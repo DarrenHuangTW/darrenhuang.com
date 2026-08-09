@@ -2,11 +2,10 @@
 
 最後更新：2026-08-09。
 
-狀態：Phase 5 進行中。
-Phase 1 的來源保全、Astro skeleton，以及 Phase 3 至 Phase 4 的核心 importer、媒體與 Stories 產物已建立。
+狀態：Phase 1–5 已完成，Phase 6 尚未開始。
+Phase 1 的來源保全、Phase 2 的 Astro skeleton，以及 Phase 3 至 Phase 4 的核心 importer、媒體與 Stories 均已完成。
 最新 importer 產物包含 86 篇正式文章、41 篇原會員限定文章、19 篇排除 drafts、1 篇正式內容頁、2 篇 Web Stories、773 個發布媒體與 192 個外部媒體或附件參考，未知 Gutenberg blocks 為 0。
-GitHub Pages base-path 成品已在本機產生 211 個 HTML，最新本機 E2E 執行結果為通過且 0 failures。
-Phase 5 尚待完成桌機與手機逐頁目視驗收、完整秘密掃描與 staged-files 審查、第一個本機 commit，以及 clean-clone 重跑。
+Phase 5 的桌機與手機代表性頁面目視驗收、秘密掃描、staged-files 審查、本機 commit、clean-clone 安裝、兩種 production build、211 個 HTML artifact 與 14 個 E2E 均已通過。
 新的 public GitHub repository 與 remote 已設定，但尚未首次 push，因此 GitHub Actions 與 Pages 預覽也尚未驗證。
 尚未切換 DNS，也尚未停止或刪除 AWS Lightsail。
 
@@ -88,7 +87,7 @@ Phase 5 尚待完成桌機與手機逐頁目視驗收、完整秘密掃描與 st
 
 ### 2.6 本機 repository
 
-- 本機 workspace 目前是已初始化但尚未建立 commit 的 Git repository，且 origin 已連接新的 public repository。
+- 本機 workspace 已建立本機 commit history，且 origin 已連接新的 public repository，但尚未首次 push。
 - 目前 branch 是 `main`。
 - 此資料夾將成為 `DarrenHuangTW/darrenhuang.com` 的本機工作副本。
 
@@ -331,12 +330,12 @@ sourceChecksum
 - 驗證 sitemap、RSS、canonical、Open Graph、日期、分類、標籤與 404 頁。
 - 驗證 clean clone 可以安裝、build 與測試。
 - 驗證 published artifact 小於 1 GB，建議在 750 MiB 顯示 warning、900 MiB 直接 fail。
-- 驗證 GitHub Actions build 在 10 分鐘內完成，建議在 8 分鐘顯示 warning。
 - 使用桌機與手機 E2E 檢查首頁、長文、圖片多的文章、原會員文章、embed、Story 與 404。
 
 ### Phase 6：GitHub Pages 預覽與 custom domain
 
 - GitHub Pages publishing source 使用 GitHub Actions。
+- 首次 push 後驗證 GitHub Actions build 在 10 分鐘內完成，並建議在 8 分鐘顯示 warning。
 - 先使用 GitHub Pages 預覽網址驗收，不先修改正式 DNS。
 - 在 repository Settings 中先設定 custom domain `darrenhuang.com`。
 - 執行 DNS 變更前，重新查閱 GitHub 官方 custom-domain 文件，避免使用過時 IP。
@@ -362,6 +361,8 @@ sourceChecksum
 - Vercel project 保留到正式站穩定後，再由使用者決定是否刪除。
 
 ## 7. 最終驗收門檻
+
+下列是整體搬遷的最終門檻，其中 GitHub Actions、DNS 與 HTTPS 項目屬於 Phase 6–7，不影響 Phase 1–5 的完成狀態。
 
 - 新站公開 86 篇正式文章。
 - 41 篇原會員文章無需登入且可正常索引。
@@ -392,7 +393,7 @@ sourceChecksum
 
 ## 9. 不可逆操作邊界
 
-- 建立 public GitHub repository 與 push 程式碼前，確認 staged files 不含 DB、會員資料或 secrets。
+- 首次或後續 push 前，確認待發布的 commits 與 staged files 不含 DB、會員資料或 secrets。
 - 修改 Cloudflare apex、`www`、`member` 或 redirect rules 前，需要清楚說明預期影響並取得使用者確認。
 - 修改 Bluehost auto-renew、付款、nameservers、transfer lock 或 registrar 前，需要使用者明確確認。
 - 刪除 Lightsail instance、snapshot、disk 或其他 AWS resource 前，需要使用者明確確認。
