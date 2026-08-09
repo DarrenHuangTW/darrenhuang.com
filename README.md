@@ -5,10 +5,10 @@ Phase 1–5 的本機搬遷與驗收已完成，內容完整性、既有網址�
 
 ## 搬遷進度
 
-截至 2026-08-09，Phase 1–5 已完成，Phase 6 尚未開始。
+截至 2026-08-09，Phase 1–5 已完成，Phase 6 的首次 push、GitHub Actions 與 Pages base-path 預覽已完成。
 最新 importer 產物包含 86 篇正式文章、41 篇原會員限定文章、19 篇排除 drafts、1 篇正式內容頁、2 篇 Web Stories、773 個發布媒體與 192 個外部媒體或附件參考，未知 Gutenberg blocks 為 0。
 正式網域與 GitHub Pages base-path 兩種本機 production build、211 個 HTML artifact、桌機與手機代表性頁面目視驗收、14 個 E2E、完整秘密掃描、staged-files 審查、第一個本機 commit，以及 clean-clone 重跑均已通過。
-GitHub Actions 與 Pages 預覽尚未執行，必須等首次 push 後才能驗證。
+GitHub Pages preview 已在公開環境通過 HTTP、桌機與手機驗收；custom domain、Cloudflare DNS 與正式流量切換尚未執行。
 
 ## 搬遷基準
 
@@ -71,14 +71,16 @@ migration-report/           適合提交至 public repository 的執行摘要。
 
 ## GitHub Pages 預覽
 
-[Pages workflow](./.github/workflows/pages.yml) 設定為只在 `main` push 或手動觸發時建置並部署，目前尚未執行。
-workflow 預定使用 `https://darrenhuangtw.github.io/darrenhuang.com/` 作為正式切站前的預覽網址。
-Repository 的 Pages source 仍需在 GitHub Settings 選擇 GitHub Actions。
+[Pages workflow](./.github/workflows/pages.yml) 已在 `main` commit `1d92c8477a34` 成功完成 build 與 deploy。
+成功的 [Actions run](https://github.com/DarrenHuangTW/darrenhuang.com/actions/runs/31313254464) build 為 1 分 23 秒、deploy 為 14 秒，整體從建立到完成約 1 分 52 秒。
+Repository 的 Pages source 已設為 GitHub Actions，HTTPS 已強制啟用。
+[GitHub Pages preview](https://darrenhuangtw.github.io/darrenhuang.com/) 已通過首頁、文章、Stories、sitemap、RSS、自訂 404、桌機與手機視覺驗收。
+完整執行證據記錄在 [Phase 6 Pages 預覽報告](./migration-report/phase-6-pages-preview.md)。
 
 這個 workflow 不會建立 custom domain、修改 DNS 或刪除舊服務。
-正式切換到 `https://darrenhuang.com` 屬於 Phase 6，必須在本機與 Pages 預覽完成驗收並取得明確確認後另行執行。
+正式切換到 `https://darrenhuang.com` 仍須另行取得 custom domain 與 DNS 操作的明確確認。
 
 ## 安全邊界
 
 任何 Cloudflare DNS 修改、AWS Lightsail 刪除、Bluehost nameserver／續約／付款修改，以及 Vercel 或舊 GitHub repository 刪除，都不屬於目前自動化流程。
-首次 push 前，必須再次檢查待發布的 commit 與 staged files，確定沒有資料庫、個資、archives、憑證或 secrets。
+每次後續 push 前，必須再次檢查待發布的 commits 與 staged files，確定沒有資料庫、個資、archives、憑證或 secrets。

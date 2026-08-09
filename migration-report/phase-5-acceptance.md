@@ -49,11 +49,12 @@ Importer 只會覆寫 `migration/reports/phase-5-importer-summary.md`，不會�
 - 已從最新程式 commit `eb18c6371593` 建立 clean clone，從 lockfile 完成 591 packages 安裝後重跑全部 source gates、migration verifier、兩種 build、兩次 dist verifier 與 14 個 E2E。
 - Clean clone 驗證完成後工作樹保持乾淨。
 
-## Phase 6 尚未開始
+## Phase 6 後續證據
 
-- 尚未首次 push。
-- 尚未取得 GitHub Actions 的實際 build 時間，也尚未驗證 GitHub Pages 預覽。
-- GitHub Actions build 應在 10 分鐘內完成，並建議於 8 分鐘顯示 warning；此 Gate 必須在首次 push 後驗證。
+- Phase 5 關閉後已完成首次 push、GitHub Actions 與 GitHub Pages base-path 預覽。
+- 成功 run 的 build 為 1 分 23 秒，低於 8 分鐘 warning 與 10 分鐘上限。
+- 詳細證據請見 [Phase 6 Pages 預覽報告](./phase-6-pages-preview.md)。
+- Custom domain、Cloudflare DNS 與正式流量切換仍未執行。
 
 ## 尚未執行的受保護操作
 

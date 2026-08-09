@@ -2,11 +2,11 @@
 
 最後更新：2026-08-09。
 
-狀態：Phase 1–5 已完成，Phase 6 尚未開始。
+狀態：Phase 1–5 已完成，Phase 6 的 Pages 預覽 Gate 已完成，custom domain 與 DNS Gate 尚未開始。
 Phase 1 的來源保全、Phase 2 的 Astro skeleton，以及 Phase 3 至 Phase 4 的核心 importer、媒體與 Stories 均已完成。
 最新 importer 產物包含 86 篇正式文章、41 篇原會員限定文章、19 篇排除 drafts、1 篇正式內容頁、2 篇 Web Stories、773 個發布媒體與 192 個外部媒體或附件參考，未知 Gutenberg blocks 為 0。
 Phase 5 的桌機與手機代表性頁面目視驗收、秘密掃描、staged-files 審查、本機 commit、clean-clone 安裝、兩種 production build、211 個 HTML artifact 與 14 個 E2E 均已通過。
-新的 public GitHub repository 與 remote 已設定，但尚未首次 push，因此 GitHub Actions 與 Pages 預覽也尚未驗證。
+Public GitHub repository 的 `main` 已首次 push，GitHub Actions build、deploy 與 Pages base-path 預覽均已驗證。
 尚未切換 DNS，也尚未停止或刪除 AWS Lightsail。
 
 ## 1. 目標與已確認決策
@@ -87,7 +87,7 @@ Phase 5 的桌機與手機代表性頁面目視驗收、秘密掃描、staged-fi
 
 ### 2.6 本機 repository
 
-- 本機 workspace 已建立本機 commit history，且 origin 已連接新的 public repository，但尚未首次 push。
+- 本機 workspace 已建立 commit history，`main` 已連接並 push 到新的 public repository。
 - 目前 branch 是 `main`。
 - 此資料夾將成為 `DarrenHuangTW/darrenhuang.com` 的本機工作副本。
 
@@ -337,6 +337,10 @@ sourceChecksum
 - GitHub Pages publishing source 使用 GitHub Actions。
 - 首次 push 後驗證 GitHub Actions build 在 10 分鐘內完成，並建議在 8 分鐘顯示 warning。
 - 先使用 GitHub Pages 預覽網址驗收，不先修改正式 DNS。
+- 2026-08-09 已完成首次 push，Pages publishing source 已設為 GitHub Actions，HTTPS 已強制啟用。
+- Commit `1d92c8477a34` 的成功 run `31313254464` build 為 1 分 23 秒、deploy 為 14 秒，整體約 1 分 52 秒。
+- `https://darrenhuangtw.github.io/darrenhuang.com/` 已通過 HTTP、桌機、手機、文章、Stories、sitemap、RSS 與自訂 404 驗收。
+- Custom domain、Cloudflare DNS 與正式流量切換仍未執行，必須另行取得明確授權。
 - 在 repository Settings 中先設定 custom domain `darrenhuang.com`。
 - 執行 DNS 變更前，重新查閱 GitHub 官方 custom-domain 文件，避免使用過時 IP。
 - GitHub custom-domain 文件位於 <https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site>。
@@ -378,7 +382,7 @@ sourceChecksum
 - 第三方 embed 失效時仍保留可點擊來源。
 - Sitemap、RSS、canonical、Open Graph、日期、分類、標籤與 404 正常。
 - GitHub Pages artifact 小於 1 GB。
-- GitHub Actions build 小於 10 分鐘。
+- GitHub Actions build 為 1 分 23 秒，小於 10 分鐘。
 - Apex、`www` 與 HTTPS 穩定，不再出現 526。
 - 完整離線 DB 與 uploads 封存已驗證且有 checksum。
 - 使用者明確同意後才刪除 AWS Lightsail。
