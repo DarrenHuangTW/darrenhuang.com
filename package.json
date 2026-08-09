@@ -12,6 +12,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "typecheck": "astro sync && tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

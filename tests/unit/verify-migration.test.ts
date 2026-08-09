@@ -131,6 +131,7 @@ describe('GitHub Pages deployment gates', () => {
       'npm run format:check',
       'npm run lint',
       'npm run check',
+      'npm run typecheck',
       'npm test',
       'npm run verify:migration',
       'npm run verify:dist',

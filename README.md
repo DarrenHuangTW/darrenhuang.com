@@ -45,7 +45,9 @@ npm run dev
 常用檢查如下。
 
 ```powershell
+npm run format:check
 npm run check
+npm run typecheck
 npm run lint
 npm test
 npm run build
