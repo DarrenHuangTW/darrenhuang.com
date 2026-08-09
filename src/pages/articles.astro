@@ -1,0 +1,26 @@
+---
+import PostCard from '@/components/PostCard.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getPostsNewestFirst } from '@/lib/content';
+
+const posts = await getPostsNewestFirst();
+---
+
+<BaseLayout
+  title="全部文章"
+  description="數位引擎完整文章列表。"
+  canonicalPath="/articles.html"
+>
+  <section class="section shell">
+    <header class="section__header">
+      <div>
+        <div class="eyebrow">Archive</div>
+        <h1>全部文章</h1>
+        <p>共 {posts.length} 篇文章，依原始發佈日期由新到舊排列。</p>
+      </div>
+    </header>
+    <div class="post-grid">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+</BaseLayout>

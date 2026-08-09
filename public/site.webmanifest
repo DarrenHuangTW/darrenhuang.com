@@ -1,0 +1,17 @@
+{
+  "name": "數位引擎",
+  "short_name": "數位引擎",
+  "lang": "zh-Hant",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#f4f1e9",
+  "theme_color": "#075f50",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

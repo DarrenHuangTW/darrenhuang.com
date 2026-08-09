@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '@/lib/content';
+import { withBase } from '@/lib/urls';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+---
+
+<article class="post-card">
+  <div class="post-card__meta">
+    <time datetime={post.data.publishedAt.toISOString()}
+      >{formatDate(post.data.publishedAt)}</time
+    >
+    {post.data.categories[0] && <span>{post.data.categories[0]}</span>}
+  </div>
+  <h2><a href={withBase(post.data.canonicalPath)}>{post.data.title}</a></h2>
+  {post.data.excerpt && <p>{post.data.excerpt}</p>}
+  <a
+    class="text-link"
+    href={withBase(post.data.canonicalPath)}
+    aria-label={`閱讀〈${post.data.title}〉`}
+  >
+    閱讀文章 <span aria-hidden="true">→</span>
+  </a>
+</article>

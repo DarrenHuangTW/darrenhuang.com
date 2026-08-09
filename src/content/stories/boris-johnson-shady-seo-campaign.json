@@ -1,0 +1,130 @@
+{
+  "aliases": [
+    "/boris-johnson-shady-seo-campaign.html"
+  ],
+  "ampSourcePath": "/web-stories/boris-johnson-shady-seo-campaign/story.html",
+  "canonicalPath": "/web-stories/boris-johnson-shady-seo-campaign/",
+  "excerpt": "SEO案例 by Darren Huang 英國首相狂人強森的政治SEO手腕 英國首相鮑里斯．強森(Boris Johnson)有著「英國川普」、「狂人強森」等稱號，最著名的是他的髮型、帶領英國脫歐的計畫、以及無厘頭的行徑。 背景 但在他很多看似奇怪的行為和發言背後，有人懷疑他其實是名懂得藉由裝瘋賣傻來操弄媒體風向，好以掩蓋掉不利自己新聞的SEO大師。 案例一 \"Boris Johnson Model\"…",
+  "legacyComparison": {
+    "decision": "新版與舊版皆為 13 頁，canonical 採用新版 Web Story。",
+    "notes": [
+      "新版與舊版頁數相同。",
+      "舊版外連線索保留在版本差異報告，不另建第二個 canonical。"
+    ],
+    "omittedAssets": []
+  },
+  "legacyPageCount": 13,
+  "legacyWpId": 765,
+  "modernPageCount": 13,
+  "modernWpId": 1867,
+  "poster": "/story-media/boris-johnson-shady-seo-campaign/coverr-oBD009YsqLVNNAznoMRGAVCZZkxJNnve4.jpg",
+  "publishedAt": "2020-10-08",
+  "slug": "boris-johnson-shady-seo-campaign",
+  "sourceChecksum": "f3c7780feebd56feb3010f3fa8d88c576469de4c798bc60554cc174a515e3033",
+  "artifactChecksum": "7c8459b7cb6f39c30f08bba90d8f8e949f4b484092929b39d8bba9164dc4938f",
+  "title": "英國首相狂人強森的政治SEO手腕",
+  "transcript": [
+    {
+      "id": "fca5c47a-e26f-4feb-b2a3-f6d8b6c68996",
+      "order": 1,
+      "lines": [
+        "SEO案例",
+        "by Darren Huang",
+        "英國首相狂人強森的政治SEO手腕"
+      ]
+    },
+    {
+      "id": "80b4f7b3-c54a-4e40-9a75-c937cedfed4b",
+      "order": 2,
+      "lines": [
+        "英國首相鮑里斯．強森(Boris Johnson)有著「英國川普」、「狂人強森」等稱號，最著名的是他的髮型、帶領英國脫歐的計畫、以及無厘頭的行徑。",
+        "背景"
+      ]
+    },
+    {
+      "id": "faa32e1b-8fe1-4f5a-86ca-373efa5fc132",
+      "order": 3,
+      "lines": [
+        "但在他很多看似奇怪的行為和發言背後，有人懷疑他其實是名懂得藉由裝瘋賣傻來操弄媒體風向，好以掩蓋掉不利自己新聞的SEO大師。"
+      ]
+    },
+    {
+      "id": "c9d79a6c-d110-4ef1-9ea4-a8b40aa82b90",
+      "order": 4,
+      "lines": [
+        "案例一",
+        "\"Boris Johnson Model\""
+      ]
+    },
+    {
+      "id": "c0ea0066-f41a-4847-bbac-47fc7ff9e7cd",
+      "order": 5,
+      "lines": [
+        "強森被爆料在擔任倫敦市長的期間，和一位美國的女企業家兼模特兒(Model)有不正當的商業利益關係且關係匪淺。這使得”Boris Johnson Model”這個字被大家廣為搜尋，結果充斥著對兩人地下戀情的揣測。"
+      ]
+    },
+    {
+      "id": "754d6b65-0d7e-4a68-8804-f1a299e2b254",
+      "order": 6,
+      "lines": [
+        "之後，在某段訪問中，強森稱呼自己是個”model of restraint” (自律的典範)，這個措辭很巧妙，因為不太有人這樣用，更何況是這位總是脫序的大哥，因此被媒體大幅報導。"
+      ]
+    },
+    {
+      "id": "b15ab0d8-45c6-4688-b95c-97f92ca15895",
+      "order": 7,
+      "lines": [
+        "仔細比較上面兩個搜尋結果，SEO們十分懷疑，他在訪談中這樣形容自己，是為了要在Google上有人搜尋”Boris Johnson Model”時，將他的誹聞洗掉。",
+        "但注意到了嗎，模特兒和典範兩個字的英文都是\"Model\""
+      ]
+    },
+    {
+      "id": "ea6ac287-3a8d-421d-85a8-a84baad28f3c",
+      "order": 8,
+      "lines": [
+        "案例二",
+        "\"Boris Johnson Bus\""
+      ]
+    },
+    {
+      "id": "116223d3-cc3d-476b-9a63-b675ad06dd75",
+      "order": 9,
+      "lines": [
+        "在英國舉行脫歐公投時，強森一項政治廣告是將英國的紅色雙層巴士漆上「我們每週要給歐盟3.5億歐元，把這些錢拿來投資在健保(NHS)吧!」"
+      ]
+    },
+    {
+      "id": "e4613c9a-b5ab-409c-9c95-65e6fb7b511f",
+      "order": 10,
+      "lines": [
+        "這個聳動的政治標語在當時引起了一大番討論，但卻在公投結果出爐(同意脫歐)後，被證實有嚴重誤導的傾向。",
+        "媒體開始紛紛報導這個標語的正當性，稱之為強森巴士事件，讓”Boris Johnson Bus”這個詞上了熱搜排行榜，結果充滿著強森說謊、誤導民眾的負面報導。"
+      ]
+    },
+    {
+      "id": "38a6be70-3db3-45a9-aea3-18529d972be2",
+      "order": 11,
+      "lines": [
+        "而強森，不知是有意或者無意，在一場採訪中當主持人問道：「總理你平常的休閒娛樂是什麼?」",
+        "強森結結巴巴的回答：「你知道…我....我喜歡畫畫，阿不對，我喜歡做東西，我喜歡做…『巴士(Bus)』，我喜歡做巴士的模型…」",
+        "開聲音就能感覺到強森回答時的不自然"
+      ]
+    },
+    {
+      "id": "d057141e-4040-46dd-81fb-c6e027fe249e",
+      "order": 12,
+      "lines": [
+        "這陣尷尬的談話除了留下一臉問號的主持人，媒體當然也開始報導強森這個特別的興趣。但是沒有錯，「Boris Bus」這個字的搜尋結果開始重新洗牌，關於公投前「巴士」的爭議性標語的報導逐漸被洗掉。"
+      ]
+    },
+    {
+      "id": "1659f169-eb29-498a-bd00-6aea80d7ace7",
+      "order": 13,
+      "lines": [
+        "SEO小結",
+        "看了這兩個例子，你覺得強森的瘋瘋癲癲是另一個境界的操作嗎? 網路名聲管理(Online Reputation Management, ORM)是搜尋引擎優化中的其中一環。你在生活中有沒有看過什麼類似的案例呢? 歡迎到數位引擎網站閱讀更多SEO內容!"
+      ]
+    }
+  ],
+  "updatedAt": "2020-10-21"
+}

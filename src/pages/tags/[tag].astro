@@ -1,0 +1,41 @@
+---
+import PostCard from '@/components/PostCard.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getPostsNewestFirst } from '@/lib/content';
+import { slugifyTaxonomy } from '@/lib/urls';
+
+export async function getStaticPaths() {
+  const posts = await getPostsNewestFirst();
+  const tags = new Map<string, typeof posts>();
+
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      tags.set(tag, [...(tags.get(tag) ?? []), post]);
+    }
+  }
+
+  return [...tags.entries()].map(([tag, taggedPosts]) => ({
+    params: { tag: slugifyTaxonomy(tag) },
+    props: { tag, posts: taggedPosts },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`標籤：${tag}`}
+  description={`數位引擎的「${tag}」相關文章。`}
+  canonicalPath={`/tags/${slugifyTaxonomy(tag)}.html`}
+>
+  <section class="section shell">
+    <header class="section__header">
+      <div>
+        <div class="eyebrow">Tag</div>
+        <h1>{tag}</h1>
+        <p>共 {posts.length} 篇文章。</p>
+      </div>
+    </header>
+    <div class="post-grid">{posts.map((post) => <PostCard post={post} />)}</div>
+  </section>
+</BaseLayout>

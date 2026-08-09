@@ -1,0 +1,49 @@
+---
+import { withBase } from '@/lib/urls';
+
+const links = [
+  { href: '/', label: '首頁' },
+  { href: '/articles.html', label: '文章' },
+  { href: '/tags.html', label: '標籤' },
+  { href: '/about.html', label: '關於' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="site-header__inner shell">
+    <a class="brand" href={withBase('/')} aria-label="數位引擎首頁">
+      <span class="brand__mark" aria-hidden="true">數</span>
+      <span>
+        <strong>數位引擎</strong>
+        <small>Darren Huang</small>
+      </span>
+    </a>
+
+    <nav aria-label="主要導覽">
+      <ul class="site-nav">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={withBase(link.href)}
+                aria-current={
+                  currentPath === withBase(link.href) ||
+                  (link.href !== '/' &&
+                    currentPath.startsWith(
+                      withBase(link.href.replace(/\.html$/, '')),
+                    ))
+                    ? 'page'
+                    : undefined
+                }
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

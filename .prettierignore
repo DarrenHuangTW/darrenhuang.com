@@ -1,0 +1,14 @@
+dist/
+node_modules/
+MIGRATION_PLAN.md
+NEXT_SESSION_PROMPT.md
+public/wp-content/uploads/
+public/blog/
+public/story-media/
+public/web-stories/
+public/*.html
+src/content/pages/
+src/content/posts/
+src/content/stories/
+migration/manifest.json
+migration/reports/

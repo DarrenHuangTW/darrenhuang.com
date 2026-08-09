@@ -1,0 +1,1982 @@
+[
+  {
+    "wpId": 6,
+    "slug": "seo-anchor-text-and-google-bomb",
+    "entries": [
+      {
+        "blockName": "raw-html/iframe",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/embed/fxwkRbxMVX0"
+      }
+    ]
+  },
+  {
+    "wpId": 9,
+    "slug": "how-to-show-images-in-google-search-results",
+    "entries": [
+      {
+        "blockName": "raw-html/iframe",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/embed/sxv-AvNPoh8?feature=player_embedded"
+      }
+    ]
+  },
+  {
+    "wpId": 12,
+    "slug": "backlinks-acquisition-scholarship",
+    "entries": [
+      {
+        "blockName": "raw-html/iframe",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/embed/UxTmZulcQZ0?feature=player_embedded"
+      }
+    ]
+  },
+  {
+    "wpId": 16,
+    "slug": "what-i-learned-from-moztalk",
+    "entries": [
+      {
+        "blockName": "raw-html/iframe",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/embed/e359jWSGMVg"
+      }
+    ]
+  },
+  {
+    "wpId": 493,
+    "slug": "amp-story-dedicated-section-google-serp",
+    "entries": [
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=x6T5ErDdGiA"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=yWn2rANvNRA"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=ttsm7q270PE"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/MordyOberstein/status/1166581597325467648"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=i7Br9GmpQWs"
+      }
+    ]
+  },
+  {
+    "wpId": 538,
+    "slug": "google-io-2019-seo-news-information",
+    "entries": [
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/g33konaut/status/1126412496754159616"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/Google/status/1125812833793581056"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlewmc/status/1126151454652166145"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/IamJoseVarghese/status/1109404147508342784"
+      }
+    ]
+  },
+  {
+    "wpId": 844,
+    "slug": "seo-newsletter-issue-1",
+    "entries": [
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1216752087515586560"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlewmc/status/1216726437975248897"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1220768238490939394"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlewmc/status/1219565763759165441"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/jroakes/status/1218611498857222149"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/darth_na/status/1222820614915940353"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1220403696363700224"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/badams/status/1217031392607064064"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=wTwnFcWUM3k&feature=emb_title"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=XR3KjgLpT7A"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=aQhS4J_waw8"
+      }
+    ]
+  },
+  {
+    "wpId": 867,
+    "slug": "seo-newsletter-issue-2",
+    "entries": [
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=cxRDjci6POs"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/stefanjudis/status/1225133056736088065"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlewmc/status/1226922920884097025"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=Vmfvf8nG09k&list=PLKoqnv2vTMUOnQn-lNDfT38X9gA_CHxTo"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=xnyJQb37RRw&list=PLKoqnv2vTMUOHPb5IJIn-7egNRmsvbPIE"
+      }
+    ]
+  },
+  {
+    "wpId": 899,
+    "slug": "seo-newsletter-issue-3",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlewmc/status/1229809366330564608"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1232426759770886144"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=Zmc9KTY8LXs"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=NWsyr-D06Ck"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=n2mrpZLTtug"
+      }
+    ]
+  },
+  {
+    "wpId": 939,
+    "slug": "seo-newsletter-issue-4",
+    "entries": [
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/gfiorelli1/status/1235883657656766465"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/ChromiumDev/status/1232670498921877507"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/dannysullivan/status/1233832378793066497"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/JohnMu/status/1235075123293585408"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/maxxeight/status/1235949311764111361"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=psEX5jPkYiw"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=JlamLfyFjTA"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=HlEaH_4Y33o"
+      }
+    ]
+  },
+  {
+    "wpId": 991,
+    "slug": "seo-newsletter-issue-5",
+    "entries": [
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/type_SEO/status/1239693977751863296"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/LizziHarvey/status/1241146046924742657"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlewmc/status/1244603549360820226"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/glenngabe/status/1242072232198840323"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=L0UqvdHJaXE"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=CzhywjGQT2Y"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=GdCBkX5mm2U"
+      }
+    ]
+  },
+  {
+    "wpId": 1074,
+    "slug": "seo-newsletter-issue-6",
+    "entries": [
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/semrush/status/1250413822298542081"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=5NSmRZ774Z8&list=PLKoqnv2vTMUO0F7xnv1MR2n-n7Y2CFgpR"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/mblumenthal/status/1247606605337833472"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/methode/status/1247786253300281345"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/dannysullivan/status/1247579364092346369"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/methode/status/1244680226967339008"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/g33konaut/status/1246044806960349185"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=h223mCgbmf4"
+      }
+    ]
+  },
+  {
+    "wpId": 1110,
+    "slug": "seo-newsletter-issue-7",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlewmc/status/1254771308589506568"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/argyleink/status/1255534034446409729"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=0jo-o7UhpgA"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=OJEXnCKxV88"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=4vtVUBzw9Rs"
+      },
+      {
+        "blockName": "raw-html/amp-facebook-page",
+        "provider": "facebook",
+        "renderedAs": "permanent-link",
+        "sourceUrl": "https://www.facebook.com/NEXFoundation/"
+      }
+    ]
+  },
+  {
+    "wpId": 1159,
+    "slug": "seo-newsletter-issue-8",
+    "entries": [
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1257376879172038656"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/patmeenan/status/1260294231589113859"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/JohnMu/status/1258011921636302848"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=oPsOZI8x5VM"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=_e66dUipkss"
+      }
+    ]
+  },
+  {
+    "wpId": 1210,
+    "slug": "how-search-engines-crawl",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/JordanWildon/status/1230829082662842369"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "facebook",
+        "renderedAs": "permanent-link",
+        "sourceUrl": "https://www.facebook.com/searchenginecommunity/photos/a.193015414769742/222830055121611/"
+      }
+    ]
+  },
+  {
+    "wpId": 1314,
+    "slug": "seo-newsletter-issue-9",
+    "entries": [
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/____lighthouse/status/1262764777803149316"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/saksters/status/1262385822856368128"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=muCwZcORL0k"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlewmc/status/1263464185607880704"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=KQlw6oHJmkM"
+      }
+    ]
+  },
+  {
+    "wpId": 1341,
+    "slug": "core-web-vitals-lcp-fid-cls",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/patmeenan/status/1260294231589113859"
+      }
+    ]
+  },
+  {
+    "wpId": 1429,
+    "slug": "seo-newsletter-issue-10",
+    "entries": [
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/JohnMu/status/1271058660681289728"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=mTBShTwCnD4"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=YCnryPIjs8s"
+      }
+    ]
+  },
+  {
+    "wpId": 1473,
+    "slug": "seo-newsletter-issue-11",
+    "entries": [
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=Y5DmGqnzvBI"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://youtu.be/JXxkoASrqNg?t=2596"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/BingWMC/status/1278002386372423680"
+      },
+      {
+        "blockName": "core-embed/spotify",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/7dzoQ9JDpes5uLTYCoFf7h"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=y9GNFEne484"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=-AR-pU_1SuI"
+      }
+    ]
+  },
+  {
+    "wpId": 1548,
+    "slug": "seo-newsletter-issue-12",
+    "entries": [
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/badams/status/1280531187296096260"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/screamingfrog/status/1278313652387557379"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=am4g0hXAA8Q"
+      },
+      {
+        "blockName": "core-embed/spotify",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/4rfm3UPUyV5aSgQhaoQNP5"
+      },
+      {
+        "blockName": "core-embed/spotify",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/5f0i0OpacTG2wgQCv6CvRI"
+      }
+    ]
+  },
+  {
+    "wpId": 1575,
+    "slug": "seo-newsletter-issue-13",
+    "entries": [
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/tomwaddington8/status/1285933536378343424"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/dawnieando/status/1286205641875431425"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=XUOD6pcvnso"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=Kruk8MhSzPk"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=W25FoUgFMQQ"
+      }
+    ]
+  },
+  {
+    "wpId": 1612,
+    "slug": "seo-newsletter-issue-14",
+    "entries": [
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=6OGbOh216mU"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/patrickstox/status/1289949065606606857"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/patrickstox/status/1292484953503158275"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/JohnMu/status/1293045032124059649"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=B4MlM1sJ5ZE"
+      },
+      {
+        "blockName": "core-embed/twitter",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlewmc/status/1292840422432215040"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=gEWkYTPSEjs"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=TTUzxHdx2jY"
+      },
+      {
+        "blockName": "core-embed/youtube",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=DcKEPl-MpLA"
+      }
+    ]
+  },
+  {
+    "wpId": 1714,
+    "slug": "seo-newsletter-issue-15",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/JohnMu/status/1296006310488662016"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/addyosmani/status/1297463776879550464"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=RT7uw4p_l1A"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=bGPB-rtxt-I"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/7lkxSrz3vlXV41YSwLCRUD"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/4E4TPubgH3PuCu34tDgQxI"
+      }
+    ]
+  },
+  {
+    "wpId": 1765,
+    "slug": "seo-newsletter-issue-16",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/MSBing_Dev/status/1300497875781267457"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/CharlesFarina/status/1304530548761735174"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=nSAVmUvMU_0&feature=youtu.be"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=ZyKZm6kF0QI"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=gKoriHae71w"
+      }
+    ]
+  },
+  {
+    "wpId": 1819,
+    "slug": "seo-newsletter-issue-17",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=pAiWkZKA8E0"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/show/0wJdllV5ZK2FSxguDqQZKm"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=jwgnwtQcSWQ"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=QAgZ-re8Km0"
+      }
+    ]
+  },
+  {
+    "wpId": 1900,
+    "slug": "seo-newsletter-issue-18",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=ZL5x3ovujiM"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1311805474992320512"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1314602740421595137"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/WebCreators/status/1313509952456019969"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlewmc/status/1316463867296395268"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=Z3dHWPXFfPo"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/2YNlwMWwJs1rJvULfQAae3"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=l-JWN2x_Na0"
+      }
+    ]
+  },
+  {
+    "wpId": 1975,
+    "slug": "seo-newsletter-issue-19",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://youtu.be/JV7egfF29pI?t=848"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/glenngabe/status/1321490978285461506"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/izzionfire/status/1320675977647837184"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=zb5ZVfS9Lyo"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/5BNpo6owMRbqeTeUkZOnYD"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=tFq6Q_muwG0"
+      }
+    ]
+  },
+  {
+    "wpId": 2028,
+    "slug": "seo-newsletter-issue-20",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlesearchc/status/1326192937164705797"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/DataChaz/status/1322217484263530496"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/WebCreators/status/1326976246597611520"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=w4l1TOJlfBY"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=WbSouimbtjU"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=wp38JZPgJgI"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/5AlsvBD4RV2FIVHwR37psV"
+      }
+    ]
+  },
+  {
+    "wpId": 2387,
+    "slug": "seo-newsletter-issue-24",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/glenngabe/status/1347995263311425537"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/dannysullivan/status/1343710012124741632"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/dannysullivan/status/1343712804616904709"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/methode/status/1349469526627332096"
+      }
+    ]
+  },
+  {
+    "wpId": 2522,
+    "slug": "seo-newsletter-issue-25",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/5uGYlUNni3mhSaDyoSGPOx"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=8G36Uoq5Uyo&"
+      }
+    ]
+  },
+  {
+    "wpId": 2558,
+    "slug": "seo-newsletter-issue-26",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/jroakes/status/1359480446153879553"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=SfC27XgelgE"
+      }
+    ]
+  },
+  {
+    "wpId": 2587,
+    "slug": "seo-newsletter-issue-27",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlesearchc/status/1363877934285664260"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/1Z3G2lILU9sVKX0H4ur8uM"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=I5skhmp6Cxg"
+      }
+    ]
+  },
+  {
+    "wpId": 2614,
+    "slug": "seo-newsletter-issue-28",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=LHMg6-xEMeM"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=x_GoMrl6_u0"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=GKq9C0GlqfQ"
+      }
+    ]
+  },
+  {
+    "wpId": 2636,
+    "slug": "seo-newsletter-issue-29",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/johnmu/status/1369939925064355841"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=XOWpo0QUZFM&t=1525s"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=1Zqkz8Y_kFw"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=UQtdv_hoGuM"
+      }
+    ]
+  },
+  {
+    "wpId": 2681,
+    "slug": "seo-newsletter-issue-30",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=uzRHCXKQZY4"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=jc7qyMgbraE"
+      }
+    ]
+  },
+  {
+    "wpId": 2712,
+    "slug": "seo-newsletter-issue-31",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlesearchc/status/1387460807831683072"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/____lighthouse/status/1387134884225900550"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/RankSense/status/1385308366755540997"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=xpSRdok0qUM"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=l3l9gB7G4zU"
+      }
+    ]
+  },
+  {
+    "wpId": 2736,
+    "slug": "seo-newsletter-issue-32-33",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/glenngabe/status/1389550143595290628"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://youtu.be/7LXazIpvDG8?t=654"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=SDBbFETGiA4"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/show/0wJdllV5ZK2FSxguDqQZKm"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/4hPDsyntMdjkc2iggfS2Hm"
+      }
+    ]
+  },
+  {
+    "wpId": 2777,
+    "slug": "seo-newsletter-issue-34",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1400135428909371398"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/____lighthouse/status/1400529906577162243"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=r14he4JRGdw"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=4DwVO7ZP7yY"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=uG1VnZlwHgs"
+      }
+    ]
+  },
+  {
+    "wpId": 2797,
+    "slug": "seo-newsletter-issue-35",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1409576349715427332"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/3ttE5qbxVrbLtMp8Wy7vKT"
+      }
+    ]
+  },
+  {
+    "wpId": 2834,
+    "slug": "seo-newsletter-issue-36",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=LfpiKOZ7Npw"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=6xtYk8optLc"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/2oJpWyr1s6Iey82UJIJFHW"
+      }
+    ]
+  },
+  {
+    "wpId": 2872,
+    "slug": "seo-newsletter-issue-37",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1418267785482833923"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/methode/status/1417920011071537153"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=VQpRU8aqSZk"
+      }
+    ]
+  },
+  {
+    "wpId": 2903,
+    "slug": "seo-newsletter-issue-38",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=2920pNH0drU"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/5wMdeCLHNz2bRO8PfrBO8B"
+      }
+    ]
+  },
+  {
+    "wpId": 2942,
+    "slug": "seo-newsletter-issue-39",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=SgrDKE7xcEk"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/6MNCyice8ECfpaONzvnhgD"
+      }
+    ]
+  },
+  {
+    "wpId": 2983,
+    "slug": "seo-newsletter-issue-40",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/7L2flMopIjfihwCIS95wPm"
+      }
+    ]
+  },
+  {
+    "wpId": 3015,
+    "slug": "seo-newsletter-issue-41",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/screamingfrog/status/1440583187420176389"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "slideshare",
+        "renderedAs": "permanent-link",
+        "sourceUrl": "https://www.slideshare.net/slideshow/embed_code/key/24BDBvNevjOAEJ"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=Ayaovhfy5Uw"
+      }
+    ]
+  },
+  {
+    "wpId": 3040,
+    "slug": "seo-newsletter-issue-42",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlesearchc/status/1447531448278437895"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/johnmu/status/1445271604288700419"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/DeiviZzZ/status/1444212582362005506"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=d1xb84T0olI"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/7jErrH4eGY88m6L6VrFitI"
+      }
+    ]
+  },
+  {
+    "wpId": 3077,
+    "slug": "seo-newsletter-issue-43",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/searchliaison/status/1448707950281854982"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=iW5ir8IBtx8"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/0y4g9xTzpRIXsU55kJseRE"
+      }
+    ]
+  },
+  {
+    "wpId": 3116,
+    "slug": "seo-newsletter-issue-44",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/cramforce/status/1456326083238760459"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=rsFLIewWSrI"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/1yGWyiCy9OyxrXduUZliqX"
+      }
+    ]
+  },
+  {
+    "wpId": 3156,
+    "slug": "seo-newsletter-issue-45",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlesearchc/status/1460970568128385031"
+      }
+    ]
+  },
+  {
+    "wpId": 3191,
+    "slug": "seo-newsletter-issue-46",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/show/0wJdllV5ZK2FSxguDqQZKm"
+      }
+    ]
+  },
+  {
+    "wpId": 3232,
+    "slug": "seo-newsletter-issue-47-48",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/googlesearchc/status/1471546117125029889"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/glenngabe/status/1482349547603046401"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/_nitman/status/1477983057940566017"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=9ERB7gJV7o8"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/48kUCS7XR87VHQkJAixKUn"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/5xpe1bzpSwGJV9vzZK7PRH"
+      }
+    ]
+  },
+  {
+    "wpId": 3256,
+    "slug": "seo-newsletter-issue-49",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/glenngabe/status/1160881702211936256"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/backlon/status/1483243985623601152"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=FHjVmi1tkEw"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/6Pbg0RB1OUQ4i9nkzdM8Ak"
+      }
+    ]
+  },
+  {
+    "wpId": 3306,
+    "slug": "seo-newsletter-issue-50",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=TMjezeeGVfY"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/show/0wJdllV5ZK2FSxguDqQZKm"
+      }
+    ]
+  },
+  {
+    "wpId": 3357,
+    "slug": "seo-newsletter-issue-51",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "slideshare",
+        "renderedAs": "permanent-link",
+        "sourceUrl": "https://www.slideshare.net/LidiaInfante/seo-gap-analysis-leverage-your-competitors-performance-wtsfest-2022"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=TIivyRpCKwg"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=SFFFEOChiJo"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/show/0wJdllV5ZK2FSxguDqQZKm"
+      }
+    ]
+  },
+  {
+    "wpId": 3400,
+    "slug": "seo-newsletter-issue-52",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/thetafferboy/status/1501872119524777987"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=okZDoE4THLY"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=Ag_-pPtJpuI"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/0xjgx5pYJxKZxkSVj10jgP"
+      }
+    ]
+  },
+  {
+    "wpId": 3446,
+    "slug": "seo-newsletter-issue-53",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "slideshare",
+        "renderedAs": "permanent-link",
+        "sourceUrl": "https://www.slideshare.net/aleydasolis/seo-low-hanging-fruit-identifying-high-impact-opportunities-fast-seoforukraine"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/1xC5f5B4DrmnCAPE27wcbm"
+      }
+    ]
+  },
+  {
+    "wpId": 3503,
+    "slug": "seo-newsletter-issue-54",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=3EWYMYlrhdY"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/episode/6YIYm6PVYt4HNHxS4Z2y8k"
+      }
+    ]
+  },
+  {
+    "wpId": 3544,
+    "slug": "seo-newsletter-issue-55",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=XbB3j15ECxo"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "spotify",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://open.spotify.com/show/0wJdllV5ZK2FSxguDqQZKm"
+      }
+    ]
+  },
+  {
+    "wpId": 3596,
+    "slug": "seo-newsletter-issue-56-57",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/addyosmani/status/1520459804656824320"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=ko-GoLR2QzU"
+      }
+    ]
+  },
+  {
+    "wpId": 3636,
+    "slug": "seo-newsletter-issue-58",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=FVZiGKDXh8U"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=lq30v-v-SaQ"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=Lz9KijaUrNg"
+      }
+    ]
+  },
+  {
+    "wpId": 3670,
+    "slug": "seo-newsletter-issue-59",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=t3W-1LsRB9E"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=HicvsqkgFi8"
+      }
+    ]
+  },
+  {
+    "wpId": 3710,
+    "slug": "seo-newsletter-issue-60",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=ltXV7dng3Gs"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=ubya-HKXzU0"
+      }
+    ]
+  },
+  {
+    "wpId": 3746,
+    "slug": "seo-newsletter-issue-61",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=DbgHkxqdu4c"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=hLbMXmSWUbc"
+      }
+    ]
+  },
+  {
+    "wpId": 3790,
+    "slug": "seo-newsletter-issue-62",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=MEpiG_AbaxA"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=DXPHyyOLv8Y"
+      }
+    ]
+  },
+  {
+    "wpId": 3835,
+    "slug": "seo-newsletter-issue-63",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=AgWntR_L75Q"
+      }
+    ]
+  },
+  {
+    "wpId": 3881,
+    "slug": "seo-newsletter-issue-64",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=YIUQolZDecM"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=fsXEDDekOFU"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=LIMqmzuzpVg"
+      }
+    ]
+  },
+  {
+    "wpId": 3914,
+    "slug": "seo-newsletter-issue-65-66",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=2gXO6qpcQXY"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=sWcBQgF2kyc"
+      }
+    ]
+  },
+  {
+    "wpId": 3956,
+    "slug": "seo-newsletter-issue-67",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=s4GseOjHIlU"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=Khb0X1_07zI"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=zsxjLJnFg6o"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=TaPhj4-bxkQ"
+      }
+    ]
+  },
+  {
+    "wpId": 3992,
+    "slug": "seo-newsletter-issue-68",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=vx0vVsgCiBM"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=OR2zpkPpBCc"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=m1YP4ptUjCM"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=4iizNFnrRWk"
+      }
+    ]
+  },
+  {
+    "wpId": 4028,
+    "slug": "seo-newsletter-issue-69",
+    "entries": [
+      {
+        "blockName": "core/embed",
+        "provider": "twitter",
+        "renderedAs": "url-blockquote",
+        "sourceUrl": "https://twitter.com/DannyRichman/status/1592490305672335360"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=dj51xoDJSts"
+      },
+      {
+        "blockName": "core/embed",
+        "provider": "youtube",
+        "renderedAs": "lazy-iframe",
+        "sourceUrl": "https://www.youtube.com/watch?v=tBjTPxz6gdQ&list=PLKoqnv2vTMUMxMs2PdBlDULqybdlPZxrk"
+      }
+    ]
+  }
+]

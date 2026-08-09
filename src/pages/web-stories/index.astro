@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { formatDate } from '@/lib/content';
+import { withBase } from '@/lib/urls';
+
+const stories = (await getCollection('stories')).toSorted(
+  (left, right) =>
+    right.data.publishedAt.getTime() - left.data.publishedAt.getTime(),
+);
+---
+
+<BaseLayout
+  title="Web Stories"
+  description="數位引擎的兩篇視覺故事。"
+  canonicalPath="/web-stories.html"
+>
+  <section class="section shell">
+    <header class="section__header">
+      <div>
+        <div class="eyebrow">Visual stories</div>
+        <h1>Web Stories</h1>
+        <p>保留原始頁面順序、媒體與完整文字 transcript。</p>
+      </div>
+    </header>
+    <div class="post-grid">
+      {
+        stories.map((story) => (
+          <article class="post-card">
+            <>
+              <div class="post-card__meta">
+                <time datetime={story.data.publishedAt.toISOString()}>
+                  {formatDate(story.data.publishedAt)}
+                </time>
+              </div>
+              <h2>
+                <a href={withBase(story.data.canonicalPath)}>
+                  {story.data.title}
+                </a>
+              </h2>
+              <p>{story.data.excerpt}</p>
+              <a class="text-link" href={withBase(story.data.canonicalPath)}>
+                閱讀 Story →
+              </a>
+            </>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

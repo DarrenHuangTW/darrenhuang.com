@@ -1,0 +1,61 @@
+---
+import PostCard from '@/components/PostCard.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getPostsNewestFirst } from '@/lib/content';
+import { withBase } from '@/lib/urls';
+
+const posts = await getPostsNewestFirst();
+const recentPosts = posts.slice(0, 5);
+---
+
+<BaseLayout title="數位引擎" canonicalPath="/">
+  <section class="hero shell">
+    <div>
+      <div class="hero__kicker">SEO · Content · Technology</div>
+      <h1>讓內容成為你的<em>長期引擎</em></h1>
+      <p class="hero__lede">
+        這裡整理 Darren Huang 對搜尋、內容策略、數位產品與科技文化的長期觀察。
+      </p>
+    </div>
+    <aside class="hero__panel">
+      <strong>完整公開，持續可讀。</strong>
+      <p>
+        原公開文章與會員電子報現已收錄於同一個靜態網站，不需登入，也不依賴舊
+        WordPress。
+      </p>
+    </aside>
+  </section>
+
+  <section class="section section--surface">
+    <div class="shell">
+      <div class="section__header">
+        <div>
+          <h2>最新文章</h2>
+          <p>從搜尋策略到文化觀察，保留原始發佈日期與網址。</p>
+        </div>
+        {
+          posts.length > 0 && (
+            <a class="text-link" href={withBase('/articles.html')}>
+              查看全部 {posts.length} 篇 →
+            </a>
+          )
+        }
+      </div>
+
+      {
+        recentPosts.length > 0 ? (
+          <div class="post-grid">
+            {recentPosts.map((post) => (
+              <PostCard post={post} />
+            ))}
+          </div>
+        ) : (
+          <div class="empty-state">
+            <h2>內容正在匯入</h2>
+            <p>Astro 架構已就緒，WordPress 文章會由可重跑 importer 產生。</p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

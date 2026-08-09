@@ -1,0 +1,18 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/urls';
+---
+
+<BaseLayout
+  title="找不到頁面"
+  description="這個網址目前沒有對應內容。"
+  canonicalPath="/404.html"
+  noindex
+>
+  <section class="empty-state shell">
+    <div class="eyebrow">404</div>
+    <h1>這一頁不在引擎裡</h1>
+    <p>網址可能已移動或輸入錯誤。你可以回到首頁，或從完整文章列表繼續探索。</p>
+    <p><a class="button" href={withBase('/')}>回到首頁</a></p>
+  </section>
+</BaseLayout>

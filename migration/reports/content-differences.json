@@ -1,0 +1,690 @@
+[
+  {
+    "wpId": 5,
+    "slug": "seo-efficient-tool-bookmarklets",
+    "sourceChecksum": "68258acd6e11fe4df6c7eca6e1ecbc5d154f07f2e32657ab27aef6d4730d82c2",
+    "normalizedTextChecksum": "f50374da42a3d73eaf16deea6b1df070cfb7a56279dce7569d9bc52c098e0222",
+    "legacyNormalizedTextChecksum": "d0328f074b43e5e9d508a49dbf59e3150335c94f6f5276450e3b637db80cf18d",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 6,
+    "slug": "seo-anchor-text-and-google-bomb",
+    "sourceChecksum": "947b4de70ef69294432118361f433149189eb2b5044bdf25f0d2b50f3691faa1",
+    "normalizedTextChecksum": "f7ee30d042fb3aaa49a99bf9430bf6eb8fc430b3658ca75568382ec2a439ff97",
+    "legacyNormalizedTextChecksum": "ed0b76c8a8e135e582b0a5066c712f23a0285a407630618cb09e5878e0598d5f",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 7,
+    "slug": "seo-spreadsheets-tip-left-function",
+    "sourceChecksum": "470c235d7369bbfe05a63304c4dcb0b3d6a2ce4a46f6d588a2049232ae3ab055",
+    "normalizedTextChecksum": "e800811500a20f63df62405f1bcc09f62ad0e9e9d0889bcaef33144b1b5e235f",
+    "legacyNormalizedTextChecksum": "eb5861e27f77ad9feb84d025e9d6b1bd61ffc899fa59537952b1c4e610723e1c",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 8,
+    "slug": "what-is-backlink-in-seo",
+    "sourceChecksum": "50f23176c8cb9920f2107f8c262cc3ab5740277f9019d07e22fd31ebb2ed2d2a",
+    "normalizedTextChecksum": "5182da1f61961b8ddfd3bf5e95d1ef6d280053da61cf24f6e43543c844330f37",
+    "legacyNormalizedTextChecksum": "206265282c8fa4e503ccfa892045545ec2be0d7d12a0acaabd32b887e976bafa",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 9,
+    "slug": "how-to-show-images-in-google-search-results",
+    "sourceChecksum": "4d2a372bee098f47b5d2b91fc085844367abceeb6e8e8c9b9aab748a618e8a51",
+    "normalizedTextChecksum": "364c66e4878387b5dbc87a236e728a57300605cbb60f5846e4652724271445b1",
+    "legacyNormalizedTextChecksum": null,
+    "comparison": "not-in-legacy-repo"
+  },
+  {
+    "wpId": 10,
+    "slug": "seo-reputation-managment",
+    "sourceChecksum": "8ad4c2b224e787d10ac9349549bed8bbc4e8432eba5f4bc718ff40799b1a11f5",
+    "normalizedTextChecksum": "459f0d65701ae20b0166e986b22e7ff507ea5d150ea04a138bc82ab174970df5",
+    "legacyNormalizedTextChecksum": null,
+    "comparison": "not-in-legacy-repo"
+  },
+  {
+    "wpId": 12,
+    "slug": "backlinks-acquisition-scholarship",
+    "sourceChecksum": "b3bb2bb7abad89272493da6564ba95f1962c9120b661e2dd78ac6634d918ba8d",
+    "normalizedTextChecksum": "3229e7d4565f452f0b923138844890fd633c9639a46d8b9bcedd3d0cc1de307d",
+    "legacyNormalizedTextChecksum": "9738700c77f865dae64c8ccdd3bf31ccf61dc56671485a73c1fc4d84abd6994b",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 15,
+    "slug": "digital-marketing-internship-twitter",
+    "sourceChecksum": "76dca5605a6c9aee6a1f630adce57950dcd2143196a0702812fa27cd12b36a6b",
+    "normalizedTextChecksum": "c19d481795c35cf3717e70d04ff711072fde77421ad2692222373ded726f81c2",
+    "legacyNormalizedTextChecksum": "7e46bae12ae7d35e8d00c0d5c2be2338f8340659521f2b5f65e4b44c1acbebd9",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 16,
+    "slug": "what-i-learned-from-moztalk",
+    "sourceChecksum": "90aa3b30a83b756131b61798c0ae70fb1bdb6a0940f4df469fb1fe0a85f2bb5d",
+    "normalizedTextChecksum": "99abd7ce7b7947b05839931cf21eccc9e5baea665a2f48a4ce36623503ee99b4",
+    "legacyNormalizedTextChecksum": "8a42385527eeb86569c223092d7ce9ef30830d9790067b192a1569904e67fdef",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 17,
+    "slug": "using-haro-to-increase-backlinks",
+    "sourceChecksum": "d761a1d5c91972ae518e08860c75efb27513e592e92273ade1087080d986d35c",
+    "normalizedTextChecksum": "324ad76b5c00c1434b7b2623f71736e9be6862cc3e80ca70f0f9864c139a806a",
+    "legacyNormalizedTextChecksum": "233df9d7fef2675f5c415a94c61cbc08d143915f9cf7e5ad3d51606b26a50f39",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 19,
+    "slug": "seo-backlinks-tool-open-site-explorer-ose",
+    "sourceChecksum": "9d1db69e458710def2d3759f0bf05b313cab1c475ea711c70f03cf0305c66cdb",
+    "normalizedTextChecksum": "1b956be1b51de2a1754f7aa2b1866e73cbb7748c22688e3b58dc86509662c743",
+    "legacyNormalizedTextChecksum": "8698f8159a28ce41c891698adb1162af0898bf90002e4aa5b8592e535329b0a1",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 224,
+    "slug": "dynamic-keyword-performance-excel-report",
+    "sourceChecksum": "0ee2ab82ed603c4149dd0b66ad739ebd5a3ac0880ee45c411bfd4fc3109137ec",
+    "normalizedTextChecksum": "1aaa6d050849fbdae837d0e179b023b9a84e0d1ea74956efb7999f2321b23a4e",
+    "legacyNormalizedTextChecksum": "6bf8f68ec80ab5238884995ba88a59f3c4ce821ccc5df6cda7b29e1dba934cb7",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 253,
+    "slug": "identify-broken-links-with-screaming-frog",
+    "sourceChecksum": "1a86dd7e242bb1e9accaaff20b4a095dc7492c9c5e1e2e050f31c48facb0645a",
+    "normalizedTextChecksum": "48d669adb24abde3b15be63857b61b265814ddd8cf5b30bca525d323ee638eea",
+    "legacyNormalizedTextChecksum": "a19220356eb8f51b16948324fbb528c2635955153277b5b531a7f91124087a5f",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 423,
+    "slug": "amazon-seo-product-manager-interview",
+    "sourceChecksum": "9d4f164e304e49e4621e8ee6c46b6cd29fe1f720ff5cb4b79b3f510671141bb3",
+    "normalizedTextChecksum": "90b8dc3197f4a455180c438f24f6d71f8ffd73196047cf7e5b9ba0a7dd2653b6",
+    "legacyNormalizedTextChecksum": "1ebad4b482dfd8e3b7e21acafa068d1658c5ff1c5730aa5caee9e4d1efb7b3cb",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 473,
+    "slug": "google-before-after-search-commands",
+    "sourceChecksum": "fe3c7f9d1b6721816641d001c6fdff52b02f74cf2662d721a0fcde04545540ce",
+    "normalizedTextChecksum": "cfa6a6ea8c276d63a03d2508cef4e4c0664c323d239a475fe7d01952043f416c",
+    "legacyNormalizedTextChecksum": "c7882c11cbe06753a0d26136c72379d6bfc6f1c80311f772859edf8fbaec3855",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 493,
+    "slug": "amp-story-dedicated-section-google-serp",
+    "sourceChecksum": "fa6264ac3b1fba9e263aec89e32333188c4ffda45b9a37ad30adf933506bad74",
+    "normalizedTextChecksum": "6b8163b385bda2ceffee38782892337e9c240fbfddf965cb561f95089fcac4f4",
+    "legacyNormalizedTextChecksum": "5d6696fd75b38fdf47ffd91f4c1d8bebe5244b23848a4531b4f6b86c561c3795",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 538,
+    "slug": "google-io-2019-seo-news-information",
+    "sourceChecksum": "417b0e8972dce9f5ba7bb1e66e57ed02e505954a4de28774ea9003af8ee9ab77",
+    "normalizedTextChecksum": "db6478499fd66ba56ed75d502ee475721fc82c43b9f53b68dbcc15c910c60eb9",
+    "legacyNormalizedTextChecksum": "9be36e0a83cb2d94dea386b4dae77ae9f7797be7005e473f133029e86252bc35",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 844,
+    "slug": "seo-newsletter-issue-1",
+    "sourceChecksum": "9de09e9d71a109137ecf8f66923e6e5cecae6c704f3b4c2eb0f460de153a9ee9",
+    "normalizedTextChecksum": "b09f80a0f55617796c25dea286c206e59a03e8487957a267d93f5228a848b1f3",
+    "legacyNormalizedTextChecksum": "d4caf37940ab56b9e3053f25019a5b38cdad316ee0292b94520b157f697f3a5a",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 867,
+    "slug": "seo-newsletter-issue-2",
+    "sourceChecksum": "8bc0fc726d062118ed59cfe7095da75096ea54a28bdc821a7c48841a2238f4cd",
+    "normalizedTextChecksum": "8cfefb7bbd8f783ef5756d15f9d6276ffd16a0a65c7afa19658a1ac6895ffdc7",
+    "legacyNormalizedTextChecksum": "da1409c8e877e4ea30cfbccf6be3cc3192628947b0684301f0371720001366a1",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 899,
+    "slug": "seo-newsletter-issue-3",
+    "sourceChecksum": "a9d3cff717c4eef4f7e3e418904ed0373b46de6ecf76e82c8a5f4050cb73cfbf",
+    "normalizedTextChecksum": "91df32286bb2a4072c4b2e4320e43b141b7c3477e436a6f45614433189eacdbc",
+    "legacyNormalizedTextChecksum": "b1bce1d2975341beead50a048c4e658495307da6fcf79fddf3e5e130c9db0c22",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 939,
+    "slug": "seo-newsletter-issue-4",
+    "sourceChecksum": "71860a38839cc61a26930f7ff87678cebf375510a3935a15fc5c1bcbe1223fb3",
+    "normalizedTextChecksum": "8b940c5a791a2a002e5336e2eefc37f55c39828ee92ef97469d1ae950b6a2124",
+    "legacyNormalizedTextChecksum": "448baab9bc50924582869cbb244a3c90e37280b57b59da10b5048fedc56a230b",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 991,
+    "slug": "seo-newsletter-issue-5",
+    "sourceChecksum": "a618d9019c69d188f3e292fa00284588be27aedf10e97333f1ae36e66054df0e",
+    "normalizedTextChecksum": "0e7ff39fd654e74c427c2278954f8c47ccc459d37a4d49a5aeb1ab8129b80d95",
+    "legacyNormalizedTextChecksum": "0b5445a8de644fc78773b617a0194369ea59bfea832a3550116806737a159733",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1042,
+    "slug": "seo-puzzle-hidden-keywords",
+    "sourceChecksum": "a60b9c7635a8e8c794a452a823daae1e37d44c9280935f5ff552264be94c4285",
+    "normalizedTextChecksum": "61e4d90e94102a6fcd6419231237063142b369420c916d928490a23703f8dea4",
+    "legacyNormalizedTextChecksum": "c9dec54f7b3a269ab0e4789b288caae131c963529e60e76470cf467866bad7e9",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1074,
+    "slug": "seo-newsletter-issue-6",
+    "sourceChecksum": "a84be9d613f4473a265225a6c5955c5980012c760f104556ae6725c308eae7b6",
+    "normalizedTextChecksum": "25dc2339216b3d182aa3597eec77685e7fa456242f74a82fac74de711e9f831f",
+    "legacyNormalizedTextChecksum": "2ba6bce80b4e46933e6ab140a249f1538e27775f90270ea5b6248c8fe22e6405",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1110,
+    "slug": "seo-newsletter-issue-7",
+    "sourceChecksum": "f84909daa0d098d7d731a059d99852485d0523b794c09d5bda9b7ea1254b535a",
+    "normalizedTextChecksum": "b37b8865392b2fe595c087d92bd74f7c5cc8db9a8ea66990068d1a24b9899ab0",
+    "legacyNormalizedTextChecksum": "16b6ca3031adf0474a8720961b021ee1814f1c271aecf435dcfa5d38fe304fc4",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1159,
+    "slug": "seo-newsletter-issue-8",
+    "sourceChecksum": "bd75b8b8052e3ef08c2f16036266abbc70434b28121a34173bdd36991ba8f785",
+    "normalizedTextChecksum": "f9ce5266fde88f794c057d0e88f7fca4ee465ba7b5d87eb7aa25fa4c64fc3707",
+    "legacyNormalizedTextChecksum": "1dc481ce747d97d27b76915e90c1b066ee1221172b8038ecace9588097092cc8",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1210,
+    "slug": "how-search-engines-crawl",
+    "sourceChecksum": "05da8bb6527f0f1d58b8e670596cd80a00df315312ec43ff49fba6223c2de9b1",
+    "normalizedTextChecksum": "403ccdc00f5b6e505839daefcd74f842af64097963f09eb55d1146efc95631e1",
+    "legacyNormalizedTextChecksum": "fd20710bef9cb8f4d00a4f80df97ed48609577f42d6772b28212b5c4fd7be776",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1314,
+    "slug": "seo-newsletter-issue-9",
+    "sourceChecksum": "f99f6a3446f060a21a55d5ed1f906525f9f6f873a8e1911419e2103bbb6146ea",
+    "normalizedTextChecksum": "2e495f26477e64134815b2409ad019c641f7035577d52101c8394ee19a828fa2",
+    "legacyNormalizedTextChecksum": "c296e1cc8256a79f1f9851164a38de6a4e2cb68e38d1311d3ec4070f85e595e9",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1341,
+    "slug": "core-web-vitals-lcp-fid-cls",
+    "sourceChecksum": "ae207f7e53b485c9ef6af68d42908f018d789d7fa194e896cc1b9a4a6f8b5790",
+    "normalizedTextChecksum": "5c045e2553e90371f7761ec188b84c1b5597b9fe2ba08e4afe3e19edd0935e41",
+    "legacyNormalizedTextChecksum": "e8a41b23b1cb22d60e3a50e2642463e00c993731d49b7666e803ec09d06bab69",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1429,
+    "slug": "seo-newsletter-issue-10",
+    "sourceChecksum": "9a1142d0cd1ea97d264e8616b648c4a52253e4fbada1c0cb2954eb416469c397",
+    "normalizedTextChecksum": "0610e53ffa52163925c61f2e51d63fb6917e1ddd3ad1dcebabd5c58f2cf63bff",
+    "legacyNormalizedTextChecksum": "6fd5034c62d379fd27da3b70f421f7640fbea562e00cdb2f8780ad2bcca28aad",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1473,
+    "slug": "seo-newsletter-issue-11",
+    "sourceChecksum": "9300b88c4bedf9f56c296c9e483eb27cd1b8d290465405c8a350e96d27eb78a1",
+    "normalizedTextChecksum": "db996d8188402abfb1939c26e34e86de22d7c74812bafc501828daa0a7320214",
+    "legacyNormalizedTextChecksum": "801fc2d4a99a2fa4f950875cf2b7ee0e8eb36cf70557cba435d4c249aa9edc72",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1548,
+    "slug": "seo-newsletter-issue-12",
+    "sourceChecksum": "23e7a7f7cfdcf10fcd9cf0cc3c15e9e1539b6254dfd9e5d878df3d9438f2d1be",
+    "normalizedTextChecksum": "e7c4f614fb12211676fa60dbe01a852098ee1d644af5678b36d6439dbf2d1076",
+    "legacyNormalizedTextChecksum": "23b24c835d0af5b9b659cf5e9348845481edb39780ba4816252e34847e7d034b",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1575,
+    "slug": "seo-newsletter-issue-13",
+    "sourceChecksum": "70856498179efad23627f098d8804e3f5342703902fb8bbb2f7327cde7987885",
+    "normalizedTextChecksum": "61b9dbc52497a08c29b8543ec38c25cbe9c7bcdeccaf87adb2013cb33f4479bd",
+    "legacyNormalizedTextChecksum": "ba9eeb8e4e87001c51eab4c4f1de8887ce74dd7f22c8ea28f04e8371a6ddf539",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1612,
+    "slug": "seo-newsletter-issue-14",
+    "sourceChecksum": "74fd71ace88571cc912d05e3a79d5918ee1d1e9a6e4d1e0f941484fb0b852a5e",
+    "normalizedTextChecksum": "ed914808424300ed658bc5bbd0f58129c5774af09e444767d7c012c102dd3e6b",
+    "legacyNormalizedTextChecksum": "0ac06d19b5768cb26bc8ce70bd2d9285e7d386f85bdaf900f7392c0a5a3a4bb9",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1714,
+    "slug": "seo-newsletter-issue-15",
+    "sourceChecksum": "2e0b4f64dd6feb5dfabdaf5349c528a6f3407fdbeb4fe26c862b589db00c4e1c",
+    "normalizedTextChecksum": "ca12fcf8a470ddcbedbedbf1b57cce65f3e6adcfd11c5c14997a6f74aa5f3173",
+    "legacyNormalizedTextChecksum": "d669fda188dad0bce4bd424f432519da45be1c2f84a839f8e8460f53cef4ffba",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1765,
+    "slug": "seo-newsletter-issue-16",
+    "sourceChecksum": "4bf6838e2331185317196c56519662479798518711ed3645d607c5b4b8fdbd0e",
+    "normalizedTextChecksum": "7fcf021832c5bd5bf78fca5f49326b6755727e49b13533a204bf83422ab89000",
+    "legacyNormalizedTextChecksum": "7cbb76950d3edbfd08b25e1d05d3b74af92333dce09505854ef72c52613a5803",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1819,
+    "slug": "seo-newsletter-issue-17",
+    "sourceChecksum": "ff9aa2c415a7cc029bc92f5a118f328d40c6dc4ee3f84de519032bb794eafc3b",
+    "normalizedTextChecksum": "029224febf105ce3e4adb0acb226b01e46203e000bdb2ab321c80bad67cc35e2",
+    "legacyNormalizedTextChecksum": "a3887ec808db9366caadb5b7e054d4690a4793d40e6dd095879216c32fefacad",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1900,
+    "slug": "seo-newsletter-issue-18",
+    "sourceChecksum": "6369f9fb302552ee501f09bd4cc53b8a9f2cfdbb1811904c510fad3768aac094",
+    "normalizedTextChecksum": "1a3ea80bf797fcb7c1dfc701a37a8dbb3bcc291e1a1189f6a0a55aba8bf9d61e",
+    "legacyNormalizedTextChecksum": "0e81caea1e87fd5a91b2d172c7f69fa58f1c4718453120204935519f1745c3b7",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1933,
+    "slug": "passage-retrieval-and-seo",
+    "sourceChecksum": "c903262561bf95bb38ab7536ad440cc296a55fbd783a14545bf943bf96c9beb4",
+    "normalizedTextChecksum": "c574747a7ccf3c2122948396f46cb4ed4a1212dc16435b328b59484dd23f8175",
+    "legacyNormalizedTextChecksum": "13abbbaaae9697e0ce5ecbb28275fcb10582b60c4d7d205fc86a3865ef861d00",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 1975,
+    "slug": "seo-newsletter-issue-19",
+    "sourceChecksum": "3a300c4bd5d42398ee6590b99bc21dcf04f1be626f71c120d927e7228ec0b723",
+    "normalizedTextChecksum": "2baa478225afad9f3bd60469550d0968bcda48826660c31130c7092e8671bdbe",
+    "legacyNormalizedTextChecksum": "82c02337df6f58b7dd6f75548370f95854e6d6f5bab551ef25db2395cbb0c606",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2028,
+    "slug": "seo-newsletter-issue-20",
+    "sourceChecksum": "ad12f58f4b9141f8e2a39f9d4e8c5c9cf108c52b8e9eff882b8ace688c155458",
+    "normalizedTextChecksum": "34e638f1e8479d30b866e4e5080cd85bfe3bb3ea9360837a80b82e2470c86a6d",
+    "legacyNormalizedTextChecksum": "9739352283ceba99e81b1f199304a802e7862e1c27c4c901b84e68534262d163",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2090,
+    "slug": "google-autocomplete-keyword",
+    "sourceChecksum": "15bcedfc65356191ec307abbbbf1fde1293edab661b9d2f2c547e3c9a89445cd",
+    "normalizedTextChecksum": "14b7a4748291a07094e6d44e94df1e0503e1fabcc4d9e20021f7c0a434e7de92",
+    "legacyNormalizedTextChecksum": "6058f1bb6c1ddab8495a08b5c2271096f51ad8d0f986e95465aa38d682921046",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2387,
+    "slug": "seo-newsletter-issue-24",
+    "sourceChecksum": "4df0d559e0eec6e35e6338c16a9b6e958af2fc2ff1c2a76375c71b5d24f91569",
+    "normalizedTextChecksum": "a01821aca72e3e764a17e14b64a4d100f39b97e263ba0b54252b391705f7c661",
+    "legacyNormalizedTextChecksum": "7e0418a13243b087599771859ae2f027bda7db3cf5cab65657a4940b79bc283c",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2498,
+    "slug": "about-the-site",
+    "sourceChecksum": "89aeea4218f735112281a30d1406a617d043d6e699de9e1492209b6c3b4a4844",
+    "normalizedTextChecksum": "70f75fe08ea3b45709383c181a8fed2d3f5b6e0cd620757c3a7f8a024924d715",
+    "legacyNormalizedTextChecksum": null,
+    "comparison": "not-in-legacy-repo"
+  },
+  {
+    "wpId": 2522,
+    "slug": "seo-newsletter-issue-25",
+    "sourceChecksum": "c522bb2941c518d758927f19681d009ba227e53088677b7f6e67a57f3f442518",
+    "normalizedTextChecksum": "02d78cb2a7802fc866334d6433aa93bccbd4e60bb40c72106949184a604cc919",
+    "legacyNormalizedTextChecksum": "efec0f7ff7f4701c7911798bff3b274b7e67e65c513da48131bc875e13f9ba5e",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2558,
+    "slug": "seo-newsletter-issue-26",
+    "sourceChecksum": "c7b390fad26af530e7c4dd27114a43648a2364f727ab841d5e0b13307b85c4f8",
+    "normalizedTextChecksum": "2953403a9f12506e0961c2fbc4bcc0adde8309cbf83d7b3cce905f827528f110",
+    "legacyNormalizedTextChecksum": "705293de0a11fca0bf186be9ff36971dbab818133f38d8dc8033d7257d7729d9",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2587,
+    "slug": "seo-newsletter-issue-27",
+    "sourceChecksum": "586fd8c065b9991a0c89a60d99d41ff4378278165fa8606b346d55cdd305b278",
+    "normalizedTextChecksum": "b901f1f2c53f4de70fc03977b52d1ca272f882814aab9cd69c3c6607e006f4e8",
+    "legacyNormalizedTextChecksum": "1fe4ec3a22ecd8029be39b945083432be76a3301b4a05450738d5a58f0044bf9",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2614,
+    "slug": "seo-newsletter-issue-28",
+    "sourceChecksum": "bf22c2207433390cc1189f041efbb86238c4a1411601aea2119c728b4b5b9587",
+    "normalizedTextChecksum": "231334ca2ef247106af91af4162e6974d7faddf04cf083241a1cda8ff5123887",
+    "legacyNormalizedTextChecksum": "07e0a67d647000ad87cae7b8f6395164b38d114e9c03f2284025cae1173acc03",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2636,
+    "slug": "seo-newsletter-issue-29",
+    "sourceChecksum": "7701fcc7f5444175bf0dde6e03c6b7df2a062295df5eb58932196a5bdfc03a55",
+    "normalizedTextChecksum": "7e38873be4979a9a576b1825d879be1a4ec25b975b1d69b8af86f61011925911",
+    "legacyNormalizedTextChecksum": "bb1dcadaf8dd9b4b755f9e81256815214e75792b8b53f5de96f1a1db90a3fe99",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2681,
+    "slug": "seo-newsletter-issue-30",
+    "sourceChecksum": "b12ca52e059515aa51f32a8270b76970b010d129529a780700623fbd1407ea28",
+    "normalizedTextChecksum": "d065eb5c997f373449604670ed68141f0ed771afeb98345e515678550581ebd6",
+    "legacyNormalizedTextChecksum": "06f01ab0fc4a68764601745f5accc71f441647d8a12dc4ca75fcd1fd9598dfe0",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2712,
+    "slug": "seo-newsletter-issue-31",
+    "sourceChecksum": "4e2e06e2ad48f60615b354fffd863d24774297cba54e4c5735c15906f3aabeef",
+    "normalizedTextChecksum": "7968fb3e49965c31dbb1d48a3fdf5c4163a1581aa2bea92e53ee92b74d7ca629",
+    "legacyNormalizedTextChecksum": "b8e5b3db214ed7ea404ed34c60320a7e8467abcee3a8ecd8fc12b2190f375513",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2736,
+    "slug": "seo-newsletter-issue-32-33",
+    "sourceChecksum": "64ca29b14410c7ec454b72b748040687e27a2f79e97cb6b481809d86fe8ea1b8",
+    "normalizedTextChecksum": "f1f35321c972bbcbb5de09350244e0d25d4c49535523fb5942c4468318cf4ff7",
+    "legacyNormalizedTextChecksum": "e1578356cbb44b3f312d7ff3e4aae55daf74d9244dc20308f7e61d08f571710e",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2777,
+    "slug": "seo-newsletter-issue-34",
+    "sourceChecksum": "947e88e11481ab25b9c9b5cc957c4d1235e48829463ceb17b75437383cc2f5aa",
+    "normalizedTextChecksum": "2dbd42d015ec83f47a7ad00478f5f7657001b9c5fe1854807aaf64cdb03c6d58",
+    "legacyNormalizedTextChecksum": "7cbf8f9b7fc108e64134845efb995beba0a26678449d01fb71b4d5bfec7de77b",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2797,
+    "slug": "seo-newsletter-issue-35",
+    "sourceChecksum": "6c58527347499b59c1303477d3bc5e0d91458cfed8bb757c0c724f0c5a35193f",
+    "normalizedTextChecksum": "19c0cbace26e2270555c8dc93878ccd3e5d88ae0955894a06dd2dcdc3d726f91",
+    "legacyNormalizedTextChecksum": "ca6332d751b420209db566b84d8becb691d98a7f5db4c419f3d03224ab6e3d7f",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2834,
+    "slug": "seo-newsletter-issue-36",
+    "sourceChecksum": "634a3c70b96e651aad02ddc77261c64fa8362b1c621fc2ae44c1db5b9c4a3e4f",
+    "normalizedTextChecksum": "58c465c612980e7383730260929c7e94d8078a23e5444097bab36fefaee7b371",
+    "legacyNormalizedTextChecksum": "46eeb2e0fb0cf6059a4f6965fd71d02eb4a5710f927a51ff8d565294203bbd5d",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2872,
+    "slug": "seo-newsletter-issue-37",
+    "sourceChecksum": "879d6f509fd607f638bce5297ebbb111a6b5159ef97f0b8fb82e48a920a90d4e",
+    "normalizedTextChecksum": "1543861171e044cd4538f0d96247a6dc5681f3a640508ce30027b8659cca0d96",
+    "legacyNormalizedTextChecksum": "c14a520616ec765935d4b77185e8468dc2d8d81c7d3b330032b8beea43854f29",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2903,
+    "slug": "seo-newsletter-issue-38",
+    "sourceChecksum": "b1329cf45474973d4d031742569a8ac3dafe3a816e6ce8d78fcb78626233b9bc",
+    "normalizedTextChecksum": "298047044382ba7eb17361de670c9abce773cddbc05fe07884404559304de5c7",
+    "legacyNormalizedTextChecksum": "a2ffacdbfa66527e477a65c636fcbd6cb2f20ae63e6c3186cd95df3738105ed7",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2942,
+    "slug": "seo-newsletter-issue-39",
+    "sourceChecksum": "6f3d158e8bd1575c9fe86ffa47b90c48035871357eb51cebd1464d21eea3c6ce",
+    "normalizedTextChecksum": "0bb1b5bfd1433309625559293359e77c9e89705e981cde4b990565b4ebe820ed",
+    "legacyNormalizedTextChecksum": "f408d51709657e7bc1b075f221d19c81e3fb45331aca44b7105bb07dda39af3f",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 2983,
+    "slug": "seo-newsletter-issue-40",
+    "sourceChecksum": "71493dc2b2faef1c49ed8ebd1c5983be9ce7a4699e4634f6b75c3775360c982c",
+    "normalizedTextChecksum": "56f6a0fa28be96accdbf73420fd3fff9ff6308b5659d1f85dde03ae880245391",
+    "legacyNormalizedTextChecksum": "af1183eb6018c2b9dc440f5d8f59a5bd00883f7ff890ee97cb1eed8f5115b11b",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3015,
+    "slug": "seo-newsletter-issue-41",
+    "sourceChecksum": "861c6fe0837da186b8140565522e6014f8840df148b365352c3d402da796fdf7",
+    "normalizedTextChecksum": "1bad7586b0455071cfc3c06d10c13d8c28344f3e7b2d350ccf9d9882e1b900b8",
+    "legacyNormalizedTextChecksum": "3c40e93d62355ef470765837a6ac4960f1238dcdcb1cf14e915ca606c5fac20f",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3040,
+    "slug": "seo-newsletter-issue-42",
+    "sourceChecksum": "da9e2c53b1ff3cfcbe8a1fd6541f2a78195a61e14126462fd1c6d26cf27a35a6",
+    "normalizedTextChecksum": "b60112daf1b5e46f5856861f43b0657804edc6fc901b97d0c5d4110c09abeb70",
+    "legacyNormalizedTextChecksum": "3cefe69d305e1aaebf5d4787f2984b1a48268ae7541cc61120498906bdfbc8eb",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3077,
+    "slug": "seo-newsletter-issue-43",
+    "sourceChecksum": "911b378022a5d6f235bb8d76ae2d4be1d8b1e2e552b626a6c49444b534e432d6",
+    "normalizedTextChecksum": "88d40a5b6ceea4f4bc7a6e999cf16ab3a2504bb41f1aa909ec99e11b43834ac2",
+    "legacyNormalizedTextChecksum": "497f4cae887a3bb6dd0b86eb2f9756bc0991d5b90d32490f66c0a109674edbdc",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3116,
+    "slug": "seo-newsletter-issue-44",
+    "sourceChecksum": "14bba22d8062f4da166fd0413ba643ea27aed56838aa35e5d5e6c73c4105c37b",
+    "normalizedTextChecksum": "036b4cc9a2758d2402ee3ad7b157a4314c9240ee6c8ddc16dc73cf2738be6b32",
+    "legacyNormalizedTextChecksum": "d92db2f63c4e5d3377026d6071a2af89ec16dfc4633d9047284ec954f9cc6c3e",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3156,
+    "slug": "seo-newsletter-issue-45",
+    "sourceChecksum": "37cbd8a2d9cd6918b393a04983e59dfd3c9caf3af68391f3b7d247a9a8beb1ef",
+    "normalizedTextChecksum": "fc4189d1b4753a80008a7e7509461a8699e1f5e70f6e1d76b6e8b3ea8fce6e5f",
+    "legacyNormalizedTextChecksum": "deb10e099d479b30a3277b19faacaf6c04b68970a870ab46292aa77ad03184a3",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3191,
+    "slug": "seo-newsletter-issue-46",
+    "sourceChecksum": "ddb36da132df67175e64c959facdabff15adba58cff42e05ccdccaf5c8a785d9",
+    "normalizedTextChecksum": "0e9e00e950e69249ea0fc25c12bca3eef4b962b50ae610ae3e19ad2d219e19cb",
+    "legacyNormalizedTextChecksum": "e48a82e418a48fe7c72cb989ea61fd0e7702e63d311333019760062f45643cda",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3232,
+    "slug": "seo-newsletter-issue-47-48",
+    "sourceChecksum": "277d10d116aaaff6f55ac2399489c4d43be9ea778375922454da6b02724132bf",
+    "normalizedTextChecksum": "dbed6fb0a30eba86c15d9dddd951e2903ca08177b30c2e9e0b56861e7942f54e",
+    "legacyNormalizedTextChecksum": "7bca3de5e61af578491fe6443717196abd2195c054844e29987e73b9bb9600a4",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3256,
+    "slug": "seo-newsletter-issue-49",
+    "sourceChecksum": "26375ec8bbc3a422e4c1bf2b951483cfdab0bb5fb4d5b9aa44438fcf29fe7c44",
+    "normalizedTextChecksum": "2ab114627e4c1c4a8104d390ebb00c0c54474ca34f96254ec2f8bcb462b45379",
+    "legacyNormalizedTextChecksum": "52f08500bf586113e37c97852d65adb40d0d3a9c69f3d0525450d3c004e62655",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3306,
+    "slug": "seo-newsletter-issue-50",
+    "sourceChecksum": "7b5a41e5daaaab59ad0c537d159e8512bf2b415e51752e89442e5ed8d2bd8d69",
+    "normalizedTextChecksum": "aca06fe510638db84f0d8ea32e5ce5011c2351ed1e0c2257c0bbc5ae471d55d0",
+    "legacyNormalizedTextChecksum": "e345094245689e199f022e28b2b3850bf7136aacdbe8100c03607ba34b309f5a",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3357,
+    "slug": "seo-newsletter-issue-51",
+    "sourceChecksum": "eb99dc0c9c888e557f22e0167f46b7bbcc418083fe97a19340dfe73cb8d81825",
+    "normalizedTextChecksum": "6c1f862675819c867f7263aead0b2dd65eb5eaa1abc08a0f931f14585f810e3c",
+    "legacyNormalizedTextChecksum": "ab081bbe04661e75677261e73b7e934cdccf65af931043902d9db109dc7a9e7b",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3400,
+    "slug": "seo-newsletter-issue-52",
+    "sourceChecksum": "80d05094491be7ac9c9b2db61e3cc8d528eeaac34e8d300230bf3d5a50fbea95",
+    "normalizedTextChecksum": "ae0ebf57fd9cb05072f6e954203f171448fcf4a03c4c86910d77af6e38903cdd",
+    "legacyNormalizedTextChecksum": "bcd20ec3ef63537b2f1bb7f6ce1ef14668a30d612814c3ddac15855619e1b191",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3446,
+    "slug": "seo-newsletter-issue-53",
+    "sourceChecksum": "afc7e15dd04a82122424c84dcdb5b5d0d171785e4bb7d80403de56b7711cc2be",
+    "normalizedTextChecksum": "5910961b873a4384dcadc81a8e788f5f6cd061203423b6f9f9d643cf1efd55c9",
+    "legacyNormalizedTextChecksum": "fbc1a7da7953bcfe40e4c5b824229a6435d0129063e4180275fb71b70ab273b8",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3503,
+    "slug": "seo-newsletter-issue-54",
+    "sourceChecksum": "b2b3382fdb19e3656dca9ed1953d782220d6928d3eabe7867c036c74a92cde60",
+    "normalizedTextChecksum": "453b21cbca0195b5568329e6b457356674c08d0206e7c448477077490ba11173",
+    "legacyNormalizedTextChecksum": "6d7f07ba6e47351dc5b135795577f6d52ad2eef6aab5c142b6fa4c03492fa2d2",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3544,
+    "slug": "seo-newsletter-issue-55",
+    "sourceChecksum": "2a3138122686418b649236d21a89a0bb3de0166e061d4b3fccf10270c420f0ed",
+    "normalizedTextChecksum": "efbbf34f3e976ac6dd1a26eab28c8da7032838f3fdeb248abead704b81f63fea",
+    "legacyNormalizedTextChecksum": "0f1a66f7811a7a96211c5e4089105674d9e31ad778ca148594dd47c65505a6fe",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3596,
+    "slug": "seo-newsletter-issue-56-57",
+    "sourceChecksum": "d20a78c8f17be6da87d1c3928643bc80572925adf6f35480b6464e4e4147f889",
+    "normalizedTextChecksum": "181caabb1d84b9f1f6bb4a1d5097e3ef23e569580e2e2550387bc9ad54703cfa",
+    "legacyNormalizedTextChecksum": "121a34eb6d5668084e0123968d589e90d358b2c19149d9764e7ca6be7e21933f",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3636,
+    "slug": "seo-newsletter-issue-58",
+    "sourceChecksum": "6bfc7ff1f625def3ee148c5ac130e4f6868da1e0f8356a177161112b0d0f5313",
+    "normalizedTextChecksum": "b1895c42359ec6b0148271549aaa4b10a878a91bef883bf94a932ac2c454a3aa",
+    "legacyNormalizedTextChecksum": "ae8801921c59d5b40c40541be6a4f708ba47d7b869c8f32ff1da38c52ca6ad75",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3670,
+    "slug": "seo-newsletter-issue-59",
+    "sourceChecksum": "fddaf82d0d751a8952de3ee5ca16de98f06215903c22a6050184c6c2be0bcbda",
+    "normalizedTextChecksum": "56a2c47b73e8b32c5ffbf3a7b594f0b86672d4d5101db6cbc6b4416b40c13fd9",
+    "legacyNormalizedTextChecksum": "b8e8e8886e14ee114975e4dd92c56f4de57702b74b3aa3b75fc7031b0fea1322",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3710,
+    "slug": "seo-newsletter-issue-60",
+    "sourceChecksum": "43220d72e01e381b64df1a361fc5ce96cdef5d40cf82b4b5695899e009a3f6e8",
+    "normalizedTextChecksum": "4a163733fb6a7da25d9eba1728a03eb3836c2345a349e996539f536eba4eaa87",
+    "legacyNormalizedTextChecksum": "158681ad0b72ba6f8782200898329456f4c6af1c2ac7e97992e5f33c599ad35d",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3746,
+    "slug": "seo-newsletter-issue-61",
+    "sourceChecksum": "3bb8ea9ce8444f3bfd21b23b2f0124335f90259c2f6f7a8873572a6366e67f2d",
+    "normalizedTextChecksum": "0f024359f931b2ae5acd36e5641073fb4394c8895fd7c9dae7144097b2f83f41",
+    "legacyNormalizedTextChecksum": "1efa9feb5cebb65bfaf28c75bdfd5bff3c35662da24ff5cbd3598db920ea1813",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3790,
+    "slug": "seo-newsletter-issue-62",
+    "sourceChecksum": "651da866359ce50fc00beed31e09265b7f8967e2102427a6448f8a9265a78cfe",
+    "normalizedTextChecksum": "3bcc29a2d54d3a653abd5cf7e04720bef04b0930a52cd558cc04c8f13373326c",
+    "legacyNormalizedTextChecksum": "ae9d87da6112e811d035863b8cc142eba74a211e8579e5b48c132f4371390d7b",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3835,
+    "slug": "seo-newsletter-issue-63",
+    "sourceChecksum": "2fc1dc7ac46a5f4459275cfbf2f7efbc325570867570e1777713945a3d5638dc",
+    "normalizedTextChecksum": "226580af3175d902f0b6542f139746cb420695bb9f67fd4305a02da7579fb0e4",
+    "legacyNormalizedTextChecksum": "a38e4c5f63f7dd20b08a221b62ae909dcd2d37633858bfb0a643d97a133c5d06",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3881,
+    "slug": "seo-newsletter-issue-64",
+    "sourceChecksum": "ebe0cf6f3ed87208f11c1955649fcd6540304b9ab8d5fa4a3d6ae30ec38a27a6",
+    "normalizedTextChecksum": "39356a46fc3d0ed6bdfdd0dfeff456ba08cdadce003ae0e14491d4e59e053dc3",
+    "legacyNormalizedTextChecksum": "6affc72b65b38d017edc25f9874cd75a376c2dd99e1f96b2f45f801a8a7a2d38",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3914,
+    "slug": "seo-newsletter-issue-65-66",
+    "sourceChecksum": "c5d1378735679dad6c68efa41962a067b95f15d766b886f349411aaa95eb8be7",
+    "normalizedTextChecksum": "9c77f05182b30b9dcc7bca2f356e9dc09c0e696bf69769814ad549492ff05ccd",
+    "legacyNormalizedTextChecksum": "d387611d591b363b8ac31c567fa88d59cf3ee91a98a900b10439cb30e6e60368",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3956,
+    "slug": "seo-newsletter-issue-67",
+    "sourceChecksum": "83d04f9ae9cd3186080bdb083e719ece39aa85d9648bf4ea62f11be66218eae2",
+    "normalizedTextChecksum": "eed6e601e8dee8e1c647a93700225bb2222cdaf4d859751a865c63d19308ce14",
+    "legacyNormalizedTextChecksum": "afd744a5e6d0077c6755ec273dc23e335edfd85b5a177f53b0e96bb03d138708",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 3992,
+    "slug": "seo-newsletter-issue-68",
+    "sourceChecksum": "4272654f53ba63fd9cdb2dfe3c07aa6c2a75c7470baf7967563667b923cb7ee0",
+    "normalizedTextChecksum": "ba4e264148b8ada3ddd5215cbcd04c6d3ec5bca9b074b17b92f40d84f752543c",
+    "legacyNormalizedTextChecksum": "e30e08bf3e1dc07360df8b4549c33f848896f5c47456f0e02c703b0278dd3dca",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 4028,
+    "slug": "seo-newsletter-issue-69",
+    "sourceChecksum": "36c684f0c2cff576f6bdeb8e96d2e65dd98a9ce6e9af2bd6eb868016b9cc07cc",
+    "normalizedTextChecksum": "2def4b8199030470af86a26023367a6ceca6d93a6534cbbe3477f22ca623f6df",
+    "legacyNormalizedTextChecksum": "ff55793c471d4348fafc79e217404c2c9963ddbd41ee7baaa20f2838d4cd4ef2",
+    "comparison": "changed"
+  },
+  {
+    "wpId": 4070,
+    "slug": "seo-newsletter-issue-70-71",
+    "sourceChecksum": "a3071362758cd033fd9e420209f29b47350bf7a557dadf18d262d2dbf26f00b5",
+    "normalizedTextChecksum": "2c93701999cc2611ca94b5bc384e72308aed8154fc9dc19d6e58431faae43fe7",
+    "legacyNormalizedTextChecksum": "e256506db343b59e8772a2bbdfac043f1879d6f199b778158609918bb44a2178",
+    "comparison": "changed"
+  }
+]

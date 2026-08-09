@@ -1,0 +1,16 @@
+---
+interface Props {
+  url: string;
+  label?: string;
+  description?: string;
+}
+
+const { url, label = '開啟外部內容', description } = Astro.props;
+---
+
+<aside class="embed embed--fallback">
+  {description && <p>{description}</p>}
+  <a href={url} rel="noopener noreferrer"
+    >{label} <span aria-hidden="true">↗</span></a
+  >
+</aside>

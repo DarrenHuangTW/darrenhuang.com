@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+import ArticleLayout from '@/layouts/ArticleLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+type RouteProps =
+  | { kind: 'post'; entry: CollectionEntry<'posts'> }
+  | { kind: 'page'; entry: CollectionEntry<'pages'> };
+
+export async function getStaticPaths() {
+  const [posts, pages] = await Promise.all([
+    getCollection('posts'),
+    getCollection('pages'),
+  ]);
+  const seen = new Set<string>();
+
+  return [
+    ...posts.map((entry) => ({ kind: 'post' as const, entry })),
+    ...pages.map((entry) => ({ kind: 'page' as const, entry })),
+  ].map(({ kind, entry }) => {
+    if (seen.has(entry.data.slug)) {
+      throw new Error(`Duplicate root route slug: ${entry.data.slug}`);
+    }
+
+    seen.add(entry.data.slug);
+    return { params: { slug: entry.data.slug }, props: { kind, entry } };
+  });
+}
+
+const route = Astro.props as RouteProps;
+const rendered =
+  route.kind === 'post'
+    ? await render(route.entry as CollectionEntry<'posts'>)
+    : await render(route.entry as CollectionEntry<'pages'>);
+const Content = rendered.Content;
+---
+
+{
+  route.kind === 'post' ? (
+    <ArticleLayout data={route.entry.data}>
+      <Content />
+    </ArticleLayout>
+  ) : (
+    <BaseLayout
+      title={route.entry.data.title}
+      description={route.entry.data.excerpt}
+      canonicalPath={route.entry.data.canonicalPath}
+      image={route.entry.data.featuredMedia?.src}
+    >
+      <article class="page shell shell--article">
+        <header class="page__header">
+          <div class="eyebrow">數位引擎</div>
+          <h1>{route.entry.data.title}</h1>
+          {route.entry.data.excerpt && <p>{route.entry.data.excerpt}</p>}
+        </header>
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+    </BaseLayout>
+  )
+}

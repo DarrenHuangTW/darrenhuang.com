@@ -1,0 +1,24 @@
+---
+interface Props {
+  url: string;
+  title?: string;
+}
+
+const { url, title = 'Spotify 音訊' } = Astro.props;
+const embedUrl = url.replace(
+  'https://open.spotify.com/',
+  'https://open.spotify.com/embed/',
+);
+---
+
+<figure class="embed embed--audio">
+  <iframe
+    src={embedUrl}
+    title={title}
+    loading="lazy"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+  ></iframe>
+  <figcaption>
+    <a href={url} rel="noopener noreferrer">在 Spotify 開啟原始內容</a>
+  </figcaption>
+</figure>

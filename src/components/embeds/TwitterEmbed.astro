@@ -1,0 +1,13 @@
+---
+interface Props {
+  url: string;
+  quote?: string;
+}
+
+const { url, quote } = Astro.props;
+---
+
+<blockquote class="embed embed--social" data-twitter-embed>
+  {quote && <p>{quote}</p>}
+  <p><a href={url} rel="noopener noreferrer">在 X／Twitter 查看原始貼文</a></p>
+</blockquote>

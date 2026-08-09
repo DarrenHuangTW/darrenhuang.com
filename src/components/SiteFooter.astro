@@ -1,0 +1,15 @@
+---
+import { withBase } from '@/lib/urls';
+
+const year = new Date().getUTCFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <p>© {year} Darren Huang．數位引擎</p>
+    <nav aria-label="頁尾導覽">
+      <a href={withBase('/rss.xml')}>RSS</a>
+      <a href={withBase('/sitemap-index.xml')}>Sitemap</a>
+    </nav>
+  </div>
+</footer>

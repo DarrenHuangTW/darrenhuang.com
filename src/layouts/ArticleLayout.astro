@@ -1,0 +1,117 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { formatDate } from '@/lib/content';
+import { slugifyTaxonomy, withBase } from '@/lib/urls';
+
+interface Props {
+  data: CollectionEntry<'posts'>['data'];
+}
+
+const { data } = Astro.props;
+const titleDateRange = data.title.match(
+  /^(.*[~～])(\d{4}[./-]\d{1,2}[./-]\d{1,2})$/u,
+);
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.excerpt}
+  canonicalPath={data.canonicalPath}
+  image={data.featuredMedia?.src}
+  type="article"
+  publishedAt={data.publishedAt}
+  updatedAt={data.updatedAt}
+>
+  <article class="article shell shell--article">
+    <header class="article__header">
+      <div class="eyebrow">數位引擎文章</div>
+      <h1>
+        {
+          titleDateRange ? (
+            <>
+              {titleDateRange[1]}
+              <wbr />
+              <span class="article__title-range-end">{titleDateRange[2]}</span>
+            </>
+          ) : (
+            data.title
+          )
+        }
+      </h1>
+      {data.excerpt && <p class="article__dek">{data.excerpt}</p>}
+      <div class="article__byline">
+        <span>Darren Huang</span>
+        <span aria-hidden="true">·</span>
+        <time datetime={data.publishedAt.toISOString()}
+          >{formatDate(data.publishedAt)}</time
+        >
+        {
+          data.updatedAt.getTime() !== data.publishedAt.getTime() && (
+            <span class="article__updated">
+              更新於 {formatDate(data.updatedAt)}
+            </span>
+          )
+        }
+      </div>
+    </header>
+
+    {
+      data.featuredMedia && (
+        <figure class="article__hero">
+          <img
+            src={withBase(data.featuredMedia.src)}
+            alt={data.featuredMedia.alt}
+            width={data.featuredMedia.width}
+            height={data.featuredMedia.height}
+            loading="eager"
+            fetchpriority="high"
+          />
+        </figure>
+      )
+    }
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    {
+      (data.categories.length > 0 || data.tags.length > 0) && (
+        <footer class="article__taxonomy">
+          {data.categories.length > 0 && (
+            <div>
+              <strong>分類</strong>
+              <ul>
+                {data.categories.map((category) => (
+                  <li>
+                    <a
+                      href={withBase(
+                        `/categories/${slugifyTaxonomy(category)}.html`,
+                      )}
+                    >
+                      {category}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {data.tags.length > 0 && (
+            <div>
+              <strong>標籤</strong>
+              <ul>
+                {data.tags.map((tag) => (
+                  <li>
+                    <a href={withBase(`/tags/${slugifyTaxonomy(tag)}.html`)}>
+                      {tag}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </footer>
+      )
+    }
+  </article>
+</BaseLayout>

@@ -1,0 +1,79 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { formatDate } from '@/lib/content';
+import { withBase } from '@/lib/urls';
+
+interface Props {
+  story: CollectionEntry<'stories'>;
+}
+
+export async function getStaticPaths() {
+  const stories = await getCollection('stories');
+
+  return stories.map((story) => ({
+    params: { story: story.data.slug },
+    props: { story },
+  }));
+}
+
+const { story } = Astro.props as Props;
+const { data } = story;
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.excerpt}
+  canonicalPath={data.canonicalPath}
+  image={data.poster}
+  publishedAt={data.publishedAt}
+  updatedAt={data.updatedAt}
+>
+  <article class="story-page shell">
+    <header class="story-page__header">
+      <div class="eyebrow">Web Story</div>
+      <h1>{data.title}</h1>
+      <p>{data.excerpt}</p>
+      <time datetime={data.publishedAt.toISOString()}
+        >{formatDate(data.publishedAt)}</time
+      >
+    </header>
+
+    <div
+      class="story-player"
+      aria-label={`${data.title}，共 ${data.modernPageCount} 頁`}
+    >
+      <iframe
+        src={withBase(data.ampSourcePath)}
+        title={`${data.title} 視覺故事`}
+        loading="eager"
+        sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+        allow="autoplay; fullscreen"></iframe>
+    </div>
+
+    <section class="story-transcript" aria-labelledby="story-transcript-title">
+      <div class="section__header">
+        <div>
+          <div class="eyebrow">Accessible transcript</div>
+          <h2 id="story-transcript-title">完整文字稿</h2>
+          <p>即使第三方 runtime 或影片無法載入，故事文字仍可直接閱讀。</p>
+        </div>
+      </div>
+      <ol>
+        {
+          data.transcript.map((page) => (
+            <li id={`transcript-${page.id}`}>
+              <h3>第 {page.order} 頁</h3>
+              {page.lines.length > 0 ? (
+                page.lines.map((line) => <p>{line}</p>)
+              ) : (
+                <p>此頁為純視覺內容。</p>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </article>
+</BaseLayout>

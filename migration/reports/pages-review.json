@@ -1,0 +1,78 @@
+[
+  {
+    "wpId": 90,
+    "sourceSlug": "about-darren-huang",
+    "slug": "about",
+    "title": "關於作者",
+    "canonicalPath": "/about.html",
+    "aliases": [
+      "/about-darren-huang.html"
+    ],
+    "decision": "publish",
+    "reason": "依規格搬遷「關於作者」為正式內容頁。",
+    "sourceChecksum": "2581d48c95a07abd3c84f58f00674bee2ed035ed47bf1ed477b6d054bcb86e6c",
+    "mediaDependencies": [
+      "/wp-content/uploads/2019/07/Darren-Huang-Profile-Picture-1024x689.jpg"
+    ]
+  },
+  {
+    "wpId": 1768,
+    "sourceSlug": "page-1768",
+    "slug": "page-1768",
+    "title": "SEO腦筋急轉彎",
+    "canonicalPath": "/page-1768.html",
+    "aliases": [],
+    "decision": "review",
+    "reason": "會員說明或 draft page 保留在人工審核清單，不預設發布。",
+    "sourceChecksum": "6eec177f0026aca4c09f7c4e48a07723c4622e9dbde63d55f453cb2d71aea34f",
+    "mediaDependencies": []
+  },
+  {
+    "wpId": 2159,
+    "sourceSlug": "membership",
+    "slug": "membership",
+    "title": "",
+    "canonicalPath": "/membership.html",
+    "aliases": [],
+    "decision": "review",
+    "reason": "會員說明或 draft page 保留在人工審核清單，不預設發布。",
+    "sourceChecksum": "e5ca13c24360eeefba743c2f207f5e56cc620ddda01d1ae933eaaf122deb82a9",
+    "mediaDependencies": []
+  },
+  {
+    "wpId": 2209,
+    "sourceSlug": "page-2209",
+    "slug": "page-2209",
+    "title": "數位引擎會員 [Backup 2020-12-19]",
+    "canonicalPath": "/page-2209.html",
+    "aliases": [],
+    "decision": "review",
+    "reason": "會員說明或 draft page 保留在人工審核清單，不預設發布。",
+    "sourceChecksum": "98b8ffd888852b40dba824dc6dcbc3f14cb79fa26e12f0d5863173410b99dbf7",
+    "mediaDependencies": []
+  },
+  {
+    "wpId": 2504,
+    "sourceSlug": "會員登入",
+    "slug": "會員登入",
+    "title": "會員登入",
+    "canonicalPath": "/會員登入.html",
+    "aliases": [],
+    "decision": "exclude-system-page",
+    "reason": "會員登入或舊 404 系統頁不搬成可操作功能。",
+    "sourceChecksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mediaDependencies": []
+  },
+  {
+    "wpId": 2512,
+    "sourceSlug": "404-oh-no",
+    "slug": "404-oh-no",
+    "title": "404 Oh No...",
+    "canonicalPath": "/404-oh-no.html",
+    "aliases": [],
+    "decision": "exclude-system-page",
+    "reason": "會員登入或舊 404 系統頁不搬成可操作功能。",
+    "sourceChecksum": "7b6636b9047eca9acdbdc1803b2c2bf689993fa0e6a2be82527412fe4b33da26",
+    "mediaDependencies": []
+  }
+]

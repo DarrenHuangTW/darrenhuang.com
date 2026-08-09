@@ -1,0 +1,116 @@
+{
+  "aliases": [
+    "/leo-burnett-backfire-seo-campaign.html"
+  ],
+  "ampSourcePath": "/web-stories/leo-burnett-backfire-seo-campaign/story.html",
+  "canonicalPath": "/web-stories/leo-burnett-backfire-seo-campaign/",
+  "excerpt": "李奧貝納與The North Face的爭議性SEO策略 SEO案例 by Darren Huang 在2019年五月，知名廣告商李奧貝納與戶外品牌The North Face執行了一項計畫，他們要利用SEO來提高品牌的曝光度。 背景 他們注意到，在查詢旅遊景點的時候，不管網頁或圖片的搜尋結果，維基百科的頁面因為網站權重高，總是排在前面。 策略 於是，他們利用這一點，拍攝了一系列旅遊景點的照片。…",
+  "legacyComparison": {
+    "decision": "新版 10 頁是舊版 12 頁的合併重寫，canonical 保留新版，不機械補回兩頁。",
+    "notes": [
+      "舊版第 4、5 頁合併為新版第 4 頁。",
+      "舊版第 7、8 頁的成功說明合併為新版第 6 頁。",
+      "舊版第 9 頁的批評與第 11 頁的媒體傷害合併為新版第 8 頁。",
+      "舊版第 2 頁的 V1 宣傳片移到新版第 7 頁。",
+      "舊版第 5、7 頁本來是沒有文字的純視覺頁。"
+    ],
+    "omittedAssets": [
+      "V3-1-2.png",
+      "wiki-2-1.png",
+      "news-1.png",
+      "news-6-1.png"
+    ]
+  },
+  "legacyPageCount": 12,
+  "legacyWpId": 614,
+  "modernPageCount": 10,
+  "modernWpId": 1498,
+  "poster": "/wp-content/uploads/2020/07/image-2.jpeg",
+  "publishedAt": "2020-07-06",
+  "slug": "leo-burnett-backfire-seo-campaign",
+  "sourceChecksum": "250f1225dca491da4d1225a648a15a876bc5b01fe05ebc7aaad7c437016e84b8",
+  "artifactChecksum": "b6c716a1c5776df8d82eae627b4aa0d867b2f1ab4decdd0003e196a31aa76736",
+  "title": "李奧貝納與The North Face的爭議性SEO策略",
+  "transcript": [
+    {
+      "id": "fca5c47a-e26f-4feb-b2a3-f6d8b6c68996",
+      "order": 1,
+      "lines": [
+        "李奧貝納與The North Face的爭議性SEO策略",
+        "SEO案例",
+        "by Darren Huang"
+      ]
+    },
+    {
+      "id": "80b4f7b3-c54a-4e40-9a75-c937cedfed4b",
+      "order": 2,
+      "lines": [
+        "在2019年五月，知名廣告商李奧貝納與戶外品牌The North Face執行了一項計畫，他們要利用SEO來提高品牌的曝光度。",
+        "背景"
+      ]
+    },
+    {
+      "id": "c0ea0066-f41a-4847-bbac-47fc7ff9e7cd",
+      "order": 3,
+      "lines": [
+        "他們注意到，在查詢旅遊景點的時候，不管網頁或圖片的搜尋結果，維基百科的頁面因為網站權重高，總是排在前面。",
+        "策略"
+      ]
+    },
+    {
+      "id": "38a6be70-3db3-45a9-aea3-18529d972be2",
+      "order": 4,
+      "lines": [
+        "於是，他們利用這一點，拍攝了一系列旅遊景點的照片。"
+      ]
+    },
+    {
+      "id": "d7516d5d-378b-4c0c-a389-4451a141c625",
+      "order": 5,
+      "lines": [
+        "透過編輯維基百科的方式，他們將旅遊景點上的圖都換上自己所拍攝的照片",
+        "\"駭\"入維基百科"
+      ]
+    },
+    {
+      "id": "a4d57cf5-d38a-457b-84a8-9bdf7d7a3031",
+      "order": 6,
+      "lines": [
+        "就這樣，只要有人搜尋景點，在維基百科頁面或在圖片結果搜尋，就會看到The North Face的商品形象照"
+      ]
+    },
+    {
+      "id": "240f754c-b576-47c2-b4e2-987319a8c84a",
+      "order": 7,
+      "lines": [
+        "Top of Images",
+        "這項企劃叫做\"Top of Images\"，李奧貝納甚至還拍攝了宣傳影片來彰顯自己的創意"
+      ]
+    },
+    {
+      "id": "102a8365-a3db-49ae-95d3-c42f8f609ef2",
+      "order": 8,
+      "lines": [
+        "對這樣子的\"創意\"，引來了網路上罵聲一片，就連維基百科也在推特上公開譴責李奧貝納和The North Face，認為這種行為嚴重違反維基百科的社群準則",
+        "負面回響"
+      ]
+    },
+    {
+      "id": "0af6ca45-0fdd-4686-843b-e068b87ece05",
+      "order": 9,
+      "lines": [
+        "最後，The North Face和李奧貝納宣布立即撤下這項企劃，並發出了道歉聲明。",
+        "收場"
+      ]
+    },
+    {
+      "id": "1659f169-eb29-498a-bd00-6aea80d7ace7",
+      "order": 10,
+      "lines": [
+        "SEO小結",
+        "這項案例在國外的SEO圈子掀起了一番討論，撇開違反維基宗旨的部分，創意方面相當值得學習。 分享這個案例希望可以讓大家認知到SEO不只侷限在寫標題和內容，發揮創意也是可以有各種可能! 點擊下方的Logo瀏覽更多的SEO內容!"
+      ]
+    }
+  ],
+  "updatedAt": "2020-10-09"
+}

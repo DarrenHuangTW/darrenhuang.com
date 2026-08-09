@@ -1,0 +1,29 @@
+---
+interface Props {
+  id: string;
+  title?: string;
+  url?: string;
+}
+
+const {
+  id,
+  title = 'YouTube 影片',
+  url = `https://www.youtube.com/watch?v=${id}`,
+} = Astro.props;
+const src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}`;
+---
+
+<figure class="embed embed--video">
+  <div class="embed__ratio">
+    <iframe
+      src={src}
+      title={title}
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+  <figcaption>
+    <a href={url} rel="noopener noreferrer">在 YouTube 開啟原始影片</a>
+  </figcaption>
+</figure>

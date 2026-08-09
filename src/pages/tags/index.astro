@@ -1,0 +1,46 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getPostsNewestFirst } from '@/lib/content';
+import { slugifyTaxonomy, withBase } from '@/lib/urls';
+
+const posts = await getPostsNewestFirst();
+const counts = new Map<string, number>();
+
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  }
+}
+
+const tags = [...counts.entries()].toSorted(
+  (left, right) =>
+    right[1] - left[1] || left[0].localeCompare(right[0], 'zh-Hant'),
+);
+---
+
+<BaseLayout
+  title="標籤"
+  description="依標籤瀏覽數位引擎文章。"
+  canonicalPath="/tags.html"
+>
+  <section class="section shell">
+    <header class="section__header">
+      <div>
+        <div class="eyebrow">Topics</div>
+        <h1>標籤</h1>
+        <p>依主題探索完整文章庫。</p>
+      </div>
+    </header>
+    <ul class="taxonomy-list">
+      {
+        tags.map(([tag, count]) => (
+          <li>
+            <a href={withBase(`/tags/${slugifyTaxonomy(tag)}.html`)}>
+              {tag} · {count}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
