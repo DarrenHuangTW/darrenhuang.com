@@ -3,6 +3,7 @@ import path from 'node:path';
 
 import { expect, test } from '@playwright/test';
 import matter from 'gray-matter';
+import { PRODUCTION_SITE_URL } from '../../site.config';
 
 type UnknownRecord = Record<string, unknown>;
 type EmbedProvider = 'spotify' | 'twitter' | 'youtube';
@@ -33,6 +34,7 @@ const manifestPath = path.join(root, 'migration', 'manifest.json');
 const contentPostsRoot = path.join(root, 'src', 'content', 'posts');
 const contentStoriesRoot = path.join(root, 'src', 'content', 'stories');
 const configuredBase = normalizeBase(process.env.BASE_PATH ?? '/');
+const configuredSite = process.env.SITE_URL ?? PRODUCTION_SITE_URL;
 
 function normalizeBase(value: string): string {
   const normalized = `/${value.replace(/^\/+|\/+$/g, '')}`;
@@ -265,15 +267,6 @@ function runtimePath(canonicalPath: string): string {
   return configuredBase ? `${configuredBase}${normalized}` : normalized;
 }
 
-function canonicalPathname(href: string): string {
-  const pathname = new URL(href, 'http://127.0.0.1:4321').pathname;
-  if (configuredBase && pathname.startsWith(`${configuredBase}/`)) {
-    return pathname.slice(configuredBase.length);
-  }
-
-  return pathname;
-}
-
 function escapedRegExp(value: string): RegExp {
   return new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
 }
@@ -326,7 +319,16 @@ test.describe('Phase 5 public-site acceptance', () => {
       .locator('link[rel="canonical"]')
       .getAttribute('href');
     expect(canonical).toBeTruthy();
-    expect(canonicalPathname(canonical ?? '')).toBe(sample.canonicalPath);
+    const expectedCanonical = new URL(
+      runtimePath(sample.canonicalPath),
+      `${configuredSite}/`,
+    ).toString();
+    expect(new URL(canonical ?? '').toString()).toBe(expectedCanonical);
+    const openGraphUrl = await page
+      .locator('meta[property="og:url"]')
+      .getAttribute('content');
+    expect(openGraphUrl).toBeTruthy();
+    expect(new URL(openGraphUrl ?? '').toString()).toBe(expectedCanonical);
   });
 
   test('long article titles and legacy galleries stay within the viewport', async ({

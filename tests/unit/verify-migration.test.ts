@@ -150,9 +150,20 @@ describe('GitHub Pages deployment gates', () => {
   });
 
   it('verifies both production-root and GitHub Pages base-path builds', () => {
-    expect(workflow).toContain('SITE_URL: https://darrenhuang.com');
+    expect(workflow).toContain('SITE_URL: https://www.darrenhuang.com');
     expect(workflow).toContain('BASE_PATH: /');
     expect(workflow).toContain('SITE_URL: https://darrenhuangtw.github.io');
     expect(workflow).toContain('BASE_PATH: /darrenhuang.com');
+
+    const previewIndex = workflow.indexOf(
+      'name: Verify project-base preview build end to end',
+    );
+    const productionIndex = workflow.indexOf(
+      'name: Build verified custom-domain artifact',
+    );
+    const uploadIndex = workflow.indexOf('actions/upload-pages-artifact@');
+    expect(previewIndex).toBeGreaterThan(0);
+    expect(productionIndex).toBeGreaterThan(previewIndex);
+    expect(uploadIndex).toBeGreaterThan(productionIndex);
   });
 });

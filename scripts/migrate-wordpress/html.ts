@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { load } from 'cheerio';
 import { decode } from 'html-entities';
+import { PRODUCTION_SITE_URL } from '../../site.config';
 import type { PublishedMediaFile } from './media';
 
 export interface InternalLinkRewriteResult {
@@ -68,7 +69,7 @@ export function rewriteInternalContentLinks(options: {
     try {
       parsed = new URL(
         sourceHref.startsWith('//') ? `https:${sourceHref}` : sourceHref,
-        'https://darrenhuang.com/',
+        `${PRODUCTION_SITE_URL}/`,
       );
     } catch {
       anchor.replaceWith(anchor.contents());
@@ -220,7 +221,7 @@ export function enrichLocalMediaHtml(
     )
     .replace(
       /https?:\/\/(?:127\.0\.0\.1|www\.darrenhuang\.com)/gi,
-      'https://darrenhuang.com',
+      PRODUCTION_SITE_URL,
     )
     .trim();
 }

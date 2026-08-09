@@ -40,18 +40,10 @@ jobs:
           npm test
           npm run verify:migration
 
-      - name: Verify production-root build
-        run: |
-          npm run build
-          npm run verify:dist
-        env:
-          SITE_URL: https://darrenhuang.com
-          BASE_PATH: /
-
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 
-      - name: Verify GitHub Pages build end to end
+      - name: Verify project-base preview build end to end
         run: |
           npm run build
           npm run verify:dist
@@ -59,6 +51,14 @@ jobs:
         env:
           SITE_URL: https://darrenhuangtw.github.io
           BASE_PATH: /darrenhuang.com
+
+      - name: Build verified custom-domain artifact
+        run: |
+          npm run build
+          npm run verify:dist
+        env:
+          SITE_URL: https://www.darrenhuang.com
+          BASE_PATH: /
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6

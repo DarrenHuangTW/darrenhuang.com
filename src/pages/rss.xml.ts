@@ -2,14 +2,16 @@ import rss from '@astrojs/rss';
 import type { APIRoute } from 'astro';
 import { getPostsNewestFirst } from '@/lib/content';
 import { withBase } from '@/lib/urls';
+import { productionSiteUrl } from '../../site.config';
 
 export const GET: APIRoute = async (context) => {
   const posts = await getPostsNewestFirst();
+  const site = new URL(withBase('/'), context.site ?? productionSiteUrl());
 
   return rss({
     title: '數位引擎',
     description: '數位行銷、SEO、內容策略與科技趨勢的長期觀察。',
-    site: context.site ?? 'https://darrenhuang.com',
+    site,
     items: posts.map((post) => ({
       title: post.data.title,
       description: post.data.excerpt,

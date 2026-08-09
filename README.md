@@ -5,10 +5,11 @@ Phase 1–5 的本機搬遷與驗收已完成，內容完整性、既有網址�
 
 ## 搬遷進度
 
-截至 2026-08-09，Phase 1–5 已完成，Phase 6 的首次 push、GitHub Actions 與 Pages base-path 預覽已完成。
+截至 2026-08-09，Phase 1–5 已完成，Phase 6 的首次 push、GitHub Actions、Pages base-path 預覽與 GitHub 帳號層級網域驗證已完成。
 最新 importer 產物包含 86 篇正式文章、41 篇原會員限定文章、19 篇排除 drafts、1 篇正式內容頁、2 篇 Web Stories、773 個發布媒體與 192 個外部媒體或附件參考，未知 Gutenberg blocks 為 0。
 正式網域與 GitHub Pages base-path 兩種本機 production build、211 個 HTML artifact、桌機與手機代表性頁面目視驗收、14 個 E2E、完整秘密掃描、staged-files 審查、第一個本機 commit，以及 clean-clone 重跑均已通過。
-GitHub Pages preview 已在公開環境通過 HTTP、桌機與手機驗收；custom domain、Cloudflare DNS 與正式流量切換尚未執行。
+GitHub Pages preview 已在公開環境通過 HTTP、桌機與手機驗收。
+正式 canonical host 已確認為 `https://www.darrenhuang.com`；repository custom domain、網站流量 DNS 與 redirect 切換尚未執行。
 
 ## 搬遷基準
 
@@ -78,7 +79,8 @@ Repository 的 Pages source 已設為 GitHub Actions，HTTPS 已強制啟用。
 完整執行證據記錄在 [Phase 6 Pages 預覽報告](./migration-report/phase-6-pages-preview.md)。
 
 這個 workflow 不會建立 custom domain、修改 DNS 或刪除舊服務。
-正式切換到 `https://darrenhuang.com` 仍須另行取得 custom domain 與 DNS 操作的明確確認。
+正式切換到 `https://www.darrenhuang.com` 仍須逐步取得 repository custom domain、網站流量 DNS 與 redirect 操作的明確確認。
+`darrenhuang.com` 與 `member.darrenhuang.com` 的 HTTP／HTTPS 請求將以 301 導向相同 path 與 query 的 `https://www.darrenhuang.com` URL。
 
 ## 安全邊界
 

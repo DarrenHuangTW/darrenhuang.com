@@ -2,6 +2,7 @@ import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 
 import { load } from 'cheerio';
+import { PRODUCTION_SITE_URL, productionSiteUrl } from '../../site.config';
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -9,6 +10,10 @@ interface CanonicalEntry {
   canonicalPath: string;
   kind: string;
   label: string;
+}
+
+interface AliasEntry extends CanonicalEntry {
+  aliasPath: string;
 }
 
 const root = process.cwd();
@@ -21,18 +26,33 @@ const warningSize = 750 * mebibyte;
 const failureSize = 900 * mebibyte;
 const pagesLimit = 1024 * mebibyte;
 const configuredBase = normalizeBase(process.env.BASE_PATH ?? '/');
-const configuredSite = process.env.SITE_URL ?? 'https://darrenhuang.com';
+const configuredSite = process.env.SITE_URL ?? PRODUCTION_SITE_URL;
 const knownHosts = new Set([
   'local.invalid',
   '127.0.0.1',
   'localhost',
   'darrenhuang.com',
+  'member.darrenhuang.com',
   'www.darrenhuang.com',
   'darrenhuangtw.github.io',
 ]);
+let configuredSiteUrl: URL | undefined;
 
 try {
-  knownHosts.add(new URL(configuredSite).hostname.toLowerCase());
+  const parsed = new URL(configuredSite);
+  knownHosts.add(parsed.hostname.toLowerCase());
+  if (
+    parsed.protocol !== 'https:' ||
+    parsed.username !== '' ||
+    parsed.password !== '' ||
+    parsed.pathname !== '/' ||
+    parsed.search !== '' ||
+    parsed.hash !== ''
+  ) {
+    failures.push(`SITE_URL 必須是純 HTTPS origin：${configuredSite}`);
+  } else {
+    configuredSiteUrl = parsed;
+  }
 } catch {
   failures.push(`SITE_URL 不是有效 URL：${configuredSite}`);
 }
@@ -175,6 +195,59 @@ function withConfiguredBase(pathname: string): string {
   return configuredBase ? `${configuredBase}${normalized}` : normalized;
 }
 
+function expectedConfiguredUrl(pathname: string): string | undefined {
+  if (!configuredSiteUrl) {
+    return undefined;
+  }
+
+  const url = new URL(configuredSiteUrl.origin);
+  url.pathname = withConfiguredBase(pathname);
+  return url.toString();
+}
+
+function absoluteUrl(value: string, label: string): URL | undefined {
+  try {
+    const parsed = new URL(value);
+    if (!['http:', 'https:'].includes(parsed.protocol)) {
+      failures.push(`${label} 不是 HTTP(S) URL：${value}`);
+      return undefined;
+    }
+    return parsed;
+  } catch {
+    failures.push(`${label} 不是絕對 URL：${value}`);
+    return undefined;
+  }
+}
+
+function configuredAbsolutePathname(
+  value: string,
+  label: string,
+): string | undefined {
+  const parsed = absoluteUrl(value, label);
+  if (!parsed || !configuredSiteUrl) {
+    return undefined;
+  }
+
+  if (parsed.origin !== configuredSiteUrl.origin) {
+    failures.push(
+      `${label} 的 origin 必須是 ${configuredSiteUrl.origin}：${value}`,
+    );
+    return undefined;
+  }
+
+  if (
+    configuredBase &&
+    parsed.pathname !== configuredBase &&
+    parsed.pathname !== `${configuredBase}/` &&
+    !parsed.pathname.startsWith(`${configuredBase}/`)
+  ) {
+    failures.push(`${label} 未包含 BASE_PATH ${configuredBase}：${value}`);
+    return undefined;
+  }
+
+  return stripConfiguredBase(parsed.pathname);
+}
+
 function isRootRelativeWithoutBase(reference: string): boolean {
   if (
     !configuredBase ||
@@ -255,8 +328,8 @@ function collectCanonicalEntries(manifest: UnknownRecord): CanonicalEntry[] {
   return result;
 }
 
-function collectAliases(manifest: UnknownRecord): string[] {
-  const aliases = new Set<string>();
+function collectAliases(manifest: UnknownRecord): AliasEntry[] {
+  const aliases = new Map<string, AliasEntry>();
 
   for (const kind of ['posts', 'pages', 'stories']) {
     const entries = manifest[kind];
@@ -273,6 +346,12 @@ function collectAliases(manifest: UnknownRecord): string[] {
         continue;
       }
 
+      const canonicalPath = stringValue(value, 'canonicalPath');
+      const label = stringValue(value, 'slug') ?? kind;
+      if (!canonicalPath?.startsWith('/')) {
+        continue;
+      }
+
       for (const alias of value.aliases) {
         if (typeof alias !== 'string') {
           failures.push(`manifest.${kind} 含有非字串 alias。`);
@@ -281,13 +360,18 @@ function collectAliases(manifest: UnknownRecord): string[] {
 
         const pathname = referencePathname(alias, '/');
         if (pathname) {
-          aliases.add(pathname);
+          aliases.set(pathname, {
+            aliasPath: pathname,
+            canonicalPath,
+            kind,
+            label,
+          });
         }
       }
     }
   }
 
-  return [...aliases];
+  return [...aliases.values()];
 }
 
 function processReference(
@@ -457,12 +541,17 @@ async function verifySitemap(
   for (const file of sitemapFiles) {
     const source = await readFile(file, 'utf8');
     for (const location of locationsFromXml(source)) {
-      const pathname = normalizedLocation(location);
+      const locationPath = configuredAbsolutePathname(
+        location,
+        `${artifactRelative(file)} <loc>`,
+      );
+      const pathname = locationPath
+        ? normalizedLocation(locationPath)
+        : undefined;
       if (pathname) {
         sitemapLocations.add(pathname);
       }
 
-      const locationPath = referencePathname(location, '/');
       if (locationPath?.endsWith('.xml')) {
         check(
           Boolean(findOutput(locationPath, artifactPaths)),
@@ -497,17 +586,21 @@ async function verifyRss(
   const itemCount = (source.match(/<item\b/gi) ?? []).length;
   check(itemCount === 86, `RSS 應包含 86 個 items，實際為 ${itemCount}。`);
 
-  const rssPaths = new Set(
-    [
-      ...source.matchAll(
-        /<link>\s*(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?\s*<\/link>/gis,
-      ),
-    ]
-      .map((match) => match[1]?.trim())
-      .filter((value): value is string => Boolean(value))
-      .map(normalizedLocation)
-      .filter((value): value is string => Boolean(value)),
-  );
+  const rssPaths = new Set<string>();
+  const rssLinks = [
+    ...source.matchAll(
+      /<link>\s*(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?\s*<\/link>/gis,
+    ),
+  ]
+    .map((match) => match[1]?.trim())
+    .filter((value): value is string => Boolean(value));
+  for (const link of rssLinks) {
+    const pathname = configuredAbsolutePathname(link, 'RSS <link>');
+    const normalized = pathname ? normalizedLocation(pathname) : undefined;
+    if (normalized) {
+      rssPaths.add(normalized);
+    }
+  }
 
   const posts = manifest.posts;
   if (!Array.isArray(posts)) {
@@ -558,15 +651,58 @@ async function verifyCanonicalFiles(
     );
     const canonicalHref = $('link[rel="canonical"]').attr('href');
     const actual = canonicalHref
-      ? normalizedLocation(canonicalHref)
+      ? absoluteUrl(canonicalHref, `${output} rel=canonical`)?.toString()
       : undefined;
-    const expected = normalizedLocation(entry.canonicalPath);
+    const expected = expectedConfiguredUrl(entry.canonicalPath);
     check(Boolean(canonicalHref), `${output} 缺少 rel=canonical。`);
     check(
       Boolean(actual && expected && actual === expected),
-      `${output} 的 canonical 不符合 ${entry.canonicalPath}。`,
+      `${output} 的 canonical 必須是 ${expected ?? '(invalid SITE_URL)'}。`,
     );
   }
+}
+
+async function verifyAliasFiles(
+  entries: AliasEntry[],
+  artifactPaths: Set<string>,
+): Promise<void> {
+  for (const entry of entries) {
+    const output = findOutput(entry.aliasPath, artifactPaths);
+    if (!output || !output.endsWith('.html')) {
+      continue;
+    }
+
+    const $ = load(
+      await readFile(path.join(distRoot, ...output.split('/')), 'utf8'),
+    );
+    const canonicalHref = $('link[rel="canonical"]').attr('href');
+    const actual = canonicalHref
+      ? absoluteUrl(canonicalHref, `${output} alias canonical`)?.toString()
+      : undefined;
+    const expected = productionSiteUrl(entry.canonicalPath).toString();
+    check(Boolean(canonicalHref), `${output} 缺少 alias rel=canonical。`);
+    check(
+      actual === expected,
+      `${output} 的 alias canonical 必須是 ${expected}。`,
+    );
+  }
+}
+
+async function verifyRobots(artifactPaths: Set<string>): Promise<void> {
+  if (!check(artifactPaths.has('robots.txt'), '缺少 dist/robots.txt。')) {
+    return;
+  }
+
+  const source = await readFile(path.join(distRoot, 'robots.txt'), 'utf8');
+  const sitemapLines = source
+    .split(/\r?\n/)
+    .map((line) => /^Sitemap:\s*(\S+)\s*$/i.exec(line)?.[1])
+    .filter((value): value is string => Boolean(value));
+  const expected = expectedConfiguredUrl('/sitemap-index.xml');
+  check(
+    sitemapLines.length === 1 && sitemapLines[0] === expected,
+    `robots.txt 的 Sitemap 必須是 ${expected ?? '(invalid SITE_URL)'}。`,
+  );
 }
 
 async function main(): Promise<void> {
@@ -620,12 +756,14 @@ async function main(): Promise<void> {
   );
   await verifyCanonicalFiles(canonicalEntries, artifactPaths);
 
-  for (const alias of collectAliases(parsed)) {
+  const aliases = collectAliases(parsed);
+  for (const alias of aliases) {
     check(
-      Boolean(findOutput(alias, artifactPaths)),
-      `Alias 沒有實體 fallback 輸出：${alias}`,
+      Boolean(findOutput(alias.aliasPath, artifactPaths)),
+      `Alias 沒有實體 fallback 輸出：${alias.aliasPath}`,
     );
   }
+  await verifyAliasFiles(aliases, artifactPaths);
 
   const htmlFiles = artifactFiles.filter((file) =>
     file.toLowerCase().endsWith('.html'),
@@ -637,6 +775,7 @@ async function main(): Promise<void> {
   await verifyCssReferences(cssFiles, artifactPaths);
   await verifySitemap(canonicalEntries, artifactFiles, artifactPaths);
   await verifyRss(parsed, artifactPaths);
+  await verifyRobots(artifactPaths);
 
   if (check(artifactPaths.has('404.html'), '缺少 dist/404.html。')) {
     const notFound = await readFile(path.join(distRoot, '404.html'), 'utf8');

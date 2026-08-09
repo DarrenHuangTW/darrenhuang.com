@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import matter from 'gray-matter';
+import { PRODUCTION_SITE_URL } from '../../site.config';
 
 import { normalizedTextChecksum, sha256 } from '../migrate-wordpress/output';
 import { analyzeStoryHtml } from '../migrate-wordpress/transform/story';
@@ -472,7 +473,7 @@ function normalizeMediaPath(value: string): string | undefined {
   let pathname: string;
 
   try {
-    const parsed = new URL(value, 'https://darrenhuang.com');
+    const parsed = new URL(value, PRODUCTION_SITE_URL);
     if (
       /^(?:https?:)?\/\//i.test(value) &&
       ![
@@ -829,7 +830,7 @@ async function validateContent(
     );
     check(
       analysis.canonicalUrl ===
-        `https://darrenhuang.com${stringValue(story, 'canonicalPath') ?? ''}`,
+        `${PRODUCTION_SITE_URL}${stringValue(story, 'canonicalPath') ?? ''}`,
       `Story ${slug} 的 AMP canonical 與 manifest 不一致。`,
     );
     check(

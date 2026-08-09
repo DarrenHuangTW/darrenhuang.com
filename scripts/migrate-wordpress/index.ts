@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { decode } from 'html-entities';
+import { PRODUCTION_SITE_URL } from '../../site.config';
 import { parseMigrationOptions } from './args';
 import {
   enrichLocalMediaHtml,
@@ -636,14 +637,14 @@ async function run(): Promise<void> {
       );
     }
 
-    const canonicalUrl = `https://darrenhuang.com/web-stories/${slug}/`;
+    const canonicalUrl = `${PRODUCTION_SITE_URL}/web-stories/${slug}/`;
     const storyOptions = {
       canonicalUrl,
       internalHosts: options.internalHosts,
       language: 'zh-Hant',
       publisherLogoUrl:
         '/wp-content/uploads/2020/10/%E6%95%B8%E4%BD%8D%E5%BC%95%E6%93%8E-logo.png',
-      siteUrl: 'https://darrenhuang.com/',
+      siteUrl: `${PRODUCTION_SITE_URL}/`,
       slug,
       title: modernItem.title,
     };

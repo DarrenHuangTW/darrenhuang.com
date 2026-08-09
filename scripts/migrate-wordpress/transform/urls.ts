@@ -1,3 +1,5 @@
+import { PRODUCTION_SITE_URL } from '../../../site.config';
+
 const DEFAULT_INTERNAL_HOSTS = [
   '127.0.0.1',
   'darrenhuang.com',
@@ -69,9 +71,12 @@ export function replacePrivateOriginLiterals(
     return current
       .replace(
         new RegExp(`https?:\\/\\/${escaped}(?=[:/\\s<>"'])`, 'gi'),
-        'https://darrenhuang.com',
+        PRODUCTION_SITE_URL,
       )
-      .replace(new RegExp(`\\b${escaped}\\b`, 'gi'), 'darrenhuang.com');
+      .replace(
+        new RegExp(`\\b${escaped}\\b`, 'gi'),
+        new URL(PRODUCTION_SITE_URL).hostname,
+      );
   }, value);
 }
 

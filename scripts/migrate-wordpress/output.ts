@@ -10,6 +10,7 @@ import {
 } from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import { PRODUCTION_SITE_URL } from '../../site.config';
 import type {
   FeaturedMedia,
   MigrationManifest,
@@ -284,7 +285,7 @@ export function writeAliasPage(options: {
   const escapedNavigation = navigationTarget
     .replaceAll('&', '&amp;')
     .replaceAll('"', '&quot;');
-  const escapedCanonical = `https://darrenhuang.com${options.canonicalPath}`
+  const escapedCanonical = `${PRODUCTION_SITE_URL}${options.canonicalPath}`
     .replaceAll('&', '&amp;')
     .replaceAll('"', '&quot;');
   const html = `<!doctype html>

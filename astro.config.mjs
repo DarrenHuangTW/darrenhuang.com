@@ -10,8 +10,9 @@ import { fileURLToPath } from 'node:url';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
+import { PRODUCTION_SITE_URL } from './site.config.ts';
 
-const site = process.env.SITE_URL ?? 'https://darrenhuang.com';
+const site = process.env.SITE_URL ?? PRODUCTION_SITE_URL;
 const requestedBase = process.env.BASE_PATH ?? '/';
 const base = requestedBase === '/' ? undefined : requestedBase;
 const storyContentDirectory = fileURLToPath(

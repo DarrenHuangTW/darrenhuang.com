@@ -2,11 +2,12 @@
 
 最後更新：2026-08-09。
 
-狀態：Phase 1–5 已完成，Phase 6 的 Pages 預覽 Gate 已完成，custom domain 與 DNS Gate 尚未開始。
+狀態：Phase 1–5 已完成，Phase 6 的 Pages 預覽與 GitHub 帳號層級網域驗證 Gate 已完成，repository custom domain 與網站流量 DNS Gate 尚未執行。
 Phase 1 的來源保全、Phase 2 的 Astro skeleton，以及 Phase 3 至 Phase 4 的核心 importer、媒體與 Stories 均已完成。
 最新 importer 產物包含 86 篇正式文章、41 篇原會員限定文章、19 篇排除 drafts、1 篇正式內容頁、2 篇 Web Stories、773 個發布媒體與 192 個外部媒體或附件參考，未知 Gutenberg blocks 為 0。
 Phase 5 的桌機與手機代表性頁面目視驗收、秘密掃描、staged-files 審查、本機 commit、clean-clone 安裝、兩種 production build、211 個 HTML artifact 與 14 個 E2E 均已通過。
 Public GitHub repository 的 `main` 已首次 push，GitHub Actions build、deploy 與 Pages base-path 預覽均已驗證。
+正式 canonical host 已確認為 `https://www.darrenhuang.com`。
 尚未切換 DNS，也尚未停止或刪除 AWS Lightsail。
 
 ## 1. 目標與已確認決策
@@ -39,13 +40,14 @@ Public GitHub repository 的 `main` 已首次 push，GitHub Actions build、depl
 - Cloudflare 目前仍是 `darrenhuang.com` 的 authoritative DNS，zone 使用 Free plan。
 - Cloudflare zone 約有 32 筆 DNS records。
 - apex `darrenhuang.com` 目前是 proxied A record，舊 origin 已遮蔽為 `<redacted-origin-ip>`。
-- `www.darrenhuang.com` 目前是 proxied CNAME，指向 apex。
+- `www.darrenhuang.com` 目前是 proxied CNAME，仍指向舊站目標。
 - 這個 origin 與 Bluehost 舊服務有關，並不是 Lightsail 或 Vercel。
 - apex 與 `www` 對外目前都回傳 Cloudflare 526 Invalid SSL certificate。
 - Cloudflare SSL/TLS Overview 顯示 Current encryption mode 為 Full，Automatic mode 已啟用。
 - 使用者確認不再使用任何 `@darrenhuang.com` 信箱。
 - DNS 中仍有 Bluehost mail、MX、SPF、DKIM、cPanel、webmail、FTP 與其他舊 hosting records，切站後可清理，但必須先匯出 DNS 備份。
 - Google site verification TXT 應先保留。
+- GitHub Pages 網域所有權 TXT 已新增並完成驗證，後續應永久保留。
 - Cloudflare 526 的官方說明位於 <https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/>。
 
 ### 2.3 AWS Lightsail
@@ -248,7 +250,8 @@ sourceChecksum
 - WordPress 的 `/<slug>.html` 直接作為文章 canonical URL，不先改成 `/blog/...`。
 - Build 後必須真的產生相同 `.html` path，而不是只依賴 client-side routing。
 - 舊 Vercel `/blog/newsletter/...` 與 `/blog/seo/...` paths 建立 alias pages 或 redirect map。
-- `member.darrenhuang.com/<slug>.html` 使用 Cloudflare Redirect Rules 301 到 `https://darrenhuang.com/<slug>.html`。
+- `darrenhuang.com` 與 `member.darrenhuang.com` 使用 Cloudflare Single Redirect 301 到 `https://www.darrenhuang.com`。
+- Redirect 必須保留原始 path 與 query string，例如 `/slug.html?ref=x` 必須導向 `https://www.darrenhuang.com/slug.html?ref=x`。
 - GitHub Pages 本身不提供完整的 server-side redirect，因此重要 301 由 Cloudflare 管理。
 - 若 Cloudflare redirect 尚未設定，靜態 alias page 至少要包含 canonical、meta refresh 與可點擊連結。
 
@@ -308,7 +311,7 @@ sourceChecksum
 - 建立文章、pages、Stories 對媒體的 dependency graph。
 - 以 SHA-256 去重 originals。
 - 將被引用的媒體放入 `public/wp-content/uploads` 並保留舊路徑。
-- 將所有 `member.darrenhuang.com`、`www.darrenhuang.com`、Lightsail IP 與 Blogger hotlink 依策略改寫或鏡像。
+- 將所有 apex、`member.darrenhuang.com`、Lightsail IP 與 Blogger hotlink 依策略改寫或鏡像，同時保留 `www.darrenhuang.com` 為正式 host。
 - 對 14 個 MP4 逐一檢查大小、引用狀態與瀏覽器播放能力。
 - 重建兩篇 Web Stories。
 - 對李奧貝納 Story 比較 legacy 12 pages 與 newer 10 pages。
@@ -340,21 +343,25 @@ sourceChecksum
 - 2026-08-09 已完成首次 push，Pages publishing source 已設為 GitHub Actions，HTTPS 已強制啟用。
 - Commit `1d92c8477a34` 的成功 run `31313254464` build 為 1 分 23 秒、deploy 為 14 秒，整體約 1 分 52 秒。
 - `https://darrenhuangtw.github.io/darrenhuang.com/` 已通過 HTTP、桌機、手機、文章、Stories、sitemap、RSS 與自訂 404 驗收。
-- Custom domain、Cloudflare DNS 與正式流量切換仍未執行，必須另行取得明確授權。
-- 在 repository Settings 中先設定 custom domain `darrenhuang.com`。
+- GitHub 帳號層級的 `darrenhuang.com` 網域所有權驗證已完成，驗證 TXT 必須保留。
+- Repository custom domain、網站流量 DNS、redirect rules 與正式流量切換仍未執行，必須逐步取得明確授權。
+- 在 repository Settings 中設定 custom domain `www.darrenhuang.com`。
+- 安全順序是先建立本機 commit，再設定 repository custom domain，接著 push 並等待 production-root Actions deploy 成功，最後才修改 `www` DNS 與建立 apex／`member` redirect。
+- 在 `www` DNS 尚未切換前，舊正式流量仍維持原狀；不得為了排除短暫驗證狀態而提早修改 apex 或 `member`。
 - 執行 DNS 變更前，重新查閱 GitHub 官方 custom-domain 文件，避免使用過時 IP。
 - GitHub custom-domain 文件位於 <https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site>。
-- 目前官方 apex A records 通常是 `185.199.108.153`、`185.199.109.153`、`185.199.110.153` 與 `185.199.111.153`，執行當天必須再次核對。
 - `www` CNAME 規劃直接指向 `DarrenHuangTW.github.io`。
 - 初次憑證驗證時優先使用 Cloudflare DNS-only，待 GitHub Pages HTTPS 正常後再決定是否恢復 proxy。
-- DNS 切換只修改 apex、`www` 與 `member` 網站流量 records。
+- Apex 與 `member` 保留既有 proxied records 作 rollback，並由 Cloudflare Single Redirect 在 origin 前攔截。
+- Cloudflare 301 必須把 apex 與 `member` 的 HTTP／HTTPS 請求導向 `https://www.darrenhuang.com`，且保留 path 與 query string。
+- Workflow 最後上傳的 artifact 必須是 `SITE_URL=https://www.darrenhuang.com`、`BASE_PATH=/` 的 production-root build，而不是 project-base 預覽 build。
 - 因使用者沒有網域信箱，舊 MX、SPF、DKIM 與 mail records 可在網站穩定後清理。
 - Google verification TXT 先保留。
 
 ### Phase 7：正式切換、觀察與 AWS 退場
 
-- 驗證 apex、`www`、HTTPS、86 篇文章、2 篇 Stories 與舊 URLs 全部正常。
-- 驗證 `member.darrenhuang.com` 301 到 apex 相同文章 path。
+- 驗證 `www`、HTTPS、86 篇文章、2 篇 Stories 與舊 URLs 全部正常。
+- 驗證 apex 與 `member.darrenhuang.com` 的 HTTP／HTTPS 請求均以 301 導向 `www`，並保留相同 path 與 query string。
 - 觀察至少 48 至 72 小時，並檢查 GitHub Actions、Cloudflare、瀏覽器 console 與 404 logs。
 - 在刪除前再次確認最新 DB、uploads archive、本機工作副本與 GitHub remote 都存在。
 - 在刪除前再次盤點 Lightsail snapshots、static IP、disks、load balancers、databases、buckets 與其他 regions。
@@ -373,7 +380,7 @@ sourceChecksum
 - 19 篇 drafts 沒有意外公開。
 - 2 篇 Stories 的文字、順序、圖片與影片完成逐頁驗收。
 - 所有舊 `/<slug>.html` URLs 回傳可閱讀內容或真正的 301。
-- `member.darrenhuang.com` 的舊文章 URLs 導向 apex。
+- Apex 與 `member.darrenhuang.com` 的舊 URLs 導向 canonical `www`，並保留 path 與 query string。
 - 舊 Vercel paths 有對應 alias 或 redirect map。
 - 文章 normalized text 比對沒有未解釋的大段缺失。
 - 未知 Gutenberg blocks 數量為 0，或每一筆都有明確人工處理紀錄。

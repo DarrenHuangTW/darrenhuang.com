@@ -40,7 +40,7 @@ describe('WordPress content transformation', () => {
       'src="/wp-content/uploads/2022/04/example.png"',
     );
     expect(result.html).toContain(
-      '<code>https://darrenhuang.com/example.html</code>',
+      '<code>https://www.darrenhuang.com/example.html</code>',
     );
     expect(result.html).not.toContain(TEST_ORIGIN);
     expect(result.html).not.toContain('<script');

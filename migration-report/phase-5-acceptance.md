@@ -54,12 +54,13 @@ Importer 只會覆寫 `migration/reports/phase-5-importer-summary.md`，不會�
 - Phase 5 關閉後已完成首次 push、GitHub Actions 與 GitHub Pages base-path 預覽。
 - 成功 run 的 build 為 1 分 23 秒，低於 8 分鐘 warning 與 10 分鐘上限。
 - 詳細證據請見 [Phase 6 Pages 預覽報告](./phase-6-pages-preview.md)。
-- Custom domain、Cloudflare DNS 與正式流量切換仍未執行。
+- GitHub 帳號層級的 `darrenhuang.com` 網域所有權驗證已於後續 Phase 6 完成。
+- Repository custom domain、網站流量 DNS、redirect rules 與正式流量切換仍未執行。
 
 ## 尚未執行的受保護操作
 
-- 尚未修改 Cloudflare DNS 或 redirect rules。
+- Cloudflare 只新增 GitHub Pages 網域所有權 TXT；網站流量 DNS、redirect rules 與 SSL 設定尚未修改。
 - 尚未刪除或停止 AWS Lightsail。
 - 尚未修改 Bluehost nameserver、續約或付款設定。
 - 尚未刪除 Vercel 或任何舊 GitHub repository。
-- GitHub Pages custom domain 與正式切站屬於後續 Gate，必須另行取得明確確認。
+- GitHub Pages repository custom domain 與正式切站屬於後續 Gate，必須逐步取得明確確認。

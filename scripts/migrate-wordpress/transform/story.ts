@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { PRODUCTION_SITE_URL } from '../../../site.config';
 
 import { redactPublicCredentialValues, sanitizePublicUrl } from './sanitize.js';
 
@@ -18,7 +19,6 @@ import {
   toAbsoluteUrl,
 } from './urls.js';
 
-const DEFAULT_SITE_URL = 'https://www.darrenhuang.com/';
 const DEFAULT_PUBLISHER_LOGO_PATH =
   '/wp-content/uploads/2020/10/數位引擎-logo.png';
 const STORY_URL_ATTRIBUTES = [
@@ -43,7 +43,7 @@ export function analyzeStoryHtml(
   const isDocument = /<html\b/i.test(rawHtml);
   const $ = load(rawHtml, {}, isDocument);
   const warnings: string[] = [];
-  const siteUrl = ensureTrailingSlash(options.siteUrl ?? DEFAULT_SITE_URL);
+  const siteUrl = ensureTrailingSlash(options.siteUrl ?? PRODUCTION_SITE_URL);
   const language = options.language ?? 'zh-Hant';
   const title = replacePrivateOriginLiterals(
     getStoryTitle($, options.title),

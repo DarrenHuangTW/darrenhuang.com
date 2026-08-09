@@ -1,8 +1,9 @@
 import type { APIRoute } from 'astro';
 import { withBase } from '@/lib/urls';
+import { productionSiteUrl } from '../../site.config';
 
 export const GET: APIRoute = ({ site }) => {
-  const origin = site ?? new URL('https://darrenhuang.com');
+  const origin = site ?? productionSiteUrl();
   const sitemap = new URL(withBase('/sitemap-index.xml'), origin);
   const body = `User-agent: *\nAllow: /\n\nSitemap: ${sitemap}\n`;
 
