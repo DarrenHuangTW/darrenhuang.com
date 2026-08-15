@@ -1,7 +1,9 @@
+import { createHash } from 'node:crypto';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 
 import { load } from 'cheerio';
+import matter from 'gray-matter';
 import { PRODUCTION_SITE_URL, productionSiteUrl } from '../../site.config';
 
 type UnknownRecord = Record<string, unknown>;
@@ -203,6 +205,18 @@ function expectedConfiguredUrl(pathname: string): string | undefined {
   const url = new URL(configuredSiteUrl.origin);
   url.pathname = withConfiguredBase(pathname);
   return url.toString();
+}
+
+function markdownPathForCanonical(pathname: string): string {
+  if (pathname.endsWith('/')) {
+    return `${pathname}index.md`;
+  }
+
+  if (pathname.endsWith('.html')) {
+    return `${pathname.slice(0, -'.html'.length)}.md`;
+  }
+
+  return `${pathname}.md`;
 }
 
 function absoluteUrl(value: string, label: string): URL | undefined {
@@ -650,16 +664,209 @@ async function verifyCanonicalFiles(
       await readFile(path.join(distRoot, ...output.split('/')), 'utf8'),
     );
     const canonicalHref = $('link[rel="canonical"]').attr('href');
+    const markdownHref = $('link[rel="alternate"][type="text/markdown"]').attr(
+      'href',
+    );
     const actual = canonicalHref
       ? absoluteUrl(canonicalHref, `${output} rel=canonical`)?.toString()
       : undefined;
     const expected = expectedConfiguredUrl(entry.canonicalPath);
+    const expectedMarkdown = expectedConfiguredUrl(
+      markdownPathForCanonical(entry.canonicalPath),
+    );
+    const actualMarkdown = markdownHref
+      ? absoluteUrl(
+          markdownHref,
+          `${output} rel=alternate type=text/markdown`,
+        )?.toString()
+      : undefined;
     check(Boolean(canonicalHref), `${output} 缺少 rel=canonical。`);
     check(
       Boolean(actual && expected && actual === expected),
       `${output} 的 canonical 必須是 ${expected ?? '(invalid SITE_URL)'}。`,
     );
+    check(
+      Boolean(actualMarkdown && actualMarkdown === expectedMarkdown),
+      `${output} 的 Markdown alternate 必須是 ${expectedMarkdown ?? '(invalid SITE_URL)'}。`,
+    );
+    check(
+      Boolean(
+        findOutput(
+          markdownPathForCanonical(entry.canonicalPath),
+          artifactPaths,
+        ),
+      ),
+      `${output} 缺少對應的 Markdown 實體輸出。`,
+    );
   }
+}
+
+async function verifyAgentResources(
+  canonicalEntries: CanonicalEntry[],
+  artifactPaths: Set<string>,
+): Promise<void> {
+  const required = [
+    'articles-llms.txt',
+    'articles.md',
+    'index.md',
+    'llms.txt',
+    '.well-known/agent-skills/index.json',
+    '.well-known/agent-skills/research-digital-engine/SKILL.md',
+  ];
+  for (const relative of required) {
+    check(artifactPaths.has(relative), `缺少 agent resource：${relative}。`);
+  }
+
+  if (
+    !artifactPaths.has('llms.txt') ||
+    !artifactPaths.has('articles-llms.txt')
+  ) {
+    return;
+  }
+
+  const llms = await readFile(path.join(distRoot, 'llms.txt'), 'utf8');
+  const articleIndex = await readFile(
+    path.join(distRoot, 'articles-llms.txt'),
+    'utf8',
+  );
+  check(llms.startsWith('# 數位引擎\n'), 'llms.txt 缺少網站標題。');
+  check(
+    llms.includes(expectedConfiguredUrl('/articles-llms.txt') ?? ''),
+    'llms.txt 缺少 Agent 文章索引的正式 URL。',
+  );
+  check(
+    articleIndex.startsWith('# 數位引擎文章索引\n'),
+    'articles-llms.txt 缺少文章索引標題。',
+  );
+
+  const posts = canonicalEntries.filter((entry) => entry.kind === 'posts');
+  for (const post of posts) {
+    const markdownPath = markdownPathForCanonical(post.canonicalPath);
+    const markdownOutput = findOutput(markdownPath, artifactPaths);
+    if (!check(Boolean(markdownOutput), `文章缺少 Markdown：${markdownPath}`)) {
+      continue;
+    }
+
+    const expectedCanonical = expectedConfiguredUrl(post.canonicalPath);
+    const expectedMarkdown = expectedConfiguredUrl(markdownPath);
+    const source = await readFile(
+      path.join(distRoot, ...(markdownOutput as string).split('/')),
+      'utf8',
+    );
+    const parsed = matter(source);
+    check(
+      parsed.data.canonical === expectedCanonical,
+      `${markdownOutput} frontmatter canonical 必須是 ${expectedCanonical}。`,
+    );
+    check(
+      parsed.data.markdown === expectedMarkdown,
+      `${markdownOutput} frontmatter markdown 必須是 ${expectedMarkdown}。`,
+    );
+    check(
+      parsed.data.language === 'zh-Hant',
+      `${markdownOutput} 必須宣告 language: zh-Hant。`,
+    );
+    check(
+      parsed.content.trim().length > 150,
+      `${markdownOutput} 的 agent-readable 內容過短。`,
+    );
+    check(
+      Boolean(expectedMarkdown && articleIndex.includes(expectedMarkdown)),
+      `articles-llms.txt 缺少 ${expectedMarkdown ?? markdownPath}。`,
+    );
+  }
+
+  const indexRelative = '.well-known/agent-skills/index.json';
+  if (!artifactPaths.has(indexRelative)) {
+    return;
+  }
+
+  const indexSource = await readFile(
+    path.join(distRoot, ...indexRelative.split('/')),
+    'utf8',
+  );
+  let index: unknown;
+  try {
+    index = JSON.parse(indexSource);
+  } catch {
+    failures.push(`${indexRelative} 不是有效 JSON。`);
+    return;
+  }
+
+  if (!isRecord(index)) {
+    failures.push(`${indexRelative} 根節點必須是 object。`);
+    return;
+  }
+
+  check(
+    index.$schema ===
+      'https://schemas.agentskills.io/discovery/0.2.0/schema.json',
+    `${indexRelative} 使用非預期的 schema。`,
+  );
+  if (
+    !check(
+      Array.isArray(index.skills) && index.skills.length === 1,
+      `${indexRelative} 必須精確列出一個真實 skill。`,
+    ) ||
+    !Array.isArray(index.skills)
+  ) {
+    return;
+  }
+
+  const skill = index.skills[0];
+  if (!isRecord(skill)) {
+    failures.push(`${indexRelative} skills[0] 必須是 object。`);
+    return;
+  }
+
+  const skillName = stringValue(skill, 'name');
+  const skillDescription = stringValue(skill, 'description');
+  const skillUrl = stringValue(skill, 'url');
+  const skillDigest = stringValue(skill, 'digest');
+  check(
+    skillName === 'research-digital-engine',
+    `${indexRelative} skill name 無效。`,
+  );
+  check(skill.type === 'skill-md', `${indexRelative} skill type 無效。`);
+  if (!skillUrl) {
+    failures.push(`${indexRelative} skill URL 缺失。`);
+    return;
+  }
+
+  const indexUrl = expectedConfiguredUrl(
+    '/.well-known/agent-skills/index.json',
+  );
+  const resolvedSkillUrl = indexUrl ? new URL(skillUrl, indexUrl) : undefined;
+  const skillPathname = resolvedSkillUrl
+    ? configuredAbsolutePathname(
+        resolvedSkillUrl.toString(),
+        `${indexRelative} skill URL`,
+      )
+    : undefined;
+  const skillOutput = skillPathname
+    ? findOutput(skillPathname, artifactPaths)
+    : undefined;
+  if (!check(Boolean(skillOutput), `${indexRelative} 指向不存在的 skill。`)) {
+    return;
+  }
+
+  const skillBytes = await readFile(
+    path.join(distRoot, ...(skillOutput as string).split('/')),
+  );
+  const expectedDigest = `sha256:${createHash('sha256').update(skillBytes).digest('hex')}`;
+  check(
+    skillDigest === expectedDigest,
+    `${indexRelative} skill digest 與 artifact 不符。`,
+  );
+  const parsedSkill = matter(skillBytes.toString('utf8'));
+  check(
+    parsedSkill.data.name === skillName,
+    `${skillOutput} frontmatter name 與 index 不符。`,
+  );
+  check(
+    parsedSkill.data.description === skillDescription,
+    `${skillOutput} frontmatter description 與 index 不符。`,
+  );
 }
 
 async function verifyAliasFiles(
@@ -764,6 +971,7 @@ async function main(): Promise<void> {
     );
   }
   await verifyAliasFiles(aliases, artifactPaths);
+  await verifyAgentResources(canonicalEntries, artifactPaths);
 
   const htmlFiles = artifactFiles.filter((file) =>
     file.toLowerCase().endsWith('.html'),

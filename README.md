@@ -30,6 +30,17 @@ GitHub Pages preview 已在公開環境通過 HTTP、桌機與手機驗收。
 - Vitest、Playwright、ESLint 與 Prettier 負責自動檢查。
 - GitHub Actions 建置並發布經驗證的 GitHub Pages artifact。
 - 第三方 embeds 使用 progressive enhancement，來源連結在外部 script 失效時仍可使用。
+- Post-build 產生 canonical 頁面的 Markdown alternates、LLM indexes 與具 digest 的 Agent Skill discovery。
+
+## Agent-readable 介面
+
+- `/llms.txt` 提供網站定位與主要機器可讀入口。
+- `/articles-llms.txt` 列出全部 86 篇文章、日期、摘要與 Markdown 版本。
+- 每個 indexable canonical 頁面都有對應 `.md` artifact 與 HTML `rel="alternate"` discovery link。
+- `/.well-known/agent-skills/index.json` 發布可驗證的 `research-digital-engine` skill。
+- `npm run audit:agent-readiness` 透過 Cloudflare 官方 MCP scanner 檢查正式 `www` hostname。
+
+Repository 內的完整實作與 Cloudflare edge 待辦記錄在 [Agent Readiness 優化報告](./migration-report/agent-readiness.md)。
 
 ## 本機開發
 
@@ -53,6 +64,7 @@ npm run build
 npm run verify:migration
 npm run verify:dist
 npm run test:e2e
+npm run audit:agent-readiness
 ```
 
 WordPress importer 的原始輸入必須位於 repository 外，並透過本機環境變數提供。
@@ -65,6 +77,7 @@ src/content/                 經過清理與 schema 驗證的文章、頁面與 
 src/components/embeds/      可降級的第三方 embed components。
 public/wp-content/uploads/  只有正式內容實際引用的媒體。
 scripts/migrate-wordpress/  可重跑且輸出可重現的 importer。
+scripts/build/              Agent-readable Markdown 與 discovery artifact 產生器。
 scripts/verify/              搬遷與建置成品驗收工具。
 migration/                  Manifest 與機器可讀的遷移報告。
 migration-report/           適合提交至 public repository 的執行摘要。

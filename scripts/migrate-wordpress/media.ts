@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, rmSync, statSync } from 'node:fs';
 import path from 'node:path';
-import { imageSize } from 'image-size';
+import sharp from 'sharp';
 import * as tar from 'tar';
 
 export interface PublishedMediaFile {
@@ -133,37 +133,44 @@ export async function extractReferencedMedia(options: {
     strip: 1,
   });
 
-  const files = [...requested]
-    .sort((left, right) => left.localeCompare(right, 'zh-Hant'))
-    .map((relativePath): PublishedMediaFile => {
-      const absolutePath = path.join(targetDir, ...relativePath.split('/'));
-      if (!existsSync(absolutePath)) {
-        throw new Error(`tar extraction did not produce ${relativePath}`);
-      }
+  const files: PublishedMediaFile[] = [];
+  const sortedPaths = [...requested].sort((left, right) =>
+    left.localeCompare(right, 'zh-Hant'),
+  );
 
-      const extension = path.extname(relativePath).toLocaleLowerCase('en-US');
-      const mime = MIME_BY_EXTENSION[extension] ?? 'application/octet-stream';
-      const result: PublishedMediaFile = {
-        path: `/wp-content/uploads/${relativePath}`,
-        bytes: statSync(absolutePath).size,
-        sha256: sha256File(absolutePath),
-        mime,
-      };
+  for (const relativePath of sortedPaths) {
+    const absolutePath = path.join(targetDir, ...relativePath.split('/'));
+    if (!existsSync(absolutePath)) {
+      throw new Error(`tar extraction did not produce ${relativePath}`);
+    }
 
-      if (mime.startsWith('image/') && mime !== 'image/svg+xml') {
-        try {
-          const dimensions = imageSize(readFileSync(absolutePath));
-          if (dimensions.width && dimensions.height) {
-            result.width = dimensions.width;
-            result.height = dimensions.height;
-          }
-        } catch {
-          // Animated or legacy images remain publishable even without dimensions.
+    const extension = path.extname(relativePath).toLocaleLowerCase('en-US');
+    const mime = MIME_BY_EXTENSION[extension] ?? 'application/octet-stream';
+    const result: PublishedMediaFile = {
+      path: `/wp-content/uploads/${relativePath}`,
+      bytes: statSync(absolutePath).size,
+      sha256: sha256File(absolutePath),
+      mime,
+    };
+
+    if (mime.startsWith('image/') && mime !== 'image/svg+xml') {
+      try {
+        const dimensions = await sharp(absolutePath, {
+          animated: false,
+          limitInputPixels: 100_000_000,
+          sequentialRead: true,
+        }).metadata();
+        if (dimensions.width && dimensions.height) {
+          result.width = dimensions.width;
+          result.height = dimensions.height;
         }
+      } catch {
+        // Animated or legacy images remain publishable even without dimensions.
       }
+    }
 
-      return result;
-    });
+    files.push(result);
+  }
 
   const byChecksum = new Map<string, string[]>();
   for (const file of files) {

@@ -1,7 +1,7 @@
 ---
 import SiteFooter from '@/components/SiteFooter.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
-import { withBase } from '@/lib/urls';
+import { markdownPathForCanonical, withBase } from '@/lib/urls';
 import '@/styles/global.css';
 
 interface Props {
@@ -31,6 +31,10 @@ const pageTitle = title === siteName ? title : `${title}｜${siteName}`;
 const siteOrigin = Astro.site ?? Astro.url.origin;
 const canonicalUrl = new URL(withBase(canonicalPath), siteOrigin);
 const imageUrl = image ? new URL(withBase(image), siteOrigin) : null;
+const llmsUrl = new URL(withBase('/llms.txt'), siteOrigin);
+const markdownUrl = noindex
+  ? null
+  : new URL(withBase(markdownPathForCanonical(canonicalPath)), siteOrigin);
 ---
 
 <!doctype html>
@@ -42,6 +46,17 @@ const imageUrl = image ? new URL(withBase(image), siteOrigin) : null;
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="describedby" href={llmsUrl} type="text/plain" />
+    {
+      markdownUrl && (
+        <link
+          rel="alternate"
+          href={markdownUrl}
+          type="text/markdown"
+          title={`${pageTitle}（Markdown）`}
+        />
+      )
+    }
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <link
       rel="alternate"

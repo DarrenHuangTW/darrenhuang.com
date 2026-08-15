@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "tsx scripts/build/agent-content.ts",
     "preview": "astro preview",
     "check": "astro check",
     "typecheck": "astro sync && tsc --noEmit",
@@ -19,6 +20,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "audit:agent-readiness": "tsx scripts/audit/agent-readiness.ts",
     "migrate": "tsx scripts/migrate-wordpress/index.ts",
     "verify:dist": "tsx scripts/verify/dist.ts",
     "verify:migration": "tsx scripts/verify/migration.ts"
@@ -33,22 +35,25 @@
     "fast-xml-parser": "^5.10.1",
     "gray-matter": "^4.0.3",
     "html-entities": "^2.6.0",
-    "image-size": "^2.0.2",
     "sanitize-html": "^2.17.6",
+    "sharp": "^0.35.3",
     "tar": "^7.5.22"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.62.1",
+    "@truto/turndown-plugin-gfm": "^1.0.3",
     "@types/node": "^26.1.2",
     "@types/sanitize-html": "^2.16.1",
+    "@types/turndown": "^5.0.6",
     "eslint": "^10.8.0",
     "eslint-plugin-astro": "^3.0.1",
     "globals": "^17.8.0",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "tsx": "^4.23.1",
+    "turndown": "^7.2.4",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.65.0",
     "vitest": "^4.1.10"

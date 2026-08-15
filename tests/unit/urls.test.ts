@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { slugifyTaxonomy, withBase } from '../../src/lib/urls';
+import {
+  markdownPathForCanonical,
+  slugifyTaxonomy,
+  withBase,
+} from '../../src/lib/urls';
 
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 
@@ -32,6 +36,28 @@ describe('withBase', () => {
     );
     expect(withBase('tel:+886123456789')).toBe('tel:+886123456789');
     expect(withBase('#main-content')).toBe('#main-content');
+  });
+});
+
+describe('markdownPathForCanonical', () => {
+  it('maps file-style, directory-style, and root canonicals', () => {
+    expect(markdownPathForCanonical('/article.html')).toBe('/article.md');
+    expect(markdownPathForCanonical('/web-stories/example/')).toBe(
+      '/web-stories/example/index.md',
+    );
+    expect(markdownPathForCanonical('/')).toBe('/index.md');
+  });
+
+  it('preserves a query and fragment without treating them as a filename', () => {
+    expect(markdownPathForCanonical('/article.html?view=plain#summary')).toBe(
+      '/article.md?view=plain#summary',
+    );
+  });
+
+  it('rejects paths that are not root-relative canonicals', () => {
+    expect(() => markdownPathForCanonical('article.html')).toThrow(
+      /must start with a slash/,
+    );
   });
 });
 

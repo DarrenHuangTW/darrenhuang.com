@@ -510,6 +510,73 @@ test.describe('Phase 5 public-site acceptance', () => {
     }
   });
 
+  test('agents can discover the site and fetch canonical Markdown alternates', async ({
+    page,
+    request,
+  }) => {
+    const llmsResponse = await request.get(runtimePath('/llms.txt'));
+    expect(llmsResponse.ok()).toBe(true);
+    expect(llmsResponse.headers()['content-type']).toContain('text/plain');
+    const llms = await llmsResponse.text();
+    expect(llms).toContain('# 數位引擎');
+    expect(llms).toContain(
+      new URL(
+        runtimePath('/articles-llms.txt'),
+        `${configuredSite}/`,
+      ).toString(),
+    );
+
+    const articleIndexResponse = await request.get(
+      runtimePath('/articles-llms.txt'),
+    );
+    expect(articleIndexResponse.ok()).toBe(true);
+    const articleIndex = await articleIndexResponse.text();
+    expect(articleIndex).toContain('共 86 篇繁體中文文章');
+
+    const sample = fixture.representativePost;
+    const htmlResponse = await page.goto(runtimePath(sample.canonicalPath));
+    expect(htmlResponse?.ok()).toBe(true);
+    const markdownPath = sample.canonicalPath.replace(/\.html$/u, '.md');
+    const alternate = page.locator(
+      'link[rel="alternate"][type="text/markdown"]',
+    );
+    await expect(alternate).toHaveAttribute(
+      'href',
+      new URL(runtimePath(markdownPath), `${configuredSite}/`).toString(),
+    );
+
+    const markdownResponse = await request.get(runtimePath(markdownPath));
+    expect(markdownResponse.ok()).toBe(true);
+    expect(markdownResponse.headers()['content-type']).toMatch(
+      /text\/(?:markdown|plain)/,
+    );
+    const markdown = await markdownResponse.text();
+    expect(markdown).toContain(`canonical: "${configuredSite}`);
+    expect(markdown).toContain(`# ${sample.title}`);
+    expect(markdown.length).toBeGreaterThan(500);
+
+    const skillsResponse = await request.get(
+      runtimePath('/.well-known/agent-skills/index.json'),
+    );
+    expect(skillsResponse.ok()).toBe(true);
+    expect(skillsResponse.headers()['content-type']).toContain(
+      'application/json',
+    );
+    const skills = (await skillsResponse.json()) as {
+      $schema?: string;
+      skills?: Array<{ digest?: string; name?: string; url?: string }>;
+    };
+    expect(skills.$schema).toBe(
+      'https://schemas.agentskills.io/discovery/0.2.0/schema.json',
+    );
+    expect(skills.skills).toHaveLength(1);
+    expect(skills.skills?.[0]).toMatchObject({
+      name: 'research-digital-engine',
+      url: 'research-digital-engine/SKILL.md',
+    });
+    expect(skills.skills?.[0]?.digest).toMatch(/^sha256:[a-f0-9]{64}$/u);
+  });
+
   test('an unknown URL returns the custom 404 page', async ({ page }) => {
     const response = await page.goto(
       runtimePath('/__phase-5-missing-page__.html'),
