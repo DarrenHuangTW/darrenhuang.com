@@ -2,11 +2,12 @@
 
 最後更新：2026-08-15。
 
-狀態：repository 內的 agent-readable 內容、探索 metadata、Free-plan Worker、自動驗證與手動 live audit 已完成。
+狀態：repository 內的 agent-readable 內容、探索 metadata、Free-plan Worker、自動驗證與 live audit 已完成並部署。
 Cloudflare zone 已確認使用 Free plan。
-本報告所述的新 artifact 與 Worker 尚未 push 或部署。
+GitHub Pages workflow [31863578234](https://github.com/DarrenHuangTW/darrenhuang.com/actions/runs/31863578234) 已成功發布 commit `354bcca`，實際 artifact tar 包含 `.nojekyll` 與完整 `.well-known` 目錄。
+Cloudflare Worker `darrenhuang-agent-readiness` 已於 2026-08-15 部署，正式 route 是 `www.darrenhuang.com/*`。
 
-## 線上基準
+## 部署前基準
 
 - 正式掃描目標是 `https://www.darrenhuang.com`。
 - Cloudflare `content` profile 的基準是 Level 2/5（Bot-Aware）。
@@ -32,7 +33,7 @@ Cloudflare zone 已確認使用 Free plan。
 
 ## Cloudflare 邊緣部署
 
-以下設定必須在包含新 artifact 的 GitHub Pages deploy 完成後才驗證。
+以下設定是在包含新 artifact 的 GitHub Pages deploy 完成並驗證後才接到正式流量。
 
 ### 1. Markdown content negotiation
 
@@ -43,8 +44,8 @@ Worker 只替明確接受 `text/markdown` 的安全讀取要求取得對應 `.md
 一般瀏覽、非頁面資源與非安全 HTTP methods 會原樣傳到 GitHub Pages origin。
 若 Markdown artifact 不存在，Worker 會回退到原始 HTML，不會把缺漏擴大成網站中斷。
 Wrangler runtime tests、generated types check 與 deploy dry-run 都納入 CI。
-正式 wildcard route 會啟用 request-limit fail-open，Free plan allowance 用完時仍直接由 GitHub Pages origin 回應。
-`/_astro/*`、`/wp-content/*` 與 `/story-media/*` 會使用更精確的 no-script routes 略過 Worker，避免靜態 assets 消耗 allowance。
+正式 wildcard route 已啟用 request-limit fail-open，Free plan allowance 用完時仍直接由 GitHub Pages origin 回應。
+`/_astro/*`、`/wp-content/*` 與 `/story-media/*` 已使用更精確的 no-script routes 略過 Worker，避免靜態 assets 消耗 allowance。
 這些 route-level safeguards 不在 `wrangler.jsonc` 內，之後每次 route deployment 都必須重新確認。
 
 ### 2. HTTP Link response header
@@ -64,12 +65,15 @@ Link: </llms.txt>; rel="describedby"; type="text/plain"
 DNS-AID 仍是新興 draft，而且這個靜態內容網站沒有 A2A、MCP 或其他 agent service endpoint 可誠實宣告。
 若未來新增真實 agent endpoint，再以 DNSSEC、SVCB／HTTPS records 與對應 protocol parameters 實作。
 
-## 預期驗證
+## 部署後驗證
 
-- 新 artifact 發布後，full profile 的 Agent Skills check 應由 fail 轉為 pass。
-- Free-plan Markdown negotiation Worker 與 Link header 完成後，content profile 應由 4/7 增加到 6/7 個 passing checks。
-- DNS-AID 會暫時保留為刻意接受的唯一 content-profile gap。
-- 實際 Level 必須以部署後的 Cloudflare scanner 結果為準，不在發布前預先宣稱。
+- Cloudflare 官方 scanner 的 `content` profile 由 Level 2/5 提升到 Level 5/5（Agent-Native），7 個 checks 中通過 6 個。
+- HTTP `Link` discovery、Markdown content negotiation、AI bot rules、Content Signals、robots.txt 與 sitemap 全部通過。
+- Full profile 的 Agent Skills check 通過，scanner 接受 v0.2.0 index 與一個有效 skill。
+- Full profile 是 Level 4/5（Agent-Integrated），因為它還評估 API Catalog、OAuth、MCP、A2A 與 WebMCP；本站沒有這些服務，因此不發布虛假的 discovery endpoints。
+- DNS-AID 保留為刻意接受的唯一 content-profile gap，因為本站沒有可透過 DNS 誠實宣告的 agent service。
+- Canonical 文章以 `Accept: text/markdown` 取得的 body 與直接 `.md` artifact 完全相同，代表 live check 的 SHA-256 一致。
+- 桌機與 Pixel 7 真實瀏覽器都取得正常 HTML，首頁與代表文章為 HTTP 200、零 console/page errors、零水平溢位。
 
 ## 可重跑命令
 

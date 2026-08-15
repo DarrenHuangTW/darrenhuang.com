@@ -41,7 +41,7 @@ GitHub Pages preview 已在公開環境通過 HTTP、桌機與手機驗收。
 - Free-plan Cloudflare Worker 為 canonical 頁面提供 `Accept: text/markdown` content negotiation，並在首頁發布 HTTP `Link` discovery。
 - `npm run audit:agent-readiness` 透過 Cloudflare 官方 MCP scanner 檢查正式 `www` hostname。
 
-Repository 內的完整實作與 Cloudflare edge 待辦記錄在 [Agent Readiness 優化報告](./migration-report/agent-readiness.md)。
+Repository 內的完整實作、Cloudflare edge 部署與 live audit 記錄在 [Agent Readiness 優化報告](./migration-report/agent-readiness.md)。
 
 ## 本機開發
 
