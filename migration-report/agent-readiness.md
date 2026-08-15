@@ -24,6 +24,7 @@ Cloudflare zone 已確認使用 Free plan。
 - 每個頁面以 `rel="describedby"` 宣告 `/llms.txt`。
 - `/.well-known/agent-skills/index.json` 發布一個真實且範圍明確的 `research-digital-engine` skill。
 - Root `.nojekyll` 會保留 `.well-known` 目錄，避免 GitHub Pages 的 Jekyll 規則排除 Agent Skill discovery files。
+- Pages artifact upload 明確啟用 hidden files，確保 `.nojekyll` 與 `.well-known` 都進入實際發布 tarball。
 - Skill index 依 Agent Skills Discovery v0.2.0 產生 SHA-256 digest，dist verifier 會重新計算並拒絕不一致的 artifact。
 - `npm run audit:agent-readiness` 可透過 Cloudflare 官方 MCP scanner 重跑 live `content` profile。
 - Dist verifier 會檢查 Markdown alternate、86 篇文章輸出、LLM indexes、skill schema、skill URL 與 digest。
