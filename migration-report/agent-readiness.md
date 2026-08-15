@@ -2,9 +2,9 @@
 
 最後更新：2026-08-15。
 
-狀態：repository 內的 agent-readable 內容、探索 metadata、自動驗證與手動 live audit 已完成。
+狀態：repository 內的 agent-readable 內容、探索 metadata、Free-plan Worker、自動驗證與手動 live audit 已完成。
 Cloudflare zone 已確認使用 Free plan。
-尚未 push、部署或修改 Cloudflare zone、HTTP rules 與 DNS。
+本報告所述的新 artifact 與 Worker 尚未 push 或部署。
 
 ## 線上基準
 
@@ -28,7 +28,7 @@ Cloudflare zone 已確認使用 Free plan。
 - Dist verifier 會檢查 Markdown alternate、86 篇文章輸出、LLM indexes、skill schema、skill URL 與 digest。
 - Playwright 會在桌機與手機專案驗證 LLM indexes、Markdown content type、canonical metadata 與 skill discovery endpoint。
 
-## Cloudflare 邊緣仍需完成
+## Cloudflare 邊緣部署
 
 以下設定必須在包含新 artifact 的 GitHub Pages deploy 完成後才驗證。
 
@@ -36,26 +36,25 @@ Cloudflare zone 已確認使用 Free plan。
 
 這個 zone 已確認使用 Free plan，因此無法啟用只提供給 Pro、Business 與 Enterprise 的 managed Markdown for Agents。
 不應只為分數直接升級。
-Repository 已產生完整 `.md` alternates，可另行設計 Cloudflare Worker 或 rewrite，將要求 Markdown 的 canonical HTML request 導向對應 `.md` artifact。
-這條 Free-plan 替代路徑需要獨立設計、測試與部署授權，不包含在本次 commit。
+Repository 已產生完整 `.md` alternates，並在 `cloudflare/agent-readiness` 實作 Free-plan Worker。
+Worker 只替明確接受 `text/markdown` 的安全讀取要求取得對應 `.md` artifact，保留 query string，並以串流方式回傳 body。
+一般瀏覽、非頁面資源與非安全 HTTP methods 會原樣傳到 GitHub Pages origin。
+若 Markdown artifact 不存在，Worker 會回退到原始 HTML，不會把缺漏擴大成網站中斷。
+Wrangler runtime tests、generated types check 與 deploy dry-run 都納入 CI。
+正式 wildcard route 會啟用 request-limit fail-open，Free plan allowance 用完時仍直接由 GitHub Pages origin 回應。
+`/_astro/*`、`/wp-content/*` 與 `/story-media/*` 會使用更精確的 no-script routes 略過 Worker，避免靜態 assets 消耗 allowance。
+這些 route-level safeguards 不在 `wrangler.jsonc` 內，之後每次 route deployment 都必須重新確認。
 
 ### 2. HTTP Link response header
 
-可建立 Response Header Transform Rule，至少套用到正式 homepage：
-
-Response Header Transform Rules 可在 Free plan 使用。
-
-```text
-http.host eq "www.darrenhuang.com" and http.request.uri.path eq "/"
-```
-
-設定或覆寫下列 response header：
+同一個 Worker 會在正式 homepage 回應加入下列 header：
 
 ```http
 Link: </llms.txt>; rel="describedby"; type="text/plain"
 ```
 
 `describedby` 是已註冊的 relation，且 `/llms.txt` 是真實、可讀、與網站相關的資源。
+把 Link header 與 content negotiation 放在同一份可測試、可版本化的 Worker source，可避免另外維護 Dashboard-only Transform Rule。
 
 ### 3. DNS-AID
 
@@ -76,6 +75,10 @@ DNS-AID 仍是新興 draft，而且這個靜態內容網站沒有 A2A、MCP 或�
 npm run build
 npm run verify:dist
 npm run test:e2e
+npm run test:worker
+npm run worker:types:check
+npm run worker:build
+npm run worker:deploy
 npm run audit:agent-readiness
 ```
 

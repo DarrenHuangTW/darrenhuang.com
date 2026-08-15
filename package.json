@@ -13,13 +13,20 @@
     "postbuild": "tsx scripts/build/agent-content.ts",
     "preview": "astro preview",
     "check": "astro check",
-    "typecheck": "astro sync && tsc --noEmit",
+    "typecheck": "npm run typecheck:site && npm run typecheck:worker",
+    "typecheck:site": "astro sync && tsc --noEmit",
+    "typecheck:worker": "tsc --noEmit -p cloudflare/agent-readiness/tsconfig.json",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
+    "test:worker": "vitest run --config cloudflare/agent-readiness/vitest.config.ts",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "worker:build": "wrangler deploy --dry-run --config cloudflare/agent-readiness/wrangler.jsonc --outfile .wrangler/agent-readiness-worker.js",
+    "worker:deploy": "wrangler deploy --config cloudflare/agent-readiness/wrangler.jsonc",
+    "worker:types": "wrangler types --config cloudflare/agent-readiness/wrangler.jsonc cloudflare/agent-readiness/worker-configuration.d.ts",
+    "worker:types:check": "wrangler types --check --config cloudflare/agent-readiness/wrangler.jsonc cloudflare/agent-readiness/worker-configuration.d.ts",
     "audit:agent-readiness": "tsx scripts/audit/agent-readiness.ts",
     "migrate": "tsx scripts/migrate-wordpress/index.ts",
     "verify:dist": "tsx scripts/verify/dist.ts",
@@ -56,6 +63,7 @@
     "turndown": "^7.2.4",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.65.0",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "wrangler": "^4.123.0"
   }
 }

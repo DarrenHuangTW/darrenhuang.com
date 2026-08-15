@@ -38,6 +38,7 @@ GitHub Pages preview 已在公開環境通過 HTTP、桌機與手機驗收。
 - `/articles-llms.txt` 列出全部 86 篇文章、日期、摘要與 Markdown 版本。
 - 每個 indexable canonical 頁面都有對應 `.md` artifact 與 HTML `rel="alternate"` discovery link。
 - `/.well-known/agent-skills/index.json` 發布可驗證的 `research-digital-engine` skill。
+- Free-plan Cloudflare Worker 為 canonical 頁面提供 `Accept: text/markdown` content negotiation，並在首頁發布 HTTP `Link` discovery。
 - `npm run audit:agent-readiness` 透過 Cloudflare 官方 MCP scanner 檢查正式 `www` hostname。
 
 Repository 內的完整實作與 Cloudflare edge 待辦記錄在 [Agent Readiness 優化報告](./migration-report/agent-readiness.md)。
@@ -60,6 +61,9 @@ npm run check
 npm run typecheck
 npm run lint
 npm test
+npm run test:worker
+npm run worker:types:check
+npm run worker:build
 npm run build
 npm run verify:migration
 npm run verify:dist
@@ -79,6 +83,7 @@ public/wp-content/uploads/  只有正式內容實際引用的媒體。
 scripts/migrate-wordpress/  可重跑且輸出可重現的 importer。
 scripts/build/              Agent-readable Markdown 與 discovery artifact 產生器。
 scripts/verify/              搬遷與建置成品驗收工具。
+cloudflare/agent-readiness/  Free-plan Markdown negotiation 與 discovery Worker。
 migration/                  Manifest 與機器可讀的遷移報告。
 migration-report/           適合提交至 public repository 的執行摘要。
 ```

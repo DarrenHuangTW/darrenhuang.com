@@ -38,6 +38,9 @@ jobs:
           npm run check
           npm run typecheck
           npm test
+          npm run test:worker
+          npm run worker:types:check
+          npm run worker:build
           npm run verify:migration
 
       - name: Install Playwright browser
