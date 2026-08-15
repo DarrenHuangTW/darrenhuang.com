@@ -706,6 +706,7 @@ async function verifyAgentResources(
   artifactPaths: Set<string>,
 ): Promise<void> {
   const required = [
+    '.nojekyll',
     'articles-llms.txt',
     'articles.md',
     'index.md',
