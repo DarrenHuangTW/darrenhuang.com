@@ -301,6 +301,105 @@ test.describe('Phase 5 public-site acceptance', () => {
     ).toBeLessThanOrEqual(2);
   });
 
+  test('the About page presents the current biography, carousel, and Person schema', async ({
+    page,
+  }, testInfo) => {
+    const response = await page.goto(runtimePath('/about.html'));
+    expect(response?.ok()).toBe(true);
+    await expect(
+      page.getByRole('heading', { level: 1, name: '關於作者' }),
+    ).toBeVisible();
+
+    const summary =
+      '一位轉換到 AI 賽道的 SEO 人。這裡收錄過去寫下的 SEO、網站分析、Python、UI／UX 與數位行銷筆記。';
+    const visibleSummary = page.getByText(summary, { exact: true });
+    await expect(visibleSummary).toHaveCount(1);
+    await expect(visibleSummary).toBeVisible();
+
+    const mainText = await page.locator('main#main-content').innerText();
+    expect(mainText).toContain('曾在美國生活 8 年');
+    expect(mainText).toContain('任職於澳洲公司，採全遠距工作');
+    expect(mainText).toContain('職涯顧問需求');
+    expect(mainText).not.toContain('KoMarketing');
+    expect(mainText).not.toContain('Rakuten');
+    expect(mainText).not.toContain('San Mateo');
+    expect(mainText).not.toContain('網站效能優化');
+
+    const slides = page.locator('[data-carousel-slide]');
+    await expect(slides).toHaveCount(8);
+    await expect(slides.first()).toContainText(
+      '2018 年參與 Google Product Experts Summit。',
+    );
+    await expect(slides.last()).toContainText(
+      '2024 年與 Gary Illyes、Terence、Cherry 合影。',
+    );
+    await expect(slides.first().locator('img')).toHaveAttribute(
+      'src',
+      runtimePath('/images/about/google-product-experts-summit-2018.webp'),
+    );
+
+    const status = page.locator('[data-carousel-status]');
+    await expect(status).toHaveText('第 1 張，共 8 張');
+    await page.getByRole('button', { name: '下一張照片' }).click();
+    await expect(status).toHaveText('第 2 張，共 8 張');
+    await expect(page.locator('[data-carousel-dot]').nth(1)).toHaveAttribute(
+      'aria-current',
+      'true',
+    );
+
+    const structuredDataSource = await page
+      .locator('head script[type="application/ld+json"]')
+      .textContent();
+    expect(structuredDataSource).toBeTruthy();
+    const person = JSON.parse(structuredDataSource ?? '{}') as UnknownRecord;
+    const expectedCanonical = new URL(
+      runtimePath('/about.html'),
+      `${configuredSite}/`,
+    ).toString();
+    const expectedPersonId = `${new URL(
+      runtimePath('/'),
+      `${configuredSite}/`,
+    ).toString()}#person`;
+    expect(person).toMatchObject({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      '@id': expectedPersonId,
+      mainEntityOfPage: expectedCanonical,
+      email: 'darrenhhuang@gmail.com',
+      homeLocation: {
+        '@type': 'Place',
+        name: 'Kaohsiung, Taiwan',
+      },
+    });
+    expect(person.sameAs).toEqual([
+      'https://www.linkedin.com/in/hunghsunhuang/',
+      'https://www.instagram.com/hunghsun_huang/',
+      'https://www.facebook.com/darrenhuangtw/',
+    ]);
+    expect(person.knowsAbout).toContain('Remote Working');
+    expect(person.knowsAbout).not.toContain('Career Consulting');
+    expect(person.brand).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: 'Asian Nomad Diary' }),
+        expect.objectContaining({ name: '數位引擎' }),
+      ]),
+    );
+
+    const visibleSchema = await page.locator('.about-schema code').innerText();
+    expect(visibleSchema).toContain('"@type": "Person"');
+    expect(visibleSchema).toContain('"Remote Working"');
+    expect(visibleSchema).not.toContain('"@id"');
+    expect(visibleSchema).not.toContain('"mainEntityOfPage"');
+
+    const horizontalOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
+    expect(
+      horizontalOverflow,
+      `${testInfo.project.name} About 頁不應水平溢位。`,
+    ).toBeLessThanOrEqual(2);
+  });
+
   test('a representative article has readable content and the preserved canonical URL', async ({
     page,
   }) => {
