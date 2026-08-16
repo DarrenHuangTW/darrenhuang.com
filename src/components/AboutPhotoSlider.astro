@@ -245,6 +245,8 @@ const { label = 'Darren Huang 的活動照片', photos } = Astro.props;
 
   .photo-carousel__media {
     display: grid;
+    min-width: 0;
+    min-height: 0;
     overflow: hidden;
     place-items: center;
     background:
@@ -258,9 +260,12 @@ const { label = 'Darren Huang 的活動照片', photos } = Astro.props;
   }
 
   .photo-carousel__media img {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    min-width: 0;
+    min-height: 0;
+    object-fit: scale-down;
   }
 
   .photo-carousel figcaption {

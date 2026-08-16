@@ -338,6 +338,36 @@ test.describe('Phase 5 public-site acceptance', () => {
       runtimePath('/images/about/google-product-experts-summit-2018.webp'),
     );
 
+    const mediaMetrics = await slides
+      .nth(1)
+      .locator('.photo-carousel__media')
+      .evaluate((media) => {
+        const image = media.querySelector('img');
+        if (!(image instanceof HTMLImageElement)) {
+          throw new Error('About carousel image is missing.');
+        }
+
+        const mediaBox = media.getBoundingClientRect();
+        const imageBox = image.getBoundingClientRect();
+        return {
+          imageHeight: imageBox.height,
+          imageWidth: imageBox.width,
+          mediaHeight: mediaBox.height,
+          mediaWidth: mediaBox.width,
+          objectFit: getComputedStyle(image).objectFit,
+        };
+      });
+    const expectedMediaRatio = testInfo.project.name.startsWith('mobile')
+      ? 1
+      : 4 / 3;
+    expect(mediaMetrics.objectFit).toBe('scale-down');
+    expect(mediaMetrics.mediaWidth / mediaMetrics.mediaHeight).toBeCloseTo(
+      expectedMediaRatio,
+      1,
+    );
+    expect(mediaMetrics.imageWidth).toBeCloseTo(mediaMetrics.mediaWidth, 0);
+    expect(mediaMetrics.imageHeight).toBeCloseTo(mediaMetrics.mediaHeight, 0);
+
     const status = page.locator('[data-carousel-status]');
     await expect(status).toHaveText('第 1 張，共 8 張');
     await page.getByRole('button', { name: '下一張照片' }).click();
