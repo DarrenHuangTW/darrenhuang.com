@@ -4,6 +4,10 @@ import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import matter from 'gray-matter';
 import { PRODUCTION_SITE_URL } from '../../site.config';
+import {
+  isProductionTrackingTarget,
+  PUBLIC_TRACKING_CONFIG,
+} from '../../src/lib/tracking';
 
 type UnknownRecord = Record<string, unknown>;
 type EmbedProvider = 'spotify' | 'twitter' | 'youtube';
@@ -299,6 +303,68 @@ test.describe('Phase 5 public-site acceptance', () => {
       horizontalOverflow,
       `${testInfo.project.name} 首頁不應水平溢位。`,
     ).toBeLessThanOrEqual(2);
+  });
+
+  test('production tracking markup cannot pollute local or project-base previews', async ({
+    page,
+  }) => {
+    const trackingRequests: string[] = [];
+    await page.route('**/*', async (route) => {
+      const hostname = new URL(route.request().url()).hostname.toLowerCase();
+      if (
+        hostname === 'googletagmanager.com' ||
+        hostname.endsWith('.googletagmanager.com') ||
+        hostname === 'google-analytics.com' ||
+        hostname.endsWith('.google-analytics.com') ||
+        hostname === 'doubleclick.net' ||
+        hostname.endsWith('.doubleclick.net') ||
+        hostname === 'clarity.ms' ||
+        hostname.endsWith('.clarity.ms') ||
+        hostname === 'clarity.microsoft.com' ||
+        hostname.endsWith('.clarity.microsoft.com')
+      ) {
+        trackingRequests.push(route.request().url());
+        await route.abort('blockedbyclient');
+        return;
+      }
+
+      await route.continue();
+    });
+
+    const response = await page.goto(runtimePath('/'));
+    expect(response?.ok()).toBe(true);
+    await page.waitForLoadState('networkidle');
+
+    const trackingMarkupExpected = isProductionTrackingTarget(
+      new URL(configuredSite),
+      true,
+      configuredBase,
+    );
+    await expect(page.locator('script[data-site-tracking="gtm"]')).toHaveCount(
+      trackingMarkupExpected ? 1 : 0,
+    );
+    await expect(
+      page.locator('noscript iframe[src*="ns.html?id="]'),
+    ).toHaveCount(0);
+
+    if (trackingMarkupExpected) {
+      const bootstrap = await page
+        .locator('script[data-site-tracking="gtm"]')
+        .textContent();
+      expect(bootstrap).toContain(
+        PUBLIC_TRACKING_CONFIG.googleTagManagerContainerId,
+      );
+      expect(bootstrap).toContain(
+        `window.location.origin==="${PRODUCTION_SITE_URL}"`,
+      );
+    }
+
+    await expect(
+      page.locator(
+        'script[src*="googletagmanager.com/gtag/js"], script[src*="clarity.ms/tag"]',
+      ),
+    ).toHaveCount(0);
+    expect(trackingRequests).toEqual([]);
   });
 
   test('the About page presents the current biography, carousel, and Person schema', async ({

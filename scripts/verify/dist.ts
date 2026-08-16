@@ -5,6 +5,10 @@ import path from 'node:path';
 import { load } from 'cheerio';
 import matter from 'gray-matter';
 import { PRODUCTION_SITE_URL, productionSiteUrl } from '../../site.config';
+import {
+  isProductionTrackingTarget,
+  PUBLIC_TRACKING_CONFIG,
+} from '../../src/lib/tracking';
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -491,6 +495,100 @@ async function verifyHtmlReferences(
       }
     });
   }
+}
+
+async function verifyTracking(htmlFiles: string[]): Promise<void> {
+  const trackingExpected = isProductionTrackingTarget(
+    configuredSiteUrl,
+    true,
+    configuredBase,
+  );
+  const expectedContainerId =
+    PUBLIC_TRACKING_CONFIG.googleTagManagerContainerId;
+  let astroPageCount = 0;
+
+  for (const file of htmlFiles) {
+    const relative = artifactRelative(file);
+    const source = await readFile(file, 'utf8');
+    const $ = load(source);
+    const generator = $('meta[name="generator"]').attr('content') ?? '';
+    const isAstroPage = generator.startsWith('Astro');
+    const headTags = $('head > script[data-site-tracking="gtm"]');
+    const activeTrackingSurface = $('script, noscript, amp-analytics')
+      .map((_index, element) => $(element).toString())
+      .get()
+      .join('\n');
+    const containerIds =
+      activeTrackingSurface.match(/\bGTM-[A-Z0-9]+\b/gu) ?? [];
+    const gtmLoaderCount = (
+      activeTrackingSurface.match(
+        /www\.googletagmanager\.com\/gtm\.js\?id=/gu,
+      ) ?? []
+    ).length;
+    const gtmNoscriptCount = (
+      activeTrackingSurface.match(
+        /www\.googletagmanager\.com\/ns\.html\?id=/gu,
+      ) ?? []
+    ).length;
+
+    if (isAstroPage) {
+      astroPageCount += 1;
+    }
+
+    check(
+      !activeTrackingSurface.includes(
+        PUBLIC_TRACKING_CONFIG.googleAnalyticsMeasurementId,
+      ),
+      `${relative} 不得直接安裝 GA4；GA4 必須只由 GTM 管理。`,
+    );
+    check(
+      !activeTrackingSurface.includes(
+        PUBLIC_TRACKING_CONFIG.microsoftClarityProjectId,
+      ) && !activeTrackingSurface.includes('clarity.ms/tag'),
+      `${relative} 不得直接安裝 Clarity；Clarity 必須只由 GTM 管理。`,
+    );
+    check(
+      !/\bUA-\d+-\d+\b/u.test(activeTrackingSurface),
+      `${relative} 不得包含 Universal Analytics tag。`,
+    );
+    check(
+      !activeTrackingSurface.includes('googletagmanager.com/gtag/js'),
+      `${relative} 不得直接載入 gtag.js。`,
+    );
+
+    if (trackingExpected && isAstroPage) {
+      check(
+        headTags.length === 1,
+        `${relative} 必須在 head 內包含且只包含一組 GTM bootstrap。`,
+      );
+      check(
+        gtmNoscriptCount === 0,
+        `${relative} 不得包含會繞過 runtime origin guard 的 GTM noscript。`,
+      );
+      check(
+        headTags.text().includes('googletagmanager.com/gtm.js?id=') &&
+          headTags
+            .text()
+            .includes(`window.location.origin==="${PRODUCTION_SITE_URL}"`),
+        `${relative} 的 GTM bootstrap 缺少正式 origin 防護。`,
+      );
+      check(gtmLoaderCount === 1, `${relative} 必須且只能載入一次 gtm.js。`);
+      check(
+        containerIds.length === 1 && containerIds[0] === expectedContainerId,
+        `${relative} 必須只包含 GTM container ${expectedContainerId}。`,
+      );
+    } else {
+      check(
+        headTags.length === 0 &&
+          containerIds.length === 0 &&
+          gtmLoaderCount === 0 &&
+          gtmNoscriptCount === 0,
+        `${relative} 不得在預覽或非 Astro fallback 輸出追蹤碼。`,
+      );
+    }
+  }
+
+  check(astroPageCount > 0, 'Dist 沒有可驗證的 Astro HTML 頁面。');
 }
 
 async function verifyCssReferences(
@@ -980,6 +1078,7 @@ async function main(): Promise<void> {
   const cssFiles = artifactFiles.filter((file) =>
     file.toLowerCase().endsWith('.css'),
   );
+  await verifyTracking(htmlFiles);
   await verifyHtmlReferences(htmlFiles, artifactPaths);
   await verifyCssReferences(cssFiles, artifactPaths);
   await verifySitemap(canonicalEntries, artifactFiles, artifactPaths);

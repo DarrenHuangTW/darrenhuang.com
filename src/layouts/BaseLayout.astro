@@ -1,6 +1,10 @@
 ---
 import SiteFooter from '@/components/SiteFooter.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
+import {
+  googleTagManagerBootstrapScript,
+  isProductionTrackingTarget,
+} from '@/lib/tracking';
 import { markdownPathForCanonical, withBase } from '@/lib/urls';
 import '@/styles/global.css';
 
@@ -44,12 +48,29 @@ const safeStructuredData = serializedStructuredData
   ?.replaceAll('<', '\\u003c')
   .replaceAll('\u2028', '\\u2028')
   .replaceAll('\u2029', '\\u2029');
+const trackingEnabled = isProductionTrackingTarget(
+  Astro.site,
+  import.meta.env.PROD,
+  import.meta.env.BASE_URL,
+);
+const googleTagManagerBootstrap = trackingEnabled
+  ? googleTagManagerBootstrapScript()
+  : null;
 ---
 
 <!doctype html>
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
+    {
+      googleTagManagerBootstrap && (
+        <script
+          data-site-tracking="gtm"
+          is:inline
+          set:html={googleTagManagerBootstrap}
+        />
+      )
+    }
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
