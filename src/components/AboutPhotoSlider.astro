@@ -1,0 +1,354 @@
+---
+import { withBase } from '@/lib/urls';
+
+export interface AboutPhoto {
+  alt: string;
+  caption: string;
+  height: number;
+  src: string;
+  width: number;
+}
+
+interface Props {
+  label?: string;
+  photos: AboutPhoto[];
+}
+
+const { label = 'Darren Huang 的活動照片', photos } = Astro.props;
+---
+
+<section
+  class="photo-carousel"
+  data-photo-carousel
+  role="region"
+  aria-roledescription="carousel"
+  aria-label={label}
+>
+  <div class="photo-carousel__viewport" data-carousel-viewport tabindex="0">
+    {
+      photos.map((photo, index) => (
+        <figure
+          class="photo-carousel__slide"
+          data-carousel-slide
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`第 ${index + 1} 張，共 ${photos.length} 張`}
+        >
+          <div class="photo-carousel__media">
+            <img
+              src={withBase(photo.src)}
+              alt={photo.alt}
+              width={photo.width}
+              height={photo.height}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchpriority={index === 0 ? 'high' : 'auto'}
+              decoding="async"
+            />
+          </div>
+          <figcaption>{photo.caption}</figcaption>
+        </figure>
+      ))
+    }
+  </div>
+
+  <div class="photo-carousel__controls">
+    <button
+      class="photo-carousel__arrow"
+      type="button"
+      data-carousel-previous
+      aria-label="上一張照片"
+    >
+      <span aria-hidden="true">←</span>
+    </button>
+    <span
+      class="photo-carousel__status"
+      data-carousel-status
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      第 1 張，共 {photos.length} 張
+    </span>
+    <button
+      class="photo-carousel__arrow"
+      type="button"
+      data-carousel-next
+      aria-label="下一張照片"
+    >
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
+
+  <div class="photo-carousel__dots" aria-label="選擇照片">
+    {
+      photos.map((_, index) => (
+        <button
+          type="button"
+          data-carousel-dot
+          data-slide-index={index}
+          aria-label={`前往第 ${index + 1} 張照片`}
+          aria-current={index === 0 ? 'true' : undefined}
+        />
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const carousels = document.querySelectorAll<HTMLElement>(
+    '[data-photo-carousel]',
+  );
+
+  for (const carousel of carousels) {
+    const viewport = carousel.querySelector<HTMLElement>(
+      '[data-carousel-viewport]',
+    );
+    const slides = Array.from(
+      carousel.querySelectorAll<HTMLElement>('[data-carousel-slide]'),
+    );
+    const dots = Array.from(
+      carousel.querySelectorAll<HTMLButtonElement>('[data-carousel-dot]'),
+    );
+    const previous = carousel.querySelector<HTMLButtonElement>(
+      '[data-carousel-previous]',
+    );
+    const next = carousel.querySelector<HTMLButtonElement>(
+      '[data-carousel-next]',
+    );
+    const status = carousel.querySelector<HTMLElement>(
+      '[data-carousel-status]',
+    );
+
+    if (!viewport || !previous || !next || !status || slides.length === 0) {
+      continue;
+    }
+
+    carousel.dataset.enhanced = 'true';
+    let activeIndex = 0;
+    let animationFrame = 0;
+
+    const updateState = (index: number) => {
+      const boundedIndex = Math.max(0, Math.min(index, slides.length - 1));
+      activeIndex = boundedIndex;
+      status.textContent = `第 ${activeIndex + 1} 張，共 ${slides.length} 張`;
+      previous.disabled = activeIndex === 0;
+      next.disabled = activeIndex === slides.length - 1;
+
+      for (const [index, dot] of dots.entries()) {
+        if (index === activeIndex) {
+          dot.setAttribute('aria-current', 'true');
+        } else {
+          dot.removeAttribute('aria-current');
+        }
+      }
+    };
+
+    const nearestSlide = () => {
+      const viewportLeft = viewport.getBoundingClientRect().left;
+      return slides.reduce(
+        (nearest, slide, index) => {
+          const distance = Math.abs(
+            slide.getBoundingClientRect().left - viewportLeft,
+          );
+          return distance < nearest.distance ? { distance, index } : nearest;
+        },
+        { distance: Number.POSITIVE_INFINITY, index: 0 },
+      ).index;
+    };
+
+    const goTo = (index: number) => {
+      const boundedIndex = Math.max(0, Math.min(index, slides.length - 1));
+      const targetSlide = slides[boundedIndex];
+      if (!targetSlide) return;
+
+      const viewportBox = viewport.getBoundingClientRect();
+      const slideBox = targetSlide.getBoundingClientRect();
+      const left = viewport.scrollLeft + slideBox.left - viewportBox.left;
+      const reduceMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches;
+
+      viewport.scrollTo({
+        left,
+        behavior: reduceMotion ? 'auto' : 'smooth',
+      });
+      updateState(boundedIndex);
+    };
+
+    viewport.addEventListener(
+      'scroll',
+      () => {
+        window.cancelAnimationFrame(animationFrame);
+        animationFrame = window.requestAnimationFrame(() => {
+          updateState(nearestSlide());
+        });
+      },
+      { passive: true },
+    );
+
+    viewport.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        goTo(activeIndex - 1);
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        goTo(activeIndex + 1);
+      }
+    });
+
+    previous.addEventListener('click', () => goTo(activeIndex - 1));
+    next.addEventListener('click', () => goTo(activeIndex + 1));
+
+    for (const dot of dots) {
+      dot.addEventListener('click', () => {
+        goTo(Number(dot.dataset.slideIndex ?? 0));
+      });
+    }
+
+    updateState(0);
+  }
+</script>
+
+<style>
+  .photo-carousel {
+    margin-block: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .photo-carousel__viewport {
+    display: flex;
+    overflow-x: auto;
+    border: 1px solid rgb(23 32 31 / 12%);
+    background: #14201e;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    scroll-snap-type: x mandatory;
+  }
+
+  .photo-carousel[data-enhanced='true'] .photo-carousel__viewport {
+    scrollbar-width: none;
+  }
+
+  .photo-carousel[data-enhanced='true']
+    .photo-carousel__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .photo-carousel__slide {
+    min-width: 0;
+    margin: 0;
+    flex: 0 0 100%;
+    background: var(--color-surface);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .photo-carousel__media {
+    display: grid;
+    overflow: hidden;
+    place-items: center;
+    background:
+      radial-gradient(
+        circle at 50% 20%,
+        rgb(255 255 255 / 9%),
+        transparent 45%
+      ),
+      #14201e;
+    aspect-ratio: 4 / 3;
+  }
+
+  .photo-carousel__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .photo-carousel figcaption {
+    min-height: 4.2rem;
+    margin: 0;
+    padding: 1rem 1.2rem;
+    color: var(--color-ink);
+    background: var(--color-surface);
+    font-size: 0.92rem;
+    text-align: left;
+  }
+
+  .photo-carousel__controls,
+  .photo-carousel__dots {
+    display: none;
+  }
+
+  .photo-carousel[data-enhanced='true'] .photo-carousel__controls {
+    display: flex;
+    margin-top: 1rem;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .photo-carousel[data-enhanced='true'] .photo-carousel__dots {
+    display: flex;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.55rem;
+  }
+
+  .photo-carousel__arrow {
+    display: inline-grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    place-items: center;
+    color: #fff;
+    border: 0;
+    background: var(--color-accent);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 750;
+  }
+
+  .photo-carousel__arrow:hover:not(:disabled) {
+    background: var(--color-accent-strong);
+  }
+
+  .photo-carousel__arrow:disabled {
+    cursor: not-allowed;
+    opacity: 0.38;
+  }
+
+  .photo-carousel__status {
+    min-width: 9rem;
+    color: var(--color-muted);
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .photo-carousel__dots button {
+    width: 0.75rem;
+    height: 0.75rem;
+    padding: 0;
+    border: 1px solid rgb(7 95 80 / 35%);
+    background: transparent;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .photo-carousel__dots button[aria-current='true'] {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+  }
+
+  @media (max-width: 40rem) {
+    .photo-carousel__media {
+      aspect-ratio: 1 / 1;
+    }
+
+    .photo-carousel figcaption {
+      min-height: 5.3rem;
+      padding: 0.9rem 1rem;
+    }
+  }
+</style>

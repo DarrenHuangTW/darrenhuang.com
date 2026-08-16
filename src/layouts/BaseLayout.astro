@@ -9,6 +9,7 @@ interface Props {
   description?: string;
   canonicalPath?: string;
   image?: string | null;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
   type?: 'article' | 'website';
   publishedAt?: Date;
   updatedAt?: Date;
@@ -20,6 +21,7 @@ const {
   description = '數位行銷、SEO、內容策略與科技趨勢的長期觀察。',
   canonicalPath = Astro.url.pathname,
   image,
+  structuredData,
   type = 'website',
   publishedAt,
   updatedAt,
@@ -35,6 +37,13 @@ const llmsUrl = new URL(withBase('/llms.txt'), siteOrigin);
 const markdownUrl = noindex
   ? null
   : new URL(withBase(markdownPathForCanonical(canonicalPath)), siteOrigin);
+const serializedStructuredData = structuredData
+  ? JSON.stringify(structuredData)
+  : null;
+const safeStructuredData = serializedStructuredData
+  ?.replaceAll('<', '\\u003c')
+  .replaceAll('\u2028', '\\u2028')
+  .replaceAll('\u2029', '\\u2029');
 ---
 
 <!doctype html>
@@ -91,6 +100,15 @@ const markdownUrl = noindex
         <meta
           property="article:modified_time"
           content={updatedAt.toISOString()}
+        />
+      )
+    }
+    {
+      safeStructuredData && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={safeStructuredData}
         />
       )
     }

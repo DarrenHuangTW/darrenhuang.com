@@ -1,0 +1,234 @@
+---
+import AboutPhotoSlider, {
+  type AboutPhoto,
+} from '@/components/AboutPhotoSlider.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/urls';
+
+const canonicalPath = '/about.html';
+const summary =
+  '一位轉換到 AI 賽道的 SEO 人。這裡收錄過去寫下的 SEO、網站分析、Python、UI／UX 與數位行銷筆記。';
+const photos: [AboutPhoto, ...AboutPhoto[]] = [
+  {
+    src: '/images/about/google-product-experts-summit-2018.webp',
+    alt: 'Darren Huang 參與 2018 年 Google Product Experts Summit',
+    caption: '2018 年參與 Google Product Experts Summit。',
+    width: 1440,
+    height: 1080,
+  },
+  {
+    src: '/images/about/danny-sullivan-product-experts-summit-2018.webp',
+    alt: 'Darren Huang 與 Danny Sullivan 在 2018 年 Google Product Experts Summit 合影',
+    caption: '2018 年 Google Product Experts Summit，與 Danny Sullivan 合影。',
+    width: 1350,
+    height: 1800,
+  },
+  {
+    src: '/images/about/paul-haahr-product-experts-summit-2018.webp',
+    alt: 'Darren Huang 與 Paul Haahr 在 2018 年 Google Product Experts Summit 合影',
+    caption: '2018 年 Google Product Experts Summit，與 Paul Haahr 合影。',
+    width: 1800,
+    height: 1350,
+  },
+  {
+    src: '/images/about/eric-enge-boston-2017.webp',
+    alt: 'Darren Huang 與 Eric Enge 於 2017 年在波士頓合影',
+    caption: '2017 年在波士頓，與 Eric Enge 合影。',
+    width: 1350,
+    height: 1800,
+  },
+  {
+    src: '/images/about/rand-fishkin-searchlove-boston-2016.webp',
+    alt: 'Darren Huang 與 Rand Fishkin 在 2016 年 SearchLove Boston 合影',
+    caption: '2016 年 SearchLove Boston，與 Rand Fishkin 合影。',
+    width: 1800,
+    height: 1013,
+  },
+  {
+    src: '/images/about/john-mueller-2017.webp',
+    alt: 'Darren Huang 與 John Mueller 於 2017 年合影',
+    caption: '2017 年與 John Mueller 合影。',
+    width: 1350,
+    height: 1800,
+  },
+  {
+    src: '/images/about/gary-illyes-boston-2017.webp',
+    alt: 'Darren Huang 與 Gary Illyes 於 2017 年在波士頓合影',
+    caption: '2017 年在波士頓，與 Gary Illyes 合影。',
+    width: 1350,
+    height: 1800,
+  },
+  {
+    src: '/images/about/gary-illyes-terence-cherry-2024.webp',
+    alt: 'Darren Huang 於 2024 年與 Gary Illyes、Terence、Cherry 合影',
+    caption: '2024 年與 Gary Illyes、Terence、Cherry 合影。',
+    width: 1800,
+    height: 1350,
+  },
+];
+
+const siteOrigin = Astro.site ?? Astro.url.origin;
+const absoluteUrl = (path: string) =>
+  new URL(withBase(path), siteOrigin).toString();
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${absoluteUrl('/')}#person`,
+  mainEntityOfPage: absoluteUrl(canonicalPath),
+  name: 'Darren Huang',
+  alternateName: '黃泓勳',
+  url: absoluteUrl('/'),
+  image: absoluteUrl(photos[0].src),
+  email: 'darrenhhuang@gmail.com',
+  description: '一位轉換到 AI 賽道的 SEO 人。',
+  nationality: {
+    '@type': 'Country',
+    name: 'Taiwan',
+  },
+  homeLocation: {
+    '@type': 'Place',
+    name: 'Kaohsiung, Taiwan',
+  },
+  sameAs: [
+    'https://www.linkedin.com/in/hunghsunhuang/',
+    'https://www.instagram.com/hunghsun_huang/',
+    'https://www.facebook.com/darrenhuangtw/',
+  ],
+  brand: [
+    {
+      '@type': 'Brand',
+      name: 'Asian Nomad Diary',
+      alternateName: 'asian_nomad_diary',
+      url: 'https://www.threads.com/@asian_nomad_diary',
+      description: 'Darren 與太太共同經營的數位游牧與旅居紀錄。',
+    },
+    {
+      '@type': 'Brand',
+      name: '數位引擎',
+      url: 'https://www.facebook.com/searchenginecommunity',
+      description:
+        'Darren 過去經營的 SEO 與數位行銷內容品牌，保留大量實用資訊。',
+    },
+  ],
+  knowsAbout: [
+    'Search Engine Optimization (SEO)',
+    'Artificial Intelligence (AI)',
+    'Automation',
+    'UI/UX',
+    'Remote Working',
+  ],
+};
+const displayPersonSchema = Object.fromEntries(
+  Object.entries(personSchema).filter(
+    ([key]) => !['@id', 'mainEntityOfPage', 'image'].includes(key),
+  ),
+);
+const visibleSchema = `<script type="application/ld+json">\n${JSON.stringify(displayPersonSchema, null, 2)}\n</script>`;
+---
+
+<BaseLayout
+  title="關於作者"
+  description={summary}
+  canonicalPath={canonicalPath}
+  image={photos[0].src}
+  structuredData={personSchema}
+>
+  <article class="about-page page shell">
+    <header class="page__header about-page__header">
+      <div class="eyebrow">Darren Huang</div>
+      <h1>關於作者</h1>
+      <p>{summary}</p>
+    </header>
+
+    <AboutPhotoSlider photos={photos} />
+
+    <div class="about-page__body prose">
+      <section aria-labelledby="about-darren">
+        <h2 id="about-darren">你好，我是 Darren</h2>
+        <p>
+          歡迎來到我的網站！我曾在美國生活 8
+          年，陸續住過波士頓、紐約與矽谷。在美國期間曾於 WeWork 擔任 SEO
+          Strategist，也曾是 Google 站長論壇的產品專家。
+        </p>
+        <p>
+          現在我已搬回台灣，平時定居高雄，任職於澳洲公司，採全遠距工作。我和太太兩人都是數位游牧者，也會四處旅居，並一起經營
+          <a
+            href="https://www.threads.com/@asian_nomad_diary"
+            target="_blank"
+            rel="noopener noreferrer">@asian_nomad_diary</a
+          >
+          ，歡迎 follow！
+        </p>
+        <p>
+          工作上，我是一位轉換到 AI 賽道的 SEO
+          人。這裡的文章大多是過去所寫，內容涵蓋 SEO、網站分析、Python、UI／UX
+          與數位行銷；我把它們保留下來，當作一路走來的紀錄，也希望其中仍有一些資訊能對你有幫助。
+        </p>
+      </section>
+
+      <section aria-labelledby="schema-introduction">
+        <h2 id="schema-introduction">用 Schema 介紹自己</h2>
+        <p>下面用個 SEO 人的方法介紹自己：</p>
+        <pre class="about-schema"><code>{visibleSchema}</code></pre>
+      </section>
+
+      <section aria-labelledby="coffee-chat">
+        <h2 id="coffee-chat">歡迎 Coffee Chat</h2>
+        <p>
+          如果你有 SEO、AI、自動化或職涯顧問需求，都歡迎找我 Coffee
+          Chat，線上也可以！可以直接寫信到
+          <a href="mailto:darrenhhuang@gmail.com">darrenhhuang@gmail.com</a>。
+        </p>
+      </section>
+
+      <section aria-labelledby="digital-engine">
+        <h2 id="digital-engine">關於數位引擎</h2>
+        <p>
+          「<a
+            href="https://www.facebook.com/searchenginecommunity/"
+            target="_blank"
+            rel="noopener noreferrer">數位引擎</a
+          >」是我過去經營的 Facebook
+          專頁。現在因時間考量已經停更，不過仍保留大量實用的 SEO
+          與數位行銷資訊，歡迎當作資料庫慢慢翻閱。
+        </p>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about-page {
+    width: min(100% - 2rem, 64rem);
+  }
+
+  .about-page__header {
+    margin-bottom: 0;
+  }
+
+  .about-page__header p {
+    max-width: 48rem;
+    margin-bottom: 0;
+  }
+
+  .about-page__body {
+    width: min(100%, 50rem);
+    margin-inline: auto;
+  }
+
+  .about-page__body section + section {
+    margin-top: 3.5rem;
+    padding-top: 0.15rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .about-schema {
+    color: #eef8f5;
+    background: #13201e;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .about-schema code {
+    color: inherit;
+  }
+</style>

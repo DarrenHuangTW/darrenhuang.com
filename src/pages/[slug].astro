@@ -11,7 +11,7 @@ type RouteProps =
 export async function getStaticPaths() {
   const [posts, pages] = await Promise.all([
     getCollection('posts'),
-    getCollection('pages'),
+    getCollection('pages', ({ data }) => data.pageKind !== 'about'),
   ]);
   const seen = new Set<string>();
 
