@@ -290,7 +290,17 @@ test.describe('Phase 5 public-site acceptance', () => {
     const response = await page.goto(runtimePath('/'));
     expect(response?.ok()).toBe(true);
     await expect(page).toHaveTitle(/數位引擎/);
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      '讓寫過的內容，繼續被找到',
+    );
+    await expect(page.locator('.hero__panel strong')).toHaveText(
+      '一些實作，一些觀察。',
+    );
+    await expect(
+      page.getByRole('heading', { level: 2, name: '文章紀錄' }),
+    ).toBeVisible();
+    await expect(page.locator('.hero')).not.toContainText('會員電子報');
+    await expect(page.locator('.hero')).not.toContainText('WordPress');
     await expect(
       page.getByRole('link', { name: /查看全部 86 篇/ }),
     ).toBeVisible();
