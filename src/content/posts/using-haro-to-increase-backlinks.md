@@ -121,14 +121,14 @@ wpId: 17
  	<li style="text-align:justify">可以連結ESPN網站和你的手機，設定一個<i> </i><b>"IT 金州勇士隊比賽結束，THEN 手機通知我比數多少"</b></li>
 </ul>
 <div>
-<div style="text-align:justify"><a href="https://ifttt.com/view_embed_recipe/196939-get-notified-with-your-favorite-team-s-final-score" target="_blank" rel="noopener noreferrer"><img style="max-width:100%" src="https://ifttt.com/recipe_embed_img/196939" alt="IFTTT Recipe: Get notified with your favorite team's final score connects espn to if-notifications" width="370px" loading="lazy" decoding="async"></a></div>
+<div style="text-align:justify"><a href="https://ifttt.com/view_embed_recipe/196939-get-notified-with-your-favorite-team-s-final-score" target="_blank" rel="noopener noreferrer"><img style="max-width:100%" src="https://ifttt.com/recipe_embed_img/196939" alt="IFTTT Recipe: Get notified with your favorite team's final score connects espn to if-notifications" loading="lazy" decoding="async"></a></div>
 <div style="text-align:justify"></div>
 </div>
 <ul>
  	<li style="text-align:justify">也可以連結FB和Google Drive，設定一個 <b>"IF你被tag在別人上傳照片裡，THEN備份該照片到Google Drive"</b></li>
 </ul>
 <div>
-<div style="text-align:justify"><a href="https://ifttt.com/view_embed_recipe/54681-download-new-facebook-photos-you-re-tagged-in-to-a-google-drive-folder" target="_blank" rel="noopener noreferrer"><img style="max-width:100%" src="https://ifttt.com/recipe_embed_img/54681" alt="IFTTT Recipe: Download new Facebook photos you're tagged in to a Google Drive folder connects facebook to google-drive" width="370px" loading="lazy" decoding="async"></a></div>
+<div style="text-align:justify"><a href="https://ifttt.com/view_embed_recipe/54681-download-new-facebook-photos-you-re-tagged-in-to-a-google-drive-folder" target="_blank" rel="noopener noreferrer"><img style="max-width:100%" src="https://ifttt.com/recipe_embed_img/54681" alt="IFTTT Recipe: Download new Facebook photos you're tagged in to a Google Drive folder connects facebook to google-drive" loading="lazy" decoding="async"></a></div>
 <div style="text-align:justify"></div>
 <div style="text-align:justify"></div>
 <div style="text-align:justify">等我哪天超級熟悉IFTTT以後有空再來寫一篇完整的教學文章，不過概念大概就是這樣，公司或商家可以連結gmail和SMS，建立一個Recipe說:<b> "IF 收到HARO的email且裡面有SEO或digital marketing，THEN 寄一封簡訊通知我"。</b></div>

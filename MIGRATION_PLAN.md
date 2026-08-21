@@ -5,7 +5,7 @@
 狀態：Phase 1–5 已完成，Phase 6 的 Pages 預覽與 GitHub 帳號層級網域驗證 Gate 已完成，repository custom domain 與網站流量 DNS Gate 尚未執行。
 Phase 1 的來源保全、Phase 2 的 Astro skeleton，以及 Phase 3 至 Phase 4 的核心 importer、媒體與 Stories 均已完成。
 最新 importer 產物包含 86 篇正式文章、41 篇原會員限定文章、19 篇排除 drafts、1 篇正式內容頁、2 篇 Web Stories、773 個發布媒體與 192 個外部媒體或附件參考，未知 Gutenberg blocks 為 0。
-Phase 5 的桌機與手機代表性頁面目視驗收、秘密掃描、staged-files 審查、本機 commit、clean-clone 安裝、兩種 production build、211 個 HTML artifact 與 14 個 E2E 均已通過。
+Phase 5 的桌機與手機代表性頁面目視驗收、秘密掃描、staged-files 審查、本機 commit、clean-clone 安裝、兩種 production build、211 個 HTML artifact 與目前 24 個 E2E 均已通過。
 Public GitHub repository 的 `main` 已首次 push，GitHub Actions build、deploy 與 Pages base-path 預覽均已驗證。
 正式 canonical host 已確認為 `https://www.darrenhuang.com`。
 尚未切換 DNS，也尚未停止或刪除 AWS Lightsail。

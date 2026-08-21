@@ -100,7 +100,7 @@ wpId: 4070
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/12/image-14-1024x533.png" alt="" class="wp-image-4083" width="507" height="263" loading="lazy" decoding="async"><figcaption>在搜尋評估指南中提到Trust是EEAT中最核心的指標</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/12/image-14-1024x533.png" alt="" class="wp-image-4083" width="507" height="264" loading="lazy" decoding="async"><figcaption>在搜尋評估指南中提到Trust是EEAT中最核心的指標</figcaption></figure>
 
 
 
@@ -126,7 +126,7 @@ wpId: 4070
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/12/image-15-1024x394.png" alt="" class="wp-image-4084" width="540" height="207" loading="lazy" decoding="async"></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/12/image-15-1024x394.png" alt="" class="wp-image-4084" width="540" height="208" loading="lazy" decoding="async"></figure>
 
 
 
@@ -182,7 +182,7 @@ wpId: 4070
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2023/01/image-5-1024x544.png" alt="" class="wp-image-4096" width="-30" height="-16" loading="lazy" decoding="async"><figcaption><a href="https://seocommunity.social/@nicockier/109484660116631988">網友提供截圖</a></figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2023/01/image-5-1024x544.png" alt="" class="wp-image-4096" width="1024" height="544" loading="lazy" decoding="async"><figcaption><a href="https://seocommunity.social/@nicockier/109484660116631988">網友提供截圖</a></figcaption></figure>
 
 
 
@@ -238,7 +238,7 @@ wpId: 4070
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/12/image-11.png" alt="" class="wp-image-4078" width="476" height="328" loading="lazy" decoding="async"><figcaption>使用社群媒體來建立連結較為有效</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/12/image-11.png" alt="" class="wp-image-4078" width="476" height="329" loading="lazy" decoding="async"><figcaption>使用社群媒體來建立連結較為有效</figcaption></figure>
 
 
 
@@ -290,7 +290,7 @@ wpId: 4070
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2023/01/image-4-1024x385.png" alt="" class="wp-image-4094" width="576" height="216" loading="lazy" decoding="async"><figcaption>63%的人都還沒開始使用AI工具幫忙</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2023/01/image-4-1024x385.png" alt="" class="wp-image-4094" width="576" height="217" loading="lazy" decoding="async"><figcaption>63%的人都還沒開始使用AI工具幫忙</figcaption></figure>
 
 
 
@@ -298,7 +298,7 @@ wpId: 4070
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2023/01/image-2-1024x363.png" alt="" class="wp-image-4092" width="589" height="208" loading="lazy" decoding="async"><figcaption>Jasper是最常被使用的工具</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2023/01/image-2-1024x363.png" alt="" class="wp-image-4092" width="589" height="209" loading="lazy" decoding="async"><figcaption>Jasper是最常被使用的工具</figcaption></figure>
 
 
 

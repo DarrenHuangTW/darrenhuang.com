@@ -48,7 +48,7 @@ wpId: 3636
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/06/Airbnb%E6%96%B0%E7%9A%84%E5%88%86%E9%A1%9E-1024x818.png" alt="" class="wp-image-3642" width="-25" height="-20" loading="lazy" decoding="async"><figcaption>Airbnb 改版後多了56種新的分類 </figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/06/Airbnb%E6%96%B0%E7%9A%84%E5%88%86%E9%A1%9E-1024x818.png" alt="" class="wp-image-3642" width="1024" height="818" loading="lazy" decoding="async"><figcaption>Airbnb 改版後多了56種新的分類 </figcaption></figure>
 
 
 
@@ -82,7 +82,7 @@ wpId: 3636
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/%E5%85%A7%E9%83%A8%E9%80%A3%E7%B5%90%E8%88%87GSC%E9%BB%9E%E6%93%8A%E7%9A%84%E7%9B%B8%E9%97%9C%E6%80%A7.png" alt="" class="wp-image-3640" width="-178" height="-114" loading="lazy" decoding="async"><figcaption>「內部連結數量」與「GSC點擊量」的相關性</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/%E5%85%A7%E9%83%A8%E9%80%A3%E7%B5%90%E8%88%87GSC%E9%BB%9E%E6%93%8A%E7%9A%84%E7%9B%B8%E9%97%9C%E6%80%A7.png" alt="" class="wp-image-3640" width="861" height="556" loading="lazy" decoding="async"><figcaption>「內部連結數量」與「GSC點擊量」的相關性</figcaption></figure>
 
 
 
@@ -90,7 +90,7 @@ wpId: 3636
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/%E9%8C%A8%E9%BB%9E%E6%96%87%E5%AD%97%E7%9A%84%E8%AE%8A%E5%8C%96%E6%80%A7%E8%88%87GSC%E9%BB%9E%E6%93%8A%E9%87%8F%E7%9A%84%E7%9B%B8%E9%97%9C%E6%80%A7.png" alt="" class="wp-image-3641" width="522" height="336" loading="lazy" decoding="async"><figcaption>「錨點文字的變化」與「GSC點擊量」的相關性</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/%E9%8C%A8%E9%BB%9E%E6%96%87%E5%AD%97%E7%9A%84%E8%AE%8A%E5%8C%96%E6%80%A7%E8%88%87GSC%E9%BB%9E%E6%93%8A%E9%87%8F%E7%9A%84%E7%9B%B8%E9%97%9C%E6%80%A7.png" alt="" class="wp-image-3641" width="522" height="337" loading="lazy" decoding="async"><figcaption>「錨點文字的變化」與「GSC點擊量」的相關性</figcaption></figure>
 
 
 
@@ -112,7 +112,7 @@ wpId: 3636
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/image-3.png" alt="" class="wp-image-3654" width="552" height="330" loading="lazy" decoding="async"><figcaption>一個網頁有一排縮圖、一張縮圖、和沒有縮圖的三種情況</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/image-3.png" alt="" class="wp-image-3654" width="552" height="331" loading="lazy" decoding="async"><figcaption>一個網頁有一排縮圖、一張縮圖、和沒有縮圖的三種情況</figcaption></figure>
 
 
 
@@ -184,7 +184,7 @@ wpId: 3636
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/image-1.png" alt="" class="wp-image-3648" width="434" height="373" loading="lazy" decoding="async"><figcaption>只要修改&lt;amp-analytics&gt;即可在AMP上裝上GA4</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/image-1.png" alt="" class="wp-image-3648" width="434" height="374" loading="lazy" decoding="async"><figcaption>只要修改&lt;amp-analytics&gt;即可在AMP上裝上GA4</figcaption></figure>
 
 
 
@@ -210,7 +210,7 @@ wpId: 3636
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/image-7.png" alt="" class="wp-image-3661" width="423" height="420" loading="lazy" decoding="async"><figcaption>&lt;HEAD&gt;中的各種meta標籤</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/image-7.png" alt="" class="wp-image-3661" width="423" height="421" loading="lazy" decoding="async"><figcaption>&lt;HEAD&gt;中的各種meta標籤</figcaption></figure>
 
 
 
@@ -236,7 +236,7 @@ wpId: 3636
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/image-4.png" alt="" class="wp-image-3656" width="551" height="203" loading="lazy" decoding="async"></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/image-4.png" alt="" class="wp-image-3656" width="551" height="204" loading="lazy" decoding="async"></figure>
 
 
 
@@ -244,7 +244,7 @@ wpId: 3636
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/image-6.png" alt="" class="wp-image-3658" width="557" height="204" loading="lazy" decoding="async"></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/06/image-6.png" alt="" class="wp-image-3658" width="557" height="205" loading="lazy" decoding="async"></figure>
 
 
 

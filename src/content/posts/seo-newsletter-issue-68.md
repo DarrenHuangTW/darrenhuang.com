@@ -96,7 +96,7 @@ wpId: 3992
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-14-1024x614.png" alt="" class="wp-image-4010" width="519" height="310" loading="lazy" decoding="async"><figcaption>Google去年推出的功能，讓商家在Google Search的介面直接管理 (<a href="https://www.searchenginejournal.com/google-business-profile-overview/425984/#close">圖片來源</a>)</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-14-1024x614.png" alt="" class="wp-image-4010" width="519" height="311" loading="lazy" decoding="async"><figcaption>Google去年推出的功能，讓商家在Google Search的介面直接管理 (<a href="https://www.searchenginejournal.com/google-business-profile-overview/425984/#close">圖片來源</a>)</figcaption></figure>
 
 
 
@@ -134,7 +134,7 @@ wpId: 3992
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-11-853x1024.png" alt="" class="wp-image-4005" width="427" height="512" loading="lazy" decoding="async"><figcaption>"Google Clicks"的更細節分析</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-11-853x1024.png" alt="" class="wp-image-4005" width="427" height="513" loading="lazy" decoding="async"><figcaption>"Google Clicks"的更細節分析</figcaption></figure>
 
 
 

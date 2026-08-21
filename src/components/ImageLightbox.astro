@@ -1,0 +1,163 @@
+<dialog class="image-lightbox" data-image-lightbox aria-label="圖片預覽">
+  <div class="image-lightbox__panel">
+    <form method="dialog">
+      <button
+        class="image-lightbox__close"
+        type="submit"
+        aria-label="關閉圖片預覽"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+    </form>
+    <figure>
+      <img data-lightbox-image alt="" decoding="async" />
+      <figcaption data-lightbox-caption hidden></figcaption>
+    </figure>
+    <a
+      class="image-lightbox__original"
+      data-lightbox-original
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      開啟原圖 <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</dialog>
+
+<script>
+  const imageExtension = /\.(?:avif|gif|jpe?g|png|webp)(?:$|[?#])/iu;
+  const dialogs = document.querySelectorAll<HTMLDialogElement>(
+    '[data-image-lightbox]',
+  );
+
+  for (const dialog of dialogs) {
+    const article = dialog.previousElementSibling;
+    const preview = dialog.querySelector<HTMLImageElement>(
+      '[data-lightbox-image]',
+    );
+    const caption = dialog.querySelector<HTMLElement>(
+      '[data-lightbox-caption]',
+    );
+    const original = dialog.querySelector<HTMLAnchorElement>(
+      '[data-lightbox-original]',
+    );
+    let trigger: HTMLElement | null = null;
+
+    if (
+      !article ||
+      !preview ||
+      !caption ||
+      !original ||
+      typeof dialog.showModal !== 'function'
+    ) {
+      continue;
+    }
+
+    const imageUrl = (image: HTMLImageElement): URL | null => {
+      const anchor = image.closest<HTMLAnchorElement>('a[href]');
+      const requested = anchor?.href || image.src;
+      if (!requested || (anchor && !imageExtension.test(anchor.href))) {
+        return null;
+      }
+
+      const url = new URL(requested, document.baseURI);
+      return url.origin === window.location.origin &&
+        imageExtension.test(url.href)
+        ? url
+        : null;
+    };
+
+    const openImage = (image: HTMLImageElement) => {
+      const url = imageUrl(image);
+      if (!url) return;
+
+      const figureCaption = image
+        .closest('figure')
+        ?.querySelector<HTMLElement>('figcaption')
+        ?.innerText.trim();
+      const description = figureCaption || image.alt.trim();
+      trigger = image.closest<HTMLElement>('a[href]') ?? image;
+      preview.src = url.toString();
+      preview.alt = image.alt;
+      original.href = url.toString();
+      caption.textContent = description;
+      caption.hidden = description.length === 0;
+      dialog.showModal();
+    };
+
+    const eligibleImages = article.querySelectorAll<HTMLImageElement>(
+      '.article__hero img, .prose img',
+    );
+    for (const image of eligibleImages) {
+      if (!imageUrl(image)) continue;
+      const declaredWidth = Number(image.getAttribute('width') ?? 0);
+      const declaredHeight = Number(image.getAttribute('height') ?? 0);
+      if (
+        declaredWidth > 0 &&
+        declaredHeight > 0 &&
+        declaredWidth < 160 &&
+        declaredHeight < 160
+      ) {
+        continue;
+      }
+
+      image.dataset.lightboxEligible = 'true';
+      const anchor = image.closest<HTMLAnchorElement>('a[href]');
+      if (anchor) {
+        anchor.setAttribute('aria-haspopup', 'dialog');
+      } else {
+        image.tabIndex = 0;
+        image.setAttribute('role', 'button');
+        image.setAttribute(
+          'aria-label',
+          image.alt ? `放大圖片：${image.alt}` : '放大圖片',
+        );
+        image.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openImage(image);
+          }
+        });
+      }
+    }
+
+    article.addEventListener('click', (event) => {
+      if (!(event instanceof MouseEvent)) return;
+      if (
+        event.button !== 0 ||
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey
+      ) {
+        return;
+      }
+
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const image = target.matches('img[data-lightbox-eligible]')
+        ? target
+        : target
+            .closest('a[href]')
+            ?.querySelector('img[data-lightbox-eligible]');
+      if (!(image instanceof HTMLImageElement)) return;
+
+      event.preventDefault();
+      openImage(image);
+    });
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener('close', () => {
+      preview.removeAttribute('src');
+      preview.alt = '';
+      caption.textContent = '';
+      caption.hidden = true;
+      original.removeAttribute('href');
+      trigger?.focus();
+      trigger = null;
+    });
+  }
+</script>

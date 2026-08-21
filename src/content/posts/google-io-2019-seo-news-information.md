@@ -24,7 +24,7 @@ wpId: 538
 
 
 
-<div class="wp-block-image"><figure class="aligncenter is-resized"><img src="./wp-content/uploads/2019/05/google-io-2019.gif" alt="" class="wp-image-556" width="238" height="133" loading="lazy" decoding="async"></figure></div>
+<div class="wp-block-image"><figure class="aligncenter is-resized"><img src="./wp-content/uploads/2019/05/google-io-2019.gif" alt="" class="wp-image-556" width="238" height="134" loading="lazy" decoding="async"></figure></div>
 
 
 

@@ -51,7 +51,7 @@ wpId: 4028
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-25-1024x358.png" alt="" class="wp-image-4040" width="581" height="204" loading="lazy" decoding="async"><figcaption>Site Diversity System 通常會將子網域與主站視為同一個網站</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-25-1024x358.png" alt="" class="wp-image-4040" width="581" height="203" loading="lazy" decoding="async"><figcaption>Site Diversity System 通常會將子網域與主站視為同一個網站</figcaption></figure>
 
 
 
@@ -81,11 +81,11 @@ wpId: 4028
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-27-1024x552.png" alt="" class="wp-image-4043" width="-30" height="-15" loading="lazy" decoding="async"><figcaption>新的 Shopping Tab Listings 讓站長能輕易註冊 Merchant Center 帳號並讓商品出現在 Shopping Tab 中</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-27-1024x552.png" alt="" class="wp-image-4043" width="1024" height="552" loading="lazy" decoding="async"><figcaption>新的 Shopping Tab Listings 讓站長能輕易註冊 Merchant Center 帳號並讓商品出現在 Shopping Tab 中</figcaption></figure>
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-28-1024x413.png" alt="" class="wp-image-4044" width="-23" height="-9" loading="lazy" decoding="async"><figcaption>已有 Merchant Center 帳號的畫面</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-28-1024x413.png" alt="" class="wp-image-4044" width="1024" height="413" loading="lazy" decoding="async"><figcaption>已有 Merchant Center 帳號的畫面</figcaption></figure>
 
 
 
@@ -107,7 +107,7 @@ wpId: 4028
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/12/image-3.png" alt="" class="wp-image-4050" width="-31" height="-19" loading="lazy" decoding="async"><figcaption>圖片： Hyung-Jin Kim 為 SMX Next 2022 主講嘉賓，與談人為 Barry Schwartz</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/12/image-3.png" alt="" class="wp-image-4050" width="658" height="411" loading="lazy" decoding="async"><figcaption>圖片： Hyung-Jin Kim 為 SMX Next 2022 主講嘉賓，與談人為 Barry Schwartz</figcaption></figure>
 
 
 
@@ -157,7 +157,7 @@ wpId: 4028
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/12/image-2-1024x549.png" alt="" class="wp-image-4048" width="531" height="284" loading="lazy" decoding="async"><figcaption>圖：文字錨點</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/12/image-2-1024x549.png" alt="" class="wp-image-4048" width="531" height="285" loading="lazy" decoding="async"><figcaption>圖：文字錨點</figcaption></figure>
 
 
 
@@ -165,7 +165,7 @@ wpId: 4028
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/12/image-1-1024x289.png" alt="" class="wp-image-4047" width="605" height="170" loading="lazy" decoding="async"><figcaption>圖：四種Sitelinks及其因素統整</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/12/image-1-1024x289.png" alt="" class="wp-image-4047" width="605" height="171" loading="lazy" decoding="async"><figcaption>圖：四種Sitelinks及其因素統整</figcaption></figure>
 
 
 
@@ -223,7 +223,7 @@ wpId: 4028
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-24-1024x378.png" alt="" class="wp-image-4038" width="-50" height="-18" loading="lazy" decoding="async"><figcaption>SEO的指標分類</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/11/image-24-1024x378.png" alt="" class="wp-image-4038" width="1024" height="378" loading="lazy" decoding="async"><figcaption>SEO的指標分類</figcaption></figure>
 
 
 
@@ -249,7 +249,7 @@ wpId: 4028
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/12/image-6-1024x576.png" alt="" class="wp-image-4055" width="549" height="308" loading="lazy" decoding="async"><figcaption>圖：HTML花了36小時爬取完畢；JS花了313小時，差了快要9倍。</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/12/image-6-1024x576.png" alt="" class="wp-image-4055" width="549" height="309" loading="lazy" decoding="async"><figcaption>圖：HTML花了36小時爬取完畢；JS花了313小時，差了快要9倍。</figcaption></figure>
 
 
 
@@ -287,7 +287,7 @@ wpId: 4028
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/12/image-4.png" alt="" class="wp-image-4052" width="543" height="310" loading="lazy" decoding="async"><figcaption>圖：筆者拿了 Glenn Gabe 自己的文章第一段來測試</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/12/image-4.png" alt="" class="wp-image-4052" width="543" height="308" loading="lazy" decoding="async"><figcaption>圖：筆者拿了 Glenn Gabe 自己的文章第一段來測試</figcaption></figure>
 
 
 
@@ -295,7 +295,7 @@ wpId: 4028
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/12/image-5.png" alt="" class="wp-image-4053" width="530" height="497" loading="lazy" decoding="async"><figcaption>圖：GLTR 的介面</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/12/image-5.png" alt="" class="wp-image-4053" width="530" height="501" loading="lazy" decoding="async"><figcaption>圖：GLTR 的介面</figcaption></figure>
 
 
 

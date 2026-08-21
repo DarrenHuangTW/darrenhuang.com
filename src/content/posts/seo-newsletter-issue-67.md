@@ -52,7 +52,7 @@ wpId: 3956
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/10/image-19-1024x735.png" alt="" class="wp-image-3971" width="475" height="340" loading="lazy" decoding="async"><figcaption><a href="https://neilpatel.com/blog/googles-spam-update/">Neil Patel文章</a></figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/10/image-19-1024x735.png" alt="" class="wp-image-3971" width="475" height="341" loading="lazy" decoding="async"><figcaption><a href="https://neilpatel.com/blog/googles-spam-update/">Neil Patel文章</a></figcaption></figure>
 
 
 
@@ -86,7 +86,7 @@ wpId: 3956
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/11/image-3.png" alt="" class="wp-image-3976" width="559" height="290" loading="lazy" decoding="async"><figcaption>瀏覽器介面改為英文即可在搜尋結果看到 sitename</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/11/image-3.png" alt="" class="wp-image-3976" width="559" height="289" loading="lazy" decoding="async"><figcaption>瀏覽器介面改為英文即可在搜尋結果看到 sitename</figcaption></figure>
 
 
 

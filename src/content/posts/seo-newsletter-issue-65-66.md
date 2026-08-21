@@ -86,7 +86,7 @@ wpId: 3914
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/10/image-13.png" alt="" class="wp-image-3939" width="600" height="377" loading="lazy" decoding="async"><figcaption>由左至右分別為 "shop the look", "buying guide", "Dynamic filters"</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/10/image-13.png" alt="" class="wp-image-3939" width="600" height="370" loading="lazy" decoding="async"><figcaption>由左至右分別為 "shop the look", "buying guide", "Dynamic filters"</figcaption></figure>
 
 
 
@@ -94,7 +94,7 @@ wpId: 3914
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/10/image-15.png" alt="" class="wp-image-3941" width="600" height="410" loading="lazy" decoding="async"><figcaption>由左至右分別為 "翻譯新聞", "論壇討論", "強化版知識圖譜"</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/10/image-15.png" alt="" class="wp-image-3941" width="600" height="343" loading="lazy" decoding="async"><figcaption>由左至右分別為 "翻譯新聞", "論壇討論", "強化版知識圖譜"</figcaption></figure>
 
 
 
@@ -218,7 +218,7 @@ wpId: 3914
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/10/image-9.png" alt="" class="wp-image-3934" width="529" height="134" loading="lazy" decoding="async"><figcaption>文中引用John Mueller的話 - 僅有產品連結的PLP很難獲得排名</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/10/image-9.png" alt="" class="wp-image-3934" width="529" height="133" loading="lazy" decoding="async"><figcaption>文中引用John Mueller的話 - 僅有產品連結的PLP很難獲得排名</figcaption></figure>
 
 
 
@@ -282,7 +282,7 @@ wpId: 3914
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/10/image-3-1024x753.png" alt="" class="wp-image-3925" width="508" height="372" loading="lazy" decoding="async"><figcaption>時常確保團隊有 "on the same page"</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/10/image-3-1024x753.png" alt="" class="wp-image-3925" width="508" height="374" loading="lazy" decoding="async"><figcaption>時常確保團隊有 "on the same page"</figcaption></figure>
 
 
 

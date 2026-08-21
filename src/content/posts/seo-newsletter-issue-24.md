@@ -257,7 +257,7 @@ wpId: 2387
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/01/Google-%E6%88%91%E7%9A%84%E5%95%86%E5%AE%B6%E5%A0%B1%E8%A1%A8%E7%BF%BB%E6%96%B0-513x1024.png" alt="" class="wp-image-2457" width="257" height="512" loading="lazy" decoding="async"><figcaption><a href="https://searchengineland.com/google-my-business-launches-new-performance-reporting-345252">圖片來源 - Search Engine Journal</a></figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/01/Google-%E6%88%91%E7%9A%84%E5%95%86%E5%AE%B6%E5%A0%B1%E8%A1%A8%E7%BF%BB%E6%96%B0-513x1024.png" alt="" class="wp-image-2457" width="257" height="513" loading="lazy" decoding="async"><figcaption><a href="https://searchengineland.com/google-my-business-launches-new-performance-reporting-345252">圖片來源 - Search Engine Journal</a></figcaption></figure></div>
 
 
 

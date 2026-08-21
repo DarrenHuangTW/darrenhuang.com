@@ -107,7 +107,7 @@ wpId: 3544
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/04/%E6%94%B9%E9%80%B2%E4%BE%B5%E5%85%A5%E5%BC%8F%E8%93%8B%E6%9D%BF.jpeg" alt="" class="wp-image-3553" width="470" height="377" loading="lazy" decoding="async"><figcaption>改善侵入式蓋板的 email 通知</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/04/%E6%94%B9%E9%80%B2%E4%BE%B5%E5%85%A5%E5%BC%8F%E8%93%8B%E6%9D%BF.jpeg" alt="" class="wp-image-3553" width="470" height="378" loading="lazy" decoding="async"><figcaption>改善侵入式蓋板的 email 通知</figcaption></figure>
 
 
 

@@ -252,7 +252,7 @@ wpId: 8
 
 
 <figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/08/%E9%BB%91%E5%B8%BDSEO%E7%AF%84%E4%BE%8B.png" alt="黑帽SEO連結建立範例-1
-" class="wp-image-1688" width="495" height="304" loading="lazy" decoding="async"><figcaption><a href="http://obgsagesa.over-blog.com/article-online-movie-download-finish-line-my-store-109414838.html" target="_blank" rel="noreferrer noopener nofollow">黑帽SEO連結建立示範 - 1</a></figcaption></figure>
+" class="wp-image-1688" width="495" height="305" loading="lazy" decoding="async"><figcaption><a href="http://obgsagesa.over-blog.com/article-online-movie-download-finish-line-my-store-109414838.html" target="_blank" rel="noreferrer noopener nofollow">黑帽SEO連結建立示範 - 1</a></figcaption></figure>
 
 
 
@@ -320,7 +320,7 @@ wpId: 8
 
 
 
-<figure class="wp-block-image is-resized"><img src="./wp-content/uploads/2016/04/white-hat-seo-example-1024x338.jpg" alt="自然反向連結" width="570" height="187" loading="lazy" decoding="async"><figcaption>從他人網站自然連過來的反向連結</figcaption></figure>
+<figure class="wp-block-image is-resized"><img src="./wp-content/uploads/2016/04/white-hat-seo-example-1024x338.jpg" alt="自然反向連結" width="570" height="188" loading="lazy" decoding="async"><figcaption>從他人網站自然連過來的反向連結</figcaption></figure>
 
 
 

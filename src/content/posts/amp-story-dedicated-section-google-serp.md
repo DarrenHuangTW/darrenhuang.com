@@ -43,7 +43,7 @@ wpId: 493
 
 
 
-<div class="wp-block-image"><figure class="aligncenter is-resized"><img src="./wp-content/uploads/2019/04/amp-instant-loading-example.gif" alt="amp instant loading example" class="wp-image-494" width="229" height="388" loading="lazy" decoding="async"><figcaption>範例 - AMP網頁載入速度</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter is-resized"><img src="./wp-content/uploads/2019/04/amp-instant-loading-example.gif" alt="amp instant loading example" class="wp-image-494" width="229" height="389" loading="lazy" decoding="async"><figcaption>範例 - AMP網頁載入速度</figcaption></figure></div>
 
 
 
@@ -91,7 +91,7 @@ wpId: 493
 
 
 
-<div class="wp-block-image"><figure class="aligncenter is-resized"><img src="./wp-content/uploads/2019/04/amp-story-gsc.png" alt="" class="wp-image-515" width="293" height="376" loading="lazy" decoding="async"></figure></div>
+<div class="wp-block-image"><figure class="aligncenter is-resized"><img src="./wp-content/uploads/2019/04/amp-story-gsc.png" alt="" class="wp-image-515" width="293" height="380" loading="lazy" decoding="async"></figure></div>
 
 
 
@@ -215,7 +215,7 @@ wpId: 493
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/08/web-story%E6%95%B8%E6%93%9A%E5%88%86%E6%9E%90-1024x521.png" alt="amp story數據分析" class="wp-image-1665" width="463" height="235" loading="lazy" decoding="async"></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/08/web-story%E6%95%B8%E6%93%9A%E5%88%86%E6%9E%90-1024x521.png" alt="amp story數據分析" class="wp-image-1665" width="463" height="236" loading="lazy" decoding="async"></figure>
 
 
 

@@ -74,7 +74,7 @@ wpId: 3746
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/07/image-14-1024x543.png" alt="" class="wp-image-3751" width="-48" height="-25" loading="lazy" decoding="async"><figcaption>GSC中給的sitemap位置轉址到別的網域仍會被接受</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/07/image-14-1024x543.png" alt="" class="wp-image-3751" width="1024" height="543" loading="lazy" decoding="async"><figcaption>GSC中給的sitemap位置轉址到別的網域仍會被接受</figcaption></figure>
 
 
 
@@ -96,7 +96,7 @@ wpId: 3746
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/07/Search-Analytics-for-Sheets-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8-1024x462.png" alt="" class="wp-image-3765" width="-49" height="-21" loading="lazy" decoding="async"><figcaption>URL Inspection結果</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/07/Search-Analytics-for-Sheets-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8-1024x462.png" alt="" class="wp-image-3765" width="1024" height="462" loading="lazy" decoding="async"><figcaption>URL Inspection結果</figcaption></figure>
 
 
 
@@ -156,7 +156,7 @@ wpId: 3746
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-2.png" alt="" class="wp-image-3772" width="600" height="383" loading="lazy" decoding="async"><figcaption>GDS中將關鍵字依據字數分類 </figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-2.png" alt="" class="wp-image-3772" width="600" height="384" loading="lazy" decoding="async"><figcaption>GDS中將關鍵字依據字數分類 </figcaption></figure>
 
 
 
@@ -164,7 +164,7 @@ wpId: 3746
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-4-1024x229.png" alt="" class="wp-image-3774" width="554" height="123" loading="lazy" decoding="async"><figcaption>拉出最高點、最低點、和平均值參考線</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-4-1024x229.png" alt="" class="wp-image-3774" width="554" height="124" loading="lazy" decoding="async"><figcaption>拉出最高點、最低點、和平均值參考線</figcaption></figure>
 
 
 
@@ -212,7 +212,7 @@ wpId: 3746
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/07/image-15.png" alt="" class="wp-image-3754" width="507" height="343" loading="lazy" decoding="async"><figcaption>善用 Screaming Frog 的 Search 功能，找出網站上有提到目標關鍵字的網頁</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/07/image-15.png" alt="" class="wp-image-3754" width="507" height="344" loading="lazy" decoding="async"><figcaption>善用 Screaming Frog 的 Search 功能，找出網站上有提到目標關鍵字的網頁</figcaption></figure>
 
 
 

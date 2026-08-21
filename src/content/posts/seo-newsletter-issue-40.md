@@ -159,7 +159,7 @@ wpId: 2983
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/09/%E8%A9%A6%E7%AE%97%E8%A1%A8-%E7%8D%B2%E5%BE%97HTTP%E7%8B%80%E6%85%8B%E7%A2%BC.png" alt="" class="wp-image-2992" width="424" height="178" loading="lazy" decoding="async"></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/09/%E8%A9%A6%E7%AE%97%E8%A1%A8-%E7%8D%B2%E5%BE%97HTTP%E7%8B%80%E6%85%8B%E7%A2%BC.png" alt="" class="wp-image-2992" width="424" height="179" loading="lazy" decoding="async"></figure></div>
 
 
 
@@ -167,7 +167,7 @@ wpId: 2983
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/09/%E8%A9%A6%E7%AE%97%E8%A1%A8-%E7%A7%BB%E9%99%A4HTML%E6%A8%99%E7%B1%A4.png" alt="" class="wp-image-2993" width="507" height="130" loading="lazy" decoding="async"></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/09/%E8%A9%A6%E7%AE%97%E8%A1%A8-%E7%A7%BB%E9%99%A4HTML%E6%A8%99%E7%B1%A4.png" alt="" class="wp-image-2993" width="507" height="131" loading="lazy" decoding="async"></figure></div>
 
 
 
@@ -197,7 +197,7 @@ wpId: 2983
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/09/%E6%8A%80%E8%A1%93SEO-%E6%AA%A2%E6%9F%A5canonical.png" alt="" class="wp-image-2988" width="459" height="399" loading="lazy" decoding="async"><figcaption>舉例來說，在第四點「有問題的canonical」中，作者就列了幾乎所有的情境</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/09/%E6%8A%80%E8%A1%93SEO-%E6%AA%A2%E6%9F%A5canonical.png" alt="" class="wp-image-2988" width="459" height="400" loading="lazy" decoding="async"><figcaption>舉例來說，在第四點「有問題的canonical」中，作者就列了幾乎所有的情境</figcaption></figure></div>
 
 
 
@@ -227,7 +227,7 @@ wpId: 2983
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/09/%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90-SEO%E6%B5%81%E9%87%8F%E6%88%90%E9%95%B7-1024x316.png" alt="" class="wp-image-2996" width="599" height="184" loading="lazy" decoding="async"><figcaption>Forexsuggest.com網站流量變化圖</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/09/%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90-SEO%E6%B5%81%E9%87%8F%E6%88%90%E9%95%B7-1024x316.png" alt="" class="wp-image-2996" width="599" height="185" loading="lazy" decoding="async"><figcaption>Forexsuggest.com網站流量變化圖</figcaption></figure></div>
 
 
 
@@ -253,7 +253,7 @@ wpId: 2983
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/09/AI%E7%94%9F%E7%94%A2%E5%85%A7%E5%AE%B9SEO-1024x541.png" alt="" class="wp-image-3002" width="557" height="293" loading="lazy" decoding="async"><figcaption>在短期內就衝到將近130萬月流量的網站</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/09/AI%E7%94%9F%E7%94%A2%E5%85%A7%E5%AE%B9SEO-1024x541.png" alt="" class="wp-image-3002" width="557" height="294" loading="lazy" decoding="async"><figcaption>在短期內就衝到將近130萬月流量的網站</figcaption></figure></div>
 
 
 
@@ -279,7 +279,7 @@ wpId: 2983
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/09/%E5%88%86%E9%9D%A2%E5%B0%8E%E8%88%AA-faceted-navigation-1024x549.jpg" alt="" class="wp-image-3003" width="-65" height="-34" loading="lazy" decoding="async"><figcaption>分面導航(faceted navigation)示意</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/09/%E5%88%86%E9%9D%A2%E5%B0%8E%E8%88%AA-faceted-navigation-1024x549.jpg" alt="" class="wp-image-3003" width="1024" height="549" loading="lazy" decoding="async"><figcaption>分面導航(faceted navigation)示意</figcaption></figure></div>
 
 
 

@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
+import { enrichLocalMediaHtml } from '../../scripts/migrate-wordpress/html.js';
+
 import {
   parseGutenbergAst,
   rewriteWordPressUrl,
@@ -9,6 +11,27 @@ import {
 const TEST_ORIGIN = '192.0.2.1';
 
 describe('WordPress content transformation', () => {
+  it('normalizes migrated image dimensions to the intrinsic aspect ratio', () => {
+    const html = enrichLocalMediaHtml(
+      '<figure><img src="/wp-content/uploads/example.png" width="600" height="500"></figure>',
+      [
+        {
+          bytes: 1_024,
+          height: 544,
+          mime: 'image/png',
+          path: '/wp-content/uploads/example.png',
+          sha256: 'test',
+          width: 1_024,
+        },
+      ],
+    );
+
+    expect(html).toContain('width="600"');
+    expect(html).toContain('height="319"');
+    expect(html).toContain('loading="lazy"');
+    expect(html).toContain('decoding="async"');
+  });
+
   it('parses nested Gutenberg blocks and preserves their sanitized HTML', () => {
     const content = `
 <!-- wp:group -->

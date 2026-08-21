@@ -231,7 +231,7 @@ wpId: 3040
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2021/10/%E9%9B%BB%E5%95%86%E7%B6%B2%E7%AB%99%E6%9C%80%E4%BD%B3%E5%81%9A%E6%B3%95-1024x453.png" alt="" class="wp-image-3059" width="636" height="282" loading="lazy" decoding="async"><figcaption>電商相關 SEO 最佳做法文章</figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2021/10/%E9%9B%BB%E5%95%86%E7%B6%B2%E7%AB%99%E6%9C%80%E4%BD%B3%E5%81%9A%E6%B3%95-1024x453.png" alt="" class="wp-image-3059" width="636" height="281" loading="lazy" decoding="async"><figcaption>電商相關 SEO 最佳做法文章</figcaption></figure>
 
 
 

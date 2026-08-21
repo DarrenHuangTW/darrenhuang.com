@@ -7,7 +7,7 @@ Phase 1–5 的本機搬遷與驗收已完成，內容完整性、既有網址�
 
 截至 2026-08-09，Phase 1–5 已完成，Phase 6 的首次 push、GitHub Actions、Pages base-path 預覽與 GitHub 帳號層級網域驗證已完成。
 最新 importer 產物包含 86 篇正式文章、41 篇原會員限定文章、19 篇排除 drafts、1 篇正式內容頁、2 篇 Web Stories、773 個發布媒體與 192 個外部媒體或附件參考，未知 Gutenberg blocks 為 0。
-正式網域與 GitHub Pages base-path 兩種本機 production build、211 個 HTML artifact、桌機與手機代表性頁面目視驗收、14 個 E2E、完整秘密掃描、staged-files 審查、第一個本機 commit，以及 clean-clone 重跑均已通過。
+正式網域與 GitHub Pages base-path 兩種本機 production build、211 個 HTML artifact、桌機與手機代表性頁面目視驗收、24 個 E2E、完整秘密掃描、staged-files 審查、第一個本機 commit，以及 clean-clone 重跑均已通過。
 GitHub Pages preview 已在公開環境通過 HTTP、桌機與手機驗收。
 正式 canonical host 已確認為 `https://www.darrenhuang.com`；repository custom domain、網站流量 DNS 與 redirect 切換尚未執行。
 
@@ -31,6 +31,18 @@ GitHub Pages preview 已在公開環境通過 HTTP、桌機與手機驗收。
 - GitHub Actions 建置並發布經驗證的 GitHub Pages artifact。
 - 第三方 embeds 使用 progressive enhancement，來源連結在外部 script 失效時仍可使用。
 - Post-build 產生 canonical 頁面的 Markdown alternates、LLM indexes 與具 digest 的 Agent Skill discovery。
+- Post-build 也會離線產生有內容雜湊的 WebP／AVIF 響應式圖片；瀏覽器端不需要圖片最佳化服務或額外 JavaScript。
+
+## 原生 UI／UX
+
+- 長文章會顯示閱讀時間、CSS scroll-driven 閱讀進度，以及由既有 `h2`／`h3` 自動產生的桌機 sticky HUD 或手機折疊目錄。
+- 每篇文章底部提供電子報前後期導覽與三篇內容相近的延伸閱讀。
+- 系統深色模式完全由 `prefers-color-scheme` 與語意化色彩 tokens 驅動，不需儲存偏好或等待 JavaScript。
+- 支援的瀏覽器使用 CSS `@view-transition` 做跨頁轉場，不支援時維持一般靜態導覽。
+- 只有站內主要導覽、文章卡片與文章旅程連結會在 hover 後 prefetch，外部連結與正文連結不會預抓。
+- 本機圖片會在 build 階段依內容雜湊產生多尺寸 `<picture>`；原始媒體 URL 保留為 fallback，圖片點擊時才載入原圖至原生 `<dialog>` 燈箱。
+
+目前 production build 會為 437 張符合條件的來源圖片產生 1,345 個響應式變體，兩種 viewport 與根路徑／GitHub Pages base path 的 24 個 E2E 均已通過。
 
 ## Agent-readable 介面
 
@@ -81,7 +93,7 @@ src/content/                 經過清理與 schema 驗證的文章、頁面與 
 src/components/embeds/      可降級的第三方 embed components。
 public/wp-content/uploads/  只有正式內容實際引用的媒體。
 scripts/migrate-wordpress/  可重跑且輸出可重現的 importer。
-scripts/build/              Agent-readable Markdown 與 discovery artifact 產生器。
+scripts/build/              Agent-readable artifacts 與響應式圖片產生器。
 scripts/verify/              搬遷與建置成品驗收工具。
 cloudflare/agent-readiness/  Free-plan Markdown negotiation 與 discovery Worker。
 migration/                  Manifest 與機器可讀的遷移報告。

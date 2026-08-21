@@ -240,7 +240,7 @@ wpId: 2736
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/05/Google-IO-%E6%91%98%E8%A6%81.png" alt="" class="wp-image-2746" width="635" height="407" loading="lazy" decoding="async"><figcaption>(<a href="https://www.instagram.com/p/CPGV0JnHfzU/" class="rank-math-link">由 @seo_pb 整理於 Instagram</a>)</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/05/Google-IO-%E6%91%98%E8%A6%81.png" alt="" class="wp-image-2746" width="635" height="408" loading="lazy" decoding="async"><figcaption>(<a href="https://www.instagram.com/p/CPGV0JnHfzU/" class="rank-math-link">由 @seo_pb 整理於 Instagram</a>)</figcaption></figure></div>
 
 
 

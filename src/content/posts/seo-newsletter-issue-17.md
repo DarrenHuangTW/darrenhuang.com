@@ -104,7 +104,7 @@ wpId: 1819
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/09/emoji-13.1-2021%E6%8E%A8%E5%87%BA.png" alt="" class="wp-image-1841" width="447" height="271" loading="lazy" decoding="async"><figcaption>因為疫情關係受影響的推行時間軸</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/09/emoji-13.1-2021%E6%8E%A8%E5%87%BA.png" alt="" class="wp-image-1841" width="447" height="272" loading="lazy" decoding="async"><figcaption>因為疫情關係受影響的推行時間軸</figcaption></figure></div>
 
 
 
@@ -172,7 +172,7 @@ wpId: 1819
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/09/google%E7%94%A2%E5%93%81%E9%81%8B%E9%80%81%E7%B4%B0%E7%AF%80%E7%B5%90%E6%A7%8B%E5%8C%96%E8%B3%87%E6%96%99.png" alt="送貨細節 結構化資料" class="wp-image-1832" width="395" height="387" loading="lazy" decoding="async"><figcaption>沒有Google Merchant Center的店家也能透過Schema Markup讓運費資訊出現在搜尋結果。</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/09/google%E7%94%A2%E5%93%81%E9%81%8B%E9%80%81%E7%B4%B0%E7%AF%80%E7%B5%90%E6%A7%8B%E5%8C%96%E8%B3%87%E6%96%99.png" alt="送貨細節 結構化資料" class="wp-image-1832" width="395" height="386" loading="lazy" decoding="async"><figcaption>沒有Google Merchant Center的店家也能透過Schema Markup讓運費資訊出現在搜尋結果。</figcaption></figure></div>
 
 
 
@@ -254,7 +254,7 @@ wpId: 1819
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/09/http2%E6%B8%AC%E8%A9%A6%E5%B7%A5%E5%85%B7.png" alt="HTTP/2測試工具" class="wp-image-1820" width="549" height="210" loading="lazy" decoding="async"><figcaption><a href="https://tools.keycdn.com/http2-test">測試網站是否支援HTTP/2的工具</a></figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/09/http2%E6%B8%AC%E8%A9%A6%E5%B7%A5%E5%85%B7.png" alt="HTTP/2測試工具" class="wp-image-1820" width="549" height="211" loading="lazy" decoding="async"><figcaption><a href="https://tools.keycdn.com/http2-test">測試網站是否支援HTTP/2的工具</a></figcaption></figure>
 
 
 

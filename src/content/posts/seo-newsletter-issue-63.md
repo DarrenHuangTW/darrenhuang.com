@@ -56,7 +56,7 @@ wpId: 3835
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-29-1024x616.png" alt="" class="wp-image-3856" width="568" height="341" loading="lazy" decoding="async"><figcaption><a href="https://docs.google.com/spreadsheets/d/12-F9Z4NzDADOFRQtOiN-CtjY2aaqj-R5CcrJNCuTha4/edit#gid=0">Aleyda Solis 所分享的自我檢測問題</a></figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-29-1024x616.png" alt="" class="wp-image-3856" width="568" height="342" loading="lazy" decoding="async"><figcaption><a href="https://docs.google.com/spreadsheets/d/12-F9Z4NzDADOFRQtOiN-CtjY2aaqj-R5CcrJNCuTha4/edit#gid=0">Aleyda Solis 所分享的自我檢測問題</a></figcaption></figure>
 
 
 
@@ -82,7 +82,7 @@ wpId: 3835
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-31.png" alt="" class="wp-image-3859" width="450" height="348" loading="lazy" decoding="async"><figcaption>改版介面前後比較</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-31.png" alt="" class="wp-image-3859" width="450" height="349" loading="lazy" decoding="async"><figcaption>改版介面前後比較</figcaption></figure>
 
 
 
@@ -112,7 +112,7 @@ wpId: 3835
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-32.png" alt="" class="wp-image-3863" width="465" height="671" loading="lazy" decoding="async"><figcaption><a href="https://twitter.com/googlesearchc/status/1561727623734169600">官方公告</a></figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-32.png" alt="" class="wp-image-3863" width="465" height="672" loading="lazy" decoding="async"><figcaption><a href="https://twitter.com/googlesearchc/status/1561727623734169600">官方公告</a></figcaption></figure>
 
 
 
@@ -142,7 +142,7 @@ wpId: 3835
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-23-1024x557.png" alt="" class="wp-image-3846" width="524" height="284" loading="lazy" decoding="async"><figcaption>SF v17中可以比較兩次抓取的結果</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-23-1024x557.png" alt="" class="wp-image-3846" width="524" height="285" loading="lazy" decoding="async"><figcaption>SF v17中可以比較兩次抓取的結果</figcaption></figure>
 
 
 
@@ -184,7 +184,7 @@ wpId: 3835
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-28-1024x588.png" alt="" class="wp-image-3854" width="545" height="312" loading="lazy" decoding="async"></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-28-1024x588.png" alt="" class="wp-image-3854" width="545" height="313" loading="lazy" decoding="async"></figure>
 
 
 
@@ -210,7 +210,7 @@ wpId: 3835
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-26.png" alt="" class="wp-image-3851" width="481" height="457" loading="lazy" decoding="async"><figcaption>Skillshop 上的課程一覽</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-26.png" alt="" class="wp-image-3851" width="481" height="458" loading="lazy" decoding="async"><figcaption>Skillshop 上的課程一覽</figcaption></figure>
 
 
 
@@ -292,7 +292,7 @@ wpId: 3835
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-18-1024x505.png" alt="" class="wp-image-3838" width="606" height="295" loading="lazy" decoding="async"></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-18-1024x505.png" alt="" class="wp-image-3838" width="606" height="299" loading="lazy" decoding="async"></figure>
 
 
 
@@ -328,7 +328,7 @@ wpId: 3835
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-19.png" alt="" class="wp-image-3840" width="532" height="278" loading="lazy" decoding="async"><figcaption>在網頁上第一次按下tab時，會跳出 skip to main content (<a href="https://webaim.org/techniques/skipnav/">範例網頁</a>)</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-19.png" alt="" class="wp-image-3840" width="532" height="279" loading="lazy" decoding="async"><figcaption>在網頁上第一次按下tab時，會跳出 skip to main content (<a href="https://webaim.org/techniques/skipnav/">範例網頁</a>)</figcaption></figure>
 
 
 

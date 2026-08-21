@@ -536,6 +536,185 @@ test.describe('Phase 5 public-site acceptance', () => {
     expect(new URL(openGraphUrl ?? '').toString()).toBe(expectedCanonical);
   });
 
+  test('the native article experience keeps reading, discovery, and images fast', async ({
+    page,
+  }, testInfo) => {
+    const runtimeErrors: string[] = [];
+    page.on('pageerror', (error) => runtimeErrors.push(error.message));
+
+    const response = await page.goto(
+      runtimePath('/seo-newsletter-issue-70-71.html'),
+    );
+    expect(response?.ok()).toBe(true);
+    await expect(page.locator('.article__byline')).toContainText(
+      /約 \d+ 分鐘/u,
+    );
+
+    const isMobile = testInfo.project.name.startsWith('mobile');
+    const desktopHud = page.locator('.reading-hud__desktop');
+    const mobileHud = page.locator('.reading-hud__mobile');
+    if (isMobile) {
+      await expect(desktopHud).toBeHidden();
+      await expect(mobileHud).toBeVisible();
+      await mobileHud.locator('summary').click();
+    } else {
+      await expect(desktopHud).toBeVisible();
+      await expect(mobileHud).toBeHidden();
+    }
+
+    const tocLink = (isMobile ? mobileHud : desktopHud).locator('a').first();
+    const targetHash = await tocLink.getAttribute('href');
+    expect(targetHash).toMatch(/^#toc-\d+$/u);
+    await tocLink.click();
+    await expect
+      .poll(() => page.evaluate(() => window.location.hash))
+      .toBe(targetHash);
+    await expect
+      .poll(async () => {
+        return page.evaluate((hash) => {
+          const target = document.querySelector(hash);
+          const header = document.querySelector('.site-header');
+          if (!target || !header) return false;
+          const targetTop = target.getBoundingClientRect().top;
+          const headerBottom = header.getBoundingClientRect().bottom;
+          return (
+            targetTop >= headerBottom && targetTop < window.innerHeight * 0.6
+          );
+        }, targetHash ?? '#missing');
+      })
+      .toBe(true);
+
+    if (!isMobile) {
+      await expect
+        .poll(() =>
+          desktopHud.evaluate((hud) => {
+            const top = hud.parentElement?.getBoundingClientRect().top ?? -1;
+            return top >= 95 && top <= 105;
+          }),
+        )
+        .toBe(true);
+    }
+
+    await expect(
+      page.locator('.article-journey__series .journey-link--previous'),
+    ).toHaveAttribute('href', runtimePath('/seo-newsletter-issue-69.html'));
+    await expect(page.locator('.article-journey .related-card')).toHaveCount(3);
+
+    const articleTitle = page.locator('.article__header h1');
+    expect(
+      await articleTitle.evaluate(
+        (heading) => getComputedStyle(heading).viewTransitionName,
+      ),
+    ).toBe('post-title-seo-newsletter-issue-70-71');
+    expect(
+      await page.locator('a[data-astro-prefetch="hover"]').count(),
+    ).toBeGreaterThan(0);
+    await expect(
+      page.locator('.prose a[href^="http"][data-astro-prefetch]'),
+    ).toHaveCount(0);
+
+    if (!isMobile) {
+      const previousIssue = page.locator(
+        '.article-journey__series .journey-link--previous',
+      );
+      await previousIssue.hover();
+      await expect
+        .poll(() =>
+          page
+            .locator(
+              `head link[rel="prefetch"][href$="${runtimePath('/seo-newsletter-issue-69.html')}"]`,
+            )
+            .count(),
+        )
+        .toBe(1);
+    }
+
+    const responsivePicture = page
+      .locator('.prose picture[data-responsive-image="true"]')
+      .first();
+    await expect(responsivePicture).toBeVisible();
+    const responsiveSource = responsivePicture
+      .locator('source[srcset]')
+      .first();
+    await expect(responsiveSource).toHaveAttribute(
+      'srcset',
+      new RegExp(escapedRegExp(runtimePath('/_optimized/'))),
+    );
+    const articleImage = responsivePicture.locator('img');
+    await expect(articleImage).toHaveAttribute('sizes', /50rem/u);
+    const fallbackSource = await articleImage.getAttribute('src');
+    expect(fallbackSource).toContain('wp-content/uploads/');
+    expect(fallbackSource).not.toContain('/_optimized/');
+    await responsivePicture.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        articleImage.evaluate(
+          (image) =>
+            image instanceof HTMLImageElement &&
+            image.complete &&
+            image.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+    const selectedImage = await articleImage.evaluate(
+      (image) => (image as HTMLImageElement).currentSrc,
+    );
+    expect(new URL(selectedImage).pathname).toContain(
+      runtimePath('/_optimized/'),
+    );
+
+    await articleImage.click();
+    const lightbox = page.locator('dialog[data-image-lightbox]');
+    await expect(lightbox).toBeVisible();
+    const previewSource = await lightbox
+      .locator('[data-lightbox-image]')
+      .getAttribute('src');
+    expect(previewSource).toBeTruthy();
+    expect(new URL(previewSource ?? '').pathname).toContain(
+      runtimePath('/wp-content/uploads/'),
+    );
+    await page.keyboard.press('Escape');
+    await expect(lightbox).toBeHidden();
+    await expect(lightbox.locator('[data-lightbox-image]')).not.toHaveAttribute(
+      'src',
+      /.+/u,
+    );
+    expect(runtimeErrors).toEqual([]);
+  });
+
+  test('the site follows the operating-system color scheme without JavaScript', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: 'dark' });
+    const response = await page.goto(runtimePath('/articles.html'));
+    expect(response?.ok()).toBe(true);
+    await expect(
+      page.locator('meta[name="theme-color"][media*="dark"]'),
+    ).toHaveAttribute('content', '#0e1514');
+
+    const palette = () =>
+      page.evaluate(() => {
+        const rootStyle = getComputedStyle(document.documentElement);
+        return {
+          background: rootStyle.getPropertyValue('--color-bg').trim(),
+          colorScheme: rootStyle.colorScheme,
+          ink: rootStyle.getPropertyValue('--color-ink').trim(),
+        };
+      });
+    await expect.poll(palette).toEqual({
+      background: '#0e1514',
+      colorScheme: 'dark',
+      ink: '#edf3ef',
+    });
+
+    await page.emulateMedia({ colorScheme: 'light' });
+    await expect.poll(palette).toEqual({
+      background: '#f4f1e9',
+      colorScheme: 'light',
+      ink: '#17201f',
+    });
+  });
+
   test('long article titles and legacy galleries stay within the viewport', async ({
     page,
   }, testInfo) => {

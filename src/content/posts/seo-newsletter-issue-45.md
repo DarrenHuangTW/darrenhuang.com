@@ -43,7 +43,7 @@ wpId: 3156
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/11/PageSpeed-Insights-%E8%B3%87%E8%A8%8A%E5%8D%A1.png" alt="" class="wp-image-3167" width="600" loading="lazy" decoding="async" height="389"><figcaption>新版 PSI加了一個顯示數據來源的資訊卡</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/11/PageSpeed-Insights-%E8%B3%87%E8%A8%8A%E5%8D%A1.png" alt="" class="wp-image-3167" width="600" loading="lazy" decoding="async" height="276"><figcaption>新版 PSI加了一個顯示數據來源的資訊卡</figcaption></figure></div>
 
 
 
@@ -93,7 +93,7 @@ wpId: 3156
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/11/GA-%E9%A0%90%E8%A8%AD%E6%B5%81%E9%87%8F%E6%B8%A0%E9%81%93%E5%88%86%E9%A1%9E.png" alt="" class="wp-image-3169" width="600" loading="lazy" decoding="async" height="561"><figcaption>2021-11-15所更新的預設流量管道分類</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/11/GA-%E9%A0%90%E8%A8%AD%E6%B5%81%E9%87%8F%E6%B8%A0%E9%81%93%E5%88%86%E9%A1%9E.png" alt="" class="wp-image-3169" width="600" loading="lazy" decoding="async" height="349"><figcaption>2021-11-15所更新的預設流量管道分類</figcaption></figure></div>
 
 
 
@@ -119,7 +119,7 @@ wpId: 3156
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/Google-%E7%BF%BB%E8%AD%AF%E7%B6%B2%E9%A0%81-1024x487.png" alt="" class="wp-image-3172" width="600" loading="lazy" decoding="async" height="487"><figcaption>泰文的搜尋字出現泰文網頁標題和描述，點進去是Google Translate所翻譯的文章，但原始文章、標題、描述皆為英文。</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/Google-%E7%BF%BB%E8%AD%AF%E7%B6%B2%E9%A0%81-1024x487.png" alt="" class="wp-image-3172" width="600" loading="lazy" decoding="async" height="285"><figcaption>泰文的搜尋字出現泰文網頁標題和描述，點進去是Google Translate所翻譯的文章，但原始文章、標題、描述皆為英文。</figcaption></figure></div>
 
 
 
@@ -149,7 +149,7 @@ wpId: 3156
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/%E7%B4%A2%E5%BC%95%E6%B6%B5%E8%93%8B%E7%AF%84%E5%9C%8D%E5%A0%B1%E8%A1%A8-1024x475.jpg" alt="" class="wp-image-3182" width="600" loading="lazy" decoding="async" height="475"><figcaption>GSC中索引涵蓋範圍報表上列出索引問題和數量</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/%E7%B4%A2%E5%BC%95%E6%B6%B5%E8%93%8B%E7%AF%84%E5%9C%8D%E5%A0%B1%E8%A1%A8-1024x475.jpg" alt="" class="wp-image-3182" width="600" loading="lazy" decoding="async" height="278"><figcaption>GSC中索引涵蓋範圍報表上列出索引問題和數量</figcaption></figure></div>
 
 
 
@@ -205,7 +205,7 @@ wpId: 3156
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/google-trends-%E5%B0%8F%E6%99%82%E5%8D%80%E9%96%93%E8%B3%87%E6%96%99-1024x359.jpg" alt="" class="wp-image-3177" width="600" loading="lazy" decoding="async" height="359"><figcaption>上圖下方代表顯示出2017-9-26，18:00 UTC到19:00UTC的走勢圖</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/google-trends-%E5%B0%8F%E6%99%82%E5%8D%80%E9%96%93%E8%B3%87%E6%96%99-1024x359.jpg" alt="" class="wp-image-3177" width="600" loading="lazy" decoding="async" height="210"><figcaption>上圖下方代表顯示出2017-9-26，18:00 UTC到19:00UTC的走勢圖</figcaption></figure></div>
 
 
 
@@ -235,7 +235,7 @@ wpId: 3156
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/%E9%80%8F%E9%81%8E%E8%AB%96%E5%A3%87%E7%99%BC%E6%83%B3%E9%A1%8C%E6%9D%90-1024x763.png" alt="" class="wp-image-3179" width="600" height="436" loading="lazy" decoding="async"><figcaption>塞選出 pets.ca表現不錯的主題，做為內容發想的參考</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/%E9%80%8F%E9%81%8E%E8%AB%96%E5%A3%87%E7%99%BC%E6%83%B3%E9%A1%8C%E6%9D%90-1024x763.png" alt="" class="wp-image-3179" width="600" height="447" loading="lazy" decoding="async"><figcaption>塞選出 pets.ca表現不錯的主題，做為內容發想的參考</figcaption></figure></div>
 
 
 
@@ -265,7 +265,7 @@ wpId: 3156
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/HARO%E6%A8%A1%E6%9D%BF-1024x155.png" alt="" class="wp-image-3163" width="600" loading="lazy" decoding="async" height="155"><figcaption>模板整理了記者的名字、聯絡信箱、期限、以及記者的請求...等等</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/HARO%E6%A8%A1%E6%9D%BF-1024x155.png" alt="" class="wp-image-3163" width="600" loading="lazy" decoding="async" height="91"><figcaption>模板整理了記者的名字、聯絡信箱、期限、以及記者的請求...等等</figcaption></figure></div>
 
 
 
@@ -273,7 +273,7 @@ wpId: 3156
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/gpt-3%E7%94%9F%E7%94%A2%E5%99%A8-1024x53.png" alt="" class="wp-image-3164" width="600" height="32" loading="lazy" decoding="async"><figcaption>輸入 <code>=meta("what is seo?")</code>所跑出來的結果</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/gpt-3%E7%94%9F%E7%94%A2%E5%99%A8-1024x53.png" alt="" class="wp-image-3164" width="600" height="31" loading="lazy" decoding="async"><figcaption>輸入 <code>=meta("what is seo?")</code>所跑出來的結果</figcaption></figure></div>
 
 
 
@@ -295,11 +295,11 @@ wpId: 3156
 
 
 
-<div class="wp-block-image is-style-default"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/%E5%B9%B3%E5%9D%87%E6%AF%8F%E5%A4%A9%E6%9C%89%E5%A4%9A%E5%B0%91%E9%A0%81%E9%9D%A2%E5%87%BA%E7%8F%BE%E5%9C%A8Discover%E4%B8%AD-1024x478.png" alt="" class="wp-image-3160" width="600" height="359" loading="lazy" decoding="async"><figcaption>平均每天有多少頁面出現在Google Discover中</figcaption></figure></div>
+<div class="wp-block-image is-style-default"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/%E5%B9%B3%E5%9D%87%E6%AF%8F%E5%A4%A9%E6%9C%89%E5%A4%9A%E5%B0%91%E9%A0%81%E9%9D%A2%E5%87%BA%E7%8F%BE%E5%9C%A8Discover%E4%B8%AD-1024x478.png" alt="" class="wp-image-3160" width="600" height="280" loading="lazy" decoding="async"><figcaption>平均每天有多少頁面出現在Google Discover中</figcaption></figure></div>
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/Google-Discover%E5%B9%B3%E5%9D%87%E5%87%BA%E7%8F%BE%E5%A4%A9%E6%95%B8-1024x239.png" alt="" class="wp-image-3161" width="600" loading="lazy" decoding="async" height="239"><figcaption>出現在Discover的網頁新舊分布。Ex: 僅約5.8%的網頁在發布10天後有流量</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/Google-Discover%E5%B9%B3%E5%9D%87%E5%87%BA%E7%8F%BE%E5%A4%A9%E6%95%B8-1024x239.png" alt="" class="wp-image-3161" width="600" loading="lazy" decoding="async" height="140"><figcaption>出現在Discover的網頁新舊分布。Ex: 僅約5.8%的網頁在發布10天後有流量</figcaption></figure></div>
 
 
 

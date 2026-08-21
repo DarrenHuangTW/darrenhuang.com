@@ -110,7 +110,7 @@ wpId: 2777
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/120384128-61de6500-c2eb-11eb-9d15-5b92981d897e-1024x567.png" alt="" class="wp-image-2781" width="487" height="269" loading="lazy" decoding="async"><figcaption>根據指標篩選出相關聯的優化機會</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/120384128-61de6500-c2eb-11eb-9d15-5b92981d897e-1024x567.png" alt="" class="wp-image-2781" width="487" height="270" loading="lazy" decoding="async"><figcaption>根據指標篩選出相關聯的優化機會</figcaption></figure></div>
 
 
 
@@ -194,7 +194,7 @@ wpId: 2777
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/tech-seo-audit-checklist.png" alt="" class="wp-image-2784" width="560" height="307" loading="lazy" decoding="async"><figcaption>健診模板截圖</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/tech-seo-audit-checklist.png" alt="" class="wp-image-2784" width="560" height="308" loading="lazy" decoding="async"><figcaption>健診模板截圖</figcaption></figure></div>
 
 
 

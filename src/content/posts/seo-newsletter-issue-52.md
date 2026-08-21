@@ -43,7 +43,7 @@ wpId: 3400
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/03/%E6%A1%8C%E9%9D%A2%E6%9D%BF%E7%94%A8%E6%88%B6%E9%AB%94%E9%A9%97%E5%B7%B2%E6%8E%A8%E5%87%BA.png" alt="" class="wp-image-3417" width="434" height="164" loading="lazy" decoding="async"><figcaption><a href="https://twitter.com/googlesearchc/status/1499440494060916745">官方公告</a></figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/03/%E6%A1%8C%E9%9D%A2%E6%9D%BF%E7%94%A8%E6%88%B6%E9%AB%94%E9%A9%97%E5%B7%B2%E6%8E%A8%E5%87%BA.png" alt="" class="wp-image-3417" width="434" height="165" loading="lazy" decoding="async"><figcaption><a href="https://twitter.com/googlesearchc/status/1499440494060916745">官方公告</a></figcaption></figure>
 
 
 
@@ -159,7 +159,7 @@ wpId: 3400
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/03/%E8%87%AA%E5%AE%9A%E7%BE%A9%E7%B6%AD%E5%BA%A6-1024x380.png" alt="" class="wp-image-3420" width="492" height="182" loading="lazy" decoding="async"><figcaption>自定義維度，將排名分類來清楚看出 「已在前三名」、「在第二頁，差一點就能進第一頁」的頁面</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/03/%E8%87%AA%E5%AE%9A%E7%BE%A9%E7%B6%AD%E5%BA%A6-1024x380.png" alt="" class="wp-image-3420" width="492" height="183" loading="lazy" decoding="async"><figcaption>自定義維度，將排名分類來清楚看出 「已在前三名」、「在第二頁，差一點就能進第一頁」的頁面</figcaption></figure>
 
 
 
@@ -225,7 +225,7 @@ wpId: 3400
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/03/Google-Marketing-Live.png" alt="" class="wp-image-3422" width="525" height="218" loading="lazy" decoding="async"><figcaption>SEM的年度大活動</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/03/Google-Marketing-Live.png" alt="" class="wp-image-3422" width="525" height="219" loading="lazy" decoding="async"><figcaption>SEM的年度大活動</figcaption></figure>
 
 
 

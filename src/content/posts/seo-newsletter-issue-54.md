@@ -212,7 +212,7 @@ wpId: 3503
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/04/future-plc-%E6%97%97%E4%B8%8B%E9%9B%9C%E8%AA%8C-1024x578.png" alt="" class="wp-image-3506" width="583" height="333" loading="lazy" decoding="async"><figcaption>Future 旗下品牌一覽 （<a href="https://www.mediabistro.com/companies/future-plc/">source</a>)</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/04/future-plc-%E6%97%97%E4%B8%8B%E9%9B%9C%E8%AA%8C-1024x578.png" alt="" class="wp-image-3506" width="583" height="329" loading="lazy" decoding="async"><figcaption>Future 旗下品牌一覽 （<a href="https://www.mediabistro.com/companies/future-plc/">source</a>)</figcaption></figure>
 
 
 

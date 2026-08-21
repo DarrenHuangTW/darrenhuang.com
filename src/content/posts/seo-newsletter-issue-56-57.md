@@ -126,7 +126,7 @@ wpId: 3596
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/06/GSC%E4%B8%AD%E7%9A%84%E5%BD%B1%E7%89%87%E7%B4%A2%E5%BC%95%E5%A0%B1%E8%A1%A8-1024x532.png" alt="" class="wp-image-3620" width="600" height="313" loading="lazy" decoding="async"><figcaption><a href="https://www.youtube.com/watch?v=YT0ZlXIZ86k&amp;">Google I/O</a> 中首次被提及的 Video Page Indexing Report </figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/06/GSC%E4%B8%AD%E7%9A%84%E5%BD%B1%E7%89%87%E7%B4%A2%E5%BC%95%E5%A0%B1%E8%A1%A8-1024x532.png" alt="" class="wp-image-3620" width="600" height="312" loading="lazy" decoding="async"><figcaption><a href="https://www.youtube.com/watch?v=YT0ZlXIZ86k&amp;">Google I/O</a> 中首次被提及的 Video Page Indexing Report </figcaption></figure>
 
 
 
@@ -134,7 +134,7 @@ wpId: 3596
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/06/%E7%B6%B2%E5%9D%80%E6%AA%A2%E6%B8%AC%E5%B7%A5%E5%85%B7%E5%8C%85%E5%90%AB%E5%BD%B1%E7%89%87%E7%B5%90%E6%9E%9C-1024x531.png" alt="" class="wp-image-3621" width="600" height="310" loading="lazy" decoding="async"><figcaption>URL Inspection Tool 加上檢測網頁上的影片收錄狀態</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/06/%E7%B6%B2%E5%9D%80%E6%AA%A2%E6%B8%AC%E5%B7%A5%E5%85%B7%E5%8C%85%E5%90%AB%E5%BD%B1%E7%89%87%E7%B5%90%E6%9E%9C-1024x531.png" alt="" class="wp-image-3621" width="600" height="311" loading="lazy" decoding="async"><figcaption>URL Inspection Tool 加上檢測網頁上的影片收錄狀態</figcaption></figure>
 
 
 

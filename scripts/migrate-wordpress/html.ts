@@ -138,6 +138,12 @@ function dependencyPath(rawValue: string): string {
   return value.normalize('NFC');
 }
 
+function positiveDimension(value: string | undefined): number | null {
+  if (!value) return null;
+  const dimension = Number(value);
+  return Number.isFinite(dimension) && dimension > 0 ? dimension : null;
+}
+
 export function enrichLocalMediaHtml(
   html: string,
   mediaFiles: PublishedMediaFile[],
@@ -155,10 +161,29 @@ export function enrichLocalMediaHtml(
 
     image.attr('loading', image.attr('loading') ?? 'lazy');
     image.attr('decoding', image.attr('decoding') ?? 'async');
-    if (media?.width && !image.attr('width'))
-      image.attr('width', String(media.width));
-    if (media?.height && !image.attr('height'))
-      image.attr('height', String(media.height));
+    const declaredWidth = positiveDimension(image.attr('width'));
+    const declaredHeight = positiveDimension(image.attr('height'));
+    if (media?.width && media.height) {
+      if (declaredWidth) {
+        image.attr('width', String(Math.round(declaredWidth)));
+        image.attr(
+          'height',
+          String(Math.round((declaredWidth * media.height) / media.width)),
+        );
+      } else if (declaredHeight) {
+        image.attr('height', String(Math.round(declaredHeight)));
+        image.attr(
+          'width',
+          String(Math.round((declaredHeight * media.width) / media.height)),
+        );
+      } else {
+        image.attr('width', String(media.width));
+        image.attr('height', String(media.height));
+      }
+    } else if (!declaredWidth || !declaredHeight) {
+      image.removeAttr('width');
+      image.removeAttr('height');
+    }
     if (image.attr('alt') === undefined) image.attr('alt', '');
   });
 

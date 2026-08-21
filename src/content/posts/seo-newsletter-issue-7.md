@@ -49,7 +49,7 @@ wpId: 1110
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/04/google%E8%B3%BC%E7%89%A9%E5%B9%B3%E5%8F%B0%E5%85%8D%E8%B2%BB-837x1024.png" alt="Google購物平台免費使用" class="wp-image-1112" width="419" height="512" loading="lazy" decoding="async"><figcaption>筆者於4/29的電腦截圖</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/04/google%E8%B3%BC%E7%89%A9%E5%B9%B3%E5%8F%B0%E5%85%8D%E8%B2%BB-837x1024.png" alt="Google購物平台免費使用" class="wp-image-1112" width="419" height="513" loading="lazy" decoding="async"><figcaption>筆者於4/29的電腦截圖</figcaption></figure></div>
 
 
 

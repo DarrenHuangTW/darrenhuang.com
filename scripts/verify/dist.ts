@@ -418,6 +418,8 @@ async function verifyHtmlReferences(
   htmlFiles: string[],
   artifactPaths: Set<string>,
 ): Promise<void> {
+  let responsivePictureCount = 0;
+
   for (const file of htmlFiles) {
     const relative = artifactRelative(file);
     const currentServedPath = servedPathForArtifact(relative);
@@ -483,6 +485,40 @@ async function verifyHtmlReferences(
       }
     });
 
+    $('main img[width], main img[height]').each((_index, element) => {
+      const image = $(element);
+      for (const attribute of ['height', 'width'] as const) {
+        const raw = image.attr(attribute);
+        if (raw !== undefined && !(Number(raw) > 0)) {
+          failures.push(
+            `${relative} 含有無效的圖片 ${attribute}：${raw || '(empty)'}`,
+          );
+        }
+      }
+    });
+
+    $('picture[data-responsive-image="true"]').each((_index, element) => {
+      responsivePictureCount += 1;
+      const picture = $(element);
+      const image = picture.children('img[src]');
+      const sources = picture.children('source[srcset]');
+      if (image.length !== 1 || sources.length === 0) {
+        failures.push(`${relative} 含有不完整的 responsive <picture>。`);
+        return;
+      }
+
+      if (!image.attr('sizes') || image.attr('src')?.includes('/_optimized/')) {
+        failures.push(
+          `${relative} 的 responsive <picture> 未保留原圖 fallback 或 sizes。`,
+        );
+      }
+      sources.each((_sourceIndex, source) => {
+        if (!$(source).attr('sizes')) {
+          failures.push(`${relative} 的 responsive <source> 缺少 sizes。`);
+        }
+      });
+    });
+
     $('meta[http-equiv]').each((_index, element) => {
       if ($(element).attr('http-equiv')?.toLowerCase() !== 'refresh') {
         return;
@@ -495,6 +531,11 @@ async function verifyHtmlReferences(
       }
     });
   }
+
+  check(
+    responsivePictureCount > 0,
+    'Dist 至少需要一個建置期產生的 responsive <picture>。',
+  );
 }
 
 async function verifyTracking(htmlFiles: string[]): Promise<void> {
@@ -1031,6 +1072,10 @@ async function main(): Promise<void> {
 
   const artifactFiles = await walkFiles(distRoot);
   const artifactPaths = new Set(artifactFiles.map(artifactRelative));
+  check(
+    artifactPaths.has('_optimized/manifest.json'),
+    '缺少 dist/_optimized/manifest.json 響應式圖片清單。',
+  );
   let artifactSize = 0;
 
   for (const file of artifactFiles) {

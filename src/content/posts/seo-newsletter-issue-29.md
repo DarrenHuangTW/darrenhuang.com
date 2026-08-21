@@ -100,7 +100,7 @@ wpId: 2636
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/03/screenshot-studio.youtube.com-2021.03.31-16_29_50-1024x462.png" alt="" class="wp-image-2639" width="652" height="293" loading="lazy" decoding="async"><figcaption>YouTube Analytics 上的 Returning Viewers</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/03/screenshot-studio.youtube.com-2021.03.31-16_29_50-1024x462.png" alt="" class="wp-image-2639" width="652" height="294" loading="lazy" decoding="async"><figcaption>YouTube Analytics 上的 Returning Viewers</figcaption></figure></div>
 
 
 
@@ -152,7 +152,7 @@ wpId: 2636
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/03/GSC%E6%B6%B5%E8%93%8B%E7%AF%84%E5%9C%8D-1024x496.png" alt="" class="wp-image-2646" width="506" height="244" loading="lazy" decoding="async"><figcaption>下載網址</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/03/GSC%E6%B6%B5%E8%93%8B%E7%AF%84%E5%9C%8D-1024x496.png" alt="" class="wp-image-2646" width="506" height="245" loading="lazy" decoding="async"><figcaption>下載網址</figcaption></figure></div>
 
 
 
