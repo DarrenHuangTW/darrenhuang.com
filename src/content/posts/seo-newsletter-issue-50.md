@@ -47,7 +47,7 @@ wpId: 3306
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/02/Google%E7%B6%B2%E9%A0%81%E6%AA%A2%E6%B8%AC%E5%B7%A5%E5%85%B7API-1024x508.png" alt="" class="wp-image-3319" width="571" height="282" loading="lazy" decoding="async"><figcaption>API 的 inputs 和 outputs</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/02/Google%E7%B6%B2%E9%A0%81%E6%AA%A2%E6%B8%AC%E5%B7%A5%E5%85%B7API-1024x508.png" alt="" class="wp-image-3319" width="571" height="283" loading="lazy" decoding="async"><figcaption>API 的 inputs 和 outputs</figcaption></figure></div>
 
 
 
@@ -55,7 +55,7 @@ wpId: 3306
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/02/%E7%B6%B2%E9%A0%81%E6%AA%A2%E6%B8%ACAPI%E7%B5%90%E6%9E%9C.png" alt="" class="wp-image-3322" width="600" loading="lazy" decoding="async" height="363"><figcaption>indexStatusResult 中的細項</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/02/%E7%B6%B2%E9%A0%81%E6%AA%A2%E6%B8%ACAPI%E7%B5%90%E6%9E%9C.png" alt="" class="wp-image-3322" width="600" loading="lazy" decoding="async" height="238"><figcaption>indexStatusResult 中的細項</figcaption></figure></div>
 
 
 
@@ -107,7 +107,7 @@ wpId: 3306
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/02/%E7%B6%B2%E5%9D%80%E6%AA%A2%E6%B8%AC%E5%B7%A5%E5%85%B7%E6%A8%A1%E6%9D%BF-2-1024x935.jpg" alt="" class="wp-image-3325" width="600" height="501" loading="lazy" decoding="async"><figcaption>相當香的 Google Data Studio 模板</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/02/%E7%B6%B2%E5%9D%80%E6%AA%A2%E6%B8%AC%E5%B7%A5%E5%85%B7%E6%A8%A1%E6%9D%BF-2-1024x935.jpg" alt="" class="wp-image-3325" width="600" height="548" loading="lazy" decoding="async"><figcaption>相當香的 Google Data Studio 模板</figcaption></figure></div>
 
 
 
@@ -133,7 +133,7 @@ wpId: 3306
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/02/SERP-%E4%B8%8A%E7%9A%84%E4%B8%8B%E4%B8%80%E5%80%8B%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C-People-Search-Next-565x1024.png" alt="" class="wp-image-3310" width="283" height="512" loading="lazy" decoding="async"><figcaption>圖片來源: <a href="https://www.seroundtable.com/google-search-people-search-next-refinements-32828.html">SER</a></figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/02/SERP-%E4%B8%8A%E7%9A%84%E4%B8%8B%E4%B8%80%E5%80%8B%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C-People-Search-Next-565x1024.png" alt="" class="wp-image-3310" width="283" height="513" loading="lazy" decoding="async"><figcaption>圖片來源: <a href="https://www.seroundtable.com/google-search-people-search-next-refinements-32828.html">SER</a></figcaption></figure></div>
 
 
 
@@ -189,7 +189,7 @@ wpId: 3306
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/02/%E9%9B%BB%E5%95%86%E7%B6%B2%E7%AB%99%E5%B8%B8%E8%A6%8BSEO%E5%95%8F%E9%A1%8C.png" alt="" class="wp-image-3330" width="500" height="677" loading="lazy" decoding="async"><figcaption>文章目錄</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/02/%E9%9B%BB%E5%95%86%E7%B6%B2%E7%AB%99%E5%B8%B8%E8%A6%8BSEO%E5%95%8F%E9%A1%8C.png" alt="" class="wp-image-3330" width="500" height="676" loading="lazy" decoding="async"><figcaption>文章目錄</figcaption></figure></div>
 
 
 

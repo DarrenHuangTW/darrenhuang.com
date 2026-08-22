@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "postbuild": "tsx scripts/build/agent-content.ts",
+    "postbuild": "tsx scripts/build/agent-content.ts && tsx scripts/build/optimize-images.ts",
     "preview": "astro preview",
     "check": "astro check",
     "typecheck": "npm run typecheck:site && npm run typecheck:worker",

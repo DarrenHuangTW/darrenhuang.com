@@ -44,7 +44,7 @@ wpId: 2903
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/wise%E6%94%B6%E9%8C%84%E9%A0%81%E9%9D%A2.png" alt="" class="wp-image-2929" width="600" height="288" loading="lazy" decoding="async"><figcaption>Wise的收錄頁面數量</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/wise%E6%94%B6%E9%8C%84%E9%A0%81%E9%9D%A2.png" alt="" class="wp-image-2929" width="600" height="338" loading="lazy" decoding="async"><figcaption>Wise的收錄頁面數量</figcaption></figure></div>
 
 
 
@@ -74,7 +74,7 @@ wpId: 2903
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/AI%E7%94%9F%E7%94%A2%E5%85%A7%E5%AE%B9-1024x630.png" alt="" class="wp-image-2915" width="600" height="315" loading="lazy" decoding="async"><figcaption>機器生產vs人工生產內容</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/AI%E7%94%9F%E7%94%A2%E5%85%A7%E5%AE%B9-1024x630.png" alt="" class="wp-image-2915" width="600" height="369" loading="lazy" decoding="async"><figcaption>機器生產vs人工生產內容</figcaption></figure></div>
 
 
 
@@ -100,7 +100,7 @@ wpId: 2903
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/Screaming-Frog%E6%AF%94%E8%BC%83%E7%88%AC%E8%A1%8C%E7%B5%90%E6%9E%9C-1024x544.png" alt="" class="wp-image-2910" width="600" height="272" loading="lazy" decoding="async"></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/Screaming-Frog%E6%AF%94%E8%BC%83%E7%88%AC%E8%A1%8C%E7%B5%90%E6%9E%9C-1024x544.png" alt="" class="wp-image-2910" width="600" height="319" loading="lazy" decoding="async"></figure></div>
 
 
 
@@ -156,7 +156,7 @@ wpId: 2903
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/search-response-PAA%E6%9F%A5%E8%A9%A2%E5%B7%A5%E5%85%B7-1024x462.png" alt="" class="wp-image-2914" width="600" height="-5" loading="lazy" decoding="async"><figcaption>Search Response 介面</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/search-response-PAA%E6%9F%A5%E8%A9%A2%E5%B7%A5%E5%85%B7-1024x462.png" alt="" class="wp-image-2914" width="600" height="271" loading="lazy" decoding="async"><figcaption>Search Response 介面</figcaption></figure></div>
 
 
 
@@ -204,7 +204,7 @@ wpId: 2903
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/Share-Among-all-Videos-250-Words.png" alt="" class="wp-image-2912" width="600" height="358" loading="lazy" decoding="async"><figcaption>每個排名位置的影片，其描述欄位至少250字的占比</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/Share-Among-all-Videos-250-Words.png" alt="" class="wp-image-2912" width="600" height="440" loading="lazy" decoding="async"><figcaption>每個排名位置的影片，其描述欄位至少250字的占比</figcaption></figure></div>
 
 
 
@@ -230,7 +230,7 @@ wpId: 2903
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/%E7%B6%B2%E9%A0%81%E9%AB%94%E9%A9%97%E5%A0%B1%E5%91%8A%E6%9B%B4%E6%96%B0.png" alt="" class="wp-image-2924" width="600" height="-97" loading="lazy" decoding="async"><figcaption>更新後的<a href="./core-web-vitals-lcp-fid-cls.html">網頁體驗</a>因素</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/%E7%B6%B2%E9%A0%81%E9%AB%94%E9%A9%97%E5%A0%B1%E5%91%8A%E6%9B%B4%E6%96%B0.png" alt="" class="wp-image-2924" width="600" height="382" loading="lazy" decoding="async"><figcaption>更新後的<a href="./core-web-vitals-lcp-fid-cls.html">網頁體驗</a>因素</figcaption></figure></div>
 
 
 

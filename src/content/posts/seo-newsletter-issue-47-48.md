@@ -49,7 +49,7 @@ wpId: 3232
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2022/01/Google-2021%E6%BC%94%E7%AE%97%E6%B3%95%E6%9B%B4%E6%96%B0%E6%95%B4%E7%90%86%E5%9C%96-943x1024.jpeg" alt="" class="wp-image-3237" width="700" height="768" loading="lazy" decoding="async"><figcaption>2021 Google重大更新回顧</figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2022/01/Google-2021%E6%BC%94%E7%AE%97%E6%B3%95%E6%9B%B4%E6%96%B0%E6%95%B4%E7%90%86%E5%9C%96-943x1024.jpeg" alt="" class="wp-image-3237" width="700" height="760" loading="lazy" decoding="async"><figcaption>2021 Google重大更新回顧</figcaption></figure>
 
 
 
@@ -77,7 +77,7 @@ wpId: 3232
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/01/%E5%9C%B0%E6%96%B9%E5%95%86%E5%AE%B6%E5%90%8D%E5%AD%97%E4%B8%AD%E6%9C%89%E9%97%9C%E9%8D%B5%E5%AD%97.png" alt="" class="wp-image-3242" width="700" loading="lazy" decoding="async" height="503"><figcaption>名字中有關鍵字的地方商家 (Law Firm 3~7) 的排名在這次更新後有下降趨勢</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/01/%E5%9C%B0%E6%96%B9%E5%95%86%E5%AE%B6%E5%90%8D%E5%AD%97%E4%B8%AD%E6%9C%89%E9%97%9C%E9%8D%B5%E5%AD%97.png" alt="" class="wp-image-3242" width="700" loading="lazy" decoding="async" height="349"><figcaption>名字中有關鍵字的地方商家 (Law Firm 3~7) 的排名在這次更新後有下降趨勢</figcaption></figure></div>
 
 
 
@@ -107,7 +107,7 @@ wpId: 3232
 
 
 
-<figure class="wp-block-image size-full is-resized"><img src="./wp-content/uploads/2022/01/%E9%83%A8%E8%90%BD%E6%A0%BCpageview%E8%88%87%E4%BD%94%E6%AF%94%E9%97%9C%E4%BF%82.png" alt="" class="wp-image-3239" width="700" height="380" loading="lazy" decoding="async"><figcaption>部落格的流量(PV)，與自然流量所佔的比例有正向關係</figcaption></figure>
+<figure class="wp-block-image size-full is-resized"><img src="./wp-content/uploads/2022/01/%E9%83%A8%E8%90%BD%E6%A0%BCpageview%E8%88%87%E4%BD%94%E6%AF%94%E9%97%9C%E4%BF%82.png" alt="" class="wp-image-3239" width="700" height="350" loading="lazy" decoding="async"><figcaption>部落格的流量(PV)，與自然流量所佔的比例有正向關係</figcaption></figure>
 
 
 
@@ -153,7 +153,7 @@ wpId: 3232
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/01/%E8%BD%89%E5%9D%80%E7%B4%80%E9%8C%84%E5%99%A8-1024x288.png" alt="" class="wp-image-3235" width="700" loading="lazy" decoding="async" height="288"><figcaption>在 Google Sheets 上的網址記錄表格</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/01/%E8%BD%89%E5%9D%80%E7%B4%80%E9%8C%84%E5%99%A8-1024x288.png" alt="" class="wp-image-3235" width="700" loading="lazy" decoding="async" height="197"><figcaption>在 Google Sheets 上的網址記錄表格</figcaption></figure></div>
 
 
 

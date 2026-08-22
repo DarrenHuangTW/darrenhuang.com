@@ -1,17 +1,29 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import ArticleJourney from '@/components/ArticleJourney.astro';
+import ImageLightbox from '@/components/ImageLightbox.astro';
+import ReadingHud from '@/components/ReadingHud.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import type {
+  ArticleHeading,
+  ArticleJourney as Journey,
+} from '@/lib/article-experience';
+import { transitionNameForPost } from '@/lib/article-experience';
 import { formatDate } from '@/lib/content';
 import { slugifyTaxonomy, withBase } from '@/lib/urls';
 
 interface Props {
   data: CollectionEntry<'posts'>['data'];
+  headings: ArticleHeading[];
+  journey: Journey;
+  readingMinutes: number;
 }
 
-const { data } = Astro.props;
+const { data, headings, journey, readingMinutes } = Astro.props;
 const titleDateRange = data.title.match(
   /^(.*[~～])(\d{4}[./-]\d{1,2}[./-]\d{1,2})$/u,
 );
+const hasTableOfContents = headings.length >= 3;
 ---
 
 <BaseLayout
@@ -23,10 +35,14 @@ const titleDateRange = data.title.match(
   publishedAt={data.publishedAt}
   updatedAt={data.updatedAt}
 >
-  <article class="article shell shell--article">
-    <header class="article__header">
+  <div class="reading-progress" aria-hidden="true">
+    <span></span>
+  </div>
+
+  <article class="article">
+    <header class="article__header shell shell--article">
       <div class="eyebrow">數位引擎文章</div>
-      <h1>
+      <h1 style={`view-transition-name: ${transitionNameForPost(data.slug)}`}>
         {
           titleDateRange ? (
             <>
@@ -46,6 +62,8 @@ const titleDateRange = data.title.match(
         <time datetime={data.publishedAt.toISOString()}
           >{formatDate(data.publishedAt)}</time
         >
+        <span aria-hidden="true">·</span>
+        <span>約 {readingMinutes} 分鐘</span>
         {
           data.updatedAt.getTime() !== data.publishedAt.getTime() && (
             <span class="article__updated">
@@ -58,7 +76,7 @@ const titleDateRange = data.title.match(
 
     {
       data.featuredMedia && (
-        <figure class="article__hero">
+        <figure class="article__hero shell">
           <img
             src={withBase(data.featuredMedia.src)}
             alt={data.featuredMedia.alt}
@@ -71,47 +89,64 @@ const titleDateRange = data.title.match(
       )
     }
 
-    <div class="prose">
-      <slot />
-    </div>
+    <div
+      class:list={[
+        'article__reading-shell',
+        'shell',
+        { 'article__reading-shell--single': !hasTableOfContents },
+      ]}
+    >
+      <ReadingHud headings={headings} />
 
-    {
-      (data.categories.length > 0 || data.tags.length > 0) && (
-        <footer class="article__taxonomy">
-          {data.categories.length > 0 && (
-            <div>
-              <strong>分類</strong>
-              <ul>
-                {data.categories.map((category) => (
-                  <li>
-                    <a
-                      href={withBase(
-                        `/categories/${slugifyTaxonomy(category)}.html`,
-                      )}
-                    >
-                      {category}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {data.tags.length > 0 && (
-            <div>
-              <strong>標籤</strong>
-              <ul>
-                {data.tags.map((tag) => (
-                  <li>
-                    <a href={withBase(`/tags/${slugifyTaxonomy(tag)}.html`)}>
-                      {tag}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </footer>
-      )
-    }
+      <div class="article__content">
+        <div class="prose">
+          <slot />
+        </div>
+
+        {
+          (data.categories.length > 0 || data.tags.length > 0) && (
+            <footer class="article__taxonomy">
+              {data.categories.length > 0 && (
+                <div>
+                  <strong>分類</strong>
+                  <ul>
+                    {data.categories.map((category) => (
+                      <li>
+                        <a
+                          href={withBase(
+                            `/categories/${slugifyTaxonomy(category)}.html`,
+                          )}
+                        >
+                          {category}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {data.tags.length > 0 && (
+                <div>
+                  <strong>標籤</strong>
+                  <ul>
+                    {data.tags.map((tag) => (
+                      <li>
+                        <a
+                          href={withBase(`/tags/${slugifyTaxonomy(tag)}.html`)}
+                        >
+                          {tag}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </footer>
+          )
+        }
+
+        <ArticleJourney journey={journey} />
+      </div>
+    </div>
   </article>
+  <ImageLightbox />
 </BaseLayout>

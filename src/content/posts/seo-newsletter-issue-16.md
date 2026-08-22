@@ -92,7 +92,7 @@ wpId: 1765
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/09/Eg39QQPUMAEr7np.png" alt="搜尋字詞報告將提供更少的資料" class="wp-image-1773" width="397" height="229" loading="lazy" decoding="async"><figcaption><em>搜尋字詞報告將提供更少的資料</em> (<a href="https://searchengineland.com/googles-search-terms-move-will-make-millions-in-ad-spend-invisible-to-advertisers-340182">SEL報導</a>)</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/09/Eg39QQPUMAEr7np.png" alt="搜尋字詞報告將提供更少的資料" class="wp-image-1773" width="397" height="230" loading="lazy" decoding="async"><figcaption><em>搜尋字詞報告將提供更少的資料</em> (<a href="https://searchengineland.com/googles-search-terms-move-will-make-millions-in-ad-spend-invisible-to-advertisers-340182">SEL報導</a>)</figcaption></figure></div>
 
 
 
@@ -164,7 +164,7 @@ wpId: 1765
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/09/meta-description%E8%A2%AB%E4%BF%AE%E6%94%B9.png" alt="" class="wp-image-1780" width="471" height="419" loading="lazy" decoding="async"><figcaption>Ahrefs研究: 搜尋結果前10名的網頁上，62.78%的網頁描述都被修改過</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/09/meta-description%E8%A2%AB%E4%BF%AE%E6%94%B9.png" alt="" class="wp-image-1780" width="471" height="421" loading="lazy" decoding="async"><figcaption>Ahrefs研究: 搜尋結果前10名的網頁上，62.78%的網頁描述都被修改過</figcaption></figure></div>
 
 
 
@@ -188,7 +188,7 @@ wpId: 1765
 <blockquote class="embed embed--twitter"><p>Twitter／X 貼文</p><a href="https://twitter.com/CharlesFarina/status/1304530548761735174" rel="noopener noreferrer">在 Twitter／X 查看原始貼文</a></blockquote>
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/09/chrome-85%E5%BD%B1%E9%9F%BForganic-traffic-1024x177.png" alt="chrome 85影響organic traffic" class="wp-image-1789" width="656" height="112" loading="lazy" decoding="async"><figcaption><a href="https://support.google.com/analytics/answer/2795821?hl=en">Chrome v85影響organic traffic</a></figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/09/chrome-85%E5%BD%B1%E9%9F%BForganic-traffic-1024x177.png" alt="chrome 85影響organic traffic" class="wp-image-1789" width="656" height="113" loading="lazy" decoding="async"><figcaption><a href="https://support.google.com/analytics/answer/2795821?hl=en">Chrome v85影響organic traffic</a></figcaption></figure>
 
 
 
@@ -214,7 +214,7 @@ wpId: 1765
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/09/SEO%E6%A1%88%E4%BE%8B-%E4%B8%BB%E9%AB%94%E8%BC%AA%E6%92%AD-1024x576.png" alt="SEO案例，出現在SERP頂部的實體輪播" class="wp-image-1781" width="522" height="293" loading="lazy" decoding="async"><figcaption>SEO案例: 讓學校出現在搜尋結果頂部的 Entity Carousel</figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/09/SEO%E6%A1%88%E4%BE%8B-%E4%B8%BB%E9%AB%94%E8%BC%AA%E6%92%AD-1024x576.png" alt="SEO案例，出現在SERP頂部的實體輪播" class="wp-image-1781" width="522" height="294" loading="lazy" decoding="async"><figcaption>SEO案例: 讓學校出現在搜尋結果頂部的 Entity Carousel</figcaption></figure>
 
 
 
@@ -322,7 +322,7 @@ wpId: 1765
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/09/google%E6%90%9C%E5%B0%8B%E9%97%9C%E4%BF%82%E9%83%A8%E9%96%80-1024x640.png" alt="" class="wp-image-1778" width="545" height="340" loading="lazy" decoding="async"><figcaption>Google的 Search Relations小組合照</figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/09/google%E6%90%9C%E5%B0%8B%E9%97%9C%E4%BF%82%E9%83%A8%E9%96%80-1024x640.png" alt="" class="wp-image-1778" width="545" height="341" loading="lazy" decoding="async"><figcaption>Google的 Search Relations小組合照</figcaption></figure>
 
 
 

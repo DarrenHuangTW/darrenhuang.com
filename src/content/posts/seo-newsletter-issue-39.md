@@ -48,7 +48,7 @@ wpId: 2942
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/Google%E6%94%B9%E5%AF%AB%E6%A8%99%E9%A1%8C-1024x216.png" alt="" class="wp-image-2953" width="600" height="162" loading="lazy" decoding="async"><figcaption>上述第五點的例子，網頁描述根據搜尋字的不同而不同，但標題卻維持一致 (<a href="https://twitter.com/rustybrick/status/1431222712920277003">source</a>)</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/Google%E6%94%B9%E5%AF%AB%E6%A8%99%E9%A1%8C-1024x216.png" alt="" class="wp-image-2953" width="600" height="127" loading="lazy" decoding="async"><figcaption>上述第五點的例子，網頁描述根據搜尋字的不同而不同，但標題卻維持一致 (<a href="https://twitter.com/rustybrick/status/1431222712920277003">source</a>)</figcaption></figure></div>
 
 
 
@@ -110,7 +110,7 @@ wpId: 2942
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/Google%E6%94%B9%E5%AF%AB%E6%A8%99%E9%A1%8C-wordstream.png" alt="" class="wp-image-2957" width="600" loading="lazy" decoding="async" height="352"><figcaption><a href="https://www.wordstream.com/blog/ws/2021/08/26/google-page-title-update">source</a></figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/Google%E6%94%B9%E5%AF%AB%E6%A8%99%E9%A1%8C-wordstream.png" alt="" class="wp-image-2957" width="600" loading="lazy" decoding="async" height="295"><figcaption><a href="https://www.wordstream.com/blog/ws/2021/08/26/google-page-title-update">source</a></figcaption></figure></div>
 
 
 
@@ -144,7 +144,7 @@ wpId: 2942
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/%E6%AA%A2%E6%9F%A5title%E6%98%AF%E5%90%A6%E8%A2%AB%E6%94%B9%E5%8B%95-1024x216.png" alt="" class="wp-image-2959" width="600" loading="lazy" decoding="async" height="216"><figcaption>範例</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/%E6%AA%A2%E6%9F%A5title%E6%98%AF%E5%90%A6%E8%A2%AB%E6%94%B9%E5%8B%95-1024x216.png" alt="" class="wp-image-2959" width="600" loading="lazy" decoding="async" height="127"><figcaption>範例</figcaption></figure></div>
 
 
 
@@ -164,7 +164,7 @@ wpId: 2942
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/SERP%E6%A8%99%E9%A1%8C%E6%AA%A2%E6%9F%A5%E5%B0%8F%E6%9B%B8%E7%B1%A4.png" alt="" class="wp-image-2960" width="600" loading="lazy" decoding="async" height="726"><figcaption>小書籤範例</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/SERP%E6%A8%99%E9%A1%8C%E6%AA%A2%E6%9F%A5%E5%B0%8F%E6%9B%B8%E7%B1%A4.png" alt="" class="wp-image-2960" width="600" loading="lazy" decoding="async" height="459"><figcaption>小書籤範例</figcaption></figure></div>
 
 
 
@@ -182,7 +182,7 @@ wpId: 2942
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/seo%E8%B3%87%E6%96%99%E7%96%8A%E5%8A%A0%E5%9C%96-1024x488.png" alt="" class="wp-image-2944" width="600" loading="lazy" decoding="async" height="488"><figcaption>範例 - Moz所提供的資料顯示在六月的核心演算法中，<em>Search Engine Land</em>的流量有劇烈波動</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/seo%E8%B3%87%E6%96%99%E7%96%8A%E5%8A%A0%E5%9C%96-1024x488.png" alt="" class="wp-image-2944" width="600" loading="lazy" decoding="async" height="286"><figcaption>範例 - Moz所提供的資料顯示在六月的核心演算法中，<em>Search Engine Land</em>的流量有劇烈波動</figcaption></figure></div>
 
 
 
@@ -242,7 +242,7 @@ wpId: 2942
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/%E9%97%9C%E9%8D%B5%E5%AD%97%E6%90%9C%E5%B0%8B%E6%84%8F%E5%9C%96%E5%88%86%E9%A1%9E%E6%A8%A1%E6%9D%BF-449x1024.png" alt="" class="wp-image-2946" width="500" loading="lazy" decoding="async" height="1024"><figcaption>模板一覽</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/08/%E9%97%9C%E9%8D%B5%E5%AD%97%E6%90%9C%E5%B0%8B%E6%84%8F%E5%9C%96%E5%88%86%E9%A1%9E%E6%A8%A1%E6%9D%BF-449x1024.png" alt="" class="wp-image-2946" width="500" loading="lazy" decoding="async" height="1140"><figcaption>模板一覽</figcaption></figure></div>
 
 
 
@@ -268,7 +268,7 @@ wpId: 2942
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/screamingfrog-GSC-API-settings-1-e1629214968710.png" alt="" class="wp-image-2948" width="600" loading="lazy" decoding="async" height="201"><figcaption>在Screaming Frog中串接GSC API</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/08/screamingfrog-GSC-API-settings-1-e1629214968710.png" alt="" class="wp-image-2948" width="600" loading="lazy" decoding="async" height="218"><figcaption>在Screaming Frog中串接GSC API</figcaption></figure></div>
 
 
 

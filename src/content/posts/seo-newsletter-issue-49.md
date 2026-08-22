@@ -112,7 +112,7 @@ X-Robots-Tag: googlebot:noindex,indexifembedded</pre>
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/01/%E6%96%87%E7%AB%A0%E4%B8%8D%E6%9C%83%E5%90%8C%E6%99%82%E5%87%BA%E7%8F%BE%E5%9C%A8-top-story-%E5%92%8C%E4%B8%80%E8%88%AC%E7%B5%90%E6%9E%9C-1-678x1024.jpg" alt="" class="wp-image-3291" width="350" height="528" loading="lazy" decoding="async"><figcaption>網頁可能不會同時出現在 Top Story 模塊和一般結果</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/01/%E6%96%87%E7%AB%A0%E4%B8%8D%E6%9C%83%E5%90%8C%E6%99%82%E5%87%BA%E7%8F%BE%E5%9C%A8-top-story-%E5%92%8C%E4%B8%80%E8%88%AC%E7%B5%90%E6%9E%9C-1-678x1024.jpg" alt="" class="wp-image-3291" width="350" height="529" loading="lazy" decoding="async"><figcaption>網頁可能不會同時出現在 Top Story 模塊和一般結果</figcaption></figure></div>
 
 
 
@@ -190,7 +190,7 @@ X-Robots-Tag: googlebot:noindex,indexifembedded</pre>
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/01/chrome-devtools-%E7%9C%8B%E5%87%BA%E7%80%8F%E8%A6%BD%E5%99%A8%E7%99%BC%E9%80%81%E8%B3%87%E6%96%99-1024x723.png" alt="" class="wp-image-3269" width="-100" height="-70" loading="lazy" decoding="async"><figcaption>在 Chrome DevTools 中的 Network Tab 可以看出瀏覽器到底發送了甚麼資料給 GA</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/01/chrome-devtools-%E7%9C%8B%E5%87%BA%E7%80%8F%E8%A6%BD%E5%99%A8%E7%99%BC%E9%80%81%E8%B3%87%E6%96%99-1024x723.png" alt="" class="wp-image-3269" width="1024" height="723" loading="lazy" decoding="async"><figcaption>在 Chrome DevTools 中的 Network Tab 可以看出瀏覽器到底發送了甚麼資料給 GA</figcaption></figure></div>
 
 
 

@@ -72,6 +72,16 @@ const googleTagManagerBootstrap = trackingEnabled
       )
     }
     <meta name="viewport" content="width=device-width" />
+    <meta
+      name="theme-color"
+      content="#f4f1e9"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0e1514"
+      media="(prefers-color-scheme: dark)"
+    />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex,follow" />}

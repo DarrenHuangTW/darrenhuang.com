@@ -149,7 +149,7 @@ wpId: 3015
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/09/%E9%A6%96%E9%A0%81%E9%A0%81%E5%B0%BE%E5%85%A7%E9%83%A8%E9%80%A3%E7%B5%90-1024x567.png" alt="" class="wp-image-3021" width="520" height="287" loading="lazy" decoding="async"><figcaption>控制組與實驗組</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/09/%E9%A6%96%E9%A0%81%E9%A0%81%E5%B0%BE%E5%85%A7%E9%83%A8%E9%80%A3%E7%B5%90-1024x567.png" alt="" class="wp-image-3021" width="520" height="288" loading="lazy" decoding="async"><figcaption>控制組與實驗組</figcaption></figure></div>
 
 
 
@@ -179,7 +179,7 @@ wpId: 3015
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/09/SEO%E5%A0%B1%E5%91%8A-1024x771.png" alt="" class="wp-image-3018" width="517" height="390" loading="lazy" decoding="async"><figcaption>對公司高層報告的現實</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/09/SEO%E5%A0%B1%E5%91%8A-1024x771.png" alt="" class="wp-image-3018" width="517" height="389" loading="lazy" decoding="async"><figcaption>對公司高層報告的現實</figcaption></figure></div>
 
 
 
@@ -209,7 +209,7 @@ wpId: 3015
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/09/%E8%87%AA%E5%8B%95%E8%BC%AA%E6%92%AD%E5%85%83%E4%BB%B6%E7%9A%84HTML%E5%A5%97%E7%89%88.png" alt="" class="wp-image-3025" width="600" height="427" loading="lazy" decoding="async"><figcaption>自動輪播元件的模板代碼</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/09/%E8%87%AA%E5%8B%95%E8%BC%AA%E6%92%AD%E5%85%83%E4%BB%B6%E7%9A%84HTML%E5%A5%97%E7%89%88.png" alt="" class="wp-image-3025" width="600" height="454" loading="lazy" decoding="async"><figcaption>自動輪播元件的模板代碼</figcaption></figure></div>
 
 
 
@@ -265,7 +265,7 @@ wpId: 3015
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/01/%E6%8A%96%E9%9F%B3%E3%80%81IG%E3%80%81Youtube%E7%9F%AD%E5%BD%B1%E7%89%87%E5%87%BA%E7%8F%BE%E5%9C%A8%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C-473x1024.jpg" alt="" class="wp-image-2416" width="200" height="392" loading="lazy" decoding="async"></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/01/%E6%8A%96%E9%9F%B3%E3%80%81IG%E3%80%81Youtube%E7%9F%AD%E5%BD%B1%E7%89%87%E5%87%BA%E7%8F%BE%E5%9C%A8%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C-473x1024.jpg" alt="" class="wp-image-2416" width="200" height="433" loading="lazy" decoding="async"></figure></div>
 
 
 

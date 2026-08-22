@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { transitionNameForPost } from '@/lib/article-experience';
 import { formatDate } from '@/lib/content';
 import { withBase } from '@/lib/urls';
 
@@ -17,11 +18,16 @@ const { post } = Astro.props;
     >
     {post.data.categories[0] && <span>{post.data.categories[0]}</span>}
   </div>
-  <h2><a href={withBase(post.data.canonicalPath)}>{post.data.title}</a></h2>
+  <h2 style={`view-transition-name: ${transitionNameForPost(post.data.slug)}`}>
+    <a href={withBase(post.data.canonicalPath)} data-astro-prefetch="hover"
+      >{post.data.title}</a
+    >
+  </h2>
   {post.data.excerpt && <p>{post.data.excerpt}</p>}
   <a
     class="text-link"
     href={withBase(post.data.canonicalPath)}
+    data-astro-prefetch="hover"
     aria-label={`閱讀〈${post.data.title}〉`}
   >
     閱讀文章 <span aria-hidden="true">→</span>

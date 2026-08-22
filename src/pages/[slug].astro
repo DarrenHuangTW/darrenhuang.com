@@ -3,6 +3,10 @@ import type { CollectionEntry } from 'astro:content';
 import { getCollection, render } from 'astro:content';
 import ArticleLayout from '@/layouts/ArticleLayout.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import {
+  getArticleJourney,
+  prepareArticleHtml,
+} from '@/lib/article-experience';
 
 type RouteProps =
   | { kind: 'post'; entry: CollectionEntry<'posts'> }
@@ -34,12 +38,30 @@ const rendered =
     ? await render(route.entry as CollectionEntry<'posts'>)
     : await render(route.entry as CollectionEntry<'pages'>);
 const Content = rendered.Content;
+const articleExperience =
+  route.kind === 'post'
+    ? prepareArticleHtml(
+        route.entry.rendered?.html ??
+          (() => {
+            throw new Error(`Missing rendered HTML for ${route.entry.id}`);
+          })(),
+      )
+    : null;
+const articleJourney =
+  route.kind === 'post'
+    ? getArticleJourney(route.entry, await getCollection('posts'))
+    : null;
 ---
 
 {
   route.kind === 'post' ? (
-    <ArticleLayout data={route.entry.data}>
-      <Content />
+    <ArticleLayout
+      data={route.entry.data}
+      headings={articleExperience?.headings ?? []}
+      journey={articleJourney!}
+      readingMinutes={articleExperience?.readingMinutes ?? 1}
+    >
+      <Fragment set:html={articleExperience?.html ?? ''} />
     </ArticleLayout>
   ) : (
     <BaseLayout

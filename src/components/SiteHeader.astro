@@ -13,7 +13,12 @@ const currentPath = Astro.url.pathname;
 
 <header class="site-header">
   <div class="site-header__inner shell">
-    <a class="brand" href={withBase('/')} aria-label="數位引擎首頁">
+    <a
+      class="brand"
+      href={withBase('/')}
+      aria-label="數位引擎首頁"
+      data-astro-prefetch="hover"
+    >
       <span class="brand__mark" aria-hidden="true">數</span>
       <span>
         <strong>數位引擎</strong>
@@ -28,6 +33,7 @@ const currentPath = Astro.url.pathname;
             <li>
               <a
                 href={withBase(link.href)}
+                data-astro-prefetch="hover"
                 aria-current={
                   currentPath === withBase(link.href) ||
                   (link.href !== '/' &&

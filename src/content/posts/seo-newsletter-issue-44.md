@@ -46,7 +46,7 @@ wpId: 3116
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/%E7%B6%B2%E9%A0%81%E9%AB%94%E9%A9%97%E6%8C%87%E6%A8%99%E6%A1%8C%E9%9D%A2%E6%9D%BF-1024x322.png" alt="" class="wp-image-3119" width="640" height="242" loading="lazy" decoding="async"><figcaption>桌面與手機 PX 更新的差異，僅有手機體驗良好這項不適用</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/%E7%B6%B2%E9%A0%81%E9%AB%94%E9%A9%97%E6%8C%87%E6%A8%99%E6%A1%8C%E9%9D%A2%E6%9D%BF-1024x322.png" alt="" class="wp-image-3119" width="640" height="201" loading="lazy" decoding="async"><figcaption>桌面與手機 PX 更新的差異，僅有手機體驗良好這項不適用</figcaption></figure></div>
 
 
 <blockquote class="embed embed--twitter"><p>Twitter／X 貼文</p><a href="https://twitter.com/cramforce/status/1456326083238760459" rel="noopener noreferrer">在 Twitter／X 查看原始貼文</a></blockquote>
@@ -78,7 +78,7 @@ wpId: 3116
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/11/%E6%96%B0%E7%89%88Lighthouse-report.png" alt="" class="wp-image-3124" width="640" height="263" loading="lazy" decoding="async"><figcaption>新版 Lighthouse中告訴你「載入」以及「滾動」兩個階段的表現</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/11/%E6%96%B0%E7%89%88Lighthouse-report.png" alt="" class="wp-image-3124" width="640" height="293" loading="lazy" decoding="async"><figcaption>新版 Lighthouse中告訴你「載入」以及「滾動」兩個階段的表現</figcaption></figure></div>
 
 
 
@@ -98,7 +98,7 @@ wpId: 3116
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/chrome-%E5%85%A7%E5%BB%BA%E6%9A%97%E9%BB%91%E6%A8%A1%E5%BC%8F-1024x667.png" alt="" class="wp-image-3121" width="640" height="387" loading="lazy" decoding="async"><figcaption>數位引擎網站在開啟夜間模式的樣子</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/chrome-%E5%85%A7%E5%BB%BA%E6%9A%97%E9%BB%91%E6%A8%A1%E5%BC%8F-1024x667.png" alt="" class="wp-image-3121" width="640" height="417" loading="lazy" decoding="async"><figcaption>數位引擎網站在開啟夜間模式的樣子</figcaption></figure></div>
 
 
 
@@ -132,7 +132,7 @@ wpId: 3116
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/11/top-stories%E4%B8%AD%E9%9D%9EAMP%E7%B6%B2%E7%AB%99%E7%9A%84%E6%AF%94%E4%BE%8B.png" alt="" class="wp-image-3138" width="640" height="336" loading="lazy" decoding="async"><figcaption>非AMP網頁出現在Top Stories的占比</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/11/top-stories%E4%B8%AD%E9%9D%9EAMP%E7%B6%B2%E7%AB%99%E7%9A%84%E6%AF%94%E4%BE%8B.png" alt="" class="wp-image-3138" width="640" height="433" loading="lazy" decoding="async"><figcaption>非AMP網頁出現在Top Stories的占比</figcaption></figure></div>
 
 
 
@@ -162,7 +162,7 @@ wpId: 3116
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/11/Googlebot-IP%E6%B8%85%E5%96%AE.png" alt="" class="wp-image-3126" width="407" height="257" loading="lazy" decoding="async"><figcaption>Googlebot的 IP地址</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img src="./wp-content/uploads/2021/11/Googlebot-IP%E6%B8%85%E5%96%AE.png" alt="" class="wp-image-3126" width="407" height="258" loading="lazy" decoding="async"><figcaption>Googlebot的 IP地址</figcaption></figure></div>
 
 
 
@@ -188,7 +188,7 @@ wpId: 3116
 
 
 
-<figure class="wp-block-image size-full is-resized"><img src="./wp-content/uploads/2021/11/SEO%E6%94%B6%E8%B2%BB%E8%AA%BF%E6%9F%A5.png" alt="" class="wp-image-3129" width="640" loading="lazy" decoding="async" height="383"><figcaption>SEO平均收費標準(時薪)</figcaption></figure>
+<figure class="wp-block-image size-full is-resized"><img src="./wp-content/uploads/2021/11/SEO%E6%94%B6%E8%B2%BB%E8%AA%BF%E6%9F%A5.png" alt="" class="wp-image-3129" width="640" loading="lazy" decoding="async" height="399"><figcaption>SEO平均收費標準(時薪)</figcaption></figure>
 
 
 
@@ -210,7 +210,7 @@ wpId: 3116
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2021/11/%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C%E6%BC%94%E5%8C%96%E5%8F%B2-927x1024.png" alt="" class="wp-image-3131" width="640" loading="lazy" decoding="async" height="1024"><figcaption>Google(左)和 Bing(右) 的搜尋結果比較</figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2021/11/%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C%E6%BC%94%E5%8C%96%E5%8F%B2-927x1024.png" alt="" class="wp-image-3131" width="640" loading="lazy" decoding="async" height="707"><figcaption>Google(左)和 Bing(右) 的搜尋結果比較</figcaption></figure>
 
 
 
@@ -228,7 +228,7 @@ wpId: 3116
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2021/11/%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C%E6%AF%94%E8%BC%83%E5%B7%A5%E5%85%B7-780x1024.png" alt="" class="wp-image-3134" width="640" loading="lazy" decoding="async" height="1024"><figcaption>「web 2.0 vs web 3.0」的搜尋結果比較 </figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2021/11/%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C%E6%AF%94%E8%BC%83%E5%B7%A5%E5%85%B7-780x1024.png" alt="" class="wp-image-3134" width="640" loading="lazy" decoding="async" height="840"><figcaption>「web 2.0 vs web 3.0」的搜尋結果比較 </figcaption></figure>
 
 
 
@@ -254,7 +254,7 @@ wpId: 3116
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/%E8%A8%AD%E5%AE%9Arage-clicks-1024x721.png" alt="" class="wp-image-3136" width="640" height="366" loading="lazy" decoding="async"><figcaption>將「rage clicks」記錄到 GA 中</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/11/%E8%A8%AD%E5%AE%9Arage-clicks-1024x721.png" alt="" class="wp-image-3136" width="640" height="451" loading="lazy" decoding="async"><figcaption>將「rage clicks」記錄到 GA 中</figcaption></figure></div>
 
 
 

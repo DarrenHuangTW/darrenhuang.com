@@ -44,7 +44,7 @@ wpId: 2797
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/FAQ%E8%B3%87%E8%A8%8A%E8%AA%BF%E7%82%BA%E5%85%A9%E5%89%87.png" alt="" class="wp-image-2804" width="600" height="317" loading="lazy" decoding="async"></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/FAQ%E8%B3%87%E8%A8%8A%E8%AA%BF%E7%82%BA%E5%85%A9%E5%89%87.png" alt="" class="wp-image-2804" width="600" height="356" loading="lazy" decoding="async"></figure></div>
 
 
 
@@ -94,7 +94,7 @@ wpId: 2797
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2021/06/Comparison_between_August_and_January_2021-480x223-1.png" alt="" class="wp-image-2807" width="600" height="273" loading="lazy" decoding="async"><figcaption>encazip.com 網站流量成長圖</figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2021/06/Comparison_between_August_and_January_2021-480x223-1.png" alt="" class="wp-image-2807" width="600" height="279" loading="lazy" decoding="async"><figcaption>encazip.com 網站流量成長圖</figcaption></figure>
 
 
 
@@ -146,7 +146,7 @@ wpId: 2797
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/%E9%A0%81%E9%9D%A2%E4%B8%8ASEO%E6%8C%87%E5%8D%97-1024x458.png" alt="" class="wp-image-2811" width="600" loading="lazy" decoding="async" height="458"><figcaption>章節</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/%E9%A0%81%E9%9D%A2%E4%B8%8ASEO%E6%8C%87%E5%8D%97-1024x458.png" alt="" class="wp-image-2811" width="600" loading="lazy" decoding="async" height="268"><figcaption>章節</figcaption></figure></div>
 
 
 
@@ -172,7 +172,7 @@ wpId: 2797
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C%E8%AE%8A%E5%8C%96%E5%8A%87%E7%83%88%E4%B8%AD.png" alt="" class="wp-image-2812" width="600" loading="lazy" decoding="async" height="447"></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C%E8%AE%8A%E5%8C%96%E5%8A%87%E7%83%88%E4%B8%AD.png" alt="" class="wp-image-2812" width="600" loading="lazy" decoding="async" height="268"></figure></div>
 
 
 
@@ -198,7 +198,7 @@ wpId: 2797
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/07/%E7%B6%B2%E9%A0%81%E6%8A%80%E8%A1%93CWV%E6%AF%94%E8%BC%83.png" alt="" class="wp-image-2817" width="600" loading="lazy" decoding="async" height="576"><figcaption>由此圖可看出Wix所架的網站在過去一年CWV有明顯提升</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/07/%E7%B6%B2%E9%A0%81%E6%8A%80%E8%A1%93CWV%E6%AF%94%E8%BC%83.png" alt="" class="wp-image-2817" width="600" loading="lazy" decoding="async" height="413"><figcaption>由此圖可看出Wix所架的網站在過去一年CWV有明顯提升</figcaption></figure></div>
 
 
 
@@ -228,7 +228,7 @@ wpId: 2797
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/%E6%9A%AB%E6%99%82%E8%BD%89%E5%9D%80%E8%88%87%E6%B0%B8%E4%B9%85%E8%BD%89%E5%9D%80-1024x610.png" alt="" class="wp-image-2814" width="600" loading="lazy" decoding="async" height="610"></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/06/%E6%9A%AB%E6%99%82%E8%BD%89%E5%9D%80%E8%88%87%E6%B0%B8%E4%B9%85%E8%BD%89%E5%9D%80-1024x610.png" alt="" class="wp-image-2814" width="600" loading="lazy" decoding="async" height="357"></figure></div>
 
 
 
@@ -258,7 +258,7 @@ wpId: 2797
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/07/SEO%E8%BD%89%E5%9D%80%E6%96%B9%E6%B3%95.png" alt="" class="wp-image-2819" width="600" height="483" loading="lazy" decoding="async"><figcaption>永久性與暫時性轉址分類</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2021/07/SEO%E8%BD%89%E5%9D%80%E6%96%B9%E6%B3%95.png" alt="" class="wp-image-2819" width="600" height="584" loading="lazy" decoding="async"><figcaption>永久性與暫時性轉址分類</figcaption></figure></div>
 
 
 

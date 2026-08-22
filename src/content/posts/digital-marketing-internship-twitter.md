@@ -71,7 +71,7 @@ wpId: 15
 <div><a href="http://4.bp.blogspot.com/-hgHpgkTdnVU/VmRbJ49CCaI/AAAAAAAAAck/toWWetmb-fw/s1600/IG.JPG"><span><img width="640" height="225"></span></a></div>
 <div><span>&nbsp;</span></div>
 <div><span>所以我建議老闆用一個之前也推薦過了工具 IFTTT，連結兩邊帳戶以後，發一個IG圖就會自動發一則Twitter，而且圖片還是會顯示。</span></div>
-<span><a href="https://ifttt.com/view_embed_recipe/103249-share-your-instagram-pics-as-native-twitter-photos" target="_blank" rel="noopener noreferrer"><img style="max-width:100%" src="https://ifttt.com/recipe_embed_img/103249" alt="IFTTT Recipe: Share your Instagram pics as native Twitter photos connects instagram to twitter" width="370px" loading="lazy" decoding="async"></a></span>
+<span><a href="https://ifttt.com/view_embed_recipe/103249-share-your-instagram-pics-as-native-twitter-photos" target="_blank" rel="noopener noreferrer"><img style="max-width:100%" src="https://ifttt.com/recipe_embed_img/103249" alt="IFTTT Recipe: Share your Instagram pics as native Twitter photos connects instagram to twitter" loading="lazy" decoding="async"></a></span>
 <div><span>
 </span><span>當然字數還是要注意不可以超過140字元不然會被切掉。</span>
 <a href="http://3.bp.blogspot.com/-icJPzdsXMAc/VmRcMs4SwOI/AAAAAAAAAcw/p0Ega956yJs/s1600/IFTTT.JPG"><span><img width="640" height="408"></span></a>

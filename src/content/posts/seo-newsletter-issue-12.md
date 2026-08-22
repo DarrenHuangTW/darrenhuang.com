@@ -154,7 +154,7 @@ wpId: 1548
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/07/Google-Discover%E6%96%87%E7%AB%A0%E7%A8%AE%E9%A1%9E-473x1024.jpg" alt="Google Discover種類" class="wp-image-1554" width="237" height="512" loading="lazy" decoding="async"><figcaption><a aria-label="undefined (opens in a new tab)" href="https://twitter.com/VorticonCmdr/status/1278055684551172098" target="_blank" rel="noreferrer noopener">圖片來源與討論</a></figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/07/Google-Discover%E6%96%87%E7%AB%A0%E7%A8%AE%E9%A1%9E-473x1024.jpg" alt="Google Discover種類" class="wp-image-1554" width="237" height="513" loading="lazy" decoding="async"><figcaption><a aria-label="undefined (opens in a new tab)" href="https://twitter.com/VorticonCmdr/status/1278055684551172098" target="_blank" rel="noreferrer noopener">圖片來源與討論</a></figcaption></figure>
 
 
 

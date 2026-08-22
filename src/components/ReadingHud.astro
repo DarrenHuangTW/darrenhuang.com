@@ -1,0 +1,45 @@
+---
+import type { ArticleHeading } from '@/lib/article-experience';
+
+interface Props {
+  headings: ArticleHeading[];
+}
+
+const { headings } = Astro.props;
+const visible = headings.length >= 3;
+---
+
+{
+  visible && (
+    <aside class="reading-hud">
+      <details class="reading-hud__mobile">
+        <summary>
+          <span>本文目錄</span>
+          <span aria-hidden="true">{headings.length} 個段落</span>
+        </summary>
+        <nav aria-label="本文目錄">
+          <ol>
+            {headings.map((heading) => (
+              <li
+                class:list={{ 'reading-hud__subheading': heading.depth === 3 }}
+              >
+                <a href={`#${heading.id}`}>{heading.text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </details>
+
+      <nav class="reading-hud__desktop" aria-label="本文目錄">
+        <strong>本文目錄</strong>
+        <ol>
+          {headings.map((heading) => (
+            <li class:list={{ 'reading-hud__subheading': heading.depth === 3 }}>
+              <a href={`#${heading.id}`}>{heading.text}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </aside>
+  )
+}

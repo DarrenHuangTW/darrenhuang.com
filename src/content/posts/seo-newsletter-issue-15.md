@@ -156,7 +156,7 @@ wpId: 1714
 
 
 
-<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/08/google-sheets%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99web-vitals.png" alt="自動記錄網站web vitals工具" class="wp-image-1721" width="485" height="332" loading="lazy" decoding="async"><figcaption>示意圖</figcaption></figure>
+<figure class="wp-block-image size-large is-resized"><img src="./wp-content/uploads/2020/08/google-sheets%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99web-vitals.png" alt="自動記錄網站web vitals工具" class="wp-image-1721" width="485" height="333" loading="lazy" decoding="async"><figcaption>示意圖</figcaption></figure>
 
 
 

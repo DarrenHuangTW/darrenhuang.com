@@ -63,6 +63,10 @@ export default defineConfig({
   site,
   base,
   output: 'static',
+  prefetch: {
+    defaultStrategy: 'hover',
+    prefetchAll: false,
+  },
   trailingSlash: 'ignore',
   build: {
     format: 'file',

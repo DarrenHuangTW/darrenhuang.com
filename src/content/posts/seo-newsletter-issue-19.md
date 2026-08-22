@@ -56,7 +56,7 @@ wpId: 1975
 
 
 
-<figure class="wp-block-image size-full is-resized"><img src="./wp-content/uploads/2020/11/google-%E7%A7%BB%E5%8B%95%E5%84%AA%E5%85%88.png" alt="" class="wp-image-1979" width="500" height="249" loading="lazy" decoding="async"><figcaption>十月中PubCon研討會上John Mueller的演講截圖 (<em>付費</em>活動無影片)。</figcaption></figure>
+<figure class="wp-block-image size-full is-resized"><img src="./wp-content/uploads/2020/11/google-%E7%A7%BB%E5%8B%95%E5%84%AA%E5%85%88.png" alt="" class="wp-image-1979" width="500" height="208" loading="lazy" decoding="async"><figcaption>十月中PubCon研討會上John Mueller的演講截圖 (<em>付費</em>活動無影片)。</figcaption></figure>
 
 
 
@@ -128,7 +128,7 @@ wpId: 1975
 
 
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/11/%E6%B8%B2%E6%9F%93%E5%89%8D%E5%BE%8CHTML-839x1024.png" alt="渲染前後HTML比較工具" class="wp-image-1983" width="420" height="512" loading="lazy" decoding="async"><figcaption>比較渲染前後HTML差異</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="./wp-content/uploads/2020/11/%E6%B8%B2%E6%9F%93%E5%89%8D%E5%BE%8CHTML-839x1024.png" alt="渲染前後HTML比較工具" class="wp-image-1983" width="420" height="513" loading="lazy" decoding="async"><figcaption>比較渲染前後HTML差異</figcaption></figure></div>
 
 
 

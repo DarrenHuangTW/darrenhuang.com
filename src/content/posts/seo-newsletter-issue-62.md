@@ -104,7 +104,7 @@ wpId: 3790
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-8-1024x528.png" alt="" class="wp-image-3806" width="425" height="218" loading="lazy" decoding="async"><figcaption>Pros &amp; Cons在搜尋結果上的外觀</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-8-1024x528.png" alt="" class="wp-image-3806" width="425" height="219" loading="lazy" decoding="async"><figcaption>Pros &amp; Cons在搜尋結果上的外觀</figcaption></figure>
 
 
 
@@ -214,7 +214,7 @@ wpId: 3790
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-5-1024x544.png" alt="" class="wp-image-3799" width="-103" height="-55" loading="lazy" decoding="async"><figcaption>官方公告摘要</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-5-1024x544.png" alt="" class="wp-image-3799" width="1024" height="544" loading="lazy" decoding="async"><figcaption>官方公告摘要</figcaption></figure>
 
 
 
@@ -222,7 +222,7 @@ wpId: 3790
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-6-1024x566.png" alt="" class="wp-image-3800" width="-53" height="-29" loading="lazy" decoding="async"><figcaption>GA4 &gt; Admin &gt; Data Streams &gt; Stream &gt; Google tag &gt; Configure tag settings &gt; Admin &gt; Combine tags</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-6-1024x566.png" alt="" class="wp-image-3800" width="1024" height="566" loading="lazy" decoding="async"><figcaption>GA4 &gt; Admin &gt; Data Streams &gt; Stream &gt; Google tag &gt; Configure tag settings &gt; Admin &gt; Combine tags</figcaption></figure>
 
 
 
@@ -230,7 +230,7 @@ wpId: 3790
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-7.png" alt="" class="wp-image-3801" width="-53" height="-44" loading="lazy" decoding="async"><figcaption>GA4 和 Google Ads 兩個標籤，會在整合後分享彼此的覆蓋範圍</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/08/image-7.png" alt="" class="wp-image-3801" width="980" height="813" loading="lazy" decoding="async"><figcaption>GA4 和 Google Ads 兩個標籤，會在整合後分享彼此的覆蓋範圍</figcaption></figure>
 
 
 
@@ -260,7 +260,7 @@ wpId: 3790
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-10-1024x679.png" alt="" class="wp-image-3812" width="-24" height="-16" loading="lazy" decoding="async"><figcaption>從 SSR 到 CSR 的不同種類 JS 渲染方式</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-10-1024x679.png" alt="" class="wp-image-3812" width="1024" height="679" loading="lazy" decoding="async"><figcaption>從 SSR 到 CSR 的不同種類 JS 渲染方式</figcaption></figure>
 
 
 
@@ -282,7 +282,7 @@ wpId: 3790
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-13-1024x596.png" alt="" class="wp-image-3817" width="464" height="269" loading="lazy" decoding="async"><figcaption>Term Suggest 的回傳結果</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/08/image-13-1024x596.png" alt="" class="wp-image-3817" width="464" height="270" loading="lazy" decoding="async"><figcaption>Term Suggest 的回傳結果</figcaption></figure>
 
 
 

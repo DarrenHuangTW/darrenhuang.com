@@ -116,7 +116,7 @@ wpId: 3446
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/04/%E7%94%A2%E5%93%81%E8%A9%95%E8%AB%96%E6%BC%94%E7%AE%97%E6%B3%95%E5%BD%B1%E9%9F%BF-1024x462.png" alt="" class="wp-image-3467" width="-9" height="-4" loading="lazy" decoding="async"><figcaption>國外網友分享這次演算法帶來的正面影響 (<a href="https://twitter.com/Marie_Haynes/status/1508878374357409799/photo/1">來源</a>)</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/04/%E7%94%A2%E5%93%81%E8%A9%95%E8%AB%96%E6%BC%94%E7%AE%97%E6%B3%95%E5%BD%B1%E9%9F%BF-1024x462.png" alt="" class="wp-image-3467" width="1024" height="462" loading="lazy" decoding="async"><figcaption>國外網友分享這次演算法帶來的正面影響 (<a href="https://twitter.com/Marie_Haynes/status/1508878374357409799/photo/1">來源</a>)</figcaption></figure>
 
 
 
@@ -138,7 +138,7 @@ wpId: 3446
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/04/Danny-Sullivan.jpg" alt="" class="wp-image-3473" width="468" height="267" loading="lazy" decoding="async"></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/04/Danny-Sullivan.jpg" alt="" class="wp-image-3473" width="468" height="263" loading="lazy" decoding="async"></figure>
 
 
 
@@ -248,7 +248,7 @@ wpId: 3446
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/03/Brian-dean-%E5%85%8D%E8%B2%BB-SEO-%E8%AA%B2%E7%A8%8B.png" alt="" class="wp-image-3455" width="490" height="435" loading="lazy" decoding="async"><figcaption>Brian Dean 的 Content SEO 影片在 SEMRush Academy 免費上架</figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/03/Brian-dean-%E5%85%8D%E8%B2%BB-SEO-%E8%AA%B2%E7%A8%8B.png" alt="" class="wp-image-3455" width="490" height="436" loading="lazy" decoding="async"><figcaption>Brian Dean 的 Content SEO 影片在 SEMRush Academy 免費上架</figcaption></figure>
 
 
 
@@ -274,7 +274,7 @@ wpId: 3446
 
 
 
-<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/04/SEO-%E7%92%B0%E4%BF%9D%E4%BD%9C%E7%82%BA%E6%8E%92%E5%90%8D%E6%8C%87%E6%A8%99.png" alt="" class="wp-image-3470" width="-303" height="-253" loading="lazy" decoding="async"><figcaption><a href="https://twitter.com/JohnMu/status/1504839809382105126">Twitter討論</a></figcaption></figure>
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="./wp-content/uploads/2022/04/SEO-%E7%92%B0%E4%BF%9D%E4%BD%9C%E7%82%BA%E6%8E%92%E5%90%8D%E6%8C%87%E6%A8%99.png" alt="" class="wp-image-3470" width="693" height="580" loading="lazy" decoding="async"><figcaption><a href="https://twitter.com/JohnMu/status/1504839809382105126">Twitter討論</a></figcaption></figure>
 
 
 
@@ -314,7 +314,7 @@ wpId: 3446
 
 
 
-<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/03/%E7%A7%BB%E9%99%A4%E5%85%A7%E5%AE%B9-1024x435.png" alt="" class="wp-image-3451" width="-120" height="-50" loading="lazy" decoding="async"><figcaption>補充 - 該頁現在也另外放上一個明顯的提示，讓誤闖進來的使用者能更快確認自己是不是目標受眾。</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img src="./wp-content/uploads/2022/03/%E7%A7%BB%E9%99%A4%E5%85%A7%E5%AE%B9-1024x435.png" alt="" class="wp-image-3451" width="1024" height="435" loading="lazy" decoding="async"><figcaption>補充 - 該頁現在也另外放上一個明顯的提示，讓誤闖進來的使用者能更快確認自己是不是目標受眾。</figcaption></figure>
 
 
 
