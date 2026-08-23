@@ -39,6 +39,36 @@ const posts = defineCollection({
   }),
 });
 
+const notes = defineCollection({
+  loader: glob({ base: './src/content/notes', pattern: '**/*.{md,mdx}' }),
+  schema: z.object({
+    slug: z
+      .string()
+      .min(1)
+      .regex(/^[^/]+$/),
+    canonicalPath: z.string().regex(/^\/notes\/[^/]+\.html$/),
+    aliases: z.array(z.string()).default([]),
+    title: z.string().min(1),
+    publishedAt: z.coerce.date(),
+    updatedAt: z.coerce.date(),
+    excerpt: z.string().default(''),
+    categories: z.array(z.string()).default([]),
+    tags: z.array(z.string()).default([]),
+    relatedPosts: z.array(z.string()).default([]),
+    relatedNotes: z.array(z.string()).default([]),
+    editorialStatus: z.enum(['review', 'published', 'excluded']),
+    noteKind: z.enum(['historical', 'reflection', 'technical', 'experiment']),
+    source: z.object({
+      platform: z.literal('facebook'),
+      recordId: z.string().regex(/^fb-[a-f0-9]{16}$/),
+      sourceFile: z.string().min(1),
+      sourceIndex: z.number().int().nonnegative(),
+      url: z.url().nullable().default(null),
+    }),
+    sourceLinks: z.array(z.url()).default([]),
+  }),
+});
+
 const pages = defineCollection({
   loader: glob({ base: './src/content/pages', pattern: '**/*.{md,mdx}' }),
   schema: z.object({
@@ -87,4 +117,4 @@ const stories = defineCollection({
   }),
 });
 
-export const collections = { pages, posts, stories };
+export const collections = { pages, posts, notes, stories };

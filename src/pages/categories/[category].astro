@@ -1,26 +1,46 @@
 ---
 import PostCard from '@/components/PostCard.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getPostsNewestFirst } from '@/lib/content';
+import NoteCard from '@/components/NoteCard.astro';
+import {
+  getPostsNewestFirst,
+  getPublishedNotesNewestFirst,
+} from '@/lib/content';
 import { slugifyTaxonomy } from '@/lib/urls';
 
 export async function getStaticPaths() {
-  const posts = await getPostsNewestFirst();
-  const categories = new Map<string, typeof posts>();
+  const [posts, notes] = await Promise.all([
+    getPostsNewestFirst(),
+    getPublishedNotesNewestFirst(),
+  ]);
+  const categories = new Map<
+    string,
+    { notes: typeof notes; posts: typeof posts }
+  >();
 
   for (const post of posts) {
     for (const category of post.data.categories) {
-      categories.set(category, [...(categories.get(category) ?? []), post]);
+      const group = categories.get(category) ?? { notes: [], posts: [] };
+      group.posts.push(post);
+      categories.set(category, group);
     }
   }
 
-  return [...categories.entries()].map(([category, categoryPosts]) => ({
+  for (const note of notes) {
+    for (const category of note.data.categories) {
+      const group = categories.get(category) ?? { notes: [], posts: [] };
+      group.notes.push(note);
+      categories.set(category, group);
+    }
+  }
+
+  return [...categories.entries()].map(([category, group]) => ({
     params: { category: slugifyTaxonomy(category) },
-    props: { category, posts: categoryPosts },
+    props: { category, ...group },
   }));
 }
 
-const { category, posts } = Astro.props;
+const { category, notes, posts } = Astro.props;
 ---
 
 <BaseLayout
@@ -33,9 +53,34 @@ const { category, posts } = Astro.props;
       <div>
         <div class="eyebrow">Category</div>
         <h1>{category}</h1>
-        <p>共 {posts.length} 篇文章。</p>
+        <p>共 {posts.length + notes.length} 篇文章與筆記。</p>
       </div>
     </header>
-    <div class="post-grid">{posts.map((post) => <PostCard post={post} />)}</div>
+    {
+      posts.length > 0 && (
+        <div class="post-grid">
+          {posts.map((post) => (
+            <PostCard post={post} />
+          ))}
+        </div>
+      )
+    }
+    {
+      notes.length > 0 && (
+        <section
+          class="taxonomy-content-group"
+          aria-labelledby="category-notes-title"
+        >
+          <header class="taxonomy-content-group__header">
+            <h2 id="category-notes-title">Facebook 保存筆記</h2>
+          </header>
+          <div class="note-grid">
+            {notes.map((note) => (
+              <NoteCard note={note} />
+            ))}
+          </div>
+        </section>
+      )
+    }
   </section>
 </BaseLayout>

@@ -1,95 +1,76 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import ArticleJourney from '@/components/ArticleJourney.astro';
 import ImageLightbox from '@/components/ImageLightbox.astro';
 import ReadingHud from '@/components/ReadingHud.astro';
 import RelatedContent from '@/components/RelatedContent.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import type {
-  ArticleHeading,
-  ArticleJourney as Journey,
-} from '@/lib/article-experience';
-import { transitionNameForPost } from '@/lib/article-experience';
+import type { ArticleHeading } from '@/lib/article-experience';
 import { formatDate } from '@/lib/content';
 import { slugifyTaxonomy, withBase } from '@/lib/urls';
 
 interface Props {
-  data: CollectionEntry<'posts'>['data'];
+  data: CollectionEntry<'notes'>['data'];
   headings: ArticleHeading[];
-  journey: Journey;
   relatedNotes: CollectionEntry<'notes'>[];
+  relatedPosts: CollectionEntry<'posts'>[];
   readingMinutes: number;
 }
 
-const { data, headings, journey, relatedNotes, readingMinutes } = Astro.props;
-const titleDateRange = data.title.match(
-  /^(.*[~～])(\d{4}[./-]\d{1,2}[./-]\d{1,2})$/u,
-);
+const { data, headings, relatedNotes, relatedPosts, readingMinutes } =
+  Astro.props;
 const hasTableOfContents = headings.length >= 3;
+const isReview = data.editorialStatus === 'review';
+const sourceLinkLabel = (href: string): string => {
+  try {
+    return new URL(href).hostname.replace(/^www\./u, '');
+  } catch {
+    return href;
+  }
+};
 ---
 
 <BaseLayout
   title={data.title}
   description={data.excerpt}
   canonicalPath={data.canonicalPath}
-  image={data.featuredMedia?.src}
   type="article"
   publishedAt={data.publishedAt}
   updatedAt={data.updatedAt}
+  noindex={isReview}
 >
   <div class="reading-progress" aria-hidden="true">
     <span></span>
   </div>
 
-  <article class="article">
+  <article class="article note-article">
     <header class="article__header shell shell--article">
-      <div class="eyebrow">數位引擎文章</div>
-      <h1 style={`view-transition-name: ${transitionNameForPost(data.slug)}`}>
-        {
-          titleDateRange ? (
-            <>
-              {titleDateRange[1]}
-              <wbr />
-              <span class="article__title-range-end">{titleDateRange[2]}</span>
-            </>
-          ) : (
-            data.title
-          )
-        }
-      </h1>
+      <div class="eyebrow">數位引擎筆記 · Facebook 保存</div>
+      <h1>{data.title}</h1>
       {data.excerpt && <p class="article__dek">{data.excerpt}</p>}
       <div class="article__byline">
-        <span>Darren Huang</span>
+        <span>原始分享於數位引擎 Facebook</span>
         <span aria-hidden="true">·</span>
-        <time datetime={data.publishedAt.toISOString()}
-          >{formatDate(data.publishedAt)}</time
-        >
+        <time datetime={data.publishedAt.toISOString()}>
+          {formatDate(data.publishedAt)}
+        </time>
         <span aria-hidden="true">·</span>
         <span>約 {readingMinutes} 分鐘</span>
         {
           data.updatedAt.getTime() !== data.publishedAt.getTime() && (
             <span class="article__updated">
-              更新於 {formatDate(data.updatedAt)}
+              整理於 {formatDate(data.updatedAt)}
             </span>
           )
         }
       </div>
+      {
+        isReview && (
+          <aside class="note-review-banner" aria-label="編輯狀態">
+            這是本地審核草稿，尚未列入正式內容索引。
+          </aside>
+        )
+      }
     </header>
-
-    {
-      data.featuredMedia && (
-        <figure class="article__hero shell">
-          <img
-            src={withBase(data.featuredMedia.src)}
-            alt={data.featuredMedia.alt}
-            width={data.featuredMedia.width}
-            height={data.featuredMedia.height}
-            loading="eager"
-            fetchpriority="high"
-          />
-        </figure>
-      )
-    }
 
     <div
       class:list={[
@@ -101,9 +82,43 @@ const hasTableOfContents = headings.length >= 3;
       <ReadingHud headings={headings} />
 
       <div class="article__content">
+        <div class="note-source-card">
+          <div>
+            <strong>來源註記</strong>
+            <p>
+              這篇內容保留 Facebook
+              貼文的原始脈絡，部分工具、介面與外部連結可能已經改變。
+            </p>
+          </div>
+          {
+            data.source.url && (
+              <a href={data.source.url} rel="noopener noreferrer">
+                查看原始貼文 <span aria-hidden="true">↗</span>
+              </a>
+            )
+          }
+        </div>
+
         <div class="prose">
           <slot />
         </div>
+
+        {
+          data.sourceLinks.length > 0 && (
+            <section class="note-links" aria-labelledby="note-links-title">
+              <h2 id="note-links-title">原文提到的連結</h2>
+              <ul>
+                {data.sourceLinks.map((href) => (
+                  <li>
+                    <a href={href} rel="noopener noreferrer">
+                      {sourceLinkLabel(href)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
 
         {
           (data.categories.length > 0 || data.tags.length > 0) && (
@@ -146,9 +161,7 @@ const hasTableOfContents = headings.length >= 3;
           )
         }
 
-        <RelatedContent notes={relatedNotes} />
-
-        <ArticleJourney journey={journey} />
+        <RelatedContent notes={relatedNotes} posts={relatedPosts} />
       </div>
     </div>
   </article>

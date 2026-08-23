@@ -11,6 +11,7 @@ import { PRODUCTION_SITE_URL } from '../../site.config.js';
 
 interface AgentPage {
   canonicalUrl: URL;
+  contentKind: 'article' | 'note';
   description: string;
   markdownUrl: URL;
   publishedAt?: string;
@@ -251,6 +252,7 @@ function pageForHtml(
     body,
     page: {
       canonicalUrl,
+      contentKind: canonicalPath.startsWith('/notes/') ? 'note' : 'article',
       description,
       markdownUrl,
       publishedAt,
@@ -274,11 +276,16 @@ function findPage(pages: AgentPage[], pathname: string): AgentPage {
   return page;
 }
 
-function llmsDocument(pages: AgentPage[], articleCount: number): string {
+function llmsDocument(
+  pages: AgentPage[],
+  articleCount: number,
+  noteCount: number,
+): string {
   const articles = findPage(pages, '/articles.html');
   const categories = findPage(pages, '/categories.html');
   const tags = findPage(pages, '/tags.html');
   const stories = findPage(pages, '/web-stories.html');
+  const notes = findPage(pages, '/notes.html');
   const about = pages.find((page) =>
     stripConfiguredBase(page.canonicalUrl.pathname).includes('about'),
   );
@@ -297,7 +304,9 @@ function llmsDocument(pages: AgentPage[], articleCount: number): string {
     '## 內容索引',
     '',
     `- [Agent 文章索引](${siteAssetUrl('/articles-llms.txt')}): 所有文章的日期、摘要與 Markdown 版本。`,
+    `- [Agent 筆記索引](${siteAssetUrl('/notes-llms.txt')}): ${noteCount} 篇已發布 Facebook 保存筆記的日期、摘要與 Markdown 版本。`,
     `- [全部文章](${articles.canonicalUrl}): 面向一般讀者的完整文章列表。`,
+    `- [Facebook 保存筆記](${notes.canonicalUrl}): 從社群內容整理出的長期筆記。`,
     `- [分類](${categories.canonicalUrl}): 依內容分類瀏覽文章。`,
     `- [標籤](${tags.canonicalUrl}): 依標籤瀏覽文章。`,
     `- [Web Stories](${stories.canonicalUrl}): 視覺故事與可讀逐頁文字。`,
@@ -310,7 +319,7 @@ function llmsDocument(pages: AgentPage[], articleCount: number): string {
     '',
     '## Agent 使用說明',
     '',
-    '- 優先讀取本檔、Agent 文章索引，再選擇與任務相關的 Markdown 頁面。',
+    '- 優先讀取本檔、Agent 文章索引與 Agent 筆記索引，再選擇與任務相關的 Markdown 頁面。',
     '- 每個 Markdown 頁面的 frontmatter 都提供 canonical HTML 網址；對外引用請使用 canonical 網址。',
     '- 網站主要語言是繁體中文（zh-Hant）。',
     '- 不要把歷史 SEO 文章中的產品介面、政策或演算法描述當成未經查證的現況。',
@@ -331,6 +340,40 @@ function articleIndexDocument(articlePages: AgentPage[]): string {
     '',
     '每個連結都指向精簡的 Markdown 版本。',
     '引用文章時，請改用該 Markdown frontmatter 內的 canonical HTML 網址。',
+  ];
+  let currentYear = '';
+
+  for (const page of sorted) {
+    const year = page.publishedAt?.slice(0, 4) || '日期不明';
+    if (year !== currentYear) {
+      lines.push('', `## ${year}`, '');
+      currentYear = year;
+    }
+
+    const published = page.publishedAt?.slice(0, 10) ?? '日期不明';
+    const description = page.description
+      ? ` — ${normalizedText(page.description)}`
+      : '';
+    lines.push(
+      `- [${markdownLinkText(page.title)}](${page.markdownUrl}) — ${published}${description}`,
+    );
+  }
+
+  lines.push('');
+  return lines.join('\n');
+}
+
+function noteIndexDocument(notePages: AgentPage[]): string {
+  const sorted = notePages.toSorted((left, right) =>
+    (right.publishedAt ?? '').localeCompare(left.publishedAt ?? ''),
+  );
+  const lines = [
+    '# 數位引擎 Facebook 保存筆記索引',
+    '',
+    `> 共 ${sorted.length} 篇繁體中文保存筆記，依原始發布日期由新到舊排列。`,
+    '',
+    '每個連結都指向精簡的 Markdown 版本。',
+    '引用筆記時，請改用該 Markdown frontmatter 內的 canonical HTML 網址。',
   ];
   let currentYear = '';
 
@@ -430,7 +473,12 @@ async function main(): Promise<void> {
     pages.push(result.page);
   }
 
-  const articlePages = pages.filter((page) => page.type === 'article');
+  const articlePages = pages.filter(
+    (page) => page.type === 'article' && page.contentKind === 'article',
+  );
+  const notePages = pages.filter(
+    (page) => page.type === 'article' && page.contentKind === 'note',
+  );
   if (articlePages.length !== expectedArticleCount) {
     throw new Error(
       `Expected ${expectedArticleCount} article Markdown pages, generated ${articlePages.length}.`,
@@ -439,7 +487,7 @@ async function main(): Promise<void> {
 
   await writeFile(
     path.join(distRoot, 'llms.txt'),
-    llmsDocument(pages, articlePages.length),
+    llmsDocument(pages, articlePages.length, notePages.length),
     'utf8',
   );
   await writeFile(
@@ -447,10 +495,15 @@ async function main(): Promise<void> {
     articleIndexDocument(articlePages),
     'utf8',
   );
+  await writeFile(
+    path.join(distRoot, 'notes-llms.txt'),
+    noteIndexDocument(notePages),
+    'utf8',
+  );
   await writeSkillIndex();
 
   console.log(
-    `[agent-content] PASS: generated ${pages.length} Markdown pages, ${articlePages.length} article entries, llms.txt, and one verified skill index.`,
+    `[agent-content] PASS: generated ${pages.length} Markdown pages, ${articlePages.length} article entries, ${notePages.length} note entries, llms.txt, and one verified skill index.`,
   );
 }
 

@@ -737,7 +737,14 @@ async function verifyRss(
     'dist/rss.xml 不是有效的 RSS channel。',
   );
   const itemCount = (source.match(/<item\b/gi) ?? []).length;
-  check(itemCount === 86, `RSS 應包含 86 個 items，實際為 ${itemCount}。`);
+  const publishedNoteCount = [...artifactPaths].filter((relative) =>
+    /^notes\/[^/]+\.html$/u.test(relative),
+  ).length;
+  const expectedItemCount = 86 + publishedNoteCount;
+  check(
+    itemCount === expectedItemCount,
+    `RSS 應包含 ${expectedItemCount} 個 items，實際為 ${itemCount}。`,
+  );
 
   const rssPaths = new Set<string>();
   const rssLinks = [
@@ -756,22 +763,43 @@ async function verifyRss(
   }
 
   const posts = manifest.posts;
-  if (!Array.isArray(posts)) {
-    return;
+  if (Array.isArray(posts)) {
+    for (const value of posts) {
+      if (!isRecord(value)) {
+        continue;
+      }
+
+      const canonicalPath = stringValue(value, 'canonicalPath');
+      const expected = canonicalPath
+        ? normalizedLocation(canonicalPath)
+        : undefined;
+      check(
+        Boolean(expected && rssPaths.has(expected)),
+        `RSS 缺少文章：${canonicalPath ?? '(canonicalPath missing)'}`,
+      );
+    }
   }
 
-  for (const value of posts) {
-    if (!isRecord(value)) {
+  for (const relative of artifactPaths) {
+    if (!/^notes\/[^/]+\.html$/u.test(relative)) {
       continue;
     }
 
-    const canonicalPath = stringValue(value, 'canonicalPath');
-    const expected = canonicalPath
-      ? normalizedLocation(canonicalPath)
-      : undefined;
+    const source = await readFile(
+      path.join(distRoot, ...relative.split('/')),
+      'utf8',
+    );
+    const $ = load(source);
+    const robots = $('meta[name="robots"]').attr('content')?.toLowerCase();
+    if (robots?.includes('noindex')) {
+      continue;
+    }
+
+    const canonicalPath = `/${relative}`;
+    const expected = normalizedLocation(canonicalPath);
     check(
       Boolean(expected && rssPaths.has(expected)),
-      `RSS 缺少文章：${canonicalPath ?? '(canonicalPath missing)'}`,
+      `RSS 缺少筆記：${canonicalPath}`,
     );
   }
 }
@@ -847,6 +875,7 @@ async function verifyAgentResources(
   const required = [
     '.nojekyll',
     'articles-llms.txt',
+    'notes-llms.txt',
     'articles.md',
     'index.md',
     'llms.txt',
@@ -859,7 +888,8 @@ async function verifyAgentResources(
 
   if (
     !artifactPaths.has('llms.txt') ||
-    !artifactPaths.has('articles-llms.txt')
+    !artifactPaths.has('articles-llms.txt') ||
+    !artifactPaths.has('notes-llms.txt')
   ) {
     return;
   }
@@ -869,14 +899,26 @@ async function verifyAgentResources(
     path.join(distRoot, 'articles-llms.txt'),
     'utf8',
   );
+  const noteIndex = await readFile(
+    path.join(distRoot, 'notes-llms.txt'),
+    'utf8',
+  );
   check(llms.startsWith('# 數位引擎\n'), 'llms.txt 缺少網站標題。');
   check(
     llms.includes(expectedConfiguredUrl('/articles-llms.txt') ?? ''),
     'llms.txt 缺少 Agent 文章索引的正式 URL。',
   );
   check(
+    llms.includes(expectedConfiguredUrl('/notes-llms.txt') ?? ''),
+    'llms.txt 缺少 Agent 筆記索引的正式 URL。',
+  );
+  check(
     articleIndex.startsWith('# 數位引擎文章索引\n'),
     'articles-llms.txt 缺少文章索引標題。',
+  );
+  check(
+    noteIndex.startsWith('# 數位引擎 Facebook 保存筆記索引\n'),
+    'notes-llms.txt 缺少筆記索引標題。',
   );
 
   const posts = canonicalEntries.filter((entry) => entry.kind === 'posts');
@@ -913,6 +955,35 @@ async function verifyAgentResources(
     check(
       Boolean(expectedMarkdown && articleIndex.includes(expectedMarkdown)),
       `articles-llms.txt 缺少 ${expectedMarkdown ?? markdownPath}。`,
+    );
+  }
+
+  const noteHtmlPaths = [...artifactPaths].filter((relative) =>
+    /^notes\/[^/]+\.html$/u.test(relative),
+  );
+  for (const relative of noteHtmlPaths) {
+    const htmlSource = await readFile(
+      path.join(distRoot, ...relative.split('/')),
+      'utf8',
+    );
+    const $ = load(htmlSource);
+    const robots =
+      $('meta[name="robots"]').attr('content')?.toLowerCase() ?? '';
+    if (robots.includes('noindex')) {
+      continue;
+    }
+
+    const canonicalPath = `/${relative}`;
+    const markdownPath = canonicalPath.replace(/\.html$/u, '.md');
+    const markdownOutput = findOutput(markdownPath, artifactPaths);
+    if (!check(Boolean(markdownOutput), `筆記缺少 Markdown：${markdownPath}`)) {
+      continue;
+    }
+
+    const expectedMarkdown = expectedConfiguredUrl(markdownPath);
+    check(
+      Boolean(expectedMarkdown && noteIndex.includes(expectedMarkdown)),
+      `notes-llms.txt 缺少 ${expectedMarkdown ?? markdownPath}。`,
     );
   }
 

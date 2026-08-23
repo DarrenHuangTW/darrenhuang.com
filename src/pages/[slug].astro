@@ -7,6 +7,7 @@ import {
   getArticleJourney,
   prepareArticleHtml,
 } from '@/lib/article-experience';
+import { getRelatedNotesForPost } from '@/lib/content-relations';
 
 type RouteProps =
   | { kind: 'post'; entry: CollectionEntry<'posts'> }
@@ -51,6 +52,16 @@ const articleJourney =
   route.kind === 'post'
     ? getArticleJourney(route.entry, await getCollection('posts'))
     : null;
+const relatedNotes =
+  route.kind === 'post'
+    ? getRelatedNotesForPost(
+        route.entry,
+        await getCollection(
+          'notes',
+          ({ data }) => data.editorialStatus === 'published',
+        ),
+      )
+    : [];
 ---
 
 {
@@ -59,6 +70,7 @@ const articleJourney =
       data={route.entry.data}
       headings={articleExperience?.headings ?? []}
       journey={articleJourney!}
+      relatedNotes={relatedNotes}
       readingMinutes={articleExperience?.readingMinutes ?? 1}
     >
       <Fragment set:html={articleExperience?.html ?? ''} />

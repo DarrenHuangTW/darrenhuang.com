@@ -1,0 +1,45 @@
+---
+import NoteCard from '@/components/NoteCard.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getNotesNewestFirst } from '@/lib/content';
+
+const notes = await getNotesNewestFirst();
+const reviewCount = notes.filter(
+  (note) => note.data.editorialStatus === 'review',
+).length;
+---
+
+<BaseLayout
+  title="數位引擎筆記"
+  description="從數位引擎 Facebook 保存下來的技術筆記、實驗與個人觀察。"
+  canonicalPath="/notes.html"
+  noindex={reviewCount > 0}
+>
+  <section class="section shell">
+    <header class="section__header notes-directory__header">
+      <div>
+        <div class="eyebrow">Facebook Archive</div>
+        <h1>數位引擎筆記</h1>
+        <p>
+          把適合長期保存的社群內容整理成可閱讀、可搜尋、也能繼續更新的筆記。
+        </p>
+      </div>
+      <div class="notes-directory__stats" aria-label="筆記統計">
+        <strong>{notes.length}</strong>
+        <span>篇本地保存內容</span>
+      </div>
+    </header>
+
+    {
+      reviewCount > 0 && (
+        <aside class="note-review-banner notes-directory__banner">
+          目前顯示的是本地審核草稿，這些內容尚未列入正式網站索引。
+        </aside>
+      )
+    }
+
+    <div class="note-grid">
+      {notes.map((note) => <NoteCard note={note} />)}
+    </div>
+  </section>
+</BaseLayout>

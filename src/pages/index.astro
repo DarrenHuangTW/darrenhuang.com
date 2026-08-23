@@ -1,11 +1,17 @@
 ---
 import PostCard from '@/components/PostCard.astro';
+import NoteCard from '@/components/NoteCard.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getPostsNewestFirst } from '@/lib/content';
+import {
+  getPostsNewestFirst,
+  getPublishedNotesNewestFirst,
+} from '@/lib/content';
 import { withBase } from '@/lib/urls';
 
 const posts = await getPostsNewestFirst();
 const recentPosts = posts.slice(0, 5);
+const notes = await getPublishedNotesNewestFirst();
+const recentNotes = notes.slice(0, 3);
 ---
 
 <BaseLayout title="數位引擎" canonicalPath="/">
@@ -57,4 +63,29 @@ const recentPosts = posts.slice(0, 5);
       }
     </div>
   </section>
+
+  {
+    recentNotes.length > 0 && (
+      <section class="section">
+        <div class="shell">
+          <div class="section__header">
+            <div>
+              <h2>Facebook 保存筆記</h2>
+              <p>
+                把社群裡值得長期閱讀的觀察，整理成可以和文章互相參照的內容。
+              </p>
+            </div>
+            <a class="text-link" href={withBase('/notes.html')}>
+              查看全部 {notes.length} 篇 →
+            </a>
+          </div>
+          <div class="note-grid">
+            {recentNotes.map((note) => (
+              <NoteCard note={note} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>

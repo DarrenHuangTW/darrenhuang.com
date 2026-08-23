@@ -315,6 +315,42 @@ test.describe('Phase 5 public-site acceptance', () => {
     ).toBeLessThanOrEqual(2);
   });
 
+  test('published Facebook notes cross-reference the existing article archive', async ({
+    page,
+  }) => {
+    const directoryResponse = await page.goto(runtimePath('/notes.html'));
+    expect(directoryResponse?.ok()).toBe(true);
+    expect(await page.locator('.note-card').count()).toBeGreaterThanOrEqual(23);
+    await expect(
+      page
+        .getByRole('link', { name: /用 ChatGPT 產生 SEO Bookmarklet/ })
+        .first(),
+    ).toBeVisible();
+
+    const noteResponse = await page.goto(
+      runtimePath('/notes/facebook-chatgpt-seo-bookmarklets.html'),
+    );
+    expect(noteResponse?.ok()).toBe(true);
+    expect(
+      await page.locator('meta[name="robots"][content*="noindex"]').count(),
+    ).toBe(0);
+    await expect(
+      page.locator(
+        '.content-relations a[href*="seo-efficient-tool-bookmarklets.html"]',
+      ),
+    ).toBeVisible();
+
+    const articleResponse = await page.goto(
+      runtimePath('/seo-efficient-tool-bookmarklets.html'),
+    );
+    expect(articleResponse?.ok()).toBe(true);
+    await expect(
+      page.locator(
+        '.content-relations a[href*="facebook-chatgpt-seo-bookmarklets.html"]',
+      ),
+    ).toBeVisible();
+  });
+
   test('production tracking markup cannot pollute local or project-base previews', async ({
     page,
   }) => {

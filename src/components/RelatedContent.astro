@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '@/lib/content';
+import { withBase } from '@/lib/urls';
+
+interface Props {
+  notes?: CollectionEntry<'notes'>[];
+  posts?: CollectionEntry<'posts'>[];
+}
+
+const { notes = [], posts = [] } = Astro.props;
+const hasRelatedContent = notes.length > 0 || posts.length > 0;
+---
+
+{
+  hasRelatedContent && (
+    <section
+      class="content-relations"
+      aria-labelledby="content-relations-title"
+    >
+      <header class="content-relations__header">
+        <div>
+          <div class="eyebrow">Keep exploring</div>
+          <h2 id="content-relations-title">延伸閱讀</h2>
+        </div>
+      </header>
+      <div class="content-relations__grid">
+        {posts.map((post) => (
+          <article class="content-relation-card">
+            <div class="content-relation-card__type">網站文章</div>
+            <time datetime={post.data.publishedAt.toISOString()}>
+              {formatDate(post.data.publishedAt)}
+            </time>
+            <h3>
+              <a
+                href={withBase(post.data.canonicalPath)}
+                data-astro-prefetch="hover"
+              >
+                {post.data.title}
+              </a>
+            </h3>
+            {post.data.excerpt && <p>{post.data.excerpt}</p>}
+          </article>
+        ))}
+        {notes.map((note) => (
+          <article class="content-relation-card content-relation-card--note">
+            <div class="content-relation-card__type">Facebook 保存筆記</div>
+            <time datetime={note.data.publishedAt.toISOString()}>
+              {formatDate(note.data.publishedAt)}
+            </time>
+            <h3>
+              <a
+                href={withBase(note.data.canonicalPath)}
+                data-astro-prefetch="hover"
+              >
+                {note.data.title}
+              </a>
+            </h3>
+            {note.data.excerpt && <p>{note.data.excerpt}</p>}
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}

@@ -1,13 +1,23 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getPostsNewestFirst } from '@/lib/content';
+import {
+  getPostsNewestFirst,
+  getPublishedNotesNewestFirst,
+} from '@/lib/content';
 import { slugifyTaxonomy, withBase } from '@/lib/urls';
 
 const posts = await getPostsNewestFirst();
+const notes = await getPublishedNotesNewestFirst();
 const counts = new Map<string, number>();
 
 for (const post of posts) {
   for (const category of post.data.categories) {
+    counts.set(category, (counts.get(category) ?? 0) + 1);
+  }
+}
+
+for (const note of notes) {
+  for (const category of note.data.categories) {
     counts.set(category, (counts.get(category) ?? 0) + 1);
   }
 }
@@ -28,7 +38,7 @@ const categories = [...counts.entries()].toSorted(
       <div>
         <div class="eyebrow">Categories</div>
         <h1>分類</h1>
-        <p>文章的主要內容分類。</p>
+        <p>文章與 Facebook 保存筆記的主要內容分類。</p>
       </div>
     </header>
     <ul class="taxonomy-list">

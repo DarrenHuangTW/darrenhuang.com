@@ -18,6 +18,9 @@ const base = requestedBase === '/' ? undefined : requestedBase;
 const storyContentDirectory = fileURLToPath(
   new URL('./src/content/stories/', import.meta.url),
 );
+const notesContentDirectory = fileURLToPath(
+  new URL('./src/content/notes/', import.meta.url),
+);
 const storySlugs = existsSync(storyContentDirectory)
   ? readdirSync(storyContentDirectory)
       .filter((filename) => filename.endsWith('.json'))
@@ -28,6 +31,22 @@ const storySlugs = existsSync(storyContentDirectory)
           ).slug,
       )
       .filter((slug) => typeof slug === 'string' && slug.length > 0)
+  : [];
+const publishedNoteSlugs = existsSync(notesContentDirectory)
+  ? readdirSync(notesContentDirectory)
+      .filter(
+        (filename) => filename.endsWith('.md') || filename.endsWith('.mdx'),
+      )
+      .map((filename) => {
+        const source = readFileSync(
+          path.join(notesContentDirectory, filename),
+          'utf8',
+        );
+        const status = /^editorialStatus:\s*published\s*$/mu.test(source);
+        const slug = /^slug:\s*([^\s]+)\s*$/mu.exec(source)?.[1];
+        return status && slug ? slug : null;
+      })
+      .filter((slug) => slug !== null)
   : [];
 const normalizedBase =
   requestedBase === '/' ? '' : `/${requestedBase.replace(/^\/+|\/+$/g, '')}`;
@@ -59,6 +78,15 @@ function storyDirectoryOutput() {
   };
 }
 
+function isPublishedNotePage(page) {
+  const pathname = new URL(page).pathname;
+  if (/\/notes(?:\.html)?$/u.test(pathname)) {
+    return publishedNoteSlugs.length > 0;
+  }
+  const match = /\/notes\/([^/]+?)(?:\.html)?$/u.exec(pathname);
+  return !match || publishedNoteSlugs.includes(match[1] ?? '');
+}
+
 export default defineConfig({
   site,
   base,
@@ -74,7 +102,9 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      filter: (page) => !new URL(page).pathname.endsWith('/404.html'),
+      filter: (page) =>
+        !new URL(page).pathname.endsWith('/404.html') &&
+        isPublishedNotePage(page),
       serialize(item) {
         const url = new URL(item.url);
         const withoutBase =

@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '@/lib/content';
+import { withBase } from '@/lib/urls';
+
+interface Props {
+  note: CollectionEntry<'notes'>;
+}
+
+const { note } = Astro.props;
+const statusLabel =
+  note.data.editorialStatus === 'review' ? '草稿審核中' : '已整理';
+---
+
+<article class="note-card">
+  <div class="note-card__meta">
+    <time datetime={note.data.publishedAt.toISOString()}>
+      {formatDate(note.data.publishedAt)}
+    </time>
+    <span>{statusLabel}</span>
+  </div>
+  <h2>
+    <a href={withBase(note.data.canonicalPath)} data-astro-prefetch="hover">
+      {note.data.title}
+    </a>
+  </h2>
+  {note.data.excerpt && <p>{note.data.excerpt}</p>}
+  <div class="note-card__footer">
+    <span
+      >{note.data.noteKind === 'historical' ? '歷史保存' : '數位引擎筆記'}</span
+    >
+    <a
+      class="text-link"
+      href={withBase(note.data.canonicalPath)}
+      data-astro-prefetch="hover"
+      aria-label={`閱讀〈${note.data.title}〉`}
+    >
+      閱讀筆記 <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</article>
