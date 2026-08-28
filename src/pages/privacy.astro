@@ -1,0 +1,103 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const canonicalPath = '/privacy.html';
+const description =
+  '數位引擎網站的資料蒐集、第三方服務、公開內容與聯絡方式說明。';
+const privacySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: '隱私說明',
+  url: 'https://www.darrenhuang.com/privacy.html',
+  description,
+};
+---
+
+<BaseLayout
+  title="隱私說明"
+  description={description}
+  canonicalPath={canonicalPath}
+  structuredData={privacySchema}
+>
+  <article class="simple-page page shell">
+    <header class="page__header">
+      <div class="eyebrow">Privacy</div>
+      <h1>隱私說明</h1>
+      <p>{description}</p>
+    </header>
+
+    <div class="prose simple-page__body">
+      <p>最後更新：2026 年 8 月 28 日。</p>
+
+      <section aria-labelledby="privacy-scope">
+        <h2 id="privacy-scope">這個網站保存什麼資料</h2>
+        <p>
+          數位引擎是以靜態頁面為主的公開內容網站，提供
+          SEO、數位行銷、網站分析、AI、自動化與科技文化相關文章與筆記。
+          網站沒有會員登入、公開留言、購物車、付款流程或需要使用者建立帳號的服務，也不會要求你在頁面上填寫身分證件、密碼或付款資料。
+        </p>
+        <p>
+          文章、圖片替代文字、日期與其他頁面資訊會公開出現在網站與
+          agent-readable 的 Markdown、RSS、sitemap 及唯讀 API 版本中。
+          如果你主動寄信聯絡我，信件內容與你的聯絡資訊會留在我的郵件服務中，僅用於回覆、討論合作或處理你提出的更正要求。
+        </p>
+      </section>
+
+      <section aria-labelledby="privacy-services">
+        <h2 id="privacy-services">網站與分析服務</h2>
+        <p>
+          網站託管在 GitHub Pages，網域與部分邊緣服務使用 Cloudflare。
+          這些服務可能為了傳送頁面、快取、資安防護、錯誤診斷與流量管理而處理 IP
+          位址、瀏覽器資訊、請求時間、請求網址及相關技術記錄；這些記錄的保留方式依各服務商的政策與設定而定。
+        </p>
+        <p>
+          正式網站可能透過 Google Tag Manager 載入 Google Analytics 及 Microsoft
+          Clarity，以了解頁面瀏覽、網站使用情況與體驗問題。 這些工具可能使用
+          cookie
+          或類似技術；瀏覽器設定、內容阻擋工具與服務商政策都可能影響它們是否執行。
+          我不會透過這個網站要求你提供額外的個人識別資料，也不會把公開文章 API
+          當成個人資料查詢服務。
+        </p>
+      </section>
+
+      <section aria-labelledby="privacy-third-party">
+        <h2 id="privacy-third-party">第三方內容與外部連結</h2>
+        <p>
+          部分文章保留
+          YouTube、Spotify、社群平台、圖片託管或其他外部網站的連結與嵌入內容。
+          你點擊或載入這些內容時，對方可能依自己的隱私政策處理請求資料；外部網站的內容、可用性與資料處理不由數位引擎控制。
+        </p>
+        <p>
+          網站也提供公開的 agent discovery、OpenAPI、MCP 與 WebMCP 入口。
+          這些入口只提供公開文章與筆記的唯讀搜尋、metadata
+          與內容，不提供登入後操作、付款、帳戶修改或其他代表你行動的功能。
+        </p>
+      </section>
+
+      <section aria-labelledby="privacy-requests">
+        <h2 id="privacy-requests">問題與要求</h2>
+        <p>
+          如果你認為網站公開了不應公開的個人資料，或希望更正由你提供的聯絡資訊，請寄信到
+          <a href="mailto:darrenhhuang@gmail.com">darrenhhuang@gmail.com</a
+          >，並提供可定位的頁面網址與必要說明。
+          我會依問題性質確認、回覆並在合理範圍內處理；請不要把密碼、身分證件或其他敏感資料附在信件中。
+        </p>
+        <p>
+          本頁是網站目前實際運作方式的摘要，不是對任何特定地區法律的完整法律意見。
+          如果網站功能、託管服務或資料處理方式有重大變更，我會更新本頁的內容與日期。
+        </p>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .simple-page {
+    width: min(100% - 2rem, 64rem);
+  }
+
+  .simple-page__body {
+    width: min(100%, 50rem);
+    margin-inline: auto;
+  }
+</style>

@@ -1,8 +1,8 @@
 # Agent Readiness 優化報告
 
-最後更新：2026-08-15。
+最後更新：2026-08-28。
 
-狀態：repository 內的 agent-readable 內容、探索 metadata、Free-plan Worker、自動驗證與 live audit 已完成並部署。
+狀態：repository 內的 agent-readable 內容、探索 metadata、公開唯讀 API、MCP／WebMCP、Free-plan Worker、自動驗證與 live audit 已完成實作，待本次 Pages artifact 與 Worker 發布後重新掃描。
 Cloudflare zone 已確認使用 Free plan。
 GitHub Pages workflow [31863578234](https://github.com/DarrenHuangTW/darrenhuang.com/actions/runs/31863578234) 已成功發布 commit `354bcca`，實際 artifact tar 包含 `.nojekyll` 與完整 `.well-known` 目錄。
 Cloudflare Worker `darrenhuang-agent-readiness` 已於 2026-08-15 部署，正式 route 是 `www.darrenhuang.com/*`。
@@ -24,6 +24,13 @@ Cloudflare Worker `darrenhuang-agent-readiness` 已於 2026-08-15 部署，正�
 - 每個 indexable HTML 頁面以 `rel="alternate"` 宣告自己的 `text/markdown` 版本。
 - 每個頁面以 `rel="describedby"` 宣告 `/llms.txt`。
 - `/.well-known/agent-skills/index.json` 發布一個真實且範圍明確的 `research-digital-engine` skill。
+- `/openapi.json` 描述公開文章與 Facebook 保存筆記的唯讀 JSON API，以及 `/mcp` JSON-RPC endpoint。
+- `/api/content.json`、`/api/articles.json` 與 `/api/notes.json` 由 build 後的正式 Markdown artifact 自動產生，detail endpoint 只回傳已公開內容。
+- `/.well-known/api-catalog` 以 RFC 9727 Linkset 格式列出 OpenAPI、內容 collections 與 MCP endpoint。
+- `/auth.md` 明確說明本站目前沒有登入、付款、OAuth、API key 或代表使用者操作。
+- `/.well-known/mcp/server-card.json` 宣告公開的 stateless streamable HTTP MCP endpoint 與兩個 read-only tools。
+- 每個頁面都註冊同一組小型 WebMCP tools；瀏覽器支援 `document.modelContext` 或相容 bridge 時，agent 可以搜尋與讀取公開內容。
+- `/contact.html` 與 `/privacy.html` 提供可供 agent 驗證的實際聯絡、網站用途、第三方服務與資料處理說明。
 - Root `.nojekyll` 會保留 `.well-known` 目錄，避免 GitHub Pages 的 Jekyll 規則排除 Agent Skill discovery files。
 - Pages artifact upload 明確啟用 hidden files，確保 `.nojekyll` 與 `.well-known` 都進入實際發布 tarball。
 - Skill index 依 Agent Skills Discovery v0.2.0 產生 SHA-256 digest，dist verifier 會重新計算並拒絕不一致的 artifact。
@@ -59,10 +66,23 @@ Link: </llms.txt>; rel="describedby"; type="text/plain"
 `describedby` 是已註冊的 relation，且 `/llms.txt` 是真實、可讀、與網站相關的資源。
 把 Link header 與 content negotiation 放在同一份可測試、可版本化的 Worker source，可避免另外維護 Dashboard-only Transform Rule。
 
-### 3. DNS-AID
+### 3. Public API and MCP
+
+Worker 會替 `/mcp` 提供不需要帳號的 JSON-RPC request／response，並以 CORS、`MCP-Protocol-Version`、`Cache-Control: no-store` 與 JSON error responses 回應。
+搜尋工具只讀取 `/api/content.json`，讀取工具只讀取 build 產生的文章或筆記 detail JSON。
+這個 endpoint 沒有 session、write method、付款流程或代表使用者行動，因此不需要 OAuth。
+Worker 也會在 API detail artifact 不存在時，把 GitHub Pages 的 HTML 404 轉成帶有 code、message 與 discovery hint 的 JSON 404。
+
+### 4. Agent response headers
+
+HTML 頁面與 agent resources 會取得 `Origin-Agent-Cluster: ?1` 與 `Permissions-Policy: tools=(self)`。
+首頁會同時宣告 `llms.txt`、API Catalog、Agent Skills index 與 MCP Server Card。
+API Catalog 會由 Worker 改寫成 RFC 9727 要求的 `application/linkset+json` profile media type。
+
+### 5. DNS-AID
 
 目前不建議為了分數建立 DNS-AID record。
-DNS-AID 仍是新興 draft，而且這個靜態內容網站沒有 A2A、MCP 或其他 agent service endpoint 可誠實宣告。
+DNS-AID 仍是新興 draft，而且這個靜態內容網站沒有需要透過 DNS 宣告的 agent service endpoint。
 若未來新增真實 agent endpoint，再以 DNSSEC、SVCB／HTTPS records 與對應 protocol parameters 實作。
 
 ## 部署後驗證

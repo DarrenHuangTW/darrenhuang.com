@@ -107,10 +107,15 @@ describe('agent readiness Worker', () => {
     expect(response.headers.get('content-type')).toBe(
       'text/html; charset=utf-8',
     );
-    expect(response.headers.get('link')).toBe(
+    expect(response.headers.get('link')).toContain(
       '</llms.txt>; rel="describedby"; type="text/plain"',
     );
+    expect(response.headers.get('link')).toContain(
+      '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+    );
     expect(response.headers.get('vary')).toBe('Accept');
+    expect(response.headers.get('origin-agent-cluster')).toBe('?1');
+    expect(response.headers.get('permissions-policy')).toBe('tools=(self)');
     const originUrl = new URL(requests[0]?.url ?? '');
     expect(originUrl.hostname).toBe('www.darrenhuang.com');
     expect(originUrl.pathname).toBe('/');
@@ -171,5 +176,156 @@ describe('agent readiness Worker', () => {
     expect(response.status).toBe(201);
     expect(await response.text()).toBe('preserve this body');
     expect(new URL(requests[0]?.url ?? '').pathname).toBe('/articles.html');
+  });
+
+  it('serves a stateless MCP handshake and tool catalog', async () => {
+    mockOrigin(() => new Response('{}'));
+
+    const initialize = await server.fetch('https://www.darrenhuang.com/mcp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'initialize',
+        params: { protocolVersion: '2025-06-18' },
+      }),
+    });
+    expect(initialize.status).toBe(200);
+    expect(initialize.headers.get('content-type')).toContain(
+      'application/json',
+    );
+    expect(initialize.headers.get('mcp-protocol-version')).toBe('2025-06-18');
+    const initializeBody = (await initialize.json()) as {
+      result?: { capabilities?: { tools?: { listChanged?: boolean } } };
+    };
+    expect(initializeBody.result?.capabilities?.tools?.listChanged).toBe(false);
+
+    const list = await server.fetch('https://www.darrenhuang.com/mcp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jsonrpc: '2.0', id: 2, method: 'tools/list' }),
+    });
+    const listBody = (await list.json()) as {
+      result?: { tools?: Array<{ name?: string }> };
+    };
+    expect(listBody.result?.tools?.map((tool) => tool.name)).toEqual([
+      'search_content',
+      'read_content',
+    ]);
+  });
+
+  it('executes read-only MCP content tools through the origin API', async () => {
+    const requests = mockOrigin((request) => {
+      const pathname = new URL(request.url).pathname;
+      if (pathname === '/api/content.json') {
+        return new Response(
+          JSON.stringify({
+            items: [
+              {
+                kind: 'article',
+                slug: 'seo-basics',
+                title: 'SEO 基礎',
+                description: '搜尋引擎最佳化入門。',
+              },
+            ],
+          }),
+          { headers: { 'Content-Type': 'application/json' } },
+        );
+      }
+      if (pathname === '/api/articles/seo-basics.json') {
+        return new Response(
+          JSON.stringify({
+            slug: 'seo-basics',
+            title: 'SEO 基礎',
+            content: '# SEO 基礎',
+          }),
+          { headers: { 'Content-Type': 'application/json' } },
+        );
+      }
+      return new Response('not found', { status: 404 });
+    });
+
+    const search = await server.fetch('https://www.darrenhuang.com/mcp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 3,
+        method: 'tools/call',
+        params: { name: 'search_content', arguments: { query: 'SEO' } },
+      }),
+    });
+    const searchBody = (await search.json()) as {
+      result?: { structuredContent?: { count?: number } };
+    };
+    expect(searchBody.result?.structuredContent?.count).toBe(1);
+
+    const read = await server.fetch('https://www.darrenhuang.com/mcp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 4,
+        method: 'tools/call',
+        params: { name: 'read_content', arguments: { slug: 'seo-basics' } },
+      }),
+    });
+    const readBody = (await read.json()) as {
+      result?: { structuredContent?: { content?: string } };
+    };
+    expect(readBody.result?.structuredContent?.content).toBe('# SEO 基礎');
+    expect(requests.map((request) => new URL(request.url).pathname)).toEqual([
+      '/api/content.json',
+      '/api/articles/seo-basics.json',
+    ]);
+  });
+
+  it('handles MCP CORS preflight and structured method errors', async () => {
+    mockOrigin(() => new Response('{}'));
+
+    const preflight = await server.fetch('https://www.darrenhuang.com/mcp', {
+      method: 'OPTIONS',
+    });
+    expect(preflight.status).toBe(204);
+    expect(preflight.headers.get('access-control-allow-origin')).toBe('*');
+    expect(preflight.headers.get('access-control-allow-methods')).toContain(
+      'POST',
+    );
+
+    const invalid = await server.fetch('https://www.darrenhuang.com/mcp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{',
+    });
+    expect(invalid.status).toBe(400);
+    const invalidBody = (await invalid.json()) as {
+      error?: { code?: number; message?: string };
+    };
+    expect(invalidBody.error).toMatchObject({ code: -32600 });
+  });
+
+  it('turns missing public API items into structured JSON errors', async () => {
+    mockOrigin(
+      () =>
+        new Response('<html><h1>Not found</h1></html>', {
+          status: 404,
+          headers: { 'Content-Type': 'text/html' },
+        }),
+    );
+
+    const response = await server.fetch(
+      'https://www.darrenhuang.com/api/articles/missing.json',
+    );
+
+    expect(response.status).toBe(404);
+    expect(response.headers.get('content-type')).toContain('application/json');
+    const body = (await response.json()) as {
+      error?: { code?: string; hint?: string };
+    };
+    expect(body.error).toMatchObject({
+      code: 'not_found',
+      hint: expect.stringContaining('/api/content.json'),
+    });
   });
 });

@@ -1,0 +1,126 @@
+---
+import { withBase } from '@/lib/urls';
+
+const contentIndexPath = withBase('/api/content.json');
+const apiBasePath = withBase('/api');
+const script = `(() => {
+  const contentIndexPath = ${JSON.stringify(contentIndexPath)};
+  const apiBasePath = ${JSON.stringify(apiBasePath)};
+  let registeredContext;
+
+  const readJson = async (path, signal) => {
+    const response = await fetch(path, {
+      headers: { Accept: 'application/json' },
+      signal,
+    });
+    if (!response.ok) {
+      throw new Error('Content endpoint returned ' + response.status + '.');
+    }
+    return response.json();
+  };
+
+  const registerTools = () => {
+    let modelContext;
+    try {
+      modelContext = document.modelContext ?? navigator.modelContext;
+    } catch {
+      return false;
+    }
+
+    if (!modelContext || typeof modelContext.registerTool !== 'function') {
+      return false;
+    }
+    if (modelContext === registeredContext) {
+      return true;
+    }
+    registeredContext = modelContext;
+
+    const tools = [
+      {
+        name: 'search_content',
+        title: 'Search 數位引擎 content',
+        description: 'Search the public Traditional Chinese articles and notes on 數位引擎.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            query: { type: 'string', minLength: 1, maxLength: 120 },
+            limit: { type: 'integer', minimum: 1, maximum: 10, default: 5 },
+          },
+          required: ['query'],
+          additionalProperties: false,
+        },
+        annotations: { readOnlyHint: true, untrustedContentHint: true },
+        async execute(input, options = {}) {
+          const query = typeof input?.query === 'string' ? input.query.trim() : '';
+          if (!query) {
+            throw new Error('query is required.');
+          }
+          const requestedLimit = Number(input?.limit ?? 5);
+          const limit = Number.isInteger(requestedLimit)
+            ? Math.min(10, Math.max(1, requestedLimit))
+            : 5;
+          const index = await readJson(contentIndexPath, options.signal);
+          const normalizedQuery = query.toLowerCase();
+          const items = Array.isArray(index?.items) ? index.items : [];
+          const results = items
+            .filter((item) => {
+              const haystack = [item.title, item.description, item.slug, item.type]
+                .filter((value) => typeof value === 'string')
+                .join(' ')
+                .toLowerCase();
+              return haystack.includes(normalizedQuery);
+            })
+            .slice(0, limit);
+          return { query, results, count: results.length };
+        },
+      },
+      {
+        name: 'read_content',
+        title: 'Read 數位引擎 content',
+        description: 'Read one public article or Facebook note with its canonical URL and Markdown content.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            kind: { type: 'string', enum: ['article', 'note'], default: 'article' },
+            slug: { type: 'string', minLength: 1, maxLength: 160 },
+          },
+          required: ['slug'],
+          additionalProperties: false,
+        },
+        annotations: { readOnlyHint: true, untrustedContentHint: true },
+        async execute(input, options = {}) {
+          const slug = typeof input?.slug === 'string' ? input.slug.trim() : '';
+          const kind = input?.kind === 'note' ? 'notes' : 'articles';
+          if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,159}$/.test(slug)) {
+            throw new Error('slug must contain only letters, numbers, dots, underscores, or hyphens.');
+          }
+          return readJson(
+            apiBasePath + '/' + kind + '/' + encodeURIComponent(slug) + '.json',
+            options.signal,
+          );
+        },
+      },
+    ];
+
+    for (const tool of tools) {
+      try {
+        const result = modelContext.registerTool(tool);
+        if (result && typeof result.catch === 'function') {
+          result.catch(() => {});
+        }
+      } catch {
+        // A browser may expose an older or disabled WebMCP implementation.
+      }
+    }
+    return true;
+  };
+
+  if (!registerTools()) {
+    document.addEventListener('DOMContentLoaded', registerTools, { once: true });
+    window.addEventListener('load', registerTools, { once: true });
+    window.setTimeout(registerTools, 1000);
+  }
+})();`;
+---
+
+<script is:inline set:html={script} />

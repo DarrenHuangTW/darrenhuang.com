@@ -1,6 +1,7 @@
 ---
 import SiteFooter from '@/components/SiteFooter.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
+import WebMcpTools from '@/components/WebMcpTools.astro';
 import {
   googleTagManagerBootstrapScript,
   isProductionTrackingTarget,
@@ -38,6 +39,15 @@ const siteOrigin = Astro.site ?? Astro.url.origin;
 const canonicalUrl = new URL(withBase(canonicalPath), siteOrigin);
 const imageUrl = image ? new URL(withBase(image), siteOrigin) : null;
 const llmsUrl = new URL(withBase('/llms.txt'), siteOrigin);
+const apiCatalogUrl = new URL(withBase('/.well-known/api-catalog'), siteOrigin);
+const mcpServerCardUrl = new URL(
+  withBase('/.well-known/mcp/server-card.json'),
+  siteOrigin,
+);
+const agentSkillsUrl = new URL(
+  withBase('/.well-known/agent-skills/index.json'),
+  siteOrigin,
+);
 const markdownUrl = noindex
   ? null
   : new URL(withBase(markdownPathForCanonical(canonicalPath)), siteOrigin);
@@ -87,6 +97,13 @@ const googleTagManagerBootstrap = trackingEnabled
     {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="canonical" href={canonicalUrl} />
     <link rel="describedby" href={llmsUrl} type="text/plain" />
+    <link
+      rel="api-catalog"
+      href={apiCatalogUrl}
+      type="application/linkset+json"
+    />
+    <link rel="describedby" href={agentSkillsUrl} type="application/json" />
+    <link rel="describedby" href={mcpServerCardUrl} type="application/json" />
     {
       markdownUrl && (
         <link
@@ -152,5 +169,6 @@ const googleTagManagerBootstrap = trackingEnabled
       <slot />
     </main>
     <SiteFooter />
+    <WebMcpTools />
   </body>
 </html>

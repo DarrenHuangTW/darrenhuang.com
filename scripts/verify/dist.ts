@@ -879,8 +879,17 @@ async function verifyAgentResources(
     'articles.md',
     'index.md',
     'llms.txt',
+    'auth.md',
+    'openapi.json',
+    'api/openapi.json',
+    'api/swagger.json',
+    'api/content.json',
+    'api/articles.json',
+    'api/notes.json',
+    '.well-known/api-catalog',
     '.well-known/agent-skills/index.json',
     '.well-known/agent-skills/research-digital-engine/SKILL.md',
+    '.well-known/mcp/server-card.json',
   ];
   for (const relative of required) {
     check(artifactPaths.has(relative), `缺少 agent resource：${relative}。`);
@@ -1080,6 +1089,212 @@ async function verifyAgentResources(
   );
 }
 
+async function readJsonResource(
+  relative: string,
+  artifactPaths: Set<string>,
+): Promise<UnknownRecord | undefined> {
+  if (!artifactPaths.has(relative)) {
+    return undefined;
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(
+      await readFile(path.join(distRoot, ...relative.split('/')), 'utf8'),
+    );
+    if (!isRecord(parsed)) {
+      failures.push(`${relative} 根節點必須是 object。`);
+      return undefined;
+    }
+    return parsed;
+  } catch {
+    failures.push(`${relative} 不是有效 JSON。`);
+    return undefined;
+  }
+}
+
+async function verifyPublicAgentResources(
+  artifactPaths: Set<string>,
+  canonicalEntries: CanonicalEntry[],
+): Promise<void> {
+  const openapi = await readJsonResource('openapi.json', artifactPaths);
+  const content = await readJsonResource('api/content.json', artifactPaths);
+  const articles = await readJsonResource('api/articles.json', artifactPaths);
+  const notes = await readJsonResource('api/notes.json', artifactPaths);
+  const catalog = await readJsonResource(
+    '.well-known/api-catalog',
+    artifactPaths,
+  );
+  const serverCard = await readJsonResource(
+    '.well-known/mcp/server-card.json',
+    artifactPaths,
+  );
+
+  const articleCount = canonicalEntries.filter(
+    (entry) => entry.kind === 'posts',
+  ).length;
+  if (articles) {
+    const articleItems = articles.items;
+    check(Array.isArray(articleItems), 'api/articles.json 缺少 items array。');
+    check(articles.kind === 'articles', 'api/articles.json kind 無效。');
+    check(
+      articles.count === articleCount,
+      `api/articles.json 必須列出 ${articleCount} 篇文章。`,
+    );
+    if (Array.isArray(articleItems)) {
+      check(
+        articleItems.every(
+          (item) =>
+            isRecord(item) &&
+            item.kind === 'article' &&
+            typeof item.slug === 'string' &&
+            typeof item.title === 'string' &&
+            typeof item.canonicalUrl === 'string' &&
+            typeof item.markdownUrl === 'string',
+        ),
+        'api/articles.json 含有不完整的 content item。',
+      );
+      check(
+        [...artifactPaths].filter((relative) =>
+          /^api\/articles\/[^/]+\.json$/u.test(relative),
+        ).length === articleItems.length,
+        'api/articles.json 與文章 detail artifacts 數量不一致。',
+      );
+    }
+  }
+
+  if (notes) {
+    const noteItems = notes.items;
+    check(Array.isArray(noteItems), 'api/notes.json 缺少 items array。');
+    check(notes.kind === 'notes', 'api/notes.json kind 無效。');
+    if (Array.isArray(noteItems)) {
+      check(
+        noteItems.every(
+          (item) =>
+            isRecord(item) &&
+            item.kind === 'note' &&
+            typeof item.slug === 'string' &&
+            typeof item.title === 'string' &&
+            typeof item.canonicalUrl === 'string' &&
+            typeof item.markdownUrl === 'string',
+        ),
+        'api/notes.json 含有不完整的 content item。',
+      );
+      check(
+        [...artifactPaths].filter((relative) =>
+          /^api\/notes\/[^/]+\.json$/u.test(relative),
+        ).length === noteItems.length,
+        'api/notes.json 與筆記 detail artifacts 數量不一致。',
+      );
+    }
+  }
+
+  if (content) {
+    const contentItems = content.items;
+    check(Array.isArray(contentItems), 'api/content.json 缺少 items array。');
+    if (Array.isArray(contentItems)) {
+      check(
+        content.count === contentItems.length,
+        'api/content.json count 不符。',
+      );
+      check(
+        contentItems.every(
+          (item) =>
+            isRecord(item) &&
+            (item.kind === 'article' || item.kind === 'note') &&
+            typeof item.slug === 'string',
+        ),
+        'api/content.json 含有不完整的 content item。',
+      );
+    }
+  }
+
+  if (openapi) {
+    check(openapi.openapi === '3.1.0', 'openapi.json 必須使用 OpenAPI 3.1。');
+    const paths = openapi.paths;
+    check(isRecord(paths), 'openapi.json 缺少 paths object。');
+    for (const requiredPath of [
+      '/api/content.json',
+      '/api/articles.json',
+      '/api/articles/{slug}.json',
+      '/api/notes.json',
+      '/api/notes/{slug}.json',
+      '/mcp',
+    ]) {
+      check(
+        isRecord(paths) && requiredPath in paths,
+        `openapi.json 缺少 ${requiredPath}。`,
+      );
+    }
+    const expectedServer = expectedConfiguredUrl('/');
+    const servers = openapi.servers;
+    check(
+      Array.isArray(servers) &&
+        servers.some(
+          (server) => isRecord(server) && server.url === expectedServer,
+        ),
+      `openapi.json 缺少正式 server URL ${expectedServer ?? '(invalid SITE_URL)'}。`,
+    );
+  }
+
+  if (catalog) {
+    const linksets = catalog.linkset;
+    check(
+      Array.isArray(linksets) && linksets.length > 0,
+      'API Catalog 缺少 linkset。',
+    );
+    const catalogItems = Array.isArray(linksets)
+      ? linksets.flatMap((linkset) =>
+          isRecord(linkset) && Array.isArray(linkset.item) ? linkset.item : [],
+        )
+      : [];
+    const openapiUrl = expectedConfiguredUrl('/openapi.json');
+    check(
+      catalogItems.some((item) => isRecord(item) && item.href === openapiUrl),
+      'API Catalog 缺少 OpenAPI href。',
+    );
+    check(
+      catalogItems.some(
+        (item) => isRecord(item) && item.href === expectedConfiguredUrl('/mcp'),
+      ),
+      'API Catalog 缺少 MCP endpoint href。',
+    );
+  }
+
+  if (serverCard) {
+    check(
+      serverCard.protocolVersion === '2025-06-18',
+      'MCP Server Card protocolVersion 無效。',
+    );
+    const transport = serverCard.transport;
+    const expectedEndpoint = configuredBase ? `${configuredBase}/mcp` : '/mcp';
+    check(
+      isRecord(transport) &&
+        transport.type === 'streamable-http' &&
+        transport.endpoint === expectedEndpoint,
+      'MCP Server Card 缺少正確的 streamable HTTP endpoint。',
+    );
+    check(
+      isRecord(serverCard.authentication) &&
+        serverCard.authentication.required === false,
+      'MCP Server Card 必須明確宣告目前不需要 authentication。',
+    );
+    check(
+      Array.isArray(serverCard.tools) && serverCard.tools.length === 2,
+      'MCP Server Card 必須列出兩個公開唯讀 tools。',
+    );
+  }
+
+  if (artifactPaths.has('auth.md')) {
+    const auth = await readFile(path.join(distRoot, 'auth.md'), 'utf8');
+    check(auth.startsWith('# Authentication guidance\n'), 'auth.md 缺少標題。');
+    check(auth.length > 500, 'auth.md 內容過短。');
+    check(
+      auth.includes('不提供會員登入') && auth.includes('不提供寫入'),
+      'auth.md 必須說明目前的 authentication 與 write scope。',
+    );
+  }
+}
+
 async function verifyAliasFiles(
   entries: AliasEntry[],
   artifactPaths: Set<string>,
@@ -1187,6 +1402,7 @@ async function main(): Promise<void> {
   }
   await verifyAliasFiles(aliases, artifactPaths);
   await verifyAgentResources(canonicalEntries, artifactPaths);
+  await verifyPublicAgentResources(artifactPaths, canonicalEntries);
 
   const htmlFiles = artifactFiles.filter((file) =>
     file.toLowerCase().endsWith('.html'),

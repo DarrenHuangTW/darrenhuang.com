@@ -12,9 +12,34 @@ const posts = await getPostsNewestFirst();
 const recentPosts = posts.slice(0, 5);
 const notes = await getPublishedNotesNewestFirst();
 const recentNotes = notes.slice(0, 3);
+const siteUrl = new URL(withBase('/'), Astro.site ?? Astro.url.origin);
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}#organization`,
+  name: '數位引擎',
+  url: siteUrl.toString(),
+  description: '數位行銷、SEO、內容策略與科技趨勢的繁體中文長期觀察。',
+  email: 'darrenhhuang@gmail.com',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'general inquiries',
+    email: 'darrenhhuang@gmail.com',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Kaohsiung',
+    addressCountry: 'TW',
+  },
+  sameAs: ['https://www.facebook.com/searchenginecommunity/'],
+};
 ---
 
-<BaseLayout title="數位引擎" canonicalPath="/">
+<BaseLayout
+  title="數位引擎"
+  canonicalPath="/"
+  structuredData={organizationSchema}
+>
   <section class="hero shell">
     <div>
       <div class="hero__kicker">SEO · AI · Automation · UI／UX</div>

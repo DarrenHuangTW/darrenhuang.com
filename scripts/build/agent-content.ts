@@ -21,6 +21,17 @@ interface AgentPage {
   updatedAt?: string;
 }
 
+interface AgentApiItem {
+  canonicalUrl: string;
+  description: string;
+  kind: 'article' | 'note';
+  markdownUrl: string;
+  publishedAt: string | null;
+  slug: string;
+  title: string;
+  updatedAt: string | null;
+}
+
 const root = process.cwd();
 const distRoot = path.join(root, 'dist');
 const configuredBase = normalizeBase(process.env.BASE_PATH ?? '/');
@@ -117,6 +128,28 @@ function siteAssetUrl(pathname: string): URL {
     ? `${configuredBase}${normalized}`
     : normalized;
   return result;
+}
+
+function writeJsonArtifactPath(relative: string): string {
+  const distPath = path.resolve(distRoot);
+  const outputPath = path.resolve(distRoot, ...relative.split('/'));
+  if (
+    outputPath !== distPath &&
+    !outputPath.startsWith(`${distPath}${path.sep}`)
+  ) {
+    throw new Error(`Refusing to write outside dist: ${relative}`);
+  }
+
+  return outputPath;
+}
+
+async function writeJsonArtifact(
+  relative: string,
+  value: unknown,
+): Promise<void> {
+  const outputPath = writeJsonArtifactPath(relative);
+  await mkdir(path.dirname(outputPath), { recursive: true });
+  await writeFile(outputPath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
 }
 
 function yamlString(value: string): string {
@@ -286,12 +319,9 @@ function llmsDocument(
   const tags = findPage(pages, '/tags.html');
   const stories = findPage(pages, '/web-stories.html');
   const notes = findPage(pages, '/notes.html');
-  const about = pages.find((page) =>
-    stripConfiguredBase(page.canonicalUrl.pathname).includes('about'),
-  );
-  if (!about) {
-    throw new Error('Agent content index cannot find the About page.');
-  }
+  const about = findPage(pages, '/about.html');
+  const contact = findPage(pages, '/contact.html');
+  const privacy = findPage(pages, '/privacy.html');
 
   const lines = [
     '# 數位引擎',
@@ -314,8 +344,18 @@ function llmsDocument(
     '## 網站資訊',
     '',
     `- [關於數位引擎](${about.markdownUrl}): 網站沿革與內容定位。`,
+    `- [聯絡](${contact.markdownUrl}): 聯絡 Darren，討論 SEO、AI、自動化與內容策略。`,
+    `- [隱私說明](${privacy.markdownUrl}): 公開內容、第三方服務與資料處理摘要。`,
     `- [RSS](${siteAssetUrl('/rss.xml')}): 文章更新 feed。`,
     `- [Sitemap](${siteAssetUrl('/sitemap-index.xml')}): 所有 canonical 網址。`,
+    '',
+    '## Programmatic interfaces',
+    '',
+    `- [OpenAPI specification](${siteAssetUrl('/openapi.json')}): 公開唯讀文章與筆記 API 的 OpenAPI 3.1 描述。`,
+    `- [API Catalog](${siteAssetUrl('/.well-known/api-catalog')}): 依 RFC 9727 發布的 API 入口索引。`,
+    `- [MCP Server Card](${siteAssetUrl('/.well-known/mcp/server-card.json')}): 公開唯讀 MCP endpoint 與 tools 說明。`,
+    `- [Authentication guidance](${siteAssetUrl('/auth.md')}): 本站目前不提供登入、付款或代表使用者操作。`,
+    `- [WebMCP tools](${siteAssetUrl('/.well-known/mcp/server-card.json')}): 瀏覽器支援時提供搜尋與讀取公開內容的唯讀工具。`,
     '',
     '## Agent 使用說明',
     '',
@@ -327,6 +367,461 @@ function llmsDocument(
   ];
 
   return lines.join('\n');
+}
+
+function apiItemForPage(page: AgentPage): AgentApiItem {
+  const canonicalPath = stripConfiguredBase(page.canonicalUrl.pathname);
+  const prefix = page.contentKind === 'note' ? '/notes/' : '/';
+  const slug = canonicalPath
+    .replace(new RegExp(`^${prefix}`), '')
+    .replace(/\.html$/u, '');
+  if (!slug || slug.includes('/') || slug.includes('\\')) {
+    throw new Error(
+      `Agent API cannot derive a safe slug from ${page.canonicalUrl.pathname}.`,
+    );
+  }
+
+  return {
+    canonicalUrl: page.canonicalUrl.toString(),
+    description: page.description,
+    kind: page.contentKind,
+    markdownUrl: page.markdownUrl.toString(),
+    publishedAt: page.publishedAt ?? null,
+    slug,
+    title: page.title,
+    updatedAt: page.updatedAt ?? null,
+  };
+}
+
+async function markdownForPage(page: AgentPage): Promise<string> {
+  const markdownRelative = markdownPathForArtifact(page.relativeHtmlPath);
+  return readFile(path.join(distRoot, ...markdownRelative.split('/')), 'utf8');
+}
+
+function apiCollectionDocument(
+  kind: 'articles' | 'notes',
+  items: AgentApiItem[],
+): Record<string, unknown> {
+  return {
+    version: '1.0',
+    kind,
+    title: kind === 'articles' ? '數位引擎文章' : '數位引擎 Facebook 保存筆記',
+    description:
+      kind === 'articles'
+        ? '數位引擎公開文章的 metadata 與 Markdown 入口。'
+        : '數位引擎公開 Facebook 保存筆記的 metadata 與 Markdown 入口。',
+    count: items.length,
+    items,
+  };
+}
+
+function apiItemSchema(): Record<string, unknown> {
+  return {
+    type: 'object',
+    required: [
+      'canonicalUrl',
+      'description',
+      'kind',
+      'markdownUrl',
+      'publishedAt',
+      'slug',
+      'title',
+      'updatedAt',
+    ],
+    properties: {
+      canonicalUrl: { type: 'string', format: 'uri' },
+      description: { type: 'string' },
+      kind: { type: 'string', enum: ['article', 'note'] },
+      markdownUrl: { type: 'string', format: 'uri' },
+      publishedAt: { type: ['string', 'null'], format: 'date-time' },
+      slug: { type: 'string' },
+      title: { type: 'string' },
+      updatedAt: { type: ['string', 'null'], format: 'date-time' },
+    },
+  };
+}
+
+function openApiDocument(): Record<string, unknown> {
+  const itemSchema = apiItemSchema();
+  const detailSchema = {
+    allOf: [
+      { $ref: '#/components/schemas/ContentItem' },
+      {
+        type: 'object',
+        required: ['content'],
+        properties: { content: { type: 'string' } },
+      },
+    ],
+  };
+  const collectionSchema = {
+    type: 'object',
+    required: ['version', 'kind', 'title', 'description', 'count', 'items'],
+    properties: {
+      version: { type: 'string' },
+      kind: { type: 'string', enum: ['articles', 'notes'] },
+      title: { type: 'string' },
+      description: { type: 'string' },
+      count: { type: 'integer' },
+      items: {
+        type: 'array',
+        items: { $ref: '#/components/schemas/ContentItem' },
+      },
+    },
+  };
+  const slugParameter = {
+    name: 'slug',
+    in: 'path',
+    required: true,
+    description: 'The stable content slug published by the site.',
+    schema: { type: 'string', pattern: '^[A-Za-z0-9][A-Za-z0-9._-]{0,159}$' },
+  };
+
+  return {
+    openapi: '3.1.0',
+    info: {
+      title: '數位引擎 public content API',
+      version: '1.0.0',
+      description:
+        'Public, read-only API for the Traditional Chinese articles and Facebook notes published by 數位引擎.',
+    },
+    servers: [{ url: siteAssetUrl('/').toString() }],
+    paths: {
+      '/api/content.json': {
+        get: {
+          operationId: 'listContent',
+          summary: 'List all public content metadata',
+          description:
+            'Returns article and note metadata without requiring authentication.',
+          responses: {
+            '200': {
+              description: 'Public content metadata.',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    required: ['version', 'count', 'items'],
+                    properties: {
+                      version: { type: 'string' },
+                      count: { type: 'integer' },
+                      items: {
+                        type: 'array',
+                        items: { $ref: '#/components/schemas/ContentItem' },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/api/articles.json': {
+        get: {
+          operationId: 'listArticles',
+          summary: 'List public articles',
+          description:
+            'Returns metadata and Markdown links for all 86 articles.',
+          responses: {
+            '200': {
+              description: 'Article collection.',
+              content: {
+                'application/json': { schema: collectionSchema },
+              },
+            },
+          },
+        },
+      },
+      '/api/articles/{slug}.json': {
+        get: {
+          operationId: 'getArticle',
+          summary: 'Read one public article',
+          parameters: [slugParameter],
+          responses: {
+            '200': {
+              description: 'Article metadata and Markdown content.',
+              content: {
+                'application/json': { schema: detailSchema },
+              },
+            },
+            '404': {
+              description: 'Article slug was not found.',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/Error' },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/api/notes.json': {
+        get: {
+          operationId: 'listNotes',
+          summary: 'List public Facebook notes',
+          description:
+            'Returns metadata and Markdown links for published notes.',
+          responses: {
+            '200': {
+              description: 'Note collection.',
+              content: {
+                'application/json': { schema: collectionSchema },
+              },
+            },
+          },
+        },
+      },
+      '/api/notes/{slug}.json': {
+        get: {
+          operationId: 'getNote',
+          summary: 'Read one public Facebook note',
+          parameters: [slugParameter],
+          responses: {
+            '200': {
+              description: 'Note metadata and Markdown content.',
+              content: {
+                'application/json': { schema: detailSchema },
+              },
+            },
+            '404': {
+              description: 'Note slug was not found.',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/Error' },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/mcp': {
+        post: {
+          operationId: 'mcpJsonRpc',
+          summary: 'Call the public read-only MCP tools',
+          description:
+            'Accepts MCP JSON-RPC requests for initialize, tools/list, tools/call, and ping.',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/JsonRpcRequest' },
+              },
+            },
+          },
+          responses: {
+            '200': {
+              description: 'MCP JSON-RPC response.',
+              content: { 'application/json': { schema: { type: 'object' } } },
+            },
+            '400': {
+              description: 'Invalid JSON-RPC request.',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/Error' },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    components: {
+      schemas: {
+        ContentItem: itemSchema,
+        Error: {
+          type: 'object',
+          required: ['error'],
+          properties: {
+            error: {
+              type: 'object',
+              required: ['code', 'message'],
+              properties: {
+                code: { type: ['string', 'integer'] },
+                message: { type: 'string' },
+                hint: { type: 'string' },
+              },
+            },
+          },
+        },
+        JsonRpcRequest: {
+          type: 'object',
+          required: ['jsonrpc', 'method'],
+          properties: {
+            jsonrpc: { const: '2.0' },
+            id: { type: ['string', 'number', 'null'] },
+            method: { type: 'string' },
+            params: { type: 'object' },
+          },
+        },
+      },
+    },
+  };
+}
+
+function authDocument(): string {
+  return [
+    '# Authentication guidance',
+    '',
+    '數位引擎目前是公開的靜態內容網站，不提供會員登入、付款、OAuth、API key 或代表使用者操作。',
+    '所有公開文章與 Facebook 保存筆記都可以直接透過 HTML、Markdown、RSS、JSON API 或 MCP 的唯讀工具讀取。',
+    '網站不會要求 agent 註冊帳號，也沒有需要 agent 代替使用者提交的表單、訂單、留言或帳戶設定。',
+    `如果你要聯絡作者，請使用 [contact page](${siteAssetUrl('/contact.html')}) 上的公開 email，並不要傳送密碼、身分證件、付款資料或其他敏感資訊。`,
+    'API 與 MCP endpoint 只會搜尋或回傳已公開的內容，並不提供寫入、刪除、付款、登入或權限提升功能。',
+    '搜尋結果只包含網站已發布的文章與保存筆記 metadata，讀取工具則回傳對應的公開 Markdown 內容與 canonical 網址。',
+    '請將文章中的歷史觀察、外部連結與第三方服務描述視為作者在特定日期的公開內容，涉及目前政策或產品行為時仍應查閱最新的一手來源。',
+    '如未來新增需要保護的服務，會在此文件與對應的 OAuth discovery metadata 中說明註冊、授權範圍與 token 使用方式。',
+    '',
+  ].join('\n');
+}
+
+function apiCatalogDocument(): Record<string, unknown> {
+  const catalogUrl = siteAssetUrl('/.well-known/api-catalog').toString();
+  return {
+    linkset: [
+      {
+        anchor: catalogUrl,
+        item: [
+          {
+            href: siteAssetUrl('/openapi.json').toString(),
+            type: 'application/vnd.oai.openapi+json;version=3.1',
+            title: '數位引擎 public content API OpenAPI specification',
+          },
+          {
+            href: siteAssetUrl('/api/content.json').toString(),
+            type: 'application/json',
+            title: 'All public content metadata',
+          },
+          {
+            href: siteAssetUrl('/api/articles.json').toString(),
+            type: 'application/json',
+            title: 'Public article collection',
+          },
+          {
+            href: siteAssetUrl('/api/notes.json').toString(),
+            type: 'application/json',
+            title: 'Public Facebook note collection',
+          },
+          {
+            href: siteAssetUrl('/mcp').toString(),
+            type: 'application/json',
+            title: 'Read-only MCP JSON-RPC endpoint',
+          },
+        ],
+      },
+    ],
+  };
+}
+
+function mcpServerCardDocument(): Record<string, unknown> {
+  const endpoint = configuredBase ? `${configuredBase}/mcp` : '/mcp';
+  return {
+    $schema:
+      'https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json',
+    version: '1.0',
+    protocolVersion: '2025-06-18',
+    serverInfo: {
+      name: 'darrenhuang-public-content',
+      title: '數位引擎公開內容 MCP',
+      version: '1.0.0',
+    },
+    description:
+      '數位引擎的公開唯讀內容 MCP server，提供繁體中文文章與 Facebook 保存筆記的搜尋與讀取。',
+    documentationUrl: siteAssetUrl('/llms.txt').toString(),
+    transport: { type: 'streamable-http', endpoint },
+    capabilities: { tools: { listChanged: false } },
+    authentication: { required: false },
+    tools: [
+      {
+        name: 'search_content',
+        title: 'Search 數位引擎 content',
+        description: 'Search public Traditional Chinese articles and notes.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            query: { type: 'string', minLength: 1, maxLength: 120 },
+            limit: { type: 'integer', minimum: 1, maximum: 10, default: 5 },
+          },
+          required: ['query'],
+          additionalProperties: false,
+        },
+      },
+      {
+        name: 'read_content',
+        title: 'Read 數位引擎 content',
+        description: 'Read one public article or Facebook note.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            kind: {
+              type: 'string',
+              enum: ['article', 'note'],
+              default: 'article',
+            },
+            slug: { type: 'string', minLength: 1, maxLength: 160 },
+          },
+          required: ['slug'],
+          additionalProperties: false,
+        },
+      },
+    ],
+  };
+}
+
+async function writeApiResources(
+  articlePages: AgentPage[],
+  notePages: AgentPage[],
+): Promise<void> {
+  const collections = [
+    {
+      kind: 'articles' as const,
+      pages: articlePages,
+    },
+    {
+      kind: 'notes' as const,
+      pages: notePages,
+    },
+  ];
+  const allItems: AgentApiItem[] = [];
+
+  for (const collection of collections) {
+    const items: AgentApiItem[] = [];
+    for (const page of collection.pages) {
+      const item = apiItemForPage(page);
+      const content = await markdownForPage(page);
+      items.push(item);
+      allItems.push(item);
+      await writeJsonArtifact(
+        `api/${collection.kind}/${encodeURIComponent(item.slug)}.json`,
+        { ...item, content },
+      );
+    }
+
+    items.sort((left, right) =>
+      (right.publishedAt ?? '').localeCompare(left.publishedAt ?? ''),
+    );
+    await writeJsonArtifact(
+      `api/${collection.kind}.json`,
+      apiCollectionDocument(collection.kind, items),
+    );
+  }
+
+  allItems.sort((left, right) =>
+    (right.publishedAt ?? '').localeCompare(left.publishedAt ?? ''),
+  );
+  await writeJsonArtifact('api/content.json', {
+    version: '1.0',
+    count: allItems.length,
+    items: allItems,
+  });
+  const openApi = openApiDocument();
+  await writeJsonArtifact('openapi.json', openApi);
+  await writeJsonArtifact('api/openapi.json', openApi);
+  await writeJsonArtifact('api/swagger.json', openApi);
+  await writeJsonArtifact('.well-known/api-catalog', apiCatalogDocument());
+  await writeJsonArtifact(
+    '.well-known/mcp/server-card.json',
+    mcpServerCardDocument(),
+  );
+  await writeFile(path.join(distRoot, 'auth.md'), authDocument(), 'utf8');
 }
 
 function articleIndexDocument(articlePages: AgentPage[]): string {
@@ -500,10 +995,11 @@ async function main(): Promise<void> {
     noteIndexDocument(notePages),
     'utf8',
   );
+  await writeApiResources(articlePages, notePages);
   await writeSkillIndex();
 
   console.log(
-    `[agent-content] PASS: generated ${pages.length} Markdown pages, ${articlePages.length} article entries, ${notePages.length} note entries, llms.txt, and one verified skill index.`,
+    `[agent-content] PASS: generated ${pages.length} Markdown pages, ${articlePages.length} article entries, ${notePages.length} note entries, llms.txt, API resources, MCP discovery, and one verified skill index.`,
   );
 }
 

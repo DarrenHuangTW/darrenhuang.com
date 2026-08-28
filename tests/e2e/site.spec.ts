@@ -995,6 +995,105 @@ test.describe('Phase 5 public-site acceptance', () => {
       url: 'research-digital-engine/SKILL.md',
     });
     expect(skills.skills?.[0]?.digest).toMatch(/^sha256:[a-f0-9]{64}$/u);
+
+    const authResponse = await request.get(runtimePath('/auth.md'));
+    expect(authResponse.ok()).toBe(true);
+    expect(await authResponse.text()).toContain('不提供會員登入');
+
+    const openApiResponse = await request.get(runtimePath('/openapi.json'));
+    expect(openApiResponse.ok()).toBe(true);
+    const openApi = (await openApiResponse.json()) as {
+      openapi?: string;
+      paths?: Record<string, unknown>;
+    };
+    expect(openApi.openapi).toBe('3.1.0');
+    expect(openApi.paths).toEqual(
+      expect.objectContaining({
+        '/api/content.json': expect.anything(),
+        '/api/articles/{slug}.json': expect.anything(),
+        '/mcp': expect.anything(),
+      }),
+    );
+    for (const alias of ['/api/openapi.json', '/api/swagger.json']) {
+      const aliasResponse = await request.get(runtimePath(alias));
+      expect(aliasResponse.ok()).toBe(true);
+      const aliasOpenApi = (await aliasResponse.json()) as {
+        openapi?: string;
+      };
+      expect(aliasOpenApi.openapi).toBe('3.1.0');
+    }
+
+    const contentResponse = await request.get(runtimePath('/api/content.json'));
+    expect(contentResponse.ok()).toBe(true);
+    const content = (await contentResponse.json()) as {
+      count?: number;
+      items?: Array<{ kind?: string; slug?: string }>;
+    };
+    expect(content.count).toBe(content.items?.length);
+    expect(content.items?.some((item) => item.kind === 'article')).toBe(true);
+    expect(content.items?.some((item) => item.kind === 'note')).toBe(true);
+
+    const apiCatalogResponse = await request.get(
+      runtimePath('/.well-known/api-catalog'),
+    );
+    expect(apiCatalogResponse.ok()).toBe(true);
+    const apiCatalog = (await apiCatalogResponse.json()) as {
+      linkset?: Array<{ item?: Array<{ href?: string }> }>;
+    };
+    expect(apiCatalog.linkset?.[0]?.item).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          href: new URL(
+            runtimePath('/openapi.json'),
+            `${configuredSite}/`,
+          ).toString(),
+        }),
+        expect.objectContaining({
+          href: new URL(runtimePath('/mcp'), `${configuredSite}/`).toString(),
+        }),
+      ]),
+    );
+
+    const mcpCardResponse = await request.get(
+      runtimePath('/.well-known/mcp/server-card.json'),
+    );
+    expect(mcpCardResponse.ok()).toBe(true);
+    const mcpCard = (await mcpCardResponse.json()) as {
+      transport?: { type?: string; endpoint?: string };
+      tools?: Array<{ name?: string }>;
+    };
+    expect(mcpCard.transport).toMatchObject({
+      type: 'streamable-http',
+      endpoint: configuredBase ? `${configuredBase}/mcp` : '/mcp',
+    });
+    expect(mcpCard.tools?.map((tool) => tool.name)).toEqual([
+      'search_content',
+      'read_content',
+    ]);
+
+    const homepageResponse = await page.goto(runtimePath('/'));
+    expect(homepageResponse?.ok()).toBe(true);
+    const homepageSchemaSource = await page
+      .locator('head script[type="application/ld+json"]')
+      .textContent();
+    const homepageSchema = JSON.parse(
+      homepageSchemaSource ?? '{}',
+    ) as UnknownRecord;
+    expect(homepageSchema).toMatchObject({
+      '@type': 'Organization',
+      email: 'darrenhhuang@gmail.com',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'general inquiries',
+      },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Kaohsiung',
+        addressCountry: 'TW',
+      },
+    });
+    expect(await page.content()).toContain('document.modelContext');
+    expect(await page.content()).toContain('search_content');
   });
 
   test('an unknown URL returns the custom 404 page', async ({ page }) => {

@@ -1,5 +1,84 @@
 const markdownMediaType = 'text/markdown';
-const discoveryLink = '</llms.txt>; rel="describedby"; type="text/plain"';
+const discoveryLinks = [
+  '</llms.txt>; rel="describedby"; type="text/plain"',
+  '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+  '</.well-known/agent-skills/index.json>; rel="describedby"; type="application/json"',
+  '</.well-known/mcp/server-card.json>; rel="describedby"; type="application/json"',
+];
+const apiCatalogPath = '/.well-known/api-catalog';
+const mcpPath = '/mcp';
+const mcpProtocolVersion = '2025-06-18';
+const mcpServerInfo = {
+  name: 'darrenhuang-public-content',
+  version: '1.0.0',
+};
+
+type JsonRpcId = string | number | null;
+type JsonRecord = Record<string, unknown>;
+
+interface JsonRpcRequest {
+  id?: JsonRpcId;
+  jsonrpc: '2.0';
+  method: string;
+  params?: unknown;
+}
+
+interface ContentItem {
+  canonicalUrl?: string;
+  description?: string;
+  kind?: 'article' | 'note';
+  markdownUrl?: string;
+  publishedAt?: string | null;
+  slug: string;
+  title: string;
+  updatedAt?: string | null;
+}
+
+interface McpToolDefinition {
+  annotations: {
+    readOnlyHint: true;
+    untrustedContentHint: true;
+  };
+  description: string;
+  inputSchema: JsonRecord;
+  name: string;
+  title: string;
+}
+
+const mcpTools: McpToolDefinition[] = [
+  {
+    name: 'search_content',
+    title: 'Search 數位引擎 content',
+    description:
+      'Search the public Traditional Chinese articles and Facebook notes on 數位引擎.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        query: { type: 'string', minLength: 1, maxLength: 120 },
+        limit: { type: 'integer', minimum: 1, maximum: 10, default: 5 },
+      },
+      required: ['query'],
+      additionalProperties: false,
+    },
+    annotations: { readOnlyHint: true, untrustedContentHint: true },
+  },
+  {
+    name: 'read_content',
+    title: 'Read 數位引擎 content',
+    description:
+      'Read one public article or Facebook note with its canonical URL and Markdown content.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        kind: { type: 'string', enum: ['article', 'note'], default: 'article' },
+        slug: { type: 'string', minLength: 1, maxLength: 160 },
+      },
+      required: ['slug'],
+      additionalProperties: false,
+    },
+    annotations: { readOnlyHint: true, untrustedContentHint: true },
+  },
+];
 
 export function acceptsMarkdown(header: string | null): boolean {
   if (!header) {
@@ -42,6 +121,10 @@ export function markdownPathForRequest(pathname: string): string | undefined {
   return undefined;
 }
 
+function isRecord(value: unknown): value is JsonRecord {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
 function appendVary(headers: Headers, value: string): void {
   const current = headers.get('vary');
   if (!current) {
@@ -55,11 +138,28 @@ function appendVary(headers: Headers, value: string): void {
   }
 }
 
-function addDiscoveryLink(headers: Headers): void {
+function appendLink(headers: Headers, value: string): void {
   const current = headers.get('link');
-  if (!current?.toLowerCase().includes('rel="describedby"')) {
-    headers.append('Link', discoveryLink);
+  if (!current?.includes(value)) {
+    headers.append('Link', value);
   }
+}
+
+function addDiscoveryLinks(headers: Headers): void {
+  for (const link of discoveryLinks) {
+    appendLink(headers, link);
+  }
+}
+
+function addPageAgentHeaders(headers: Headers): void {
+  headers.set('Origin-Agent-Cluster', '?1');
+  headers.set('Permissions-Policy', 'tools=(self)');
+}
+
+function addPublicAgentHeaders(headers: Headers): void {
+  addPageAgentHeaders(headers);
+  headers.set('Access-Control-Allow-Origin', '*');
+  headers.set('X-Content-Type-Options', 'nosniff');
 }
 
 function responseWithHeaders(
@@ -80,8 +180,338 @@ async function fetchOrigin(request: Request): Promise<Response> {
   return fetch(request);
 }
 
+async function fetchOriginPath(
+  request: Request,
+  pathname: string,
+): Promise<Response> {
+  const url = new URL(request.url);
+  url.pathname = pathname;
+  url.search = '';
+  return fetchOrigin(
+    new Request(url, {
+      method: 'GET',
+      headers: { Accept: 'application/json' },
+    }),
+  );
+}
+
+function jsonResponse(
+  value: unknown,
+  status: number,
+  headers: Headers,
+): Response {
+  headers.set('Content-Type', 'application/json; charset=utf-8');
+  return new Response(JSON.stringify(value), { status, headers });
+}
+
+function mcpHeaders(): Headers {
+  return new Headers({
+    'Access-Control-Allow-Headers':
+      'Accept, Content-Type, MCP-Protocol-Version, MCP-Session-Id',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Expose-Headers': 'MCP-Protocol-Version',
+    'Cache-Control': 'no-store',
+    'MCP-Protocol-Version': mcpProtocolVersion,
+  });
+}
+
+function mcpJsonResponse(value: unknown, status = 200): Response {
+  return jsonResponse(value, status, mcpHeaders());
+}
+
+function mcpEmptyResponse(status = 204): Response {
+  return new Response(null, { status, headers: mcpHeaders() });
+}
+
+function jsonRpcError(
+  id: JsonRpcId,
+  code: number,
+  message: string,
+): JsonRecord {
+  return { jsonrpc: '2.0', id, error: { code, message } };
+}
+
+function jsonRpcResult(id: JsonRpcId, result: unknown): JsonRecord {
+  return { jsonrpc: '2.0', id, result };
+}
+
+function isJsonRpcId(value: unknown): value is JsonRpcId {
+  return (
+    value === null ||
+    typeof value === 'string' ||
+    (typeof value === 'number' && Number.isFinite(value))
+  );
+}
+
+function parseJsonRpcRequest(source: string): JsonRpcRequest | undefined {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(source) as unknown;
+  } catch {
+    return undefined;
+  }
+
+  if (!isRecord(parsed) || parsed.jsonrpc !== '2.0') {
+    return undefined;
+  }
+  if (typeof parsed.method !== 'string' || !parsed.method) {
+    return undefined;
+  }
+  if ('id' in parsed && !isJsonRpcId(parsed.id)) {
+    return undefined;
+  }
+
+  return parsed as unknown as JsonRpcRequest;
+}
+
+function contentItem(value: unknown): value is ContentItem {
+  return (
+    isRecord(value) &&
+    typeof value.slug === 'string' &&
+    typeof value.title === 'string'
+  );
+}
+
+async function readContentItems(request: Request): Promise<ContentItem[]> {
+  const response = await fetchOriginPath(request, '/api/content.json');
+  const source = await response.text();
+  if (!response.ok) {
+    throw new Error(`Content index returned ${response.status}.`);
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(source) as unknown;
+  } catch {
+    throw new Error('Content index was not valid JSON.');
+  }
+
+  if (!isRecord(parsed) || !Array.isArray(parsed.items)) {
+    throw new Error('Content index did not contain an items array.');
+  }
+
+  return parsed.items.filter(contentItem);
+}
+
+async function readContentDetail(
+  request: Request,
+  kind: 'articles' | 'notes',
+  slug: string,
+): Promise<unknown> {
+  const response = await fetchOriginPath(
+    request,
+    `/api/${kind}/${encodeURIComponent(slug)}.json`,
+  );
+  const source = await response.text();
+  if (!response.ok) {
+    throw new Error(`Content item returned ${response.status}.`);
+  }
+
+  try {
+    return JSON.parse(source) as unknown;
+  } catch {
+    throw new Error('Content item was not valid JSON.');
+  }
+}
+
+function toolResult(value: unknown): JsonRecord {
+  return {
+    content: [{ type: 'text', text: JSON.stringify(value) }],
+    structuredContent: value,
+  };
+}
+
+function toolError(message: string): JsonRecord {
+  return {
+    content: [{ type: 'text', text: message }],
+    isError: true,
+  };
+}
+
+async function executeTool(
+  request: Request,
+  name: string,
+  argumentsValue: JsonRecord,
+): Promise<JsonRecord> {
+  try {
+    if (name === 'search_content') {
+      const query =
+        typeof argumentsValue.query === 'string'
+          ? argumentsValue.query.trim()
+          : '';
+      if (!query) {
+        return toolError('query is required.');
+      }
+
+      const requestedLimit = Number(argumentsValue.limit ?? 5);
+      const limit = Number.isInteger(requestedLimit)
+        ? Math.min(10, Math.max(1, requestedLimit))
+        : 5;
+      const normalizedQuery = query.toLowerCase();
+      const items = await readContentItems(request);
+      const results = items
+        .filter((item) => {
+          const haystack = [item.title, item.description, item.slug, item.kind]
+            .filter((value) => typeof value === 'string')
+            .join(' ')
+            .toLowerCase();
+          return haystack.includes(normalizedQuery);
+        })
+        .slice(0, limit);
+      return toolResult({ query, count: results.length, results });
+    }
+
+    if (name === 'read_content') {
+      const slug =
+        typeof argumentsValue.slug === 'string'
+          ? argumentsValue.slug.trim()
+          : '';
+      if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,159}$/u.test(slug)) {
+        return toolError(
+          'slug must contain only letters, numbers, dots, underscores, or hyphens.',
+        );
+      }
+      const kind = argumentsValue.kind === 'note' ? 'notes' : 'articles';
+      return toolResult(await readContentDetail(request, kind, slug));
+    }
+
+    return toolError(`Unknown tool: ${name}.`);
+  } catch (error) {
+    return toolError(error instanceof Error ? error.message : String(error));
+  }
+}
+
+async function handleMcpRequest(request: Request): Promise<Response> {
+  if (request.method === 'OPTIONS') {
+    return mcpEmptyResponse();
+  }
+
+  if (request.method === 'GET' || request.method === 'HEAD') {
+    const headers = mcpHeaders();
+    headers.set('Allow', 'POST, OPTIONS');
+    return jsonResponse(
+      {
+        error: {
+          code: 'method_not_allowed',
+          message:
+            'This stateless MCP endpoint accepts POST JSON-RPC requests.',
+        },
+      },
+      405,
+      headers,
+    );
+  }
+
+  if (request.method !== 'POST') {
+    return mcpJsonResponse(
+      {
+        error: {
+          code: 'method_not_allowed',
+          message: 'MCP accepts POST, or OPTIONS for CORS preflight.',
+        },
+      },
+      405,
+    );
+  }
+
+  const source = await request.text();
+  if (source.length > 64 * 1024) {
+    return mcpJsonResponse(
+      jsonRpcError(null, -32600, 'MCP request is too large.'),
+      413,
+    );
+  }
+
+  const rpc = parseJsonRpcRequest(source);
+  if (!rpc) {
+    return mcpJsonResponse(
+      jsonRpcError(null, -32600, 'Invalid JSON-RPC request.'),
+      400,
+    );
+  }
+
+  const id = rpc.id ?? null;
+  if (rpc.method === 'notifications/initialized') {
+    return mcpEmptyResponse();
+  }
+
+  if (rpc.method === 'ping') {
+    return mcpJsonResponse(jsonRpcResult(id, {}));
+  }
+
+  if (rpc.method === 'initialize') {
+    return mcpJsonResponse(
+      jsonRpcResult(id, {
+        protocolVersion: mcpProtocolVersion,
+        capabilities: { tools: { listChanged: false } },
+        serverInfo: mcpServerInfo,
+        instructions:
+          'Use tools/list to inspect the two public read-only content tools.',
+      }),
+    );
+  }
+
+  if (rpc.method === 'tools/list') {
+    return mcpJsonResponse(jsonRpcResult(id, { tools: mcpTools }));
+  }
+
+  if (rpc.method === 'tools/call') {
+    if (!isRecord(rpc.params) || typeof rpc.params.name !== 'string') {
+      return mcpJsonResponse(
+        jsonRpcError(id, -32602, 'tools/call requires a tool name.'),
+        400,
+      );
+    }
+    const argumentsValue = rpc.params.arguments ?? {};
+    if (!isRecord(argumentsValue)) {
+      return mcpJsonResponse(
+        jsonRpcError(id, -32602, 'tools/call arguments must be an object.'),
+        400,
+      );
+    }
+    const result = await executeTool(request, rpc.params.name, argumentsValue);
+    return mcpJsonResponse(jsonRpcResult(id, result));
+  }
+
+  return mcpJsonResponse(
+    jsonRpcError(id, -32601, `Method not found: ${rpc.method}.`),
+    404,
+  );
+}
+
+function isAgentResource(pathname: string): boolean {
+  return (
+    pathname === '/auth.md' ||
+    pathname === '/openapi.json' ||
+    pathname.startsWith('/api/') ||
+    pathname === '/.well-known/agent-skills/index.json' ||
+    pathname === '/.well-known/mcp/server-card.json'
+  );
+}
+
+function isContentDetailResource(pathname: string): boolean {
+  return /^\/api\/(?:articles|notes)\/[^/]+\.json$/u.test(pathname);
+}
+
 async function handleRequest(request: Request): Promise<Response> {
   const url = new URL(request.url);
+
+  if (url.pathname === mcpPath) {
+    return handleMcpRequest(request);
+  }
+
+  if (url.pathname === apiCatalogPath) {
+    const response = await fetchOrigin(request);
+    return responseWithHeaders(response, (headers) => {
+      headers.set(
+        'Content-Type',
+        'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
+      );
+      addPublicAgentHeaders(headers);
+    });
+  }
+
   const isSafeRead = request.method === 'GET' || request.method === 'HEAD';
   const markdownPath = isSafeRead
     ? markdownPathForRequest(url.pathname)
@@ -101,7 +531,7 @@ async function handleRequest(request: Request): Promise<Response> {
         headers.set('Content-Location', `${markdownPath}${url.search}`);
         appendVary(headers, 'Accept');
         if (url.pathname === '/') {
-          addDiscoveryLink(headers);
+          addDiscoveryLinks(headers);
         }
       });
     }
@@ -118,8 +548,38 @@ async function handleRequest(request: Request): Promise<Response> {
   }
 
   const response = await fetchOrigin(request);
+  if (isAgentResource(url.pathname)) {
+    if (isContentDetailResource(url.pathname) && response.status === 404) {
+      await response.body?.cancel();
+      const headers = new Headers();
+      addPublicAgentHeaders(headers);
+      return jsonResponse(
+        {
+          error: {
+            code: 'not_found',
+            message: 'The requested public content item was not found.',
+            hint: 'Use /api/content.json to discover valid article and note slugs.',
+          },
+        },
+        404,
+        headers,
+      );
+    }
+
+    return responseWithHeaders(response, (headers) => {
+      addPublicAgentHeaders(headers);
+    });
+  }
+
   if (!markdownPath && url.pathname !== '/') {
-    return response;
+    const contentType = response.headers.get('content-type') ?? '';
+    if (!contentType.toLowerCase().includes('text/html')) {
+      return response;
+    }
+
+    return responseWithHeaders(response, (headers) => {
+      addPageAgentHeaders(headers);
+    });
   }
 
   return responseWithHeaders(response, (headers) => {
@@ -127,7 +587,8 @@ async function handleRequest(request: Request): Promise<Response> {
       appendVary(headers, 'Accept');
     }
     if (url.pathname === '/') {
-      addDiscoveryLink(headers);
+      addPageAgentHeaders(headers);
+      addDiscoveryLinks(headers);
     }
   });
 }

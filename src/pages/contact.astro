@@ -1,0 +1,85 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const canonicalPath = '/contact.html';
+const description =
+  '聯絡 Darren Huang，討論 SEO、AI、自動化、內容策略與網站體驗。';
+const contactSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: '聯絡 Darren Huang',
+  url: 'https://www.darrenhuang.com/contact.html',
+  mainEntity: {
+    '@type': 'Person',
+    name: 'Darren Huang',
+    email: 'darrenhhuang@gmail.com',
+    url: 'https://www.darrenhuang.com/about.html',
+  },
+};
+---
+
+<BaseLayout
+  title="聯絡"
+  description={description}
+  canonicalPath={canonicalPath}
+  structuredData={contactSchema}
+>
+  <article class="simple-page page shell">
+    <header class="page__header">
+      <div class="eyebrow">Contact</div>
+      <h1>聯絡 Darren</h1>
+      <p>{description}</p>
+    </header>
+
+    <div class="prose simple-page__body">
+      <section aria-labelledby="contact-purpose">
+        <h2 id="contact-purpose">適合討論的主題</h2>
+        <p>
+          如果你正在處理 SEO 策略、AI
+          搜尋、內容整理、自動化流程、網站分析、網站效能或使用者體驗，歡迎寫信分享你的背景與問題。
+          我會先了解問題的範圍，再判斷是否適合以 Coffee
+          Chat、一次性的網站健診或其他方式討論。
+        </p>
+        <p>
+          這個網站主要是公開內容
+          archive，不是客服平台，也沒有登入、付款或案件管理系統。
+          因此請不要在信件中傳送密碼、身分證件、付款資料、未公開的客戶資料或其他不必要的敏感資訊。
+        </p>
+      </section>
+
+      <section aria-labelledby="contact-method">
+        <h2 id="contact-method">聯絡方式</h2>
+        <p>
+          最直接的方式是寄信到
+          <a href="mailto:darrenhhuang@gmail.com">darrenhhuang@gmail.com</a>。
+          為了讓我能快速判斷是否能協助，信件主旨可以包含你的主題，例如「SEO
+          健診」、「AI 內容策略」或「自動化流程」。
+        </p>
+        <p>
+          我目前有全職工作，回覆時間與可承接的工作量都有限。
+          寄信不代表已建立委任、顧問或其他契約關係；若有進一步合作可能，我會在回信中另行說明範圍、時間與費用。
+        </p>
+      </section>
+
+      <section aria-labelledby="contact-content">
+        <h2 id="contact-content">關於網站內容</h2>
+        <p>
+          若你是針對某篇文章提供更正、補充或來源，也可以直接附上文章標題與
+          canonical 網址。
+          文章多數是過去的觀察與實作紀錄，產品介面、搜尋政策、工具功能與市場資訊可能隨時間改變；我會把讀者提供的更新當作參考，不保證每項歷史內容都代表目前狀態。
+        </p>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .simple-page {
+    width: min(100% - 2rem, 64rem);
+  }
+
+  .simple-page__body {
+    width: min(100%, 50rem);
+    margin-inline: auto;
+  }
+</style>
