@@ -353,6 +353,7 @@ function llmsDocument(
     '',
     `- [OpenAPI specification](${siteAssetUrl('/openapi.json')}): 公開唯讀文章與筆記 API 的 OpenAPI 3.1 描述。`,
     `- [API Catalog](${siteAssetUrl('/.well-known/api-catalog')}): 依 RFC 9727 發布的 API 入口索引。`,
+    `- [ARD catalog](${siteAssetUrl('/.well-known/ai-catalog.json')}): 依 Agentic Resource Discovery 描述本站公開 API、MCP 與 Skill。`,
     `- [MCP Server Card](${siteAssetUrl('/.well-known/mcp/server-card.json')}): 公開唯讀 MCP endpoint 與 tools 說明。`,
     `- [Authentication guidance](${siteAssetUrl('/auth.md')}): 本站目前不提供登入、付款或代表使用者操作。`,
     `- [WebMCP tools](${siteAssetUrl('/.well-known/mcp/server-card.json')}): 瀏覽器支援時提供搜尋與讀取公開內容的唯讀工具。`,
@@ -659,7 +660,7 @@ function openApiDocument(): Record<string, unknown> {
 
 function authDocument(): string {
   return [
-    '# Authentication guidance',
+    '# Auth.md — Authentication guidance',
     '',
     '數位引擎目前是公開的靜態內容網站，不提供會員登入、付款、OAuth、API key 或代表使用者操作。',
     '所有公開文章與 Facebook 保存筆記都可以直接透過 HTML、Markdown、RSS、JSON API 或 MCP 的唯讀工具讀取。',
@@ -671,6 +672,73 @@ function authDocument(): string {
     '如未來新增需要保護的服務，會在此文件與對應的 OAuth discovery metadata 中說明註冊、授權範圍與 token 使用方式。',
     '',
   ].join('\n');
+}
+
+function ardCatalogDocument(): Record<string, unknown> {
+  return {
+    specVersion: '1.0',
+    host: {
+      displayName: '數位引擎',
+      identifier: 'https://www.darrenhuang.com',
+      documentationUrl: siteAssetUrl('/llms.txt').toString(),
+    },
+    entries: [
+      {
+        identifier: 'urn:air:www.darrenhuang.com:api:public-content',
+        displayName: '數位引擎 public content API',
+        type: 'application/json',
+        url: siteAssetUrl('/api/content.json').toString(),
+        description:
+          '公開文章與 Facebook 保存筆記的 metadata，可用來發現可讀取的內容。',
+        capabilities: ['read', 'searchable-content'],
+        representativeQueries: [
+          '找出數位行銷與 SEO 相關文章',
+          '搜尋網站中關於 AI 與自動化的內容',
+        ],
+      },
+      {
+        identifier: 'urn:air:www.darrenhuang.com:api:openapi',
+        displayName: '數位引擎 public content API OpenAPI',
+        type: 'application/vnd.oai.openapi+json',
+        url: siteAssetUrl('/openapi.json').toString(),
+        description:
+          '公開唯讀 JSON API 與 MCP JSON-RPC endpoint 的 OpenAPI 3.1 描述。',
+        capabilities: ['read', 'api-description'],
+        representativeQueries: [
+          '如何列出數位引擎的公開內容',
+          '如何讀取一篇數位引擎文章的 Markdown 內容',
+        ],
+      },
+      {
+        identifier: 'urn:air:www.darrenhuang.com:mcp:public-content',
+        displayName: '數位引擎公開內容 MCP',
+        type: 'application/mcp-server-card+json',
+        url: siteAssetUrl('/.well-known/mcp/server-card.json').toString(),
+        description:
+          '不需要登入、只提供搜尋與讀取公開文章及保存筆記的 MCP server。',
+        capabilities: ['read', 'search'],
+        representativeQueries: [
+          '用 MCP 搜尋數位引擎的公開內容',
+          '用 MCP 讀取一篇指定的公開文章',
+        ],
+      },
+      {
+        identifier: 'urn:air:www.darrenhuang.com:skill:research-digital-engine',
+        displayName: 'research-digital-engine',
+        type: 'application/ai-skill+md',
+        url: siteAssetUrl(
+          '/.well-known/agent-skills/research-digital-engine/SKILL.md',
+        ).toString(),
+        description:
+          '指引 agent 使用數位引擎公開索引、Markdown、API 與 MCP 的 read-only research skill。',
+        capabilities: ['research', 'read'],
+        representativeQueries: [
+          '研究數位引擎網站中的 SEO 文章',
+          '整理數位引擎關於內容策略的公開觀察',
+        ],
+      },
+    ],
+  };
 }
 
 function apiCatalogDocument(): Record<string, unknown> {
@@ -817,6 +885,7 @@ async function writeApiResources(
   await writeJsonArtifact('api/openapi.json', openApi);
   await writeJsonArtifact('api/swagger.json', openApi);
   await writeJsonArtifact('.well-known/api-catalog', apiCatalogDocument());
+  await writeJsonArtifact('.well-known/ai-catalog.json', ardCatalogDocument());
   await writeJsonArtifact(
     '.well-known/mcp/server-card.json',
     mcpServerCardDocument(),

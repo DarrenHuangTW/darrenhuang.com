@@ -1054,6 +1054,41 @@ test.describe('Phase 5 public-site acceptance', () => {
       ]),
     );
 
+    const ardCatalogResponse = await request.get(
+      runtimePath('/.well-known/ai-catalog.json'),
+    );
+    expect(ardCatalogResponse.ok()).toBe(true);
+    expect(ardCatalogResponse.headers()['content-type']).toMatch(
+      /application\/(?:ai-catalog\+json|json)/,
+    );
+    const ardCatalog = (await ardCatalogResponse.json()) as {
+      specVersion?: string;
+      host?: { displayName?: string; identifier?: string };
+      entries?: Array<{
+        identifier?: string;
+        type?: string;
+        url?: string;
+        representativeQueries?: string[];
+      }>;
+    };
+    expect(ardCatalog).toMatchObject({
+      specVersion: '1.0',
+      host: {
+        displayName: '數位引擎',
+        identifier: 'https://www.darrenhuang.com',
+      },
+    });
+    expect(ardCatalog.entries).toHaveLength(4);
+    expect(
+      ardCatalog.entries?.every(
+        (entry) =>
+          entry.identifier?.startsWith('urn:air:') &&
+          typeof entry.type === 'string' &&
+          typeof entry.url === 'string' &&
+          (entry.representativeQueries?.length ?? 0) >= 2,
+      ),
+    ).toBe(true);
+
     const mcpCardResponse = await request.get(
       runtimePath('/.well-known/mcp/server-card.json'),
     );

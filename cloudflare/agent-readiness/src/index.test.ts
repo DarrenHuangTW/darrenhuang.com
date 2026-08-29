@@ -113,6 +113,9 @@ describe('agent readiness Worker', () => {
     expect(response.headers.get('link')).toContain(
       '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
     );
+    expect(response.headers.get('link')).toContain(
+      '</.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/ai-catalog+json"',
+    );
     expect(response.headers.get('vary')).toBe('Accept');
     expect(response.headers.get('origin-agent-cluster')).toBe('?1');
     expect(response.headers.get('permissions-policy')).toBe('tools=(self)');
@@ -135,6 +138,27 @@ describe('agent readiness Worker', () => {
     expect(response.headers.get('vary')).toBe('Accept');
     expect(requests).toHaveLength(1);
     expect(new URL(requests[0]?.url ?? '').pathname).toBe('/articles.html');
+  });
+
+  it('serves the ARD catalog with an agent media type and headers', async () => {
+    mockOrigin(
+      () =>
+        new Response('{"specVersion":"1.0"}', {
+          headers: { 'Content-Type': 'application/json' },
+        }),
+    );
+
+    const response = await server.fetch(
+      'https://www.darrenhuang.com/.well-known/ai-catalog.json',
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get('content-type')).toBe(
+      'application/ai-catalog+json; charset=utf-8',
+    );
+    expect(response.headers.get('access-control-allow-origin')).toBe('*');
+    expect(response.headers.get('x-content-type-options')).toBe('nosniff');
+    expect(await response.text()).toContain('specVersion');
   });
 
   it('falls back to HTML when a Markdown artifact is missing', async () => {

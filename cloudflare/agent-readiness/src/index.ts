@@ -2,10 +2,12 @@ const markdownMediaType = 'text/markdown';
 const discoveryLinks = [
   '</llms.txt>; rel="describedby"; type="text/plain"',
   '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+  '</.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/ai-catalog+json"',
   '</.well-known/agent-skills/index.json>; rel="describedby"; type="application/json"',
   '</.well-known/mcp/server-card.json>; rel="describedby"; type="application/json"',
 ];
 const apiCatalogPath = '/.well-known/api-catalog';
+const ardCatalogPath = '/.well-known/ai-catalog.json';
 const mcpPath = '/mcp';
 const mcpProtocolVersion = '2025-06-18';
 const mcpServerInfo = {
@@ -485,6 +487,7 @@ function isAgentResource(pathname: string): boolean {
     pathname === '/auth.md' ||
     pathname === '/openapi.json' ||
     pathname.startsWith('/api/') ||
+    pathname === ardCatalogPath ||
     pathname === '/.well-known/agent-skills/index.json' ||
     pathname === '/.well-known/mcp/server-card.json'
   );
@@ -508,6 +511,14 @@ async function handleRequest(request: Request): Promise<Response> {
         'Content-Type',
         'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
       );
+      addPublicAgentHeaders(headers);
+    });
+  }
+
+  if (url.pathname === ardCatalogPath) {
+    const response = await fetchOrigin(request);
+    return responseWithHeaders(response, (headers) => {
+      headers.set('Content-Type', 'application/ai-catalog+json; charset=utf-8');
       addPublicAgentHeaders(headers);
     });
   }

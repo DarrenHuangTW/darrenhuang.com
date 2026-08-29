@@ -887,6 +887,7 @@ async function verifyAgentResources(
     'api/articles.json',
     'api/notes.json',
     '.well-known/api-catalog',
+    '.well-known/ai-catalog.json',
     '.well-known/agent-skills/index.json',
     '.well-known/agent-skills/research-digital-engine/SKILL.md',
     '.well-known/mcp/server-card.json',
@@ -1124,6 +1125,10 @@ async function verifyPublicAgentResources(
     '.well-known/api-catalog',
     artifactPaths,
   );
+  const ardCatalog = await readJsonResource(
+    '.well-known/ai-catalog.json',
+    artifactPaths,
+  );
   const serverCard = await readJsonResource(
     '.well-known/mcp/server-card.json',
     artifactPaths,
@@ -1260,6 +1265,61 @@ async function verifyPublicAgentResources(
     );
   }
 
+  if (ardCatalog) {
+    check(ardCatalog.specVersion === '1.0', 'ARD catalog specVersion 無效。');
+    check(isRecord(ardCatalog.host), 'ARD catalog 缺少 host object。');
+    const entries = ardCatalog.entries;
+    check(
+      Array.isArray(entries) && entries.length >= 3,
+      'ARD catalog 必須至少列出三個公開 agent resource。',
+    );
+    if (isRecord(ardCatalog.host)) {
+      check(
+        typeof ardCatalog.host.displayName === 'string' &&
+          typeof ardCatalog.host.identifier === 'string',
+        'ARD catalog host 必須有 displayName 與 identifier。',
+      );
+    }
+    if (Array.isArray(entries)) {
+      check(
+        entries.every((entry) => {
+          if (!isRecord(entry)) {
+            return false;
+          }
+          const hasUrl = typeof entry.url === 'string';
+          const hasData = isRecord(entry.data);
+          const queries = entry.representativeQueries;
+          return (
+            typeof entry.identifier === 'string' &&
+            entry.identifier.startsWith('urn:air:') &&
+            typeof entry.displayName === 'string' &&
+            typeof entry.type === 'string' &&
+            hasUrl !== hasData &&
+            Array.isArray(queries) &&
+            queries.length >= 2 &&
+            queries.length <= 5 &&
+            queries.every((query) => typeof query === 'string')
+          );
+        }),
+        'ARD catalog entries 必須符合 identifier、type、url/data 與 representativeQueries 規則。',
+      );
+      const expectedArdUrls = [
+        expectedConfiguredUrl('/api/content.json'),
+        expectedConfiguredUrl('/openapi.json'),
+        expectedConfiguredUrl('/.well-known/mcp/server-card.json'),
+        expectedConfiguredUrl(
+          '/.well-known/agent-skills/research-digital-engine/SKILL.md',
+        ),
+      ];
+      for (const expectedUrl of expectedArdUrls) {
+        check(
+          entries.some((entry) => isRecord(entry) && entry.url === expectedUrl),
+          `ARD catalog 缺少公開 resource URL ${expectedUrl ?? '(invalid SITE_URL)'}。`,
+        );
+      }
+    }
+  }
+
   if (serverCard) {
     check(
       serverCard.protocolVersion === '2025-06-18',
@@ -1286,7 +1346,10 @@ async function verifyPublicAgentResources(
 
   if (artifactPaths.has('auth.md')) {
     const auth = await readFile(path.join(distRoot, 'auth.md'), 'utf8');
-    check(auth.startsWith('# Authentication guidance\n'), 'auth.md 缺少標題。');
+    check(
+      auth.startsWith('# Auth.md — Authentication guidance\n'),
+      'auth.md 缺少標題。',
+    );
     check(auth.length > 500, 'auth.md 內容過短。');
     check(
       auth.includes('不提供會員登入') && auth.includes('不提供寫入'),

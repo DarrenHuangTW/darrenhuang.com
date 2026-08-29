@@ -1,6 +1,7 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "darrenhuang-agent-readiness",
+  "account_id": "a6467645a8f76463416f3db199174bca",
   "main": "./src/index.ts",
   "compatibility_date": "2026-08-15",
   "compatibility_flags": ["nodejs_compat"],
