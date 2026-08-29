@@ -1355,6 +1355,13 @@ async function verifyPublicAgentResources(
       auth.includes('不提供會員登入') && auth.includes('不提供寫入'),
       'auth.md 必須說明目前的 authentication 與 write scope。',
     );
+    check(
+      auth.includes('Agent audience:') &&
+        auth.includes('Registration/provisioning endpoint:') &&
+        auth.includes('Supported registration methods:') &&
+        auth.includes('Credential use:'),
+      'auth.md 必須自包含說明 agent audience、provisioning endpoint、registration methods 與 credential use。',
+    );
   }
 }
 
