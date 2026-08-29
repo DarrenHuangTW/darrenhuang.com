@@ -3,27 +3,32 @@ name: Deploy Astro site to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   build:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: 24
           cache: npm
@@ -63,23 +68,93 @@ jobs:
           SITE_URL: https://www.darrenhuang.com
           BASE_PATH: /
 
+      - name: Verify deployable hidden files
+        run: |
+          test -f dist/.nojekyll
+          test -d dist/.well-known
+          test -z "$(find dist -mindepth 1 -type f -name '.*' ! -path 'dist/.nojekyll' -print)"
+          test -z "$(find dist/.well-known -mindepth 1 -name '.*' -print)"
+
       - name: Configure GitHub Pages
-        uses: actions/configure-pages@v6
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
 
       - name: Upload verified site artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           include-hidden-files: true
           path: dist
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
+
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify source quality and migration integrity
+        run: |
+          npm run format:check
+          npm run lint
+          npm run check
+          npm run typecheck
+          npm test
+          npm run test:worker
+          npm run worker:types:check
+          npm run worker:build
+          npm run verify:migration
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Verify project-base preview build end to end
+        run: |
+          npm run build
+          npm run verify:dist
+          npm run test:e2e
+        env:
+          SITE_URL: https://darrenhuangtw.github.io
+          BASE_PATH: /darrenhuang.com
+
+      - name: Build verified custom-domain artifact
+        run: |
+          npm run build
+          npm run verify:dist
+        env:
+          SITE_URL: https://www.darrenhuang.com
+          BASE_PATH: /
+
+      - name: Verify hidden agent discovery files
+        run: |
+          test -f dist/.nojekyll
+          test -d dist/.well-known
+          test -z "$(find dist -mindepth 1 -type f -name '.*' ! -path 'dist/.nojekyll' -print)"
+          test -z "$(find dist/.well-known -mindepth 1 -name '.*' -print)"

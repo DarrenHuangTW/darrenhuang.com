@@ -114,11 +114,15 @@ export function findForbiddenPublishedText(source: string): string[] {
 export function isSensitiveRepositoryFile(relativePath: string): boolean {
   const normalized = relativePath.replaceAll('\\', '/').replace(/^\.\//, '');
   const basename = path.posix.basename(normalized);
-  const isAllowedExample = normalized === '.env.example';
+  const isAllowedExample =
+    normalized === '.env.example' || normalized === '.dev.vars.example';
 
   if (
     !isAllowedExample &&
-    (basename === '.env' || basename.startsWith('.env.'))
+    (basename === '.env' ||
+      basename.startsWith('.env.') ||
+      basename === '.dev.vars' ||
+      basename.startsWith('.dev.vars.'))
   ) {
     return true;
   }

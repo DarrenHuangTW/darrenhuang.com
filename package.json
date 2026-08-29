@@ -30,7 +30,8 @@
     "audit:agent-readiness": "tsx scripts/audit/agent-readiness.ts",
     "migrate": "tsx scripts/migrate-wordpress/index.ts",
     "verify:dist": "tsx scripts/verify/dist.ts",
-    "verify:migration": "tsx scripts/verify/migration.ts"
+    "verify:migration": "tsx scripts/verify/migration.ts",
+    "verify:production": "tsx scripts/verify/production.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.5",

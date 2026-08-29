@@ -54,6 +54,7 @@ GitHub Pages preview 已在公開環境通過 HTTP、桌機與手機驗收。
 - `npm run audit:agent-readiness` 透過 Cloudflare 官方 MCP scanner 檢查正式 `www` hostname。
 
 Repository 內的完整實作、Cloudflare edge 部署與 live audit 記錄在 [Agent Readiness 優化報告](./migration-report/agent-readiness.md)。
+本輪 verifier、Worker、CI 與 repository security 的修正與限制記錄在 [repository security audit](./migration-report/repository-security-audit.md)。
 
 ## 本機開發
 
@@ -79,9 +80,14 @@ npm run worker:build
 npm run build
 npm run verify:migration
 npm run verify:dist
+npm run verify:production
 npm run test:e2e
 npm run audit:agent-readiness
 ```
+
+`npm run verify:production` 只對正式網站發出 GET 請求，檢查 apex 與 `www` 的 HTTP／HTTPS 轉址、正式 HTTPS host、GitHub Pages 可用性、`robots.txt`、sitemap 與代表性頁面。
+它不會登入或修改 Cloudflare、Bluehost、GitHub、DNS 或任何郵件服務。
+正式網域移轉仍須完成 [production transfer verification checklist](./migration-report/production-transfer-verification.md) 中的人工 registrar、DNS 與 email 檢查。
 
 WordPress importer 的原始輸入必須位於 repository 外，並透過本機環境變數提供。
 可用的變數名稱記錄在 [.env.example](./.env.example)，但實際路徑與秘密值不得提交。
@@ -95,6 +101,7 @@ public/wp-content/uploads/  只有正式內容實際引用的媒體。
 scripts/migrate-wordpress/  可重跑且輸出可重現的 importer。
 scripts/build/              Agent-readable artifacts 與響應式圖片產生器。
 scripts/verify/              搬遷與建置成品驗收工具。
+migration-report/production-transfer-verification.md  正式網域移轉的自動與人工驗收清單。
 cloudflare/agent-readiness/  Free-plan Markdown negotiation 與 discovery Worker。
 migration/                  Manifest 與機器可讀的遷移報告。
 migration-report/           適合提交至 public repository 的執行摘要。

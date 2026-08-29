@@ -13,6 +13,7 @@ const apiRootPath = '/api';
 const apiVersionHeader = 'X-API-Version';
 const apiVersion = '1';
 const mcpProtocolVersion = '2025-06-18';
+const mcpRequestMaxBytes = 64 * 1024;
 const mcpServerInfo = {
   name: 'darrenhuang-public-content',
   version: '1.0.0',
@@ -346,11 +347,26 @@ function parseJsonRpcRequest(source: string): JsonRpcRequest | undefined {
   if (typeof parsed.method !== 'string' || !parsed.method) {
     return undefined;
   }
-  if ('id' in parsed && !isJsonRpcId(parsed.id)) {
-    return undefined;
+
+  let id: JsonRpcId | undefined;
+  if ('id' in parsed) {
+    if (!isJsonRpcId(parsed.id)) {
+      return undefined;
+    }
+    id = parsed.id;
   }
 
-  return parsed as unknown as JsonRpcRequest;
+  const request: JsonRpcRequest = {
+    jsonrpc: '2.0',
+    method: parsed.method,
+  };
+  if (id !== undefined) {
+    request.id = id;
+  }
+  if ('params' in parsed) {
+    request.params = parsed.params;
+  }
+  return request;
 }
 
 function contentItem(value: unknown): value is ContentItem {
@@ -415,6 +431,76 @@ function toolError(message: string): JsonRecord {
     content: [{ type: 'text', text: message }],
     isError: true,
   };
+}
+
+class McpRequestTooLargeError extends Error {
+  constructor() {
+    super('MCP request is too large.');
+    this.name = 'McpRequestTooLargeError';
+  }
+}
+
+function exceedsMcpRequestMaxFromHeader(request: Request): boolean {
+  const value = request.headers.get('content-length')?.trim();
+  if (!value || !/^\d+$/u.test(value)) {
+    return false;
+  }
+
+  const length = Number(value);
+  return !Number.isSafeInteger(length) || length > mcpRequestMaxBytes;
+}
+
+async function readMcpRequestBody(request: Request): Promise<string> {
+  if (exceedsMcpRequestMaxFromHeader(request)) {
+    throw new McpRequestTooLargeError();
+  }
+
+  const body: ReadableStream<Uint8Array> | null = request.body;
+  if (!body) {
+    return '';
+  }
+
+  const reader = body.getReader();
+  const chunks: Uint8Array[] = [];
+  let totalBytes = 0;
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) {
+        break;
+      }
+      if (!(value instanceof Uint8Array)) {
+        await reader.cancel('MCP request body was not a byte stream.');
+        throw new Error('MCP request body was not a byte stream.');
+      }
+
+      if (value.byteLength > mcpRequestMaxBytes - totalBytes) {
+        await reader.cancel('MCP request is too large.');
+        throw new McpRequestTooLargeError();
+      }
+
+      chunks.push(value);
+      totalBytes += value.byteLength;
+    }
+  } finally {
+    reader.releaseLock();
+  }
+
+  const bytes = new Uint8Array(totalBytes);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return new TextDecoder().decode(bytes);
+}
+
+function mcpRequestTooLargeResponse(): Response {
+  return mcpJsonResponse(
+    jsonRpcError(null, -32600, 'MCP request is too large.'),
+    413,
+  );
 }
 
 async function executeTool(
@@ -503,12 +589,14 @@ async function handleMcpRequest(request: Request): Promise<Response> {
     );
   }
 
-  const source = await request.text();
-  if (source.length > 64 * 1024) {
-    return mcpJsonResponse(
-      jsonRpcError(null, -32600, 'MCP request is too large.'),
-      413,
-    );
+  let source: string;
+  try {
+    source = await readMcpRequestBody(request);
+  } catch (error) {
+    if (error instanceof McpRequestTooLargeError) {
+      return mcpRequestTooLargeResponse();
+    }
+    throw error;
   }
 
   const rpc = parseJsonRpcRequest(source);

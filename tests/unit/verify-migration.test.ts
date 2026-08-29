@@ -118,6 +118,20 @@ describe('migration verifier integrity helpers', () => {
     );
     expect(isSensitiveRepositoryFile('migration/report.json')).toBe(false);
   });
+
+  it('keeps non-HTTPS production URLs forbidden and protects Wrangler local vars', () => {
+    expect(
+      findForbiddenPublishedText('http://darrenhuang.com/example'),
+    ).toContain('非 HTTPS 正式站 URL');
+    expect(
+      findForbiddenPublishedText(
+        'HTTP redirect fixtures are described without publishing a non-HTTPS URL.',
+      ),
+    ).not.toContain('非 HTTPS 正式站 URL');
+    expect(isSensitiveRepositoryFile('.dev.vars')).toBe(true);
+    expect(isSensitiveRepositoryFile('.dev.vars.production')).toBe(true);
+    expect(isSensitiveRepositoryFile('.dev.vars.example')).toBe(false);
+  });
 });
 
 describe('GitHub Pages deployment gates', () => {
@@ -165,5 +179,28 @@ describe('GitHub Pages deployment gates', () => {
     expect(previewIndex).toBeGreaterThan(0);
     expect(productionIndex).toBeGreaterThan(previewIndex);
     expect(uploadIndex).toBeGreaterThan(productionIndex);
+  });
+
+  it('keeps pull requests validation-only and workflow actions pinned', () => {
+    expect(workflow).toContain('pull_request:');
+    expect(workflow).toContain("if: github.event_name != 'pull_request'");
+    expect(workflow).toContain("if: github.event_name == 'pull_request'");
+    expect(workflow).toContain(
+      'permissions:\n  contents: read\n\nconcurrency:',
+    );
+    expect(workflow).toContain('include-hidden-files: true');
+    expect(workflow).toContain('test -f dist/.nojekyll');
+    expect(workflow).toContain('test -d dist/.well-known');
+    expect(workflow).toContain(
+      "test -z \"$(find dist -mindepth 1 -type f -name '.*' ! -path 'dist/.nojekyll' -print)\"",
+    );
+
+    const actionRefs = [
+      ...workflow.matchAll(/uses:\s+\S+@([0-9a-f]{40})(?:\s|#)/gu),
+    ].map((match) => match[1]);
+    expect(actionRefs.length).toBeGreaterThan(0);
+    expect(actionRefs.every((ref) => /^[0-9a-f]{40}$/u.test(ref ?? ''))).toBe(
+      true,
+    );
   });
 });

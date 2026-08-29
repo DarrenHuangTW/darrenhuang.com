@@ -329,6 +329,53 @@ describe('agent readiness Worker', () => {
     expect(invalidBody.error).toMatchObject({ code: -32600 });
   });
 
+  it('rejects MCP request bodies over 64 KiB before parsing', async () => {
+    mockOrigin(() => new Response('{}'));
+
+    const response = await server.fetch('https://www.darrenhuang.com/mcp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'ping',
+        padding: 'x'.repeat(64 * 1024),
+      }),
+    });
+
+    expect(response.status).toBe(413);
+    expect(response.headers.get('content-type')).toContain('application/json');
+    expect(
+      ((await response.json()) as { error?: { code?: number } }).error?.code,
+    ).toBe(-32600);
+  });
+
+  it('caps chunked MCP request bodies without Content-Length', async () => {
+    mockOrigin(() => new Response('{}'));
+
+    const payload = new TextEncoder().encode(
+      JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'ping' }),
+    );
+    const body = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(payload);
+        controller.enqueue(new Uint8Array(64 * 1024));
+        controller.close();
+      },
+    });
+    const response = await server.fetch('https://www.darrenhuang.com/mcp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      duplex: 'half',
+    });
+
+    expect(response.status).toBe(413);
+    expect(
+      ((await response.json()) as { error?: { code?: number } }).error?.code,
+    ).toBe(-32600);
+  });
+
   it('turns missing public API items into structured JSON errors', async () => {
     mockOrigin(
       () =>
