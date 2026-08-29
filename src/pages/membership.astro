@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/urls';
+
+const canonicalPath = '/membership.html';
+const description =
+  '數位引擎目前不需要會員登入或付費，公開文章、歷史電子報與保存筆記都可以直接閱讀。';
+---
+
+<BaseLayout
+  title="公開內容與電子報說明"
+  description={description}
+  canonicalPath={canonicalPath}
+>
+  <article class="simple-page page shell">
+    <header class="page__header">
+      <div class="eyebrow">Public archive</div>
+      <h1>公開內容，不需要會員</h1>
+      <p>{description}</p>
+    </header>
+
+    <div class="prose simple-page__body">
+      <section aria-labelledby="public-content">
+        <h2 id="public-content">目前的閱讀方式</h2>
+        <p>
+          數位引擎現在是一個公開內容
+          archive，不提供會員登入、付款或訂閱後才能閱讀的文章。
+          目前網站上的文章、過去的會員電子報保存內容，以及已發布的 Facebook
+          保存筆記，都可以直接透過 HTML、Markdown、RSS、JSON API、MCP 或支援的
+          WebMCP 介面閱讀。
+        </p>
+        <p>
+          你可以從<a href={withBase('/articles.html')}>完整文章列表</a
+          >開始，或先閱讀
+          <a href={withBase('/llms.txt')}>agent 內容索引</a>，再依主題選擇文章。
+        </p>
+      </section>
+
+      <section aria-labelledby="newsletter-archive">
+        <h2 id="newsletter-archive">歷史電子報</h2>
+        <p>
+          網站保留部分過去的會員電子報，作為公開的歷史文章 archive。
+          這些內容反映原始發布時的背景與工具狀態，不代表目前仍有相同的電子報訂閱服務，也不代表所有外部服務今天仍然使用相同介面。
+        </p>
+      </section>
+
+      <section aria-labelledby="questions">
+        <h2 id="questions">需要進一步聯絡</h2>
+        <p>
+          如果你要討論 SEO、AI、自動化、內容策略或網站體驗，請使用<a
+            href={withBase('/contact.html')}>聯絡頁</a
+          >上的公開 email。
+          寄信不會建立會員帳號或自動建立任何付費關係，也請不要傳送密碼、身分證件、付款資料或其他敏感資訊。
+        </p>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .simple-page {
+    width: min(100% - 2rem, 64rem);
+  }
+
+  .simple-page__body {
+    width: min(100%, 50rem);
+    margin-inline: auto;
+  }
+</style>

@@ -18,7 +18,9 @@ const organizationSchema = {
   '@type': 'Organization',
   '@id': `${siteUrl}#organization`,
   name: '數位引擎',
+  alternateName: 'Darren Huang',
   url: siteUrl.toString(),
+  logo: new URL(withBase('/favicon.svg'), siteUrl).toString(),
   description: '數位行銷、SEO、內容策略與科技趨勢的繁體中文長期觀察。',
   email: 'darrenhhuang@gmail.com',
   contactPoint: {
@@ -45,7 +47,7 @@ const organizationSchema = {
       <div class="hero__kicker">SEO · AI · Automation · UI／UX</div>
       <h1>讓寫過的內容，<em>繼續被找到</em></h1>
       <p class="hero__lede">
-        我是 Darren，一位轉換到 AI 賽道的 SEO 人。這裡收錄過去寫下的
+        我是 Darren Huang，一位轉換到 AI 賽道的 SEO 人。這裡收錄過去寫下的
         SEO、網站分析、Python、UI／UX
         與數位行銷文章，也留下一些關於數位產品與科技文化的觀察。
       </p>
@@ -54,6 +56,40 @@ const organizationSchema = {
       <strong>一些實作，一些觀察。</strong>
       <p>關於搜尋、內容、網站、產品，以及科技如何影響工作與生活。</p>
     </aside>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="agent-interfaces">
+    <div class="shell agent-interfaces">
+      <div class="section__header">
+        <div>
+          <h2 id="agent-interfaces">給開發者與 Agent 的公開入口</h2>
+          <p>
+            如果你要研究數位引擎的公開內容，可以直接使用下列文件與唯讀介面，不需要登入、API
+            key 或瀏覽器 JavaScript。
+          </p>
+        </div>
+      </div>
+      <ul class="agent-interfaces__list">
+        <li>
+          <a href={withBase('/developers.html')}>開發者與 Agent 入口</a>
+          <span>快速了解 API、MCP、WebMCP 與版本政策。</span>
+        </li>
+        <li>
+          <a href={withBase('/llms.txt')}>llms.txt</a>
+          <span>網站定位、內容索引與 agent 使用說明。</span>
+        </li>
+        <li>
+          <a href={withBase('/openapi.json')}>OpenAPI 3.1</a>
+          <span>公開文章與保存筆記的唯讀 JSON API。</span>
+        </li>
+        <li>
+          <a href={withBase('/.well-known/mcp/server-card.json')}
+            >MCP Server Card</a
+          >
+          <span>公開 MCP endpoint 與兩個 read-only tools。</span>
+        </li>
+      </ul>
+    </div>
   </section>
 
   <section class="section section--surface">
@@ -114,3 +150,38 @@ const organizationSchema = {
     )
   }
 </BaseLayout>
+
+<style>
+  .agent-interfaces__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .agent-interfaces__list li {
+    display: grid;
+    gap: 0.25rem;
+    padding-block: 0.85rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .agent-interfaces__list a {
+    color: var(--color-link);
+    font-family: var(--font-sans);
+    font-weight: 750;
+  }
+
+  .agent-interfaces__list span {
+    color: var(--color-muted);
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 40rem) {
+    .agent-interfaces__list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

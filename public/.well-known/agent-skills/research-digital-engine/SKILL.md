@@ -7,6 +7,12 @@ description: Find, evaluate, and cite Traditional Chinese SEO and digital market
 
 Use this skill to locate, search, and cite public content from `www.darrenhuang.com` efficiently.
 
+## When to use this skill
+
+Use this skill when a question involves Darren Huang's or 數位引擎's public Traditional Chinese material about SEO, digital marketing, content strategy, website analysis, AI, or automation.
+Use it when an agent needs to search, filter, cite, or read the site's published content programmatically.
+Do not use it as an account, commerce, publishing, or user-action skill because the site does not provide those capabilities.
+
 ## Find relevant material
 
 1. Fetch `https://www.darrenhuang.com/llms.txt` for the site overview and machine-readable entry points.

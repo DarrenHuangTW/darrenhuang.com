@@ -37,7 +37,13 @@ const siteName = '數位引擎';
 const pageTitle = title === siteName ? title : `${title}｜${siteName}`;
 const siteOrigin = Astro.site ?? Astro.url.origin;
 const canonicalUrl = new URL(withBase(canonicalPath), siteOrigin);
-const imageUrl = image ? new URL(withBase(image), siteOrigin) : null;
+const socialImagePath =
+  image === undefined
+    ? '/images/about/google-product-experts-summit-2018.webp'
+    : image;
+const imageUrl = socialImagePath
+  ? new URL(withBase(socialImagePath), siteOrigin)
+  : null;
 const llmsUrl = new URL(withBase('/llms.txt'), siteOrigin);
 const apiCatalogUrl = new URL(withBase('/.well-known/api-catalog'), siteOrigin);
 const mcpServerCardUrl = new URL(
@@ -94,6 +100,7 @@ const googleTagManagerBootstrap = trackingEnabled
     />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <meta name="author" content="Darren Huang" />
     {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="canonical" href={canonicalUrl} />
     <link rel="describedby" href={llmsUrl} type="text/plain" />
@@ -128,7 +135,14 @@ const googleTagManagerBootstrap = trackingEnabled
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    {
+      imageUrl && (
+        <>
+          <meta property="og:image" content={imageUrl} />
+          <meta property="og:image:alt" content="Darren Huang｜數位引擎" />
+        </>
+      )
+    }
     <meta
       name="twitter:card"
       content={imageUrl ? 'summary_large_image' : 'summary'}

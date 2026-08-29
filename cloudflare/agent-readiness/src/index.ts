@@ -9,6 +9,9 @@ const discoveryLinks = [
 const apiCatalogPath = '/.well-known/api-catalog';
 const ardCatalogPath = '/.well-known/ai-catalog.json';
 const mcpPath = '/mcp';
+const apiRootPath = '/api';
+const apiVersionHeader = 'X-API-Version';
+const apiVersion = '1';
 const mcpProtocolVersion = '2025-06-18';
 const mcpServerInfo = {
   name: 'darrenhuang-public-content',
@@ -164,6 +167,11 @@ function addPublicAgentHeaders(headers: Headers): void {
   headers.set('X-Content-Type-Options', 'nosniff');
 }
 
+function addApiAgentHeaders(headers: Headers): void {
+  addPublicAgentHeaders(headers);
+  headers.set(apiVersionHeader, apiVersion);
+}
+
 function responseWithHeaders(
   response: Response,
   configure: (headers: Headers) => void,
@@ -204,6 +212,84 @@ function jsonResponse(
 ): Response {
   headers.set('Content-Type', 'application/json; charset=utf-8');
   return new Response(JSON.stringify(value), { status, headers });
+}
+
+function apiErrorResponse(status: number): Response {
+  const normalizedStatus = status >= 400 && status <= 599 ? status : 502;
+  const isNotFound = normalizedStatus === 404;
+  const isMethodNotAllowed = normalizedStatus === 405;
+  const headers = new Headers();
+  addApiAgentHeaders(headers);
+  if (isMethodNotAllowed) {
+    headers.set('Allow', 'GET, HEAD');
+  }
+
+  return jsonResponse(
+    {
+      error: {
+        code: isNotFound
+          ? 'not_found'
+          : isMethodNotAllowed
+            ? 'method_not_allowed'
+            : 'api_error',
+        message: isNotFound
+          ? 'The requested public API resource was not found.'
+          : isMethodNotAllowed
+            ? 'The requested API resource does not support this method.'
+            : 'The public API could not complete the request.',
+        hint: 'Read /openapi.json for valid endpoints, /api/content.json for public slugs, and X-API-Version: 1 for the current API version.',
+      },
+    },
+    normalizedStatus,
+    headers,
+  );
+}
+
+function unsupportedApiVersionResponse(): Response {
+  const headers = new Headers();
+  addApiAgentHeaders(headers);
+  return jsonResponse(
+    {
+      error: {
+        code: 'unsupported_api_version',
+        message: `Only public API version ${apiVersion} is currently supported.`,
+        hint: `Send ${apiVersionHeader}: ${apiVersion} or read /openapi.json for the version policy.`,
+      },
+    },
+    400,
+    headers,
+  );
+}
+
+function notFoundMarkdown(url: URL): string {
+  const link = (pathname: string): string =>
+    new URL(pathname, url.origin).toString();
+  return [
+    '# 找不到頁面',
+    '',
+    '此網址沒有對應的公開內容。',
+    '',
+    '你可以從以下入口繼續：',
+    '',
+    `- [網站首頁](${link('/')})`,
+    `- [llms.txt](${link('/llms.txt')})`,
+    `- [文章索引](${link('/articles-llms.txt')})`,
+    `- [Sitemap](${link('/sitemap-index.xml')})`,
+    `- [開發者與 Agent 入口](${link('/developers.html')})`,
+    '',
+  ].join('\n');
+}
+
+function markdownNotFoundResponse(request: Request, url: URL): Response {
+  const headers = new Headers();
+  addPublicAgentHeaders(headers);
+  headers.set('Content-Type', `${markdownMediaType}; charset=utf-8`);
+  headers.set('Content-Location', `${url.pathname}${url.search}`);
+  appendVary(headers, 'Accept');
+  return new Response(
+    request.method === 'HEAD' ? null : notFoundMarkdown(url),
+    { status: 404, headers },
+  );
 }
 
 function mcpHeaders(): Headers {
@@ -493,15 +579,26 @@ function isAgentResource(pathname: string): boolean {
   );
 }
 
-function isContentDetailResource(pathname: string): boolean {
-  return /^\/api\/(?:articles|notes)\/[^/]+\.json$/u.test(pathname);
+function isApiPath(pathname: string): boolean {
+  return pathname === apiRootPath || pathname.startsWith(`${apiRootPath}/`);
 }
 
 async function handleRequest(request: Request): Promise<Response> {
   const url = new URL(request.url);
 
+  if (isApiPath(url.pathname)) {
+    const requestedVersion = request.headers.get(apiVersionHeader)?.trim();
+    if (requestedVersion && requestedVersion !== apiVersion) {
+      return unsupportedApiVersionResponse();
+    }
+  }
+
   if (url.pathname === mcpPath) {
     return handleMcpRequest(request);
+  }
+
+  if (url.pathname === apiRootPath || url.pathname === `${apiRootPath}/`) {
+    return apiErrorResponse(404);
   }
 
   if (url.pathname === apiCatalogPath) {
@@ -559,26 +656,27 @@ async function handleRequest(request: Request): Promise<Response> {
   }
 
   const response = await fetchOrigin(request);
-  if (isAgentResource(url.pathname)) {
-    if (isContentDetailResource(url.pathname) && response.status === 404) {
-      await response.body?.cancel();
-      const headers = new Headers();
-      addPublicAgentHeaders(headers);
-      return jsonResponse(
-        {
-          error: {
-            code: 'not_found',
-            message: 'The requested public content item was not found.',
-            hint: 'Use /api/content.json to discover valid article and note slugs.',
-          },
-        },
-        404,
-        headers,
-      );
-    }
+  if (isApiPath(url.pathname) && response.status >= 400) {
+    await response.body?.cancel();
+    return apiErrorResponse(response.status);
+  }
 
+  if (
+    response.status === 404 &&
+    isSafeRead &&
+    acceptsMarkdown(request.headers.get('accept'))
+  ) {
+    await response.body?.cancel();
+    return markdownNotFoundResponse(request, url);
+  }
+
+  if (isAgentResource(url.pathname)) {
     return responseWithHeaders(response, (headers) => {
-      addPublicAgentHeaders(headers);
+      if (isApiPath(url.pathname)) {
+        addApiAgentHeaders(headers);
+      } else {
+        addPublicAgentHeaders(headers);
+      }
     });
   }
 
@@ -596,6 +694,13 @@ async function handleRequest(request: Request): Promise<Response> {
   return responseWithHeaders(response, (headers) => {
     if (markdownPath) {
       appendVary(headers, 'Accept');
+    }
+    if (
+      (response.headers.get('content-type') ?? '')
+        .toLowerCase()
+        .includes('text/html')
+    ) {
+      addPageAgentHeaders(headers);
     }
     if (url.pathname === '/') {
       addPageAgentHeaders(headers);

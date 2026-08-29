@@ -1004,9 +1004,11 @@ test.describe('Phase 5 public-site acceptance', () => {
     expect(openApiResponse.ok()).toBe(true);
     const openApi = (await openApiResponse.json()) as {
       openapi?: string;
+      info?: { description?: string };
       paths?: Record<string, unknown>;
     };
     expect(openApi.openapi).toBe('3.1.0');
+    expect(openApi.info?.description).toContain('API version policy');
     expect(openApi.paths).toEqual(
       expect.objectContaining({
         '/api/content.json': expect.anything(),
@@ -1094,9 +1096,15 @@ test.describe('Phase 5 public-site acceptance', () => {
     );
     expect(mcpCardResponse.ok()).toBe(true);
     const mcpCard = (await mcpCardResponse.json()) as {
+      name?: string;
+      serverUrl?: string;
       transport?: { type?: string; endpoint?: string };
       tools?: Array<{ name?: string }>;
     };
+    expect(mcpCard).toMatchObject({
+      name: 'darrenhuang-public-content',
+      serverUrl: new URL(runtimePath('/mcp'), `${configuredSite}/`).toString(),
+    });
     expect(mcpCard.transport).toMatchObject({
       type: 'streamable-http',
       endpoint: configuredBase ? `${configuredBase}/mcp` : '/mcp',
@@ -1108,6 +1116,13 @@ test.describe('Phase 5 public-site acceptance', () => {
 
     const homepageResponse = await page.goto(runtimePath('/'));
     expect(homepageResponse?.ok()).toBe(true);
+    await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
+    await expect(
+      page.locator('a[href$="/developers.html"]').first(),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: '給開發者與 Agent 的公開入口' }),
+    ).toBeVisible();
     const homepageSchemaSource = await page
       .locator('head script[type="application/ld+json"]')
       .textContent();
@@ -1129,6 +1144,18 @@ test.describe('Phase 5 public-site acceptance', () => {
     });
     expect(await page.content()).toContain('document.modelContext');
     expect(await page.content()).toContain('search_content');
+
+    const developerResponse = await page.goto(runtimePath('/developers.html'));
+    expect(developerResponse?.ok()).toBe(true);
+    await expect(
+      page.getByRole('heading', { level: 1, name: '開發者與 Agent 入口' }),
+    ).toBeVisible();
+
+    const membershipResponse = await page.goto(runtimePath('/membership.html'));
+    expect(membershipResponse?.ok()).toBe(true);
+    await expect(
+      page.getByRole('heading', { level: 1, name: '公開內容，不需要會員' }),
+    ).toBeVisible();
   });
 
   test('an unknown URL returns the custom 404 page', async ({ page }) => {

@@ -1322,6 +1322,14 @@ async function verifyPublicAgentResources(
 
   if (serverCard) {
     check(
+      serverCard.name === 'darrenhuang-public-content',
+      'MCP Server Card 缺少 server name。',
+    );
+    check(
+      serverCard.serverUrl === expectedConfiguredUrl('/mcp'),
+      'MCP Server Card 缺少正式 serverUrl。',
+    );
+    check(
       serverCard.protocolVersion === '2025-06-18',
       'MCP Server Card protocolVersion 無效。',
     );

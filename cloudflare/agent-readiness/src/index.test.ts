@@ -352,4 +352,67 @@ describe('agent readiness Worker', () => {
       hint: expect.stringContaining('/api/content.json'),
     });
   });
+
+  it('returns a recoverable Markdown body for unknown safe reads', async () => {
+    mockOrigin(
+      () =>
+        new Response('<html><h1>Not found</h1></html>', {
+          status: 404,
+          headers: { 'Content-Type': 'text/html' },
+        }),
+    );
+
+    const response = await server.fetch(
+      'https://www.darrenhuang.com/not-a-real-page?source=agent',
+      { headers: { Accept: 'text/markdown' } },
+    );
+
+    expect(response.status).toBe(404);
+    expect(response.headers.get('content-type')).toBe(
+      'text/markdown; charset=utf-8',
+    );
+    expect(response.headers.get('content-location')).toBe(
+      '/not-a-real-page?source=agent',
+    );
+    expect(response.headers.get('vary')).toBe('Accept');
+    expect(await response.text()).toContain('/llms.txt');
+  });
+
+  it('normalizes unknown API routes and unsupported API methods to JSON', async () => {
+    mockOrigin((request) => {
+      if (request.method === 'POST') {
+        return new Response('<html><h1>Method not allowed</h1></html>', {
+          status: 405,
+          headers: { 'Content-Type': 'text/html' },
+        });
+      }
+
+      return new Response('<html><h1>Not found</h1></html>', {
+        status: 404,
+        headers: { 'Content-Type': 'text/html' },
+      });
+    });
+
+    const missing = await server.fetch(
+      'https://www.darrenhuang.com/api/not-a-real-resource',
+      { headers: { Accept: 'application/json' } },
+    );
+    expect(missing.status).toBe(404);
+    expect(missing.headers.get('content-type')).toContain('application/json');
+    expect(missing.headers.get('x-api-version')).toBe('1');
+    const missingBody = (await missing.json()) as {
+      error?: { code?: string };
+    };
+    expect(missingBody.error?.code).toBe('not_found');
+
+    const method = await server.fetch(
+      'https://www.darrenhuang.com/api/content.json',
+      { method: 'POST', body: '{}', headers: { Accept: 'application/json' } },
+    );
+    expect(method.status).toBe(405);
+    expect(method.headers.get('content-type')).toContain('application/json');
+    expect(
+      ((await method.json()) as { error?: { code?: string } }).error?.code,
+    ).toBe('method_not_allowed');
+  });
 });

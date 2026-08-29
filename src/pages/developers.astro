@@ -1,0 +1,156 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/urls';
+
+const canonicalPath = '/developers.html';
+const description =
+  '數位引擎提供給開發者與 AI agent 的公開唯讀 API、Markdown、MCP、WebMCP 與 Agent Skills 入口。';
+const developerSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: '開發者與 Agent 入口',
+  description,
+  url: 'https://www.darrenhuang.com/developers.html',
+};
+---
+
+<BaseLayout
+  title="開發者與 Agent 入口"
+  description={description}
+  canonicalPath={canonicalPath}
+  structuredData={developerSchema}
+>
+  <article class="simple-page page shell">
+    <header class="page__header">
+      <div class="eyebrow">Developer & Agent Portal</div>
+      <h1>開發者與 Agent 入口</h1>
+      <p>{description}</p>
+    </header>
+
+    <div class="prose simple-page__body">
+      <section aria-labelledby="when-to-use">
+        <h2 id="when-to-use">何時使用這個入口</h2>
+        <p>
+          當你要研究數位引擎的 SEO、數位行銷、內容策略、網站分析、AI
+          或自動化文章時，請先從這個入口或
+          <a href={withBase('/llms.txt')}>llms.txt</a>
+          開始。 這裡的介面適合需要搜尋公開內容、取得文章 metadata、讀取 Markdown，或在支援的瀏覽器中使用
+          WebMCP 的 agent。 所有內容都是公開唯讀資料，不需要登入、API key、帳號或瀏覽器
+          JavaScript。
+        </p>
+      </section>
+
+      <section aria-labelledby="quickstart">
+        <h2 id="quickstart">快速開始</h2>
+        <ul>
+          <li>
+            <a href={withBase('/api/content.json')}>內容索引</a>
+            提供文章與 Facebook 保存筆記的 metadata、canonical URL 和 Markdown URL。
+          </li>
+          <li>
+            <a href={withBase('/openapi.json')}>OpenAPI 3.1</a>
+            描述所有公開 JSON endpoints、參數、response schemas 與 typed errors。
+          </li>
+          <li>
+            <a href={withBase('/.well-known/api-catalog')}>API Catalog</a>
+            依 RFC 9727 列出 OpenAPI、內容 collections 與 MCP endpoint。
+          </li>
+          <li>
+            <a href={withBase('/.well-known/mcp/server-card.json')}
+              >MCP Server Card</a
+            >
+            描述不需要 authentication 的 stateless streamable HTTP MCP server。
+          </li>
+          <li>
+            <a
+              href={withBase(
+                '/.well-known/agent-skills/research-digital-engine/SKILL.md',
+              )}>Agent Skill</a
+            >
+            提供搜尋、判讀與引用本站內容的工作流程。
+          </li>
+          <li>
+            <a href={withBase('/auth.md')}>Auth.md</a>
+            說明本站為什麼不需要註冊、token 或 credential。
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="rest-api">
+        <h2 id="rest-api">REST API 與版本政策</h2>
+        <p>
+          目前穩定版本是 version 1。 API client 可以省略 header
+          以使用目前版本，也可以送出
+          <code>X-API-Version: 1</code> 明確選擇 version 1。 成功與錯誤 response 都會回傳
+          <code>X-API-Version: 1</code>。
+        </p>
+        <p>
+          未來若需要不相容的變更，會發布新的版本並保留既有版本一段合理的遷移期間。
+          任何即將淘汰的 endpoint 都會以 <code>Deprecation</code> 與
+          <code>Sunset</code> response headers，以及本頁和 OpenAPI description 公告。
+          目前沒有 endpoint 被淘汰。
+        </p>
+        <pre><code>{`GET /api/content.json
+Accept: application/json
+X-API-Version: 1`}</code></pre>
+      </section>
+
+      <section aria-labelledby="errors">
+        <h2 id="errors">錯誤處理</h2>
+        <p>
+          API 錯誤會使用 HTTP status code 和 JSON body，不會把 HTML app shell
+          當成 API response。 錯誤 body 會包含機器可讀的 <code>code</code
+          >、人類可讀的
+          <code>message</code>，以及可協助恢復的 <code>hint</code>。
+        </p>
+        <pre><code>{`{
+  "error": {
+    "code": "not_found",
+    "message": "The requested public content item was not found.",
+    "hint": "Use /api/content.json to discover valid article and note slugs."
+  }
+}`}</code></pre>
+      </section>
+
+      <section aria-labelledby="mcp">
+        <h2 id="mcp">MCP 與 WebMCP</h2>
+        <p>
+          MCP endpoint 位於 <code>/mcp</code>，支援
+          <code>initialize</code>、<code>ping</code>、<code>tools/list</code> 與
+          <code>tools/call</code>。 它只提供 <code>search_content</code> 與 <code
+            >read_content</code
+          > 兩個唯讀工具，不支援登入、購買、寫入、刪除或代表使用者操作。
+        </p>
+        <p>
+          支援 WebMCP 的瀏覽器可以直接使用頁面上的同一組搜尋與讀取 tools。
+          不支援 WebMCP 的 client 仍可使用 Markdown、JSON API 或 MCP HTTP
+          endpoint。
+        </p>
+      </section>
+
+      <section aria-labelledby="limits">
+        <h2 id="limits">範圍與限制</h2>
+        <p>
+          數位引擎是公開內容 archive，不是 SaaS product 或交易平台。 本站沒有
+          API key 發放、sandbox、帳號管理、付款、訂單、留言或寫入 API。
+          文章中的歷史介面、政策、產品功能與外部連結可能已改變；涉及目前狀態的問題應再查閱相關服務的最新一手來源。
+        </p>
+        <p>
+          如需討論 SEO、AI、內容策略、自動化或網站體驗，可以前往
+          <a href={withBase('/contact.html')}>聯絡頁</a>。
+        </p>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .simple-page {
+    width: min(100% - 2rem, 64rem);
+  }
+
+  .simple-page__body {
+    width: min(100%, 50rem);
+    margin-inline: auto;
+  }
+</style>
