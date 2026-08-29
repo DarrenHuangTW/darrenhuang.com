@@ -22,7 +22,7 @@ Repository custom domain、網站流量 DNS、redirect rules 與正式流量切�
 | Phase 4  | 媒體 dependency graph、embeds 與 Stories                                   | 完成。                               |
 | Phase 5  | [URL、SEO、build artifact、連結與 E2E](./phase-5-acceptance.md)            | 完成。                               |
 | Phase 6  | [Pages 預覽與 custom-domain 準備](./phase-6-pages-preview.md)              | 預覽與網域驗證完成；流量切換待授權。 |
-| Agent    | [Agent Readiness 優化與 Cloudflare handoff](./agent-readiness.md)          | Repo 完成；edge 設定待授權。         |
+| Agent    | [Agent Readiness 優化與 Cloudflare handoff](./agent-readiness.md)          | Repo 與 edge deploy 完成。           |
 | Security | [Repository security 與 verifier 修正稽核](./repository-security-audit.md) | 本輪修正與限制均有證據記錄。         |
 | 產生檔   | [Phase 5 importer 摘要](../migration/reports/phase-5-importer-summary.md)  | 每次 importer 執行時更新。           |
 

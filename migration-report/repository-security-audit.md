@@ -138,7 +138,7 @@ Unsigned commits 沒有被改寫。
 
 本輪開始前的 read-only baseline 是：secret scanning 開啟、push protection 開啟、Dependabot security updates 關閉、vulnerability alerts endpoint 不可用、CodeQL analysis 尚未建立、main 沒有 branch protection、Actions 允許 all 且未要求 SHA pinning。
 
-本輪新增的 security policy files 與 workflow 目前只存在工作樹，尚未因本輪工作而發布到 GitHub。
+本輪新增的 security policy files 與 workflow 已包含在 `a033c9c`，並已推送至 `origin/main`。
 
 2026-08-29 透過 `gh api -X PUT repos/DarrenHuangTW/darrenhuang.com/vulnerability-alerts` 啟用 vulnerability alerts，response 為 `204 No Content`。
 
@@ -152,19 +152,23 @@ Actions remote policy 仍是 `allowed_actions=all`、`sha_pinning_required=false
 
 main branch protection endpoint 仍為 `404 Not Found`，本輪沒有修改。
 
-CodeQL workflow 已加入工作樹，但尚未因本輪工作發布或產生 remote analysis run。
+CodeQL workflow 已隨 `a033c9c` 發布，push run `33240692404` 已成功完成。
 
 ## Cloudflare remote settings audit
 
 本輪檢查了 `cloudflare/agent-readiness/wrangler.jsonc`、最新 Wrangler schema 與最新 Workers runtime types。
 
-本輪只修改 Worker source 與 local test，沒有執行 Wrangler deploy，也沒有修改 Cloudflare route、WAF、rate-limit、secrets、bindings 或 zone settings。
+本輪修改了 Worker source 與 local test，並執行 Wrangler deploy；沒有修改 Cloudflare route、WAF、rate-limit、secrets、bindings 或 zone settings。
+
+Worker deployment 使用 version ID `06a78f46-b12e-4803-a038-7b152a636906`，並套用既有 `www.darrenhuang.com/*` route。
 
 本輪使用本地 Wrangler `4.123.0`，最新查證的 Workers types package 為 `5.20260829.1`。
 
 Worker verification 已記錄 types check、dry-run build 與 Worker tests。
 
-公開 production smoke verification 只發出 GET 請求，不登入或修改 Cloudflare、registrar、DNS、GitHub 或郵件服務。
+`npm run verify:production` 只發出 GET 請求，不登入或修改 Cloudflare、registrar、DNS、GitHub 或郵件服務。
+
+另外以 live read-only POST 驗證 oversized MCP body 回傳 `413`，沒有觸發內容或設定修改。
 
 ## Verification record
 
@@ -187,6 +191,9 @@ Worker verification 已記錄 types check、dry-run build 與 Worker tests。
 - `npm run test:e2e`：通過，26 desktop/mobile Chromium tests。
 - `npm run audit:agent-readiness -- https://www.darrenhuang.com all`：完成，Level 4/5，已通過的 published capabilities 與刻意不支援的 DNS-AID、OAuth/Auth.md、A2A findings 均如實輸出。
 - `npm audit --audit-level=high`：通過，0 vulnerabilities。
+- GitHub Pages run `33240692397`：成功，build、兩組 artifact build、E2E、hidden-file checks、upload 與 deploy job 均成功。
+- GitHub CodeQL run `33240692404`：成功。
+- Live Worker smoke：server card `200`、content API `200`、Markdown negotiation `200 text/markdown`、oversized MCP request `413`。
 
 先前的 targeted regression checks 也通過：`npm test -- tests/unit/verify-migration.test.ts tests/unit/verify-production.test.ts` 為 14 tests，`npm run test:worker -- cloudflare/agent-readiness/src/index.test.ts` 為 16 tests。
 
@@ -198,7 +205,7 @@ Worker verification 已記錄 types check、dry-run build 與 Worker tests。
 
 最終 versioned/untracked set 只包含本輪 source、test、workflow、policy、verifier、migration report 與原先使用者刻意保留的 transfer verifier 變更。
 
-本輪沒有 commit、push、Pages deploy 或 Worker deploy。
+本輪已建立 commit `a033c9c` 並 fast-forward push 至 `origin/main`，且完成 Pages 與 Worker deployment。
 
 ## Reproducibility references
 
