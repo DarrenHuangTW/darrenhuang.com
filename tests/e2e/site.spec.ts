@@ -331,8 +331,9 @@ test.describe('Phase 5 public-site acceptance', () => {
   test('published Facebook notes cross-reference the existing article archive', async ({
     page,
   }) => {
-    const directoryResponse = await page.goto(runtimePath('/notes.html'));
+    const directoryResponse = await page.goto(runtimePath('/notes/'));
     expect(directoryResponse?.ok()).toBe(true);
+    await expect(page).toHaveURL(/\/notes\.html$/);
     expect(await page.locator('.note-card').count()).toBeGreaterThanOrEqual(24);
     await expect(
       page

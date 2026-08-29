@@ -184,6 +184,12 @@ function findOutput(
   );
 }
 
+function isPublishedNoteHtml(relative: string): boolean {
+  return (
+    relative !== 'notes/index.html' && /^notes\/[^/]+\.html$/u.test(relative)
+  );
+}
+
 function servedPathForArtifact(relative: string): string {
   if (relative === 'index.html') {
     return '/';
@@ -737,8 +743,8 @@ async function verifyRss(
     'dist/rss.xml 不是有效的 RSS channel。',
   );
   const itemCount = (source.match(/<item\b/gi) ?? []).length;
-  const publishedNoteCount = [...artifactPaths].filter((relative) =>
-    /^notes\/[^/]+\.html$/u.test(relative),
+  const publishedNoteCount = [...artifactPaths].filter(
+    isPublishedNoteHtml,
   ).length;
   const expectedItemCount = 86 + publishedNoteCount;
   check(
@@ -781,7 +787,7 @@ async function verifyRss(
   }
 
   for (const relative of artifactPaths) {
-    if (!/^notes\/[^/]+\.html$/u.test(relative)) {
+    if (!isPublishedNoteHtml(relative)) {
       continue;
     }
 
@@ -968,9 +974,7 @@ async function verifyAgentResources(
     );
   }
 
-  const noteHtmlPaths = [...artifactPaths].filter((relative) =>
-    /^notes\/[^/]+\.html$/u.test(relative),
-  );
+  const noteHtmlPaths = [...artifactPaths].filter(isPublishedNoteHtml);
   for (const relative of noteHtmlPaths) {
     const htmlSource = await readFile(
       path.join(distRoot, ...relative.split('/')),
