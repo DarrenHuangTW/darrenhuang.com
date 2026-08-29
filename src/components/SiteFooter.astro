@@ -2,6 +2,28 @@
 import { withBase } from '@/lib/urls';
 
 const year = new Date().getUTCFullYear();
+const agentLinks = [
+  {
+    href: '/developers.html',
+    label: '開發者與 Agent 入口',
+    description: '快速了解 API、MCP、WebMCP 與版本政策。',
+  },
+  {
+    href: '/llms.txt',
+    label: 'llms.txt',
+    description: '網站定位、內容索引與 agent 使用說明。',
+  },
+  {
+    href: '/openapi.json',
+    label: 'OpenAPI 3.1',
+    description: '公開文章與保存筆記的唯讀 JSON API。',
+  },
+  {
+    href: '/.well-known/mcp/server-card.json',
+    label: 'MCP Server Card',
+    description: '公開 MCP endpoint 與兩個 read-only tools。',
+  },
+] as const;
 ---
 
 <footer class="site-footer">
@@ -10,10 +32,80 @@ const year = new Date().getUTCFullYear();
     <nav aria-label="頁尾導覽">
       <a href={withBase('/rss.xml')}>RSS</a>
       <a href={withBase('/sitemap-index.xml')}>Sitemap</a>
-      <a href={withBase('/developers.html')}>開發者</a>
-      <a href={withBase('/openapi.json')}>API</a>
       <a href={withBase('/contact.html')}>聯絡</a>
       <a href={withBase('/privacy.html')}>隱私</a>
     </nav>
   </div>
+  <nav
+    class="shell site-footer__agent-nav"
+    aria-labelledby="site-footer-agent-title"
+  >
+    <h2 id="site-footer-agent-title">給開發者與 Agent 的公開入口</h2>
+    <p>
+      如果你要研究數位引擎的公開內容，可以直接使用下列文件與唯讀介面，不需要登入、API
+      key 或瀏覽器 JavaScript。
+    </p>
+    <ul class="site-footer__agent-links">
+      {
+        agentLinks.map((link) => (
+          <li>
+            <a href={withBase(link.href)}>{link.label}</a>
+            <span>{link.description}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 </footer>
+
+<style>
+  .site-footer__agent-nav {
+    display: block;
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .site-footer__agent-nav h2 {
+    margin: 0;
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+  }
+
+  .site-footer__agent-nav > p {
+    max-width: 48rem;
+    margin: 0.45rem 0 1rem;
+  }
+
+  .site-footer__agent-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__agent-links li {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .site-footer__agent-links a {
+    color: var(--color-link);
+    font-family: var(--font-sans);
+    font-weight: 750;
+  }
+
+  .site-footer__agent-links span {
+    color: var(--color-muted);
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 40rem) {
+    .site-footer__agent-links {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
