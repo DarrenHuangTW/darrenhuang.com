@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-meta-description-google-rewrites.html
 aliases: []
 title: Meta Description 被改寫：搜尋結果摘要不一定照單全收
 publishedAt: '2018-01-18'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 保存一則早期觀察：Google 可能從頁面其他內容拼湊搜尋結果摘要，並說明 meta description 應該和頁面實際內容一起規劃。
 categories:
   - SEO相關
@@ -27,9 +27,13 @@ source:
   recordId: fb-7992a4dfd8986a28
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 474
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/pfbid02iay3TGC9mvBK6kcnWz6arAgoyMDx5A3T1gSTBmr5YAW5gSxmcovGN9BK2dkgLw93l'
 sourceLinks: []
 ---
+
+<img src="../images/facebook-notes/facebook-meta-description-google-rewrites/193011768103440.png" alt="Meta Description 改寫的 Facebook 貼文附圖 1" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-meta-description-google-rewrites/193011864770097.png" alt="Meta Description 改寫的 Facebook 貼文附圖 2" loading="lazy" decoding="async">
 
 這則早期貼文記錄一個搜尋結果摘要的觀察案例。
 

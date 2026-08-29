@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-url-trailing-slash-duplicate-content.html
 aliases: []
 title: 網址結尾斜線與重複內容：真正要統一的是整個 URL 訊號
 publishedAt: '2021-05-07'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 整理網址結尾斜線、HTTP/HTTPS、www 與非 www 版本的差異，並說明 canonical、轉址、內部連結與 sitemap 應該共同指向同一版本。
 categories:
   - SEO相關
@@ -29,7 +29,7 @@ source:
   recordId: fb-fa10321a8cc743cf
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 313
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/996989324372343'
 sourceLinks:
   - 'https://domain.com'
   - 'http://domain.com'
@@ -37,6 +37,8 @@ sourceLinks:
   - 'https://www.seroundtable.com/google-trailing-slashes-url-24943.html'
   - 'https://ahrefs.com/blog/trailing-slash/'
 ---
+
+<img src="../images/facebook-notes/facebook-url-trailing-slash-duplicate-content/996989324372343.png" alt="網址結尾斜線與重複內容的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 網址是否帶有結尾斜線，會依 URL 所在層級與伺服器設定產生不同結果。
 

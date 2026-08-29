@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-ecommerce-product-listing-seo.html
 aliases: []
 title: 電商產品列表頁：在 SEO 與使用者需求之間取平衡
 publishedAt: '2022-10-21'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 摘要一篇電商分類頁優化文章的重點，說明 PLP 不應為了 SEO 堆疊無關文字，而要用內容、導覽與測試一起服務購買決策。
 categories:
   - SEO相關
@@ -28,10 +28,12 @@ source:
   recordId: fb-885e9468eac61e6b
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 164
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/1344959259575346'
 sourceLinks:
   - 'https://ahrefs.com/blog/seo-ecommerce-category-pages/'
 ---
+
+<img src="../images/facebook-notes/facebook-ecommerce-product-listing-seo/1344959259575346.png" alt="電商產品列表頁的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 這則貼文推薦一篇關於電商產品列表頁，也就是 PLP 或分類頁的優化文章。
 

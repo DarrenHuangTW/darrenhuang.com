@@ -333,7 +333,7 @@ test.describe('Phase 5 public-site acceptance', () => {
   }) => {
     const directoryResponse = await page.goto(runtimePath('/notes.html'));
     expect(directoryResponse?.ok()).toBe(true);
-    expect(await page.locator('.note-card').count()).toBeGreaterThanOrEqual(23);
+    expect(await page.locator('.note-card').count()).toBeGreaterThanOrEqual(24);
     await expect(
       page
         .getByRole('link', { name: /用 ChatGPT 產生 SEO Bookmarklet/ })
@@ -352,6 +352,39 @@ test.describe('Phase 5 public-site acceptance', () => {
         '.content-relations a[href*="seo-efficient-tool-bookmarklets.html"]',
       ),
     ).toBeVisible();
+
+    const aiSourceUrl =
+      'https://www.facebook.com/searchenginecommunity/posts/pfbid02bxf3N5HEqpyajkuvKhcrP6EK95R7YuVHjEtn3tkBfQxNGkVZ12GetcHHHjUULqK2l';
+    const aiNoteResponse = await page.goto(
+      runtimePath('/notes/facebook-ai-anxiety-and-learning.html'),
+    );
+    expect(aiNoteResponse?.ok()).toBe(true);
+    await expect(
+      page.locator(`.note-source-card a[href="${aiSourceUrl}"]`),
+    ).toContainText(aiSourceUrl);
+    await expect(
+      page.locator('.prose img[src*="982399827335432.jpg"]'),
+    ).toHaveCount(1);
+    await expect(page.locator('.prose')).not.toContainText('網站草稿');
+
+    const videoSourceUrl =
+      'https://www.facebook.com/searchenginecommunity/videos/2212506532371678/';
+    const videoNoteResponse = await page.goto(
+      runtimePath('/notes/facebook-john-mueller-taiwan-greeting.html'),
+    );
+    expect(videoNoteResponse?.ok()).toBe(true);
+    await expect(
+      page.getByRole('heading', {
+        level: 1,
+        name: 'John Mueller 向台灣打聲招呼',
+      }),
+    ).toBeVisible();
+    await expect(
+      page.locator(`.note-source-card a[href="${videoSourceUrl}"]`),
+    ).toContainText(videoSourceUrl);
+    await expect(
+      page.locator('video source[src*="2212506532371678.mp4"]'),
+    ).toHaveCount(1);
 
     const articleResponse = await page.goto(
       runtimePath('/seo-efficient-tool-bookmarklets.html'),

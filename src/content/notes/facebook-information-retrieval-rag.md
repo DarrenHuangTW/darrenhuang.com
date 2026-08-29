@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-information-retrieval-rag.html
 aliases: []
 title: 從搜尋引擎到 RAG：重新理解資訊檢索
 publishedAt: '2025-04-23'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 從早期研究搜尋引擎的挫折，到用 RAG 重新接觸文件拆分、查詢改寫與重排序，這是一則把 AI 學習連回資訊檢索的個人記錄。
 categories:
   - AI
@@ -30,11 +30,13 @@ source:
   recordId: fb-4c70775b7a8bbadf
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 34
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/1000594365515978'
 sourceLinks:
   - 'https://docs.google.com/document/d/e/2PACX-1vREAufCaAVZ9eu7HOpZxd9ZzFDv7prq4lPL4YP_P6JG_45R2XtzKpNhVA24sHSusIO50RN0ifoDAkOh/pub'
   - 'https://x.com/JeffDean/status/1914803487751184434'
 ---
+
+<img src="../images/facebook-notes/facebook-information-retrieval-rag/1000594365515978.jpg" alt="資訊檢索與 RAG 的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 這則貼文記錄我重新接觸資訊檢索的過程。
 

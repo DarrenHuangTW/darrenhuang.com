@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-http-request-lifecycle.html
 aliases: []
 title: 輸入網址後發生什麼事：從 Request 到 Status Code
 publishedAt: '2018-03-29'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 用一個簡化的網頁請求流程，理解 Request Headers、Response Headers 與 2XX、3XX、4XX、5XX 狀態碼如何描述資源的結果。
 categories:
   - 網站技術
@@ -28,11 +28,19 @@ source:
   recordId: fb-b61ef59028d08873
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 469
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/pfbid0wGAsQ5cCpw7svnw91cwM2vM8DkTqkCcSM5smm9mHAJHtfeT4UXb2WWLJ2nvNrDQol'
 sourceLinks:
   - 'http://www.example.com/hello-world'
   - 'https://httpstatusdogs.com/'
 ---
+
+<img src="../images/facebook-notes/facebook-http-request-lifecycle/225793264825290.jpg" alt="HTTP Request Lifecycle 的 Facebook 貼文附圖 1" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-http-request-lifecycle/225793274825289.jpg" alt="HTTP Request Lifecycle 的 Facebook 貼文附圖 2" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-http-request-lifecycle/225793261491957.jpg" alt="HTTP Request Lifecycle 的 Facebook 貼文附圖 3" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-http-request-lifecycle/225793304825286.jpg" alt="HTTP Request Lifecycle 的 Facebook 貼文附圖 4" loading="lazy" decoding="async">
 
 在瀏覽器輸入網址並按下 Enter 之後，瀏覽器會向伺服器送出請求，伺服器再回傳描述資源狀態的回應。
 

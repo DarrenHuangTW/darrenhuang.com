@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-conversion-funnel-analytics.html
 aliases: []
 title: 用 Conversion Funnel 找到使用者在哪一步離開
 publishedAt: '2018-07-18'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 一則從購物流程出發的分析筆記，說明如何把轉換流程拆成步驟，再用流失位置找出最值得優化的頁面。
 categories:
   - 分析
@@ -24,9 +24,11 @@ source:
   recordId: fb-f68dde9001ce6118
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 477
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/195974181140532'
 sourceLinks: []
 ---
+
+<img src="../images/facebook-notes/facebook-conversion-funnel-analytics/195974181140532.png" alt="Conversion Funnel 的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 如果網站的 Goal 需要經過多個步驟才能完成，就值得觀察使用者在哪一個步驟離開。
 

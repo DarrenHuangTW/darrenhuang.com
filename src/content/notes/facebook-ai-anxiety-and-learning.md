@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-ai-anxiety-and-learning.html
 aliases: []
 title: AI 焦慮之後：從擔心被取代到開始理解工具
 publishedAt: '2025-03-31'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 一則比較偏個人的記錄，談 AI 帶來的不安、朋友分享工具的影響，以及真正開始動手理解之後心態如何改變。
 categories:
   - 工作心得
@@ -27,9 +27,11 @@ source:
   recordId: fb-ae735efd24b62f3c
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 35
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/pfbid02bxf3N5HEqpyajkuvKhcrP6EK95R7YuVHjEtn3tkBfQxNGkVZ12GetcHHHjUULqK2l'
 sourceLinks: []
 ---
+
+<img src="../images/facebook-notes/facebook-ai-anxiety-and-learning/982399827335432.jpg" alt="AI 焦慮與學習的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 幾年前 AI 爆發時，我相當焦慮。
 
@@ -52,7 +54,3 @@ sourceLinks: []
 差別是，現在心裡比較踏實，至少會先理解一件事情大概怎麼做，再去判斷它的價值。
 
 這個過程也讓我更了解人類目前的價值所在。
-
-原始貼文最後提到一位朋友的 AI 與自動化課程推薦。
-
-這份網站草稿先保留「透過朋友與持續交流進入學習狀態」的脈絡，不把外部課程當成本網站的正式推薦。

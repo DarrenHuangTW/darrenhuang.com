@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-ai-product-description-style-transfer.html
 aliases: []
 title: 用 Style Transfer、Few-Shot 與 LoRA 做產品描述
 publishedAt: '2025-03-26'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 一則記錄電商產品描述實驗的社群貼文，從提示詞、範例學習到 LoRA 微調，整理出不同方法的成本與控制力。
 categories:
   - AI
@@ -29,7 +29,7 @@ source:
   recordId: fb-47bfbc2562f9ba16
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 36
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/pfbid03b1Ti4fLervSLbAusz7JrTVQHchywTS74EZzRuzBftrh9veEwpRY2ZwbYaoZmcwml'
 sourceLinks:
   - 'https://colab.research.google.com/drive/1uabc4lmQHPvWjkWOh4c_VQLg1j3ig161?usp=sharing'
   - 'https://www.everlane.com/products/womens-everywhere-pant-stretch-linen-cedarwood'
@@ -37,6 +37,14 @@ sourceLinks:
   - 'https://www.everlane.com/products/womens-relaxed-linen-shirt-cornstalk-chambray'
   - 'https://www.everlane.com/products/womens-gardener-jean-diamond-stone'
 ---
+
+<img src="../images/facebook-notes/facebook-ai-product-description-style-transfer/978545244387557.jpg" alt="產品描述實驗的 Facebook 貼文附圖 1" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-ai-product-description-style-transfer/978545164387565.jpg" alt="產品描述實驗的 Facebook 貼文附圖 2" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-ai-product-description-style-transfer/978545184387563.jpg" alt="產品描述實驗的 Facebook 貼文附圖 3" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-ai-product-description-style-transfer/978550381053710.jpg" alt="產品描述實驗的 Facebook 貼文附圖 4" loading="lazy" decoding="async">
 
 這則貼文記錄一個電商產品描述的實驗。
 

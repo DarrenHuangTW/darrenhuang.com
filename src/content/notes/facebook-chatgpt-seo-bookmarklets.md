@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-chatgpt-seo-bookmarklets.html
 aliases: []
 title: 用 ChatGPT 產生 SEO Bookmarklet 的早期嘗試
 publishedAt: '2023-04-30'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 一則記錄 ChatGPT 開始普及後，如何用自然語言產生瀏覽器書籤工具的社群貼文，並連回網站既有的 Bookmarklet 文章。
 categories:
   - SEO相關
@@ -25,12 +25,14 @@ source:
   recordId: fb-54113acaddb236bf
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 109
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/563031205938965'
 sourceLinks:
   - 'https://www.darrenhuang.com/seo-efficient-tool-bookmarklets.html'
   - 'https://seonotebook.notion.site/SEO-Bookmarklets-Brought-to-you-by-ChatGPT-22de9256a65d40609d93c68c58d857dd'
   - 'https://github.com/circleghost/SEO-bookmark'
 ---
+
+<img src="../images/facebook-notes/facebook-chatgpt-seo-bookmarklets/563031205938965.jpg" alt="ChatGPT SEO Bookmarklet 的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 這則貼文記錄 ChatGPT 開始普及後，一種很直覺的工作方式：把需求交給模型，請它產生可以放進瀏覽器書籤的 JavaScript。
 

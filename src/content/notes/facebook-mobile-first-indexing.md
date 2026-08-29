@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-mobile-first-indexing.html
 aliases: []
 title: 行動版內容優先索引：Dynamic Serving 別忘了 Vary
 publishedAt: '2020-03-09'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: >-
   保存一則工作案例，說明 Dynamic Serving 依 User-Agent 回傳不同 HTML 時，為什麼 HTTP 的 Vary: User-Agent 可能成為重要的快取訊號。
 categories:
@@ -30,9 +30,11 @@ source:
   recordId: fb-d72c3cfddce8015a
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 386
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/682384215832857'
 sourceLinks: []
 ---
+
+<img src="../images/facebook-notes/facebook-mobile-first-indexing/682384215832857.png" alt="行動版內容優先索引的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 這則貼文保存一個與行動版內容優先索引有關的工作案例。
 

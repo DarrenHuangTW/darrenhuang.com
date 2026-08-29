@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-cwv-faq.html
 aliases: []
 title: Core Web Vitals 官方問答：分數、資料與排名的歷史筆記
 publishedAt: '2021-04-08'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 保存 2021 年 Core Web Vitals 上線前整理的官方問答，聚焦 LCP、FID、CLS 的資料計算方式與排名影響邊界。
 categories:
   - 網站技術
@@ -29,10 +29,12 @@ source:
   recordId: fb-81054c780503e73e
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 321
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/979065359498073'
 sourceLinks:
   - 'https://support.google.com/webmasters/thread/104436075'
 ---
+
+<img src="../images/facebook-notes/facebook-cwv-faq/979065359498073.png" alt="Core Web Vitals 官方問答的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 這則貼文整理 2021 年 Core Web Vitals 正式成為搜尋相關討論焦點前，Google 官方問答中的幾個重點。
 

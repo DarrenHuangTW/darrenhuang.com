@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-search-console-crawl-stats.html
 aliases: []
 title: Search Console 檢索統計：Google 最近在爬什麼頁面？
 publishedAt: '2021-01-21'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 整理 Search Console 檢索統計資料中的發現與重新整理概念，將爬蟲行為連回 sitemap、重複網址與網站被植入頁面的排查。
 categories:
   - SEO相關
@@ -29,10 +29,18 @@ source:
   recordId: fb-e4309d05d67f9676
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 341
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/pfbid0yhGdyvj2HNq1CEUXZVTpwbi95gPAvD4fxGsXZGXpbWW3UTchTShbtTdG9cCaEQagl'
 sourceLinks:
   - 'https://support.google.com/webmasters/answer/9679690'
 ---
+
+<img src="../images/facebook-notes/facebook-search-console-crawl-stats/932157614188848.png" alt="Search Console 檢索統計的 Facebook 貼文附圖 1" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-search-console-crawl-stats/932157657522177.png" alt="Search Console 檢索統計的 Facebook 貼文附圖 2" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-search-console-crawl-stats/932157710855505.png" alt="Search Console 檢索統計的 Facebook 貼文附圖 3" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-search-console-crawl-stats/932157850855491.png" alt="Search Console 檢索統計的 Facebook 貼文附圖 4" loading="lazy" decoding="async">
 
 這則貼文介紹 Search Console 的檢索統計資料，並特別注意爬蟲是在重新整理舊頁面，還是在發現新的頁面。
 

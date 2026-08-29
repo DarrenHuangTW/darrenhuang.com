@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-technical-seo-15-common-problems.html
 aliases: []
 title: 15 個常見的 SEO 技術問題：把檢查清單變成優先順序
 publishedAt: '2023-09-01'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 整理一份 2023 年的技術 SEO 問題清單，並把轉址、圖片替代文字、速度、標題、內部連結與索引等問題放回實際優化順序中。
 categories:
   - SEO相關
@@ -30,9 +30,11 @@ source:
   recordId: fb-851318a6a22a3ccd
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 75
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/627941536114598'
 sourceLinks: []
 ---
+
+<img src="../images/facebook-notes/facebook-technical-seo-15-common-problems/627941536114598.jpg" alt="15 個常見 SEO 技術問題的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 這則貼文整理一份 2023 年的常見技術 SEO 問題清單。
 

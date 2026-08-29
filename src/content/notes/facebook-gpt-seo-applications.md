@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-gpt-seo-applications.html
 aliases: []
 title: GPT 開始進入 SEO 工作：一份早期應用清單
 publishedAt: '2023-01-19'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 整理 ChatGPT 普及初期的 SEO 使用案例，從提示詞、技術 SEO、內容分析到跨語言閱讀，保留當時工具生態剛開始變化的觀察。
 categories:
   - AI
@@ -30,7 +30,7 @@ source:
   recordId: fb-ecb795a979961c6d
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 138
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/1409733066431298'
 sourceLinks:
   - 'https://www.aleydasolis.com/en/search-engine-optimization/chatgpt-for-seo/'
   - 'https://matttutt.me/best-examples-of-using-chatgpt-to-help-with-seo/'
@@ -41,6 +41,8 @@ sourceLinks:
   - 'https://ipullrank.com/ai-content-not-seo-threat'
   - 'https://github.com/immersive-translate/immersive-translate'
 ---
+
+<img src="../images/facebook-notes/facebook-gpt-seo-applications/1409733066431298.png" alt="GPT 在 SEO 應用的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 這則貼文整理 ChatGPT 普及初期，SEO 工作者開始嘗試的幾種工作方式。
 

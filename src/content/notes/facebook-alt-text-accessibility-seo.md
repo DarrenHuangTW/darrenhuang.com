@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-alt-text-accessibility-seo.html
 aliases: []
 title: Alt Text 不只是圖片 SEO：先為使用者描述圖片
 publishedAt: '2018-08-16'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 重新整理圖片替代文字的正確用途，說明 alt text 同時服務可及性、內容理解與圖片搜尋，而不是把關鍵字塞進每一張圖片。
 categories:
   - SEO相關
@@ -27,11 +27,15 @@ source:
   recordId: fb-45369f1f5eb342da
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 443
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/pfbid0D7W7KMsBGrbL5GcdxdesASuLARxXyefNvCef65aL4RyT5bbzi4JBZbEnjrdLWoVRl'
 sourceLinks:
   - 'https://www.w3.org/WAI/tutorials/images/'
   - 'https://webaim.org/techniques/alttext/'
 ---
+
+<img src="../images/facebook-notes/facebook-alt-text-accessibility-seo/319884422082840.png" alt="圖片 alt attribute 的 Facebook 貼文附圖 1" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-alt-text-accessibility-seo/319884432082839.png" alt="圖片 alt attribute 的 Facebook 貼文附圖 2" loading="lazy" decoding="async">
 
 圖片的 alt attribute 首先是為了在圖片無法顯示時提供替代資訊，也讓使用 Screen Reader 的使用者理解圖片內容。
 

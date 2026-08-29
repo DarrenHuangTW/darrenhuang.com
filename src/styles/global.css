@@ -587,9 +587,22 @@ main {
 }
 
 .note-source-card a {
-  flex: 0 0 auto;
+  display: flex;
+  max-width: min(100%, 42rem);
+  flex: 0 1 42rem;
+  flex-direction: column;
+  align-items: flex-end;
+  overflow-wrap: anywhere;
   font-weight: 750;
+  text-align: right;
   text-decoration: none;
+}
+
+.note-source-card__url {
+  color: var(--color-muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.45;
 }
 
 .note-links {
@@ -1488,6 +1501,11 @@ img[data-lightbox-eligible='true'] {
   .note-source-card {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .note-source-card a {
+    align-items: flex-start;
+    text-align: left;
   }
 
   .post-card {

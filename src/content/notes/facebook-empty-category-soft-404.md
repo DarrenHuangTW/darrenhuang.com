@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-empty-category-soft-404.html
 aliases: []
 title: 空白分類頁：noindex、soft 404 與頁面變更訊號
 publishedAt: '2021-04-26'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 從電商空白分類頁的討論出發，整理 noindex 與 soft 404 的差異，以及內容、內部連結和商品變化如何成為重新檢查的訊號。
 categories:
   - SEO相關
@@ -29,12 +29,14 @@ source:
   recordId: fb-0d43966073df0b59
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 316
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/990437555027520'
 sourceLinks:
   - 'https://www.seroundtable.com/google-soft-404s-or-noindex-empty-pages-31263.html'
   - 'https://developers.google.com/search/docs/advanced/crawling/block-indexing?hl=zh-tw'
   - 'https://www.seo-tea.com/soft-404/'
 ---
+
+<img src="../images/facebook-notes/facebook-empty-category-soft-404/990437555027520.png" alt="空白分類頁的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 電商網站有時會產生沒有商品或內容的空白分類頁。
 

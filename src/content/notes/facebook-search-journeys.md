@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-search-journeys.html
 aliases: []
 title: 從答案到旅程：Google 對搜尋體驗的三個想像
 publishedAt: '2018-09-24'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 保存 Google 20 週年時對搜尋未來的三個觀察：從單一答案走向搜尋旅程、從查詢走向主動探索，以及從文字走向更視覺化的資訊發現。
 categories:
   - 搜尋
@@ -29,13 +29,25 @@ source:
   recordId: fb-f3bfefba38136a4e
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 436
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/pfbid022CxRD3uGtRQ84k9NFUa2nEttc5Wn4gD1WfeU9HnEKC9fm34aQY6nAwErttmwGbivl'
 sourceLinks:
   - 'http://bit.ly/2Q0XsA8'
   - 'http://bit.ly/2N1Icks'
   - 'http://bit.ly/2OQinFS'
   - 'http://bit.ly/2DqMTFd'
 ---
+
+<img src="../images/facebook-notes/facebook-search-journeys/342912769780005.png" alt="Google 搜尋旅程的 Facebook 貼文附圖 1" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-search-journeys/342912843113331.png" alt="Google 搜尋旅程的 Facebook 貼文附圖 2" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-search-journeys/342912796446669.png" alt="Google 搜尋旅程的 Facebook 貼文附圖 3" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-search-journeys/342912779780004.png" alt="Google 搜尋旅程的 Facebook 貼文附圖 4" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-search-journeys/342912816446667.jpg" alt="Google 搜尋旅程的 Facebook 貼文附圖 5" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-search-journeys/342912806446668.jpg" alt="Google 搜尋旅程的 Facebook 貼文附圖 6" loading="lazy" decoding="async">
 
 這則貼文整理 Google 20 週年時談到的搜尋未來。
 

@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-https-not-just-checkout.html
 aliases: []
 title: HTTPS 不只是登入與結帳時才需要
 publishedAt: '2018-07-10'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 2018 年的一則基礎觀念分享，從加密、資料完整性與伺服器驗證三個角度說明為什麼整個網站都應該使用 HTTPS。
 categories:
   - SEO相關
@@ -25,9 +25,11 @@ source:
   recordId: fb-1f48afcd39700518
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 487
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/282607862477163'
 sourceLinks: []
 ---
+
+<img src="../images/facebook-notes/facebook-https-not-just-checkout/282607862477163.png" alt="HTTPS 的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 網站並不是只有在要求使用者輸入密碼或結帳時才需要 HTTPS。
 

@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-fid-to-inp.html
 aliases: []
 title: 從 FID 到 INP：互動回應速度指標的歷史轉換
 publishedAt: '2023-05-14'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 保存 2023 年記錄 Core Web Vitals 指標轉換的說明，從使用者互動到下一個畫面繪製，理解 INP 想測量的體驗問題。
 categories:
   - 網站技術
@@ -28,10 +28,14 @@ source:
   recordId: fb-8f02f922617f4df1
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 105
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/pfbid034P6LsuioipVHRvUn8ESDCStsYsefGcvJ3oYVDqbB7jAYxVq3Bi773KV5LLfSsx22l'
 sourceLinks:
   - 'https://www.seroundtable.com/inp-fid-core-web-vitals-google-35358.html'
 ---
+
+<img src="../images/facebook-notes/facebook-fid-to-inp/570819481826804.jpg" alt="FID 到 INP 的 Facebook 貼文附圖 1" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-fid-to-inp/570819958493423.jpg" alt="FID 到 INP 的 Facebook 貼文附圖 2" loading="lazy" decoding="async">
 
 這則 2023 年的貼文記錄 Core Web Vitals 從 FID 轉向 INP 的背景。
 

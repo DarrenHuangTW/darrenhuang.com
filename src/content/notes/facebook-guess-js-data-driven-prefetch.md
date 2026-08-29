@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-guess-js-data-driven-prefetch.html
 aliases: []
 title: Guess.js：用資料預測下一頁，再決定是否預取
 publishedAt: '2019-07-13'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 一則把 prefetch、使用者行為資料與機器學習放在一起討論的歷史筆記，重點是預取應該建立在機率與成本的平衡上。
 categories:
   - 網站技術
@@ -27,13 +27,19 @@ source:
   recordId: fb-1a877a3cef5446a4
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 409
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/pfbid045x29mfcfqKmWSShS2kZWT279V2SCDSF4aioNdasPnB8rvpFFf1VewPfFfeCrsAMl'
 sourceLinks:
   - 'https://www.youtube.com/watch?time_continue=2093&v=Mv-l3-tJgGk'
   - 'https://blog.mgechev.com/2018/05/09/introducing-guess-js-data-driven-user-experiences-web/'
   - 'https://github.com/guess-js'
   - 'https://guess-gatsby-wikipedia.firebaseapp.com/'
 ---
+
+<img src="../images/facebook-notes/facebook-guess-js-data-driven-prefetch/499531467451467.png" alt="Guess.js 的 Facebook 貼文附圖 1" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-guess-js-data-driven-prefetch/499531474118133.png" alt="Guess.js 的 Facebook 貼文附圖 2" loading="lazy" decoding="async">
+
+<img src="../images/facebook-notes/facebook-guess-js-data-driven-prefetch/499531480784799.png" alt="Guess.js 的 Facebook 貼文附圖 3" loading="lazy" decoding="async">
 
 如果把所有可能的下一頁都 prefetch，理論上可以讓點擊後的體驗更快，但也會大量消耗使用者的網路流量。
 

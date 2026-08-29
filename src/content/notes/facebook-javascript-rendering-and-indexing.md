@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-javascript-rendering-and-indexing.html
 aliases: []
 title: JavaScript 產生的內容，搜尋引擎真的看得到嗎？
 publishedAt: '2022-04-10'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 保存一份以 Search Console 網址檢查工具確認 JavaScript 內容是否被渲染的實務筆記，並連回搜尋引擎抓取與索引的基礎文章。
 categories:
   - 網站技術
@@ -29,13 +29,15 @@ source:
   recordId: fb-f902d0797d159796
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 218
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/1211889536215653'
 sourceLinks:
   - 'https://www.facebook.com/searchenginecommunity/videos/399775824108328/'
   - 'https://www.onely.com/blog/ultimate-guide-javascript-seo/'
   - 'https://ahrefs.com/blog/javascript-seo/'
   - 'https://www.seo-tea.com/javascript-seo/'
 ---
+
+<img src="../images/facebook-notes/facebook-javascript-rendering-and-indexing/1211889536215653.jpg" alt="JavaScript SEO 的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 JavaScript SEO 的問題不是「網站能不能使用 JavaScript」，而是重要內容能不能被搜尋引擎順利取得、渲染與理解。
 

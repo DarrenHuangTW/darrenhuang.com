@@ -4,7 +4,7 @@ canonicalPath: /notes/facebook-bad-cloaking-experiment.html
 aliases: []
 title: Bad Cloaking 實驗：搜尋引擎看到的內容和使用者一樣嗎？
 publishedAt: '2023-07-28'
-updatedAt: '2026-08-24'
+updatedAt: '2026-08-29'
 excerpt: 保存一則關於 cloaking 的 SEO 實驗摘要，重點不在模仿黑帽手法，而在理解實驗變因、流量變化與不能過度解讀的因果關係。
 categories:
   - SEO相關
@@ -27,9 +27,11 @@ source:
   recordId: fb-a8b192176692082a
   sourceFile: posts/profile_posts_1.json
   sourceIndex: 85
-  url: null
+  url: 'https://www.facebook.com/searchenginecommunity/posts/pfbid02XqVCTU3uYr5iTYo4LQULNTtaNBd2KTPzTvC6uoLAewDAya25GWoRAcotdyDBfTjbl'
 sourceLinks: []
 ---
+
+<img src="../images/facebook-notes/facebook-bad-cloaking-experiment/611295784445840.jpg" alt="Bad Cloaking 實驗的 Facebook 貼文附圖" loading="lazy" decoding="async">
 
 Cloaking 指的是讓搜尋引擎與一般使用者看到不同內容，常見於試圖操弄排名的黑帽 SEO 做法。
 
