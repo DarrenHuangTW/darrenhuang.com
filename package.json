@@ -34,7 +34,7 @@
     "verify:production": "tsx scripts/verify/production.ts"
   },
   "dependencies": {
-    "@astrojs/mdx": "^7.0.5",
+    "@astrojs/mdx": "^7.0.8",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "@wordpress/block-serialization-default-parser": "^5.52.0",
