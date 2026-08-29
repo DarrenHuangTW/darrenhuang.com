@@ -116,11 +116,15 @@ CodeQL workflow 同樣使用 immutable SHA，並以 JavaScript/TypeScript analys
 
 這個 endpoint 是 public read-only、靜態資料為主，可靠的 abuse control 應由 Cloudflare WAF、rate limiting 或其他平台 policy 管理，而不是由單一 Worker instance 的全域 mutable state 模擬。
 
-本輪沒有修改 Cloudflare route、WAF、rate-limit、DNS、zone、robots 設定或部署 Worker。
+本輪沒有修改 Cloudflare route、WAF、rate-limit、DNS、zone 或 robots 設定。
+
+本輪有部署已修正的 Worker source，但沒有變更上述 Cloudflare remote settings。
 
 Worker 的 route 仍是 `www.darrenhuang.com/*`，但 handler 只對明確 agent resource、API、MCP、Markdown negotiation 與 page response 做對應處理，其餘 request 轉交 origin。
 
-本輪沒有修改 GitHub branch protection，因為目前部署流程仍依賴 main push，強制 PR gate、required checks、admin enforcement 與 signed commit policy 需要 repository owner 依日常維運方式另行決策。
+本輪沒有修改 GitHub branch protection，因為使用者要求保留直接 push 到 main 的能力。
+
+Required checks、admin enforcement 與 signed commit policy 仍未啟用。
 
 本輪沒有改寫 commit、移除遠端 branch、prune Git objects 或清理 `.tmp`、Facebook export、`node_modules`、`dist`、`.astro`、`.wrangler`、`test-results` 等資料。
 
@@ -148,7 +152,11 @@ Unsigned commits 沒有被改寫。
 
 啟用後讀回 automated security fixes 顯示 `enabled=true` 且 `paused=false`。
 
-Actions remote policy 仍是 `allowed_actions=all`、`sha_pinning_required=false`，本輪沒有修改。
+本輪透過 GitHub Actions permissions API 將 `sha_pinning_required` 設為 `true`，保留 `enabled=true` 與 `allowed_actions=all`，response 為 `204 No Content`。
+
+設定後讀回 remote policy 為 `enabled=true`、`allowed_actions=all`、`sha_pinning_required=true`。
+
+設定前已逐行檢查 workflow 的 11 個 `uses:` references，全部是 full-length commit SHA。
 
 main branch protection endpoint 仍為 `404 Not Found`，本輪沒有修改。
 
@@ -169,6 +177,16 @@ Worker verification 已記錄 types check、dry-run build 與 Worker tests。
 `npm run verify:production` 只發出 GET 請求，不登入或修改 Cloudflare、registrar、DNS、GitHub 或郵件服務。
 
 另外以 live read-only POST 驗證 oversized MCP body 回傳 `413`，沒有觸發內容或設定修改。
+
+2026-08-29 以 Cloudflare DoH 與 Google DoH 進行公開 DNS read-only cross-check。
+
+兩個 resolver 對 apex 的 Cloudflare nameservers、MX、CAA 與 TXT 結果一致，且都沒有回傳 DS record。
+
+兩個 resolver 對 `www` 的 A record 結果一致。
+
+同日以 Verisign RDAP 查詢 `darrenhuang.com`，公開結果顯示 nameservers 仍為 Cloudflare nameservers，並顯示 `client transfer prohibited` status。
+
+這些 DNS 與 RDAP 觀察只能確認當時的公開解析與 registry response，不能單獨證明 registrar transfer 已完成、DNSSEC delegation 已啟用或郵件 continuity 已驗證。
 
 ## Verification record
 
