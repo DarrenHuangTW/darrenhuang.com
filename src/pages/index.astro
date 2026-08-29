@@ -58,40 +58,6 @@ const organizationSchema = {
     </aside>
   </section>
 
-  <section class="section section--surface" aria-labelledby="agent-interfaces">
-    <div class="shell agent-interfaces">
-      <div class="section__header">
-        <div>
-          <h2 id="agent-interfaces">給開發者與 Agent 的公開入口</h2>
-          <p>
-            如果你要研究數位引擎的公開內容，可以直接使用下列文件與唯讀介面，不需要登入、API
-            key 或瀏覽器 JavaScript。
-          </p>
-        </div>
-      </div>
-      <ul class="agent-interfaces__list">
-        <li>
-          <a href={withBase('/developers.html')}>開發者與 Agent 入口</a>
-          <span>快速了解 API、MCP、WebMCP 與版本政策。</span>
-        </li>
-        <li>
-          <a href={withBase('/llms.txt')}>llms.txt</a>
-          <span>網站定位、內容索引與 agent 使用說明。</span>
-        </li>
-        <li>
-          <a href={withBase('/openapi.json')}>OpenAPI 3.1</a>
-          <span>公開文章與保存筆記的唯讀 JSON API。</span>
-        </li>
-        <li>
-          <a href={withBase('/.well-known/mcp/server-card.json')}
-            >MCP Server Card</a
-          >
-          <span>公開 MCP endpoint 與兩個 read-only tools。</span>
-        </li>
-      </ul>
-    </div>
-  </section>
-
   <section class="section section--surface">
     <div class="shell">
       <div class="section__header">
@@ -150,38 +116,3 @@ const organizationSchema = {
     )
   }
 </BaseLayout>
-
-<style>
-  .agent-interfaces__list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem 2rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .agent-interfaces__list li {
-    display: grid;
-    gap: 0.25rem;
-    padding-block: 0.85rem;
-    border-top: 1px solid var(--color-line);
-  }
-
-  .agent-interfaces__list a {
-    color: var(--color-link);
-    font-family: var(--font-sans);
-    font-weight: 750;
-  }
-
-  .agent-interfaces__list span {
-    color: var(--color-muted);
-    font-size: 0.92rem;
-  }
-
-  @media (max-width: 40rem) {
-    .agent-interfaces__list {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

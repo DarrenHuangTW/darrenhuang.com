@@ -284,7 +284,7 @@ test.describe('Phase 5 public-site acceptance', () => {
     }
   });
 
-  test('desktop and mobile homepages expose the migrated collection', async ({
+  test('desktop and mobile homepages expose the collection and keep agent links in the footer', async ({
     page,
   }, testInfo) => {
     const response = await page.goto(runtimePath('/'));
@@ -296,6 +296,19 @@ test.describe('Phase 5 public-site acceptance', () => {
     await expect(page.locator('.hero__panel strong')).toHaveText(
       '一些實作，一些觀察。',
     );
+    await expect(page.locator('main')).not.toContainText(
+      '給開發者與 Agent 的公開入口',
+    );
+    const footer = page.locator('footer');
+    await expect(
+      footer.getByRole('heading', {
+        level: 2,
+        name: '給開發者與 Agent 的公開入口',
+      }),
+    ).toBeVisible();
+    await expect(
+      footer.getByRole('link', { name: '開發者與 Agent 入口' }),
+    ).toBeVisible();
     await expect(
       page.getByRole('heading', { level: 2, name: '文章紀錄' }),
     ).toBeVisible();
@@ -1117,12 +1130,18 @@ test.describe('Phase 5 public-site acceptance', () => {
     const homepageResponse = await page.goto(runtimePath('/'));
     expect(homepageResponse?.ok()).toBe(true);
     await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
+    const homepageFooter = page.locator('footer');
     await expect(
-      page.locator('a[href$="/developers.html"]').first(),
+      homepageFooter.locator('a[href$="/developers.html"]'),
     ).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: '給開發者與 Agent 的公開入口' }),
+      homepageFooter.getByRole('heading', {
+        name: '給開發者與 Agent 的公開入口',
+      }),
     ).toBeVisible();
+    await expect(page.locator('main')).not.toContainText(
+      '給開發者與 Agent 的公開入口',
+    );
     const homepageSchemaSource = await page
       .locator('head script[type="application/ld+json"]')
       .textContent();
