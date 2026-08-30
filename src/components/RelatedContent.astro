@@ -1,14 +1,19 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { formatDate } from '@/lib/content';
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
+import type { ArticlePost } from '@/lib/article-experience';
+import { formatLocalizedDate } from '@/lib/i18n';
 import { withBase } from '@/lib/urls';
 
 interface Props {
+  locale?: Locale;
   notes?: CollectionEntry<'notes'>[];
-  posts?: CollectionEntry<'posts'>[];
+  posts?: ArticlePost[];
 }
 
-const { notes = [], posts = [] } = Astro.props;
+const { locale = DEFAULT_LOCALE, notes = [], posts = [] } = Astro.props;
+const t = getMessages(locale);
 const hasRelatedContent = notes.length > 0 || posts.length > 0;
 ---
 
@@ -20,16 +25,18 @@ const hasRelatedContent = notes.length > 0 || posts.length > 0;
     >
       <header class="content-relations__header">
         <div>
-          <div class="eyebrow">Keep exploring</div>
-          <h2 id="content-relations-title">延伸閱讀</h2>
+          <div class="eyebrow">{t.relatedContent.eyebrow}</div>
+          <h2 id="content-relations-title">{t.relatedContent.title}</h2>
         </div>
       </header>
       <div class="content-relations__grid">
         {posts.map((post) => (
           <article class="content-relation-card">
-            <div class="content-relation-card__type">網站文章</div>
+            <div class="content-relation-card__type">
+              {t.relatedContent.postType}
+            </div>
             <time datetime={post.data.publishedAt.toISOString()}>
-              {formatDate(post.data.publishedAt)}
+              {formatLocalizedDate(post.data.publishedAt, locale)}
             </time>
             <h3>
               <a
@@ -44,9 +51,11 @@ const hasRelatedContent = notes.length > 0 || posts.length > 0;
         ))}
         {notes.map((note) => (
           <article class="content-relation-card content-relation-card--note">
-            <div class="content-relation-card__type">Facebook 保存筆記</div>
+            <div class="content-relation-card__type">
+              {t.relatedContent.noteType}
+            </div>
             <time datetime={note.data.publishedAt.toISOString()}>
-              {formatDate(note.data.publishedAt)}
+              {formatLocalizedDate(note.data.publishedAt, locale)}
             </time>
             <h3>
               <a

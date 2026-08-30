@@ -1,0 +1,51 @@
+---
+import PostCard from '@/components/PostCard.astro';
+import { getMessages } from '@/i18n/messages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { taxonomyAlternates } from '@/lib/i18n';
+import { getLocalizedPostsNewestFirst } from '@/lib/localized-content';
+import { slugifyTaxonomy } from '@/lib/urls';
+
+export async function getStaticPaths() {
+  const posts = await getLocalizedPostsNewestFirst('en');
+  const tags = new Map<string, typeof posts>();
+
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      const group = tags.get(tag) ?? [];
+      group.push(post);
+      tags.set(tag, group);
+    }
+  }
+
+  return [...tags.entries()].map(([tag, tagPosts]) => ({
+    params: { tag: slugifyTaxonomy(tag) },
+    props: { posts: tagPosts, tag },
+  }));
+}
+
+const locale = 'en';
+const t = getMessages(locale);
+const { posts, tag } = Astro.props;
+---
+
+<BaseLayout
+  title={t.taxonomy.tags.detailTitle(tag)}
+  description={t.taxonomy.tags.detailDescription(tag)}
+  canonicalPath={`/en/tags/${slugifyTaxonomy(tag)}.html`}
+  locale={locale}
+  alternates={taxonomyAlternates('tags', tag)}
+>
+  <section class="section shell">
+    <header class="section__header">
+      <div>
+        <div class="eyebrow">Topic</div>
+        <h1>{tag}</h1>
+        <p>{t.taxonomy.tags.detailCount(posts.length)}</p>
+      </div>
+    </header>
+    <div class="post-grid">
+      {posts.map((post) => <PostCard post={post} locale={locale} />)}
+    </div>
+  </section>
+</BaseLayout>

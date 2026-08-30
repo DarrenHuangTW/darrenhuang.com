@@ -1,11 +1,20 @@
 ---
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
 import { withBase } from '@/lib/urls';
 
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const t = getMessages(locale).webMcp;
 const contentIndexPath = withBase('/api/content.json');
-const apiBasePath = withBase('/api');
+const apiBasePath = withBase(locale === 'en' ? '/api/en' : '/api');
 const script = `(() => {
   const contentIndexPath = ${JSON.stringify(contentIndexPath)};
   const apiBasePath = ${JSON.stringify(apiBasePath)};
+  const pageLocale = ${JSON.stringify(locale)};
   let registeredContext;
 
   const readJson = async (path, signal) => {
@@ -38,8 +47,8 @@ const script = `(() => {
     const tools = [
       {
         name: 'search_content',
-        title: 'Search 數位引擎 content',
-        description: 'Search the public Traditional Chinese articles and notes on 數位引擎.',
+        title: ${JSON.stringify(t.searchTitle)},
+        description: ${JSON.stringify(t.searchDescription)},
         inputSchema: {
           type: 'object',
           properties: {
@@ -64,6 +73,7 @@ const script = `(() => {
           const items = Array.isArray(index?.items) ? index.items : [];
           const results = items
             .filter((item) => {
+              if (item.locale !== pageLocale) return false;
               const haystack = [item.title, item.description, item.slug, item.type]
                 .filter((value) => typeof value === 'string')
                 .join(' ')
@@ -76,8 +86,8 @@ const script = `(() => {
       },
       {
         name: 'read_content',
-        title: 'Read 數位引擎 content',
-        description: 'Read one public article or Facebook note with its canonical URL and Markdown content.',
+        title: ${JSON.stringify(t.readTitle)},
+        description: ${JSON.stringify(t.readDescription)},
         inputSchema: {
           type: 'object',
           properties: {

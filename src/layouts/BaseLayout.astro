@@ -2,6 +2,9 @@
 import SiteFooter from '@/components/SiteFooter.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import WebMcpTools from '@/components/WebMcpTools.astro';
+import { DEFAULT_LOCALE, LOCALE_METADATA, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
+import { interfaceAlternates, localizedPath } from '@/lib/i18n';
 import {
   googleTagManagerBootstrapScript,
   isProductionTrackingTarget,
@@ -14,27 +17,39 @@ interface Props {
   description?: string;
   canonicalPath?: string;
   image?: string | null;
+  imageAlt?: string;
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
   type?: 'article' | 'website';
   publishedAt?: Date;
   updatedAt?: Date;
   noindex?: boolean;
+  locale?: Locale;
+  alternates?: Partial<Record<Locale, string>>;
+  translationKey?: string;
 }
 
 const {
   title,
-  description = '數位行銷、SEO、內容策略與科技趨勢的長期觀察。',
+  description,
   canonicalPath = Astro.url.pathname,
   image,
+  imageAlt,
   structuredData,
   type = 'website',
   publishedAt,
   updatedAt,
   noindex = false,
+  locale = DEFAULT_LOCALE,
+  alternates = {},
+  translationKey,
 } = Astro.props;
 
-const siteName = '數位引擎';
-const pageTitle = title === siteName ? title : `${title}｜${siteName}`;
+const localeMetadata = LOCALE_METADATA[locale];
+const t = getMessages(locale);
+const siteName = localeMetadata.siteName;
+const brandedSiteName = `${siteName} ${localeMetadata.brandByline}`;
+const pageTitle = t.baseLayout.pageTitle(title, siteName);
+const localizedDescription = description ?? t.baseLayout.defaultDescription;
 const siteOrigin = Astro.site ?? Astro.url.origin;
 const canonicalUrl = new URL(withBase(canonicalPath), siteOrigin);
 const socialImagePath =
@@ -44,7 +59,8 @@ const socialImagePath =
 const imageUrl = socialImagePath
   ? new URL(withBase(socialImagePath), siteOrigin)
   : null;
-const llmsUrl = new URL(withBase('/llms.txt'), siteOrigin);
+const socialImageAlt = imageAlt?.trim() || t.baseLayout.defaultOgImageAlt;
+const llmsUrl = new URL(localizedPath('/llms.txt', locale), siteOrigin);
 const apiCatalogUrl = new URL(withBase('/.well-known/api-catalog'), siteOrigin);
 const mcpServerCardUrl = new URL(
   withBase('/.well-known/mcp/server-card.json'),
@@ -72,10 +88,31 @@ const trackingEnabled = isProductionTrackingTarget(
 const googleTagManagerBootstrap = trackingEnabled
   ? googleTagManagerBootstrapScript()
   : null;
+const inferredAlternates = interfaceAlternates(canonicalPath);
+const effectiveAlternates = {
+  ...inferredAlternates,
+  ...alternates,
+  [locale]: canonicalPath,
+};
+const alternateUrls = Object.entries(effectiveAlternates)
+  .filter((entry): entry is [Locale, string] => Boolean(entry[1]))
+  .map(([alternateLocale, pathname]) => ({
+    href: new URL(withBase(pathname), siteOrigin),
+    hreflang: LOCALE_METADATA[alternateLocale].htmlLang,
+    locale: alternateLocale,
+  }));
+const hasTranslationCluster = alternateUrls.length > 1;
+const xDefaultUrl = alternateUrls.find(
+  (alternate) => alternate.locale === 'en',
+)?.href;
 ---
 
 <!doctype html>
-<html lang="zh-Hant">
+<html
+  lang={localeMetadata.htmlLang}
+  data-page-locale={locale}
+  data-translation-key={translationKey}
+>
   <head>
     <meta charset="UTF-8" />
     {
@@ -99,10 +136,25 @@ const googleTagManagerBootstrap = trackingEnabled
       media="(prefers-color-scheme: dark)"
     />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
+    <meta name="description" content={localizedDescription} />
     <meta name="author" content="Darren Huang" />
     {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="canonical" href={canonicalUrl} />
+    {
+      hasTranslationCluster &&
+        alternateUrls.map((alternate) => (
+          <link
+            rel="alternate"
+            hreflang={alternate.hreflang}
+            href={alternate.href}
+          />
+        ))
+    }
+    {
+      hasTranslationCluster && xDefaultUrl && (
+        <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+      )
+    }
     <link rel="describedby" href={llmsUrl} type="text/plain" />
     <link
       rel="api-catalog"
@@ -117,29 +169,39 @@ const googleTagManagerBootstrap = trackingEnabled
           rel="alternate"
           href={markdownUrl}
           type="text/markdown"
-          title={`${pageTitle}（Markdown）`}
+          title={t.baseLayout.markdownAlternateTitle(pageTitle)}
         />
       )
     }
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <link
       rel="alternate"
-      href={withBase('/rss.xml')}
+      href={localizedPath('/rss.xml', locale)}
       type="application/rss+xml"
-      title="數位引擎 RSS"
+      title={t.baseLayout.rssTitle}
     />
     <link rel="manifest" href={withBase('/site.webmanifest')} />
-    <meta property="og:locale" content="zh_TW" />
-    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content={localeMetadata.ogLocale} />
+    {
+      alternateUrls
+        .filter((alternate) => alternate.locale !== locale)
+        .map((alternate) => (
+          <meta
+            property="og:locale:alternate"
+            content={LOCALE_METADATA[alternate.locale].ogLocale}
+          />
+        ))
+    }
+    <meta property="og:site_name" content={brandedSiteName} />
     <meta property="og:type" content={type} />
     <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={localizedDescription} />
     <meta property="og:url" content={canonicalUrl} />
     {
       imageUrl && (
         <>
           <meta property="og:image" content={imageUrl} />
-          <meta property="og:image:alt" content="Darren Huang｜數位引擎" />
+          <meta property="og:image:alt" content={socialImageAlt} />
         </>
       )
     }
@@ -148,7 +210,8 @@ const googleTagManagerBootstrap = trackingEnabled
       content={imageUrl ? 'summary_large_image' : 'summary'}
     />
     <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={localizedDescription} />
+    {imageUrl && <meta name="twitter:image:alt" content={socialImageAlt} />}
     {
       publishedAt && (
         <meta
@@ -177,12 +240,14 @@ const googleTagManagerBootstrap = trackingEnabled
     <title>{pageTitle}</title>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">跳到主要內容</a>
-    <SiteHeader />
+    <a class="skip-link" href="#main-content">
+      {t.baseLayout.skipToMain}
+    </a>
+    <SiteHeader locale={locale} alternates={effectiveAlternates} />
     <main id="main-content">
       <slot />
     </main>
-    <SiteFooter />
-    <WebMcpTools />
+    <SiteFooter locale={locale} />
+    <WebMcpTools locale={locale} />
   </body>
 </html>

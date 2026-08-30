@@ -1,0 +1,39 @@
+---
+import { getMessages } from '@/i18n/messages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { localizedPath } from '@/lib/i18n';
+import { withBase } from '@/lib/urls';
+
+const locale = 'en';
+const t = getMessages(locale).notFound;
+---
+
+<BaseLayout
+  title={t.title}
+  description={t.description}
+  canonicalPath="/en/404.html"
+  locale={locale}
+  noindex
+>
+  <section class="empty-state shell">
+    <div class="eyebrow">404</div>
+    <h1>{t.heading}</h1>
+    <p>{t.explanation}</p>
+    <nav aria-labelledby="not-found-next-steps">
+      <h2 id="not-found-next-steps">{t.nextSteps}</h2>
+      <ul>
+        <li><a href={localizedPath('/', locale)}>{t.home}</a></li>
+        <li>
+          <a href={localizedPath('/articles.html', locale)}>{t.allArticles}</a>
+        </li>
+        <li>
+          <a href={localizedPath('/llms.txt', locale)}>{t.agentIndex}</a>
+        </li>
+        <li><a href={withBase('/sitemap-index.xml')}>Sitemap</a></li>
+        <li>
+          <a href={localizedPath('/developers.html', locale)}>{t.developers}</a>
+        </li>
+      </ul>
+    </nav>
+  </section>
+</BaseLayout>

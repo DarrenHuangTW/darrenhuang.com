@@ -1,0 +1,107 @@
+---
+import SimplePage from '@/components/SimplePage.astro';
+import { getMessages } from '@/i18n/messages';
+import { localizedPath } from '@/lib/i18n';
+import { withBase } from '@/lib/urls';
+
+const locale = 'en';
+const t = getMessages(locale).developers;
+const developerSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: t.title,
+  description: t.description,
+  url: 'https://www.darrenhuang.com/en/developers.html',
+  inLanguage: 'en',
+};
+---
+
+<SimplePage
+  title={t.title}
+  visibleTitle={t.title}
+  description={t.description}
+  canonicalPath="/en/developers.html"
+  eyebrow="Developer & Agent Portal"
+  structuredData={developerSchema}
+  locale={locale}
+>
+  <section aria-labelledby="when-to-use">
+    <h2 id="when-to-use">{t.whenToUse.title}</h2>
+    <p>
+      {t.whenToUse.bodyBeforeLlms}{' '}
+      <a href={localizedPath('/llms.txt', locale)}>llms.txt</a>.{' '}
+      {t.whenToUse.bodyAfterLlms}
+    </p>
+  </section>
+
+  <section aria-labelledby="quickstart">
+    <h2 id="quickstart">{t.quickstart.title}</h2>
+    <ul>
+      <li>
+        <a href={withBase('/api/content.json')}
+          >{t.quickstart.contentIndexLabel}</a
+        >: {t.quickstart.contentIndex}
+      </li>
+      <li>
+        <a href={withBase('/openapi.json')}>OpenAPI 3.1</a>:
+        {t.quickstart.openApi}
+      </li>
+      <li>
+        <a href={withBase('/.well-known/api-catalog')}>API Catalog</a>:
+        {t.quickstart.apiCatalog}
+      </li>
+      <li>
+        <a href={withBase('/.well-known/mcp/server-card.json')}
+          >MCP Server Card</a
+        >: {t.quickstart.mcpCard}
+      </li>
+      <li>
+        <a
+          href={withBase(
+            '/.well-known/agent-skills/research-digital-engine/SKILL.md',
+          )}>Agent Skill</a
+        >: {t.quickstart.agentSkill}
+      </li>
+      <li>
+        <a href={withBase('/auth.md')}>Auth.md</a>: {t.quickstart.auth}
+      </li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="rest-api">
+    <h2 id="rest-api">{t.restApi.title}</h2>
+    <p>{t.restApi.current}</p>
+    <p>{t.restApi.policy}</p>
+    <pre><code>{`GET /api/content.json
+Accept: application/json
+X-API-Version: 1`}</code></pre>
+  </section>
+
+  <section aria-labelledby="errors">
+    <h2 id="errors">{t.errors.title}</h2>
+    <p>{t.errors.body}</p>
+    <pre><code>{`{
+  "error": {
+    "code": "not_found",
+    "message": "The requested public content item was not found.",
+    "hint": "Use /api/content.json to discover valid content."
+  }
+}`}</code></pre>
+  </section>
+
+  <section aria-labelledby="mcp">
+    <h2 id="mcp">{t.mcp.title}</h2>
+    <p>{t.mcp.endpoint}</p>
+    <p>{t.mcp.browser}</p>
+  </section>
+
+  <section aria-labelledby="limits">
+    <h2 id="limits">{t.limits.title}</h2>
+    <p>{t.limits.body}</p>
+    <p>
+      {t.limits.contactBeforeLink}{' '}
+      <a href={localizedPath('/contact.html', locale)}>contact page</a>
+      {t.limits.contactAfterLink}
+    </p>
+  </section>
+</SimplePage>

@@ -1,5 +1,7 @@
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 
+export { slugifyTaxonomy } from './taxonomy';
+
 export function withBase(path: string): string {
   if (/^(?:[a-z]+:|#)/i.test(path)) {
     return path;
@@ -26,15 +28,4 @@ export function markdownPathForCanonical(path: string): string {
   }
 
   return `${pathname}.md${suffix}`;
-}
-
-export function slugifyTaxonomy(value: string): string {
-  return value
-    .normalize('NFKC')
-    .trim()
-    .toLocaleLowerCase('zh-Hant')
-    .replace(/[\s_]+/g, '-')
-    .replace(/[^\p{Letter}\p{Number}-]+/gu, '')
-    .replace(/-{2,}/g, '-')
-    .replace(/^-|-$/g, '');
 }

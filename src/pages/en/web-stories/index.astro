@@ -1,0 +1,37 @@
+---
+import { getMessages } from '@/i18n/messages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/urls';
+
+const locale = 'en';
+const t = getMessages(locale).webStories.index;
+---
+
+<BaseLayout
+  title={t.title}
+  description={t.description}
+  canonicalPath="/en/web-stories.html"
+  locale={locale}
+>
+  <section class="section shell">
+    <header class="section__header">
+      <div>
+        <div class="eyebrow">{t.eyebrow}</div>
+        <h1>{t.title}</h1>
+        <p>{t.intro}</p>
+      </div>
+    </header>
+
+    <div class="empty-state">
+      <p>{t.translationPending}</p>
+      <a
+        class="text-link"
+        href={withBase('/web-stories.html')}
+        hreflang="zh-Hant"
+        lang="zh-Hant"
+      >
+        {t.browseChinese} →
+      </a>
+    </div>
+  </section>
+</BaseLayout>

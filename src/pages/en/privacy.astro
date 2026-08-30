@@ -1,0 +1,58 @@
+---
+import SimplePage from '@/components/SimplePage.astro';
+import { getMessages } from '@/i18n/messages';
+import { formatLocalizedDate } from '@/lib/i18n';
+
+const locale = 'en';
+const t = getMessages(locale).privacy;
+const updatedAt = new Date('2026-08-28T00:00:00+08:00');
+const privacySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: t.title,
+  url: 'https://www.darrenhuang.com/en/privacy.html',
+  description: t.description,
+  inLanguage: 'en',
+  dateModified: updatedAt.toISOString(),
+};
+---
+
+<SimplePage
+  title={t.title}
+  visibleTitle={t.title}
+  description={t.description}
+  canonicalPath="/en/privacy.html"
+  eyebrow="Privacy"
+  structuredData={privacySchema}
+  locale={locale}
+>
+  <p>{t.lastUpdated(formatLocalizedDate(updatedAt, locale))}</p>
+
+  <section aria-labelledby="privacy-scope">
+    <h2 id="privacy-scope">{t.scope.title}</h2>
+    <p>{t.scope.siteData}</p>
+    <p>{t.scope.publicData}</p>
+  </section>
+
+  <section aria-labelledby="privacy-services">
+    <h2 id="privacy-services">{t.services.title}</h2>
+    <p>{t.services.hosting}</p>
+    <p>{t.services.analytics}</p>
+  </section>
+
+  <section aria-labelledby="privacy-third-party">
+    <h2 id="privacy-third-party">{t.thirdParty.title}</h2>
+    <p>{t.thirdParty.embeds}</p>
+    <p>{t.thirdParty.agents}</p>
+  </section>
+
+  <section aria-labelledby="privacy-requests">
+    <h2 id="privacy-requests">{t.requests.title}</h2>
+    <p>
+      {t.requests.bodyBeforeEmail}{' '}
+      <a href="mailto:darrenhhuang@gmail.com">darrenhhuang@gmail.com</a>{' '}
+      {t.requests.bodyAfterEmail}
+    </p>
+    <p>{t.requests.closing}</p>
+  </section>
+</SimplePage>

@@ -1060,6 +1060,10 @@ test.describe('Phase 5 public-site acceptance', () => {
       expect.objectContaining({
         '/api/content.json': expect.anything(),
         '/api/articles/{slug}.json': expect.anything(),
+        '/api/en/articles.json': expect.anything(),
+        '/api/en/articles/{slug}.json': expect.anything(),
+        '/api/en/notes.json': expect.anything(),
+        '/api/en/notes/{slug}.json': expect.anything(),
         '/mcp': expect.anything(),
       }),
     );
@@ -1123,7 +1127,7 @@ test.describe('Phase 5 public-site acceptance', () => {
     expect(ardCatalog).toMatchObject({
       specVersion: '1.0',
       host: {
-        displayName: '數位引擎',
+        displayName: 'Digital Engine by Darren Huang / 數位引擎',
         identifier: 'https://www.darrenhuang.com',
       },
     });
@@ -1209,6 +1213,134 @@ test.describe('Phase 5 public-site acceptance', () => {
     await expect(
       page.getByRole('heading', { level: 1, name: '公開內容，不需要會員' }),
     ).toBeVisible();
+  });
+
+  test('the English site exposes matching pages, SEO alternates, and agent resources', async ({
+    page,
+    request,
+  }) => {
+    const homepageResponse = await page.goto(runtimePath('/en/'));
+    expect(homepageResponse?.ok()).toBe(true);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(
+      page.getByRole('heading', {
+        level: 1,
+        name: 'Helping old ideas stay findable',
+      }),
+    ).toBeVisible();
+    await expect(page.locator('link[hreflang="zh-Hant"]')).toHaveAttribute(
+      'href',
+      new URL(runtimePath('/'), `${configuredSite}/`).toString(),
+    );
+    await expect(page.locator('link[hreflang="en"]')).toHaveAttribute(
+      'href',
+      new URL(runtimePath('/en/'), `${configuredSite}/`).toString(),
+    );
+    await expect(page.locator('link[hreflang="x-default"]')).toHaveAttribute(
+      'href',
+      new URL(runtimePath('/en/'), `${configuredSite}/`).toString(),
+    );
+
+    const archiveResponse = await page.goto(runtimePath('/en/articles.html'));
+    expect(archiveResponse?.ok()).toBe(true);
+    await expect(page.locator('main article')).toHaveCount(10);
+
+    const topicResponse = await page.goto(runtimePath('/en/tags/seo.html'));
+    expect(topicResponse?.ok()).toBe(true);
+    await expect(
+      page.getByRole('link', { name: 'Switch to 繁體中文' }),
+    ).toHaveAttribute('href', runtimePath('/tags/seo相關.html'));
+    await expect(page.locator('link[hreflang="zh-Hant"]')).toHaveAttribute(
+      'href',
+      new URL(
+        runtimePath('/tags/seo相關.html'),
+        `${configuredSite}/`,
+      ).toString(),
+    );
+    await expect(page.locator('link[hreflang="en"]')).toHaveAttribute(
+      'href',
+      new URL(
+        runtimePath('/en/tags/seo.html'),
+        `${configuredSite}/`,
+      ).toString(),
+    );
+
+    const articlePath = '/en/how-search-engines-crawl.html';
+    const articleResponse = await page.goto(runtimePath(articlePath));
+    expect(articleResponse?.ok()).toBe(true);
+    await expect(
+      page.getByRole('heading', {
+        level: 1,
+        name: 'How Search Engines Work: Crawling',
+      }),
+    ).toBeVisible();
+    await expect(page.locator('html')).toHaveAttribute(
+      'data-translation-key',
+      'post:how-search-engines-crawl',
+    );
+    await expect(
+      page.locator('meta[property="article:published_time"]'),
+    ).toHaveAttribute('content', '2020-05-27T00:00:00.000Z');
+    await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
+      'content',
+      'Diagram of the search engine process from crawling and rendering through indexing, algorithms, and ranking',
+    );
+    await expect(
+      page.locator('meta[name="twitter:image:alt"]'),
+    ).toHaveAttribute(
+      'content',
+      'Diagram of the search engine process from crawling and rendering through indexing, algorithms, and ranking',
+    );
+    await expect(page.locator('.article__historical-notice')).toContainText(
+      'Originally published in Chinese on May 27, 2020',
+    );
+    expect(
+      await page
+        .locator('main img:not([data-lightbox-image])')
+        .evaluateAll((images) =>
+          images.every((image) => Boolean(image.getAttribute('alt')?.trim())),
+        ),
+    ).toBe(true);
+    await expect(
+      page.getByRole('link', { name: 'Switch to 繁體中文' }),
+    ).toHaveAttribute('href', runtimePath('/how-search-engines-crawl.html'));
+
+    const englishApiResponse = await request.get(
+      runtimePath('/api/en/articles.json'),
+    );
+    expect(englishApiResponse.ok()).toBe(true);
+    const englishApi = (await englishApiResponse.json()) as {
+      count?: number;
+      items?: Array<{
+        language?: string;
+        locale?: string;
+        translationKey?: string;
+      }>;
+    };
+    expect(englishApi.count).toBe(10);
+    expect(englishApi.items).toHaveLength(10);
+    expect(
+      englishApi.items?.every(
+        (item) =>
+          item.locale === 'en' &&
+          item.language === 'en' &&
+          item.translationKey?.startsWith('post:'),
+      ),
+    ).toBe(true);
+
+    const englishRssResponse = await request.get(runtimePath('/en/rss.xml'));
+    expect(englishRssResponse.ok()).toBe(true);
+    const englishRss = await englishRssResponse.text();
+    expect(englishRss).toContain('<language>en-US</language>');
+    expect(englishRss).toContain(
+      new URL(runtimePath(articlePath), `${configuredSite}/`).toString(),
+    );
+
+    const englishLlmsResponse = await request.get(runtimePath('/en/llms.txt'));
+    expect(englishLlmsResponse.ok()).toBe(true);
+    expect(await englishLlmsResponse.text()).toContain(
+      '10 English article translations',
+    );
   });
 
   test('an unknown URL returns the custom 404 page', async ({ page }) => {

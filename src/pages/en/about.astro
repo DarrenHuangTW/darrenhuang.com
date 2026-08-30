@@ -1,0 +1,226 @@
+---
+import AboutPhotoSlider, {
+  type AboutPhoto,
+} from '@/components/AboutPhotoSlider.astro';
+import { getMessages } from '@/i18n/messages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/urls';
+
+const locale = 'en';
+const t = getMessages(locale).about;
+const canonicalPath = '/en/about.html';
+const photos: [AboutPhoto, ...AboutPhoto[]] = [
+  {
+    src: '/images/about/google-product-experts-summit-2018.webp',
+    alt: t.photos.summit.alt,
+    caption: t.photos.summit.caption,
+    width: 1440,
+    height: 1080,
+  },
+  {
+    src: '/images/about/danny-sullivan-product-experts-summit-2018.webp',
+    alt: t.photos.danny.alt,
+    caption: t.photos.danny.caption,
+    width: 1350,
+    height: 1800,
+  },
+  {
+    src: '/images/about/paul-haahr-product-experts-summit-2018.webp',
+    alt: t.photos.paul.alt,
+    caption: t.photos.paul.caption,
+    width: 1800,
+    height: 1350,
+  },
+  {
+    src: '/images/about/eric-enge-boston-2017.webp',
+    alt: t.photos.eric.alt,
+    caption: t.photos.eric.caption,
+    width: 1350,
+    height: 1800,
+  },
+  {
+    src: '/images/about/rand-fishkin-searchlove-boston-2016.webp',
+    alt: t.photos.rand.alt,
+    caption: t.photos.rand.caption,
+    width: 1800,
+    height: 1013,
+  },
+  {
+    src: '/images/about/john-mueller-2017.webp',
+    alt: t.photos.john.alt,
+    caption: t.photos.john.caption,
+    width: 1350,
+    height: 1800,
+  },
+  {
+    src: '/images/about/gary-illyes-boston-2017.webp',
+    alt: t.photos.gary2017.alt,
+    caption: t.photos.gary2017.caption,
+    width: 1350,
+    height: 1800,
+  },
+  {
+    src: '/images/about/gary-illyes-terence-cherry-2024.webp',
+    alt: t.photos.gary2024.alt,
+    caption: t.photos.gary2024.caption,
+    width: 1800,
+    height: 1350,
+  },
+];
+
+const siteOrigin = Astro.site ?? Astro.url.origin;
+const absoluteUrl = (pathname: string) =>
+  new URL(withBase(pathname), siteOrigin).toString();
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${absoluteUrl('/en/')}#person`,
+  mainEntityOfPage: absoluteUrl(canonicalPath),
+  name: 'Darren Huang',
+  alternateName: '黃泓勳',
+  url: absoluteUrl('/en/'),
+  image: absoluteUrl(photos[0].src),
+  email: 'darrenhhuang@gmail.com',
+  description: t.schema.personDescription,
+  nationality: {
+    '@type': 'Country',
+    name: 'Taiwan',
+  },
+  homeLocation: {
+    '@type': 'Place',
+    name: 'Kaohsiung, Taiwan',
+  },
+  sameAs: [
+    'https://www.linkedin.com/in/hunghsunhuang/',
+    'https://www.instagram.com/hunghsun_huang/',
+    'https://www.facebook.com/darrenhuangtw/',
+  ],
+  brand: [
+    {
+      '@type': 'Brand',
+      name: 'Asian Nomad Diary',
+      alternateName: 'asian_nomad_diary',
+      url: 'https://www.threads.com/@asian_nomad_diary',
+      description: t.schema.nomadDiaryDescription,
+    },
+    {
+      '@type': 'Brand',
+      name: 'Digital Engine',
+      alternateName: '數位引擎',
+      url: 'https://www.facebook.com/searchenginecommunity',
+      description: t.schema.digitalEngineDescription,
+    },
+  ],
+  knowsAbout: [
+    'Search Engine Optimization (SEO)',
+    'Artificial Intelligence (AI)',
+    'Automation',
+    'UI/UX',
+    'Remote Working',
+  ],
+  inLanguage: 'en',
+};
+const displayPersonSchema = Object.fromEntries(
+  Object.entries(personSchema).filter(
+    ([key]) => !['@id', 'mainEntityOfPage', 'image'].includes(key),
+  ),
+);
+const visibleSchema = `<script type="application/ld+json">\n${JSON.stringify(displayPersonSchema, null, 2)}\n</script>`;
+---
+
+<BaseLayout
+  title={t.title}
+  description={t.summary}
+  canonicalPath={canonicalPath}
+  image={photos[0].src}
+  structuredData={personSchema}
+  locale={locale}
+>
+  <article class="about-page page shell">
+    <header class="page__header about-page__header">
+      <div class="eyebrow">Darren Huang</div>
+      <h1>{t.title}</h1>
+      <p>{t.summary}</p>
+    </header>
+
+    <AboutPhotoSlider photos={photos} locale={locale} />
+
+    <div class="about-page__body prose">
+      <section aria-labelledby="about-darren">
+        <h2 id="about-darren">{t.introduction.title}</h2>
+        <p>{t.introduction.greeting}</p>
+        <p>
+          {t.introduction.residenceBeforeDiary}{' '}
+          <a
+            href="https://www.threads.com/@asian_nomad_diary"
+            target="_blank"
+            rel="noopener noreferrer">@asian_nomad_diary</a
+          >{t.introduction.residenceAfterDiary}
+        </p>
+        <p>{t.introduction.career}</p>
+      </section>
+
+      <section aria-labelledby="schema-introduction">
+        <h2 id="schema-introduction">{t.schemaIntroduction.title}</h2>
+        <p>{t.schemaIntroduction.body}</p>
+        <pre class="about-schema"><code>{visibleSchema}</code></pre>
+      </section>
+
+      <section aria-labelledby="coffee-chat">
+        <h2 id="coffee-chat">{t.coffeeChat.title}</h2>
+        <p>
+          {t.coffeeChat.bodyBeforeEmail}{' '}
+          <a href="mailto:darrenhhuang@gmail.com">darrenhhuang@gmail.com</a>.
+        </p>
+      </section>
+
+      <section aria-labelledby="digital-engine">
+        <h2 id="digital-engine">{t.digitalEngine.title}</h2>
+        <p>
+          <a
+            href="https://www.facebook.com/searchenginecommunity/"
+            target="_blank"
+            rel="noopener noreferrer">{t.digitalEngine.linkLabel}</a
+          >
+          {t.digitalEngine.bodyAfterLink}
+        </p>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about-page {
+    width: min(100% - 2rem, 64rem);
+  }
+
+  .about-page__header {
+    margin-bottom: 0;
+  }
+
+  .about-page__header p {
+    max-width: 48rem;
+    margin-bottom: 0;
+  }
+
+  .about-page__body {
+    width: min(100%, 50rem);
+    margin-inline: auto;
+  }
+
+  .about-page__body section + section {
+    margin-top: 3.5rem;
+    padding-top: 0.15rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .about-schema {
+    color: #eef8f5;
+    background: #13201e;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .about-schema code {
+    color: inherit;
+  }
+</style>

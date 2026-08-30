@@ -1,0 +1,51 @@
+---
+import SimplePage from '@/components/SimplePage.astro';
+import { getMessages } from '@/i18n/messages';
+
+const locale = 'en';
+const t = getMessages(locale).contact;
+const contactSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: t.schemaName,
+  url: 'https://www.darrenhuang.com/en/contact.html',
+  inLanguage: 'en',
+  mainEntity: {
+    '@type': 'Person',
+    name: 'Darren Huang',
+    email: 'darrenhhuang@gmail.com',
+    url: 'https://www.darrenhuang.com/en/about.html',
+  },
+};
+---
+
+<SimplePage
+  title={t.title}
+  visibleTitle={t.visibleTitle}
+  description={t.description}
+  canonicalPath="/en/contact.html"
+  eyebrow="Contact"
+  structuredData={contactSchema}
+  locale={locale}
+>
+  <section aria-labelledby="contact-purpose">
+    <h2 id="contact-purpose">{t.purpose.title}</h2>
+    <p>{t.purpose.body}</p>
+    <p>{t.purpose.archiveNotice}</p>
+  </section>
+
+  <section aria-labelledby="contact-method">
+    <h2 id="contact-method">{t.method.title}</h2>
+    <p>
+      {t.method.bodyBeforeEmail}{' '}
+      <a href="mailto:darrenhhuang@gmail.com">darrenhhuang@gmail.com</a>.
+      {t.method.bodyAfterEmail}
+    </p>
+    <p>{t.method.availability}</p>
+  </section>
+
+  <section aria-labelledby="contact-content">
+    <h2 id="contact-content">{t.content.title}</h2>
+    <p>{t.content.body}</p>
+  </section>
+</SimplePage>

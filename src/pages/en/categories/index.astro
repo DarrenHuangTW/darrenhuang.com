@@ -1,0 +1,56 @@
+---
+import { getMessages } from '@/i18n/messages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { localizedPath } from '@/lib/i18n';
+import { getLocalizedPostsNewestFirst } from '@/lib/localized-content';
+import { slugifyTaxonomy } from '@/lib/urls';
+
+const locale = 'en';
+const t = getMessages(locale);
+const posts = await getLocalizedPostsNewestFirst(locale);
+const counts = new Map<string, number>();
+
+for (const post of posts) {
+  for (const category of post.data.categories) {
+    counts.set(category, (counts.get(category) ?? 0) + 1);
+  }
+}
+
+const categories = [...counts.entries()].toSorted(
+  (left, right) =>
+    right[1] - left[1] || left[0].localeCompare(right[0], 'en-US'),
+);
+---
+
+<BaseLayout
+  title={t.taxonomy.categories.title}
+  description={t.taxonomy.categories.description}
+  canonicalPath="/en/categories.html"
+  locale={locale}
+>
+  <section class="section shell">
+    <header class="section__header">
+      <div>
+        <div class="eyebrow">{t.taxonomy.categories.eyebrow}</div>
+        <h1>{t.taxonomy.categories.title}</h1>
+        <p>{t.taxonomy.categories.intro}</p>
+      </div>
+    </header>
+    <ul class="taxonomy-list">
+      {
+        categories.map(([category, count]) => (
+          <li>
+            <a
+              href={localizedPath(
+                `/categories/${slugifyTaxonomy(category)}.html`,
+                locale,
+              )}
+            >
+              {category} · {count}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

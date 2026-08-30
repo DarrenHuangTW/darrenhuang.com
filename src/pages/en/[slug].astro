@@ -1,0 +1,51 @@
+---
+import { render } from 'astro:content';
+import type { EnglishPostRoute } from '@/lib/localized-content';
+import ArticleLayout from '@/layouts/ArticleLayout.astro';
+import {
+  getArticleJourney,
+  prepareArticleHtml,
+} from '@/lib/article-experience';
+import { localizeTranslatedHtml } from '@/lib/localize-html';
+import {
+  getEnglishCounterparts,
+  getEnglishPostRoutes,
+  getLocalizedPostsNewestFirst,
+} from '@/lib/localized-content';
+
+export async function getStaticPaths() {
+  return (await getEnglishPostRoutes()).map((route) => ({
+    params: { slug: route.post.data.slug },
+    props: route,
+  }));
+}
+
+const route = Astro.props as EnglishPostRoute;
+await render(route.translation);
+const sourceHtml = route.translation.rendered?.html;
+if (!sourceHtml) {
+  throw new Error(`Missing rendered English HTML for ${route.translation.id}`);
+}
+const localizedHtml = localizeTranslatedHtml(sourceHtml, {
+  counterparts: await getEnglishCounterparts(),
+  sourceCanonicalPath: route.source.data.canonicalPath,
+});
+const articleExperience = prepareArticleHtml(localizedHtml);
+const posts = await getLocalizedPostsNewestFirst('en');
+const articleJourney = getArticleJourney(route.post, posts);
+---
+
+<ArticleLayout
+  data={route.post.data}
+  headings={articleExperience.headings}
+  journey={articleJourney}
+  relatedNotes={[]}
+  readingMinutes={articleExperience.readingMinutes}
+  locale="en"
+  alternates={{
+    'zh-hant': route.source.data.canonicalPath,
+    en: route.post.data.canonicalPath,
+  }}
+>
+  <Fragment set:html={articleExperience.html} />
+</ArticleLayout>

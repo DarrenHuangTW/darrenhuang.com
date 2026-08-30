@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run verify:i18n && astro build",
     "postbuild": "tsx scripts/build/agent-content.ts && tsx scripts/build/optimize-images.ts",
     "preview": "astro preview",
     "check": "astro check",
@@ -29,7 +29,9 @@
     "worker:types:check": "wrangler types --check --config cloudflare/agent-readiness/wrangler.jsonc cloudflare/agent-readiness/worker-configuration.d.ts",
     "audit:agent-readiness": "tsx scripts/audit/agent-readiness.ts",
     "migrate": "tsx scripts/migrate-wordpress/index.ts",
-    "verify:dist": "tsx scripts/verify/dist.ts",
+    "verify:dist": "tsx scripts/verify/dist.ts && tsx scripts/verify/i18n-dist.ts",
+    "verify:i18n": "tsx scripts/verify/i18n.ts",
+    "verify:i18n:dist": "tsx scripts/verify/i18n-dist.ts",
     "verify:migration": "tsx scripts/verify/migration.ts",
     "verify:production": "tsx scripts/verify/production.ts"
   },

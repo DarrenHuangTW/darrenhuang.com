@@ -1,0 +1,85 @@
+---
+import PostCard from '@/components/PostCard.astro';
+import { getMessages } from '@/i18n/messages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getLocalizedPostsNewestFirst } from '@/lib/localized-content';
+import { withBase } from '@/lib/urls';
+
+const locale = 'en';
+const t = getMessages(locale);
+const posts = await getLocalizedPostsNewestFirst(locale);
+const recentPosts = posts.slice(0, 5);
+const siteUrl = new URL(withBase('/en/'), Astro.site ?? Astro.url.origin);
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}#organization`,
+  name: 'Digital Engine by Darren Huang',
+  alternateName: ['Digital Engine', '數位引擎'],
+  url: siteUrl.toString(),
+  logo: new URL(withBase('/favicon.svg'), siteUrl).toString(),
+  description: t.home.schemaDescription,
+  email: 'darrenhhuang@gmail.com',
+  founder: {
+    '@type': 'Person',
+    name: 'Darren Huang',
+  },
+  inLanguage: 'en',
+  sameAs: ['https://www.facebook.com/searchenginecommunity/'],
+};
+---
+
+<BaseLayout
+  title={t.home.title}
+  canonicalPath="/en/"
+  structuredData={organizationSchema}
+  locale={locale}
+>
+  <section class="hero shell">
+    <div>
+      <div class="hero__kicker">{t.home.hero.kicker}</div>
+      <h1>
+        {t.home.hero.headingBeforeEmphasis}<em>{t.home.hero.headingEmphasis}</em
+        >
+      </h1>
+      <p class="hero__lede">{t.home.hero.lede}</p>
+    </div>
+    <aside class="hero__panel">
+      <strong>{t.home.hero.panelTitle}</strong>
+      <p>{t.home.hero.panelBody}</p>
+    </aside>
+  </section>
+
+  <section class="section section--surface">
+    <div class="shell">
+      <div class="section__header">
+        <div>
+          <h2>{t.home.posts.title}</h2>
+          <p>{t.home.posts.description}</p>
+        </div>
+        {
+          posts.length > 0 && (
+            <a class="text-link" href={withBase('/en/articles.html')}>
+              {t.home.posts.viewAll(posts.length)} →
+            </a>
+          )
+        }
+      </div>
+
+      {
+        recentPosts.length > 0 ? (
+          <div class="post-grid">
+            {recentPosts.map((post) => (
+              <PostCard post={post} locale={locale} />
+            ))}
+          </div>
+        ) : (
+          <div class="empty-state">
+            <h2>{t.home.posts.emptyTitle}</h2>
+            <p>{t.home.posts.emptyBody}</p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,84 @@
+---
+import { LOCALE_METADATA, SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
+import { localizedPath } from '@/lib/i18n';
+
+export interface Props {
+  alternates?: Partial<Record<Locale, string>>;
+  locale: Locale;
+}
+
+const { alternates = {}, locale } = Astro.props;
+const t = getMessages(locale);
+const options = SUPPORTED_LOCALES.map((optionLocale) => ({
+  href: localizedPath(alternates[optionLocale] ?? '/', optionLocale),
+  locale: optionLocale,
+  metadata: LOCALE_METADATA[optionLocale],
+}));
+---
+
+<nav class="language-switcher" aria-label={t.languageSwitcher.ariaLabel}>
+  <ul>
+    {
+      options.map((option) => (
+        <li>
+          {option.locale === locale ? (
+            <span
+              aria-current="page"
+              lang={option.metadata.htmlLang}
+              title={option.metadata.label}
+            >
+              {option.metadata.label}
+            </span>
+          ) : (
+            <a
+              href={option.href}
+              hreflang={option.metadata.htmlLang}
+              lang={option.metadata.htmlLang}
+              aria-label={t.languageSwitcher.switchTo(option.metadata.label)}
+              data-astro-prefetch="hover"
+            >
+              {option.metadata.label}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .language-switcher ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    gap: 0.65rem;
+    list-style: none;
+  }
+
+  .language-switcher li + li::before {
+    margin-right: 0.65rem;
+    color: var(--color-line-strong, var(--color-muted));
+    content: '/';
+  }
+
+  .language-switcher a,
+  .language-switcher span {
+    color: var(--color-muted);
+    font-family: var(--font-sans);
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .language-switcher a:hover {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .language-switcher span[aria-current='page'] {
+    color: var(--color-ink);
+  }
+</style>

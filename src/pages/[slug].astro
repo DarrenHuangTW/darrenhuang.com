@@ -8,6 +8,7 @@ import {
   prepareArticleHtml,
 } from '@/lib/article-experience';
 import { getRelatedNotesForPost } from '@/lib/content-relations';
+import { getEnglishCounterparts } from '@/lib/localized-content';
 
 type RouteProps =
   | { kind: 'post'; entry: CollectionEntry<'posts'> }
@@ -62,6 +63,10 @@ const relatedNotes =
         ),
       )
     : [];
+const englishCounterpart =
+  route.kind === 'post'
+    ? (await getEnglishCounterparts()).get(route.entry.data.canonicalPath)
+    : undefined;
 ---
 
 {
@@ -72,6 +77,14 @@ const relatedNotes =
       journey={articleJourney!}
       relatedNotes={relatedNotes}
       readingMinutes={articleExperience?.readingMinutes ?? 1}
+      alternates={
+        englishCounterpart
+          ? {
+              'zh-hant': route.entry.data.canonicalPath,
+              en: englishCounterpart,
+            }
+          : undefined
+      }
     >
       <Fragment set:html={articleExperience?.html ?? ''} />
     </ArticleLayout>

@@ -1,0 +1,55 @@
+---
+import type { Locale } from '@/i18n/config';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+interface Props {
+  canonicalPath: string;
+  description: string;
+  eyebrow: string;
+  locale: Locale;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+  title: string;
+  visibleTitle: string;
+}
+
+const {
+  canonicalPath,
+  description,
+  eyebrow,
+  locale,
+  structuredData,
+  title,
+  visibleTitle,
+} = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  structuredData={structuredData}
+  locale={locale}
+>
+  <article class="simple-page page shell">
+    <header class="page__header">
+      <div class="eyebrow">{eyebrow}</div>
+      <h1>{visibleTitle}</h1>
+      <p>{description}</p>
+    </header>
+
+    <div class="prose simple-page__body">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .simple-page {
+    width: min(100% - 2rem, 64rem);
+  }
+
+  .simple-page__body {
+    width: min(100%, 50rem);
+    margin-inline: auto;
+  }
+</style>

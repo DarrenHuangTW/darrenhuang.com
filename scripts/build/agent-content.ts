@@ -9,26 +9,33 @@ import TurndownService from 'turndown';
 
 import { PRODUCTION_SITE_URL } from '../../site.config.js';
 
-interface AgentPage {
+export interface AgentPage {
   canonicalUrl: URL;
   contentKind: 'article' | 'note';
   description: string;
+  language: string;
+  locale: string;
   markdownUrl: URL;
   publishedAt?: string;
   relativeHtmlPath: string;
   title: string;
+  translationKey?: string;
   type: 'article' | 'website';
   updatedAt?: string;
 }
 
-interface AgentApiItem {
+export interface AgentApiItem {
+  apiUrl: string;
   canonicalUrl: string;
   description: string;
   kind: 'article' | 'note';
+  language: string;
+  locale: string;
   markdownUrl: string;
   publishedAt: string | null;
   slug: string;
   title: string;
+  translationKey: string | null;
   updatedAt: string | null;
 }
 
@@ -36,7 +43,8 @@ const root = process.cwd();
 const distRoot = path.join(root, 'dist');
 const configuredBase = normalizeBase(process.env.BASE_PATH ?? '/');
 const configuredSite = new URL(process.env.SITE_URL ?? PRODUCTION_SITE_URL);
-const expectedArticleCount = 86;
+const defaultLocale = 'zh-hant';
+const includeEnglishPreview = process.env.I18N_PREVIEW === '1';
 
 function normalizeBase(value: string): string {
   const normalized = `/${value.replace(/^\/+|\/+$/g, '')}`;
@@ -197,14 +205,16 @@ function markdownBody(html: string): string {
     .trim();
 }
 
-function markdownDocument(page: AgentPage, body: string): string {
+export function markdownDocument(page: AgentPage, body: string): string {
   const metadata = [
     '---',
     `title: ${yamlString(page.title)}`,
     `description: ${yamlString(page.description)}`,
     `canonical: ${yamlString(page.canonicalUrl.toString())}`,
     `markdown: ${yamlString(page.markdownUrl.toString())}`,
-    'language: zh-Hant',
+    `locale: ${yamlString(page.locale)}`,
+    `language: ${yamlString(page.language)}`,
+    `translationKey: ${page.translationKey ? yamlString(page.translationKey) : 'null'}`,
     `type: ${page.type}`,
   ];
 
@@ -218,12 +228,37 @@ function markdownDocument(page: AgentPage, body: string): string {
 
   metadata.push('---');
 
-  return `${metadata.join('\n')}\n\n> 此 Markdown 版本由正式 HTML 內容自動產生。\n> 引用時請使用 [canonical page](${page.canonicalUrl.toString()})。\n\n${body}\n`;
+  const notice =
+    page.locale === 'en'
+      ? `> This Markdown version is generated automatically from the HTML page.\n> When citing this content, use the [canonical page](${page.canonicalUrl.toString()}).`
+      : `> 此 Markdown 版本由正式 HTML 內容自動產生。\n> 引用時請使用 [canonical page](${page.canonicalUrl.toString()})。`;
+
+  return `${metadata.join('\n')}\n\n${notice}\n\n${body}\n`;
 }
 
-function pageForHtml(
+function localeRelativePath(page: AgentPage): string {
+  const canonicalPath = stripConfiguredBase(page.canonicalUrl.pathname);
+  if (page.locale === defaultLocale) {
+    return canonicalPath;
+  }
+
+  const localePrefix = `/${page.locale.toLowerCase()}`;
+  if (
+    canonicalPath !== localePrefix &&
+    !canonicalPath.startsWith(`${localePrefix}/`)
+  ) {
+    throw new Error(
+      `${page.relativeHtmlPath} locale ${page.locale} does not match canonical path ${canonicalPath}.`,
+    );
+  }
+
+  return canonicalPath.slice(localePrefix.length) || '/';
+}
+
+export function pageForHtml(
   relativeHtmlPath: string,
   source: string,
+  options: { includeNoindexEnglish?: boolean } = {},
 ): { body: string; page: AgentPage } | undefined {
   const $ = load(source);
   const main = $('main#main-content').first();
@@ -232,7 +267,22 @@ function pageForHtml(
   }
 
   const robots = $('meta[name="robots"]').attr('content')?.toLowerCase() ?? '';
-  if (robots.includes('noindex')) {
+  const html = $('html').first();
+  const language = normalizedText(html.attr('lang') ?? '');
+  const locale = normalizedText(html.attr('data-page-locale') ?? '');
+  const translationKey = normalizedText(
+    html.attr('data-translation-key') ?? '',
+  );
+  if (!language) {
+    throw new Error(`${relativeHtmlPath} is missing html[lang].`);
+  }
+  if (!locale) {
+    throw new Error(`${relativeHtmlPath} is missing html[data-page-locale].`);
+  }
+  if (
+    robots.includes('noindex') &&
+    !(options.includeNoindexEnglish === true && locale === 'en')
+  ) {
     return undefined;
   }
 
@@ -281,19 +331,27 @@ function pageForHtml(
     throw new Error(`${relativeHtmlPath} produced an empty Markdown body.`);
   }
 
+  const page: AgentPage = {
+    canonicalUrl,
+    contentKind: 'article',
+    description,
+    language,
+    locale,
+    markdownUrl,
+    publishedAt,
+    relativeHtmlPath,
+    title,
+    translationKey: translationKey || undefined,
+    type,
+    updatedAt,
+  };
+  page.contentKind = localeRelativePath(page).startsWith('/notes/')
+    ? 'note'
+    : 'article';
+
   return {
     body,
-    page: {
-      canonicalUrl,
-      contentKind: canonicalPath.startsWith('/notes/') ? 'note' : 'article',
-      description,
-      markdownUrl,
-      publishedAt,
-      relativeHtmlPath,
-      title,
-      type,
-      updatedAt,
-    },
+    page,
   };
 }
 
@@ -379,8 +437,69 @@ function llmsDocument(
   return lines.join('\n');
 }
 
+function englishLlmsDocument(
+  pages: AgentPage[],
+  articleCount: number,
+  noteCount: number,
+): string {
+  const articles = findPage(pages, '/en/articles.html');
+  const categories = findPage(pages, '/en/categories.html');
+  const tags = findPage(pages, '/en/tags.html');
+  const stories = findPage(pages, '/en/web-stories.html');
+  const notes = findPage(pages, '/en/notes.html');
+  const about = findPage(pages, '/en/about.html');
+  const contact = findPage(pages, '/en/contact.html');
+  const privacy = findPage(pages, '/en/privacy.html');
+  const developers = findPage(pages, '/en/developers.html');
+  const membership = findPage(pages, '/en/membership.html');
+
+  return [
+    '# Digital Engine by Darren Huang',
+    '',
+    '> Personal notes on SEO, AI, content strategy, web analytics, and technology.',
+    '',
+    `Digital Engine currently publishes ${articleCount} English article translations and ${noteCount} English saved Facebook notes.`,
+    'Publication and update dates come from the original Chinese content. Treat time-sensitive statements in their historical context and verify current claims with primary sources.',
+    '',
+    '## Content indexes',
+    '',
+    `- [English article index](${siteAssetUrl('/en/articles-llms.txt')}): Dates, summaries, and Markdown versions of every English article.`,
+    `- [English note index](${siteAssetUrl('/en/notes-llms.txt')}): Dates, summaries, and Markdown versions of ${noteCount} English saved Facebook notes.`,
+    `- [All articles](${articles.canonicalUrl}): The reader-facing English article archive.`,
+    `- [Saved Facebook notes](${notes.canonicalUrl}): The English notes interface; translations will be added in a later release.`,
+    `- [Categories](${categories.canonicalUrl}): Browse English articles by category.`,
+    `- [Topics](${tags.canonicalUrl}): Browse English articles by topic.`,
+    `- [Web Stories](${stories.canonicalUrl}): The English Web Stories interface; page-by-page translations will be added later.`,
+    '',
+    '## Site information',
+    '',
+    `- [About Darren](${about.markdownUrl}): Darren's background and the relationship between Digital Engine and 數位引擎.`,
+    `- [Contact](${contact.markdownUrl}): Contact Darren about SEO, AI, automation, and content strategy.`,
+    `- [Privacy](${privacy.markdownUrl}): Public content, analytics, third-party services, and data-handling summary.`,
+    `- [Public archive](${membership.markdownUrl}): Articles and archived newsletters are free to read without a membership.`,
+    `- [English RSS](${siteAssetUrl('/en/rss.xml')}): English article feed.`,
+    `- [Sitemap](${siteAssetUrl('/sitemap-index.xml')}): Canonical URLs and language alternates.`,
+    '',
+    '## Programmatic interfaces',
+    '',
+    `- [English content metadata](${siteAssetUrl('/api/en/content.json')}): English article metadata and Markdown URLs.`,
+    `- [OpenAPI specification](${siteAssetUrl('/openapi.json')}): The read-only content API and MCP endpoint.`,
+    `- [API Catalog](${siteAssetUrl('/.well-known/api-catalog')}): RFC 9727 API discovery.`,
+    `- [MCP Server Card](${siteAssetUrl('/.well-known/mcp/server-card.json')}): Public read-only MCP endpoint and tools.`,
+    `- [Developer and Agent Portal](${developers.markdownUrl}): API, MCP, WebMCP, errors, and version policy.`,
+    '',
+    '## Agent guidance',
+    '',
+    '- Start with this file and the English article index, then open only the Markdown pages relevant to the task.',
+    '- Each Markdown page includes its canonical HTML URL and translation key in frontmatter. Cite the canonical URL.',
+    '- English translations preserve the original publication date and historical context.',
+    '- Do not treat historical descriptions of products, interfaces, policies, or algorithms as verified current behavior.',
+    '',
+  ].join('\n');
+}
+
 function apiItemForPage(page: AgentPage): AgentApiItem {
-  const canonicalPath = stripConfiguredBase(page.canonicalUrl.pathname);
+  const canonicalPath = localeRelativePath(page);
   const prefix = page.contentKind === 'note' ? '/notes/' : '/';
   const slug = canonicalPath
     .replace(new RegExp(`^${prefix}`), '')
@@ -390,15 +509,24 @@ function apiItemForPage(page: AgentPage): AgentApiItem {
       `Agent API cannot derive a safe slug from ${page.canonicalUrl.pathname}.`,
     );
   }
+  const localeApiPrefix =
+    page.locale === defaultLocale ? '' : `${page.locale}/`;
+  const collection = page.contentKind === 'note' ? 'notes' : 'articles';
 
   return {
+    apiUrl: siteAssetUrl(
+      `/api/${localeApiPrefix}${collection}/${encodeURIComponent(slug)}.json`,
+    ).toString(),
     canonicalUrl: page.canonicalUrl.toString(),
     description: page.description,
     kind: page.contentKind,
+    language: page.language,
+    locale: page.locale,
     markdownUrl: page.markdownUrl.toString(),
     publishedAt: page.publishedAt ?? null,
     slug,
     title: page.title,
+    translationKey: page.translationKey ?? null,
     updatedAt: page.updatedAt ?? null,
   };
 }
@@ -411,15 +539,30 @@ async function markdownForPage(page: AgentPage): Promise<string> {
 function apiCollectionDocument(
   kind: 'articles' | 'notes',
   items: AgentApiItem[],
+  locale: string,
 ): Record<string, unknown> {
+  const english = locale === 'en';
   return {
     version: '1.0',
     kind,
-    title: kind === 'articles' ? '數位引擎文章' : '數位引擎 Facebook 保存筆記',
+    locale,
+    language: english ? 'en' : 'zh-Hant',
+    title:
+      kind === 'articles'
+        ? english
+          ? 'Digital Engine articles'
+          : '數位引擎文章'
+        : english
+          ? 'Digital Engine saved Facebook notes'
+          : '數位引擎 Facebook 保存筆記',
     description:
       kind === 'articles'
-        ? '數位引擎公開文章的 metadata 與 Markdown 入口。'
-        : '數位引擎公開 Facebook 保存筆記的 metadata 與 Markdown 入口。',
+        ? english
+          ? 'Metadata and Markdown links for public Digital Engine articles.'
+          : '數位引擎公開文章的 metadata 與 Markdown 入口。'
+        : english
+          ? 'Metadata and Markdown links for saved Digital Engine Facebook notes.'
+          : '數位引擎公開 Facebook 保存筆記的 metadata 與 Markdown 入口。',
     count: items.length,
     items,
   };
@@ -429,23 +572,31 @@ function apiItemSchema(): Record<string, unknown> {
   return {
     type: 'object',
     required: [
+      'apiUrl',
       'canonicalUrl',
       'description',
       'kind',
+      'language',
+      'locale',
       'markdownUrl',
       'publishedAt',
       'slug',
       'title',
+      'translationKey',
       'updatedAt',
     ],
     properties: {
+      apiUrl: { type: 'string', format: 'uri' },
       canonicalUrl: { type: 'string', format: 'uri' },
       description: { type: 'string' },
       kind: { type: 'string', enum: ['article', 'note'] },
+      language: { type: 'string' },
+      locale: { type: 'string' },
       markdownUrl: { type: 'string', format: 'uri' },
       publishedAt: { type: ['string', 'null'], format: 'date-time' },
       slug: { type: 'string' },
       title: { type: 'string' },
+      translationKey: { type: ['string', 'null'] },
       updatedAt: { type: ['string', 'null'], format: 'date-time' },
     },
   };
@@ -465,10 +616,21 @@ function openApiDocument(): Record<string, unknown> {
   };
   const collectionSchema = {
     type: 'object',
-    required: ['version', 'kind', 'title', 'description', 'count', 'items'],
+    required: [
+      'version',
+      'kind',
+      'locale',
+      'language',
+      'title',
+      'description',
+      'count',
+      'items',
+    ],
     properties: {
       version: { type: 'string' },
       kind: { type: 'string', enum: ['articles', 'notes'] },
+      locale: { type: 'string' },
+      language: { type: 'string' },
       title: { type: 'string' },
       description: { type: 'string' },
       count: { type: 'integer' },
@@ -505,10 +667,10 @@ function openApiDocument(): Record<string, unknown> {
   return {
     openapi: '3.1.0',
     info: {
-      title: '數位引擎 public content API',
+      title: 'Digital Engine public content API',
       version: '1.0.0',
       description:
-        'Public, read-only API for the Traditional Chinese articles and Facebook notes published by 數位引擎. API version policy: version 1 is the current stable surface. Clients may send X-API-Version: 1. Backward-compatible additions remain on version 1; incompatible changes will use a new version. Deprecated operations will announce Deprecation and Sunset response headers and will be documented here before removal.',
+        'Public, read-only API for the Traditional Chinese and English content published by Digital Engine by Darren Huang. Every item includes locale, language, translationKey, canonicalUrl, markdownUrl, and apiUrl. API version policy: version 1 is the current stable surface. Clients may send X-API-Version: 1. Backward-compatible additions remain on version 1; incompatible changes will use a new version. Deprecated operations will announce Deprecation and Sunset response headers and will be documented here before removal.',
     },
     servers: [{ url: siteAssetUrl('/').toString() }],
     paths: {
@@ -543,12 +705,44 @@ function openApiDocument(): Record<string, unknown> {
           },
         },
       },
+      '/api/en/content.json': {
+        get: {
+          operationId: 'listEnglishContent',
+          summary: 'List English public content metadata',
+          description:
+            'Returns English article and note metadata without requiring authentication.',
+          parameters: [apiVersionParameter],
+          responses: {
+            '200': {
+              description: 'English public content metadata.',
+              ...apiVersionResponse,
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    required: ['version', 'locale', 'count', 'items'],
+                    properties: {
+                      version: { type: 'string' },
+                      locale: { const: 'en' },
+                      count: { type: 'integer' },
+                      items: {
+                        type: 'array',
+                        items: { $ref: '#/components/schemas/ContentItem' },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
       '/api/articles.json': {
         get: {
           operationId: 'listArticles',
           summary: 'List public articles',
           description:
-            'Returns metadata and Markdown links for all 86 articles.',
+            'Returns metadata and Markdown links for Traditional Chinese articles.',
           parameters: [apiVersionParameter],
           responses: {
             '200': {
@@ -556,6 +750,49 @@ function openApiDocument(): Record<string, unknown> {
               ...apiVersionResponse,
               content: {
                 'application/json': { schema: collectionSchema },
+              },
+            },
+          },
+        },
+      },
+      '/api/en/articles.json': {
+        get: {
+          operationId: 'listEnglishArticles',
+          summary: 'List public English articles',
+          description:
+            'Returns metadata and Markdown links for published English article translations.',
+          parameters: [apiVersionParameter],
+          responses: {
+            '200': {
+              description: 'English article collection.',
+              ...apiVersionResponse,
+              content: {
+                'application/json': { schema: collectionSchema },
+              },
+            },
+          },
+        },
+      },
+      '/api/en/articles/{slug}.json': {
+        get: {
+          operationId: 'getEnglishArticle',
+          summary: 'Read one public English article',
+          parameters: [apiVersionParameter, slugParameter],
+          responses: {
+            '200': {
+              description: 'English article metadata and Markdown content.',
+              ...apiVersionResponse,
+              content: {
+                'application/json': { schema: detailSchema },
+              },
+            },
+            '404': {
+              description: 'English article slug was not found.',
+              ...apiVersionResponse,
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/Error' },
+                },
               },
             },
           },
@@ -619,6 +856,49 @@ function openApiDocument(): Record<string, unknown> {
             },
             '404': {
               description: 'Note slug was not found.',
+              ...apiVersionResponse,
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/Error' },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/api/en/notes.json': {
+        get: {
+          operationId: 'listEnglishNotes',
+          summary: 'List public English saved Facebook notes',
+          description:
+            'Returns metadata and Markdown links for published English saved-note translations.',
+          parameters: [apiVersionParameter],
+          responses: {
+            '200': {
+              description: 'English saved-note collection.',
+              ...apiVersionResponse,
+              content: {
+                'application/json': { schema: collectionSchema },
+              },
+            },
+          },
+        },
+      },
+      '/api/en/notes/{slug}.json': {
+        get: {
+          operationId: 'getEnglishNote',
+          summary: 'Read one public English saved Facebook note',
+          parameters: [apiVersionParameter, slugParameter],
+          responses: {
+            '200': {
+              description: 'English saved-note metadata and Markdown content.',
+              ...apiVersionResponse,
+              content: {
+                'application/json': { schema: detailSchema },
+              },
+            },
+            '404': {
+              description: 'English saved-note slug was not found.',
               ...apiVersionResponse,
               content: {
                 'application/json': {
@@ -720,18 +1000,18 @@ function ardCatalogDocument(): Record<string, unknown> {
   return {
     specVersion: '1.0',
     host: {
-      displayName: '數位引擎',
+      displayName: 'Digital Engine by Darren Huang / 數位引擎',
       identifier: 'https://www.darrenhuang.com',
       documentationUrl: siteAssetUrl('/llms.txt').toString(),
     },
     entries: [
       {
         identifier: 'urn:air:www.darrenhuang.com:api:public-content',
-        displayName: '數位引擎 public content API',
+        displayName: 'Digital Engine public content API',
         type: 'application/json',
         url: siteAssetUrl('/api/content.json').toString(),
         description:
-          '公開文章與 Facebook 保存筆記的 metadata，可用來發現可讀取的內容。',
+          '繁體中文與英文公開文章、Facebook 保存筆記的 metadata，可用來發現可讀取的內容。',
         capabilities: ['read', 'searchable-content'],
         representativeQueries: [
           '找出數位行銷與 SEO 相關文章',
@@ -740,7 +1020,7 @@ function ardCatalogDocument(): Record<string, unknown> {
       },
       {
         identifier: 'urn:air:www.darrenhuang.com:api:openapi',
-        displayName: '數位引擎 public content API OpenAPI',
+        displayName: 'Digital Engine public content API OpenAPI',
         type: 'application/vnd.oai.openapi+json',
         url: siteAssetUrl('/openapi.json').toString(),
         description:
@@ -753,11 +1033,11 @@ function ardCatalogDocument(): Record<string, unknown> {
       },
       {
         identifier: 'urn:air:www.darrenhuang.com:mcp:public-content',
-        displayName: '數位引擎公開內容 MCP',
+        displayName: 'Digital Engine multilingual public content MCP',
         type: 'application/mcp-server-card+json',
         url: siteAssetUrl('/.well-known/mcp/server-card.json').toString(),
         description:
-          '不需要登入、只提供搜尋與讀取公開文章及保存筆記的 MCP server。',
+          '不需要登入、只提供搜尋與讀取繁體中文及英文公開文章和保存筆記的 MCP server。',
         capabilities: ['read', 'search'],
         representativeQueries: [
           '用 MCP 搜尋數位引擎的公開內容',
@@ -803,7 +1083,17 @@ function apiCatalogDocument(): Record<string, unknown> {
           {
             href: siteAssetUrl('/api/articles.json').toString(),
             type: 'application/json',
-            title: 'Public article collection',
+            title: 'Traditional Chinese article collection',
+          },
+          {
+            href: siteAssetUrl('/api/en/content.json').toString(),
+            type: 'application/json',
+            title: 'English public content metadata',
+          },
+          {
+            href: siteAssetUrl('/api/en/articles.json').toString(),
+            type: 'application/json',
+            title: 'English article collection',
           },
           {
             href: siteAssetUrl('/api/notes.json').toString(),
@@ -837,7 +1127,7 @@ function mcpServerCardDocument(): Record<string, unknown> {
       version: '1.0.0',
     },
     description:
-      '數位引擎的公開唯讀內容 MCP server，提供繁體中文文章與 Facebook 保存筆記的搜尋與讀取。',
+      'Digital Engine public read-only MCP server for searching and reading Traditional Chinese and English articles and saved Facebook notes.',
     documentationUrl: siteAssetUrl('/llms.txt').toString(),
     transport: { type: 'streamable-http', endpoint },
     capabilities: { tools: { listChanged: false } },
@@ -845,13 +1135,19 @@ function mcpServerCardDocument(): Record<string, unknown> {
     tools: [
       {
         name: 'search_content',
-        title: 'Search 數位引擎 content',
-        description: 'Search public Traditional Chinese articles and notes.',
+        title: 'Search Digital Engine content',
+        description:
+          'Search public Traditional Chinese or English articles and notes.',
         inputSchema: {
           type: 'object',
           properties: {
             query: { type: 'string', minLength: 1, maxLength: 120 },
             limit: { type: 'integer', minimum: 1, maximum: 10, default: 5 },
+            locale: {
+              type: 'string',
+              enum: ['zh-hant', 'en'],
+              default: 'zh-hant',
+            },
           },
           required: ['query'],
           additionalProperties: false,
@@ -859,8 +1155,9 @@ function mcpServerCardDocument(): Record<string, unknown> {
       },
       {
         name: 'read_content',
-        title: 'Read 數位引擎 content',
-        description: 'Read one public article or Facebook note.',
+        title: 'Read Digital Engine content',
+        description:
+          'Read one public Traditional Chinese or English article or Facebook note.',
         inputSchema: {
           type: 'object',
           properties: {
@@ -868,6 +1165,11 @@ function mcpServerCardDocument(): Record<string, unknown> {
               type: 'string',
               enum: ['article', 'note'],
               default: 'article',
+            },
+            locale: {
+              type: 'string',
+              enum: ['zh-hant', 'en'],
+              default: 'zh-hant',
             },
             slug: { type: 'string', minLength: 1, maxLength: 160 },
           },
@@ -883,38 +1185,59 @@ async function writeApiResources(
   articlePages: AgentPage[],
   notePages: AgentPage[],
 ): Promise<void> {
-  const collections = [
-    {
-      kind: 'articles' as const,
-      pages: articlePages,
-    },
-    {
-      kind: 'notes' as const,
-      pages: notePages,
-    },
-  ];
   const allItems: AgentApiItem[] = [];
+  const locales = [
+    ...new Set([...articlePages, ...notePages].map((page) => page.locale)),
+  ];
 
-  for (const collection of collections) {
-    const items: AgentApiItem[] = [];
-    for (const page of collection.pages) {
-      const item = apiItemForPage(page);
-      const content = await markdownForPage(page);
-      items.push(item);
-      allItems.push(item);
+  for (const locale of locales) {
+    const localePrefix = locale === defaultLocale ? '' : `${locale}/`;
+    const localeItems: AgentApiItem[] = [];
+    const collections = [
+      {
+        kind: 'articles' as const,
+        pages: articlePages.filter((page) => page.locale === locale),
+      },
+      {
+        kind: 'notes' as const,
+        pages: notePages.filter((page) => page.locale === locale),
+      },
+    ];
+
+    for (const collection of collections) {
+      const items: AgentApiItem[] = [];
+      for (const page of collection.pages) {
+        const item = apiItemForPage(page);
+        const content = await markdownForPage(page);
+        items.push(item);
+        localeItems.push(item);
+        allItems.push(item);
+        await writeJsonArtifact(
+          `api/${localePrefix}${collection.kind}/${encodeURIComponent(item.slug)}.json`,
+          { ...item, content },
+        );
+      }
+
+      items.sort((left, right) =>
+        (right.publishedAt ?? '').localeCompare(left.publishedAt ?? ''),
+      );
       await writeJsonArtifact(
-        `api/${collection.kind}/${encodeURIComponent(item.slug)}.json`,
-        { ...item, content },
+        `api/${localePrefix}${collection.kind}.json`,
+        apiCollectionDocument(collection.kind, items, locale),
       );
     }
 
-    items.sort((left, right) =>
+    localeItems.sort((left, right) =>
       (right.publishedAt ?? '').localeCompare(left.publishedAt ?? ''),
     );
-    await writeJsonArtifact(
-      `api/${collection.kind}.json`,
-      apiCollectionDocument(collection.kind, items),
-    );
+    if (locale !== defaultLocale) {
+      await writeJsonArtifact(`api/${localePrefix}content.json`, {
+        version: '1.0',
+        locale,
+        count: localeItems.length,
+        items: localeItems,
+      });
+    }
   }
 
   allItems.sort((left, right) =>
@@ -938,28 +1261,43 @@ async function writeApiResources(
   await writeFile(path.join(distRoot, 'auth.md'), authDocument(), 'utf8');
 }
 
-function articleIndexDocument(articlePages: AgentPage[]): string {
+function articleIndexDocument(
+  articlePages: AgentPage[],
+  locale = defaultLocale,
+): string {
   const sorted = articlePages.toSorted((left, right) =>
     (right.publishedAt ?? '').localeCompare(left.publishedAt ?? ''),
   );
-  const lines = [
-    '# 數位引擎文章索引',
-    '',
-    `> 共 ${sorted.length} 篇繁體中文文章，依原始發布日期由新到舊排列。`,
-    '',
-    '每個連結都指向精簡的 Markdown 版本。',
-    '引用文章時，請改用該 Markdown frontmatter 內的 canonical HTML 網址。',
-  ];
+  const english = locale === 'en';
+  const lines = english
+    ? [
+        '# Digital Engine English article index',
+        '',
+        `> ${sorted.length} English ${sorted.length === 1 ? 'article' : 'articles'}, ordered by the original publication date from newest to oldest.`,
+        '',
+        'Each link opens a streamlined Markdown version.',
+        'When citing an article, use the canonical HTML URL in its Markdown frontmatter.',
+      ]
+    : [
+        '# 數位引擎文章索引',
+        '',
+        `> 共 ${sorted.length} 篇繁體中文文章，依原始發布日期由新到舊排列。`,
+        '',
+        '每個連結都指向精簡的 Markdown 版本。',
+        '引用文章時，請改用該 Markdown frontmatter 內的 canonical HTML 網址。',
+      ];
   let currentYear = '';
 
   for (const page of sorted) {
-    const year = page.publishedAt?.slice(0, 4) || '日期不明';
+    const year =
+      page.publishedAt?.slice(0, 4) || (english ? 'Unknown date' : '日期不明');
     if (year !== currentYear) {
       lines.push('', `## ${year}`, '');
       currentYear = year;
     }
 
-    const published = page.publishedAt?.slice(0, 10) ?? '日期不明';
+    const published =
+      page.publishedAt?.slice(0, 10) ?? (english ? 'Unknown date' : '日期不明');
     const description = page.description
       ? ` — ${normalizedText(page.description)}`
       : '';
@@ -972,28 +1310,43 @@ function articleIndexDocument(articlePages: AgentPage[]): string {
   return lines.join('\n');
 }
 
-function noteIndexDocument(notePages: AgentPage[]): string {
+function noteIndexDocument(
+  notePages: AgentPage[],
+  locale = defaultLocale,
+): string {
   const sorted = notePages.toSorted((left, right) =>
     (right.publishedAt ?? '').localeCompare(left.publishedAt ?? ''),
   );
-  const lines = [
-    '# 數位引擎 Facebook 保存筆記索引',
-    '',
-    `> 共 ${sorted.length} 篇繁體中文保存筆記，依原始發布日期由新到舊排列。`,
-    '',
-    '每個連結都指向精簡的 Markdown 版本。',
-    '引用筆記時，請改用該 Markdown frontmatter 內的 canonical HTML 網址。',
-  ];
+  const english = locale === 'en';
+  const lines = english
+    ? [
+        '# Digital Engine English saved-note index',
+        '',
+        `> ${sorted.length} English saved Facebook ${sorted.length === 1 ? 'note' : 'notes'}, ordered by the original publication date from newest to oldest.`,
+        '',
+        'Each link opens a streamlined Markdown version.',
+        'When citing a note, use the canonical HTML URL in its Markdown frontmatter.',
+      ]
+    : [
+        '# 數位引擎 Facebook 保存筆記索引',
+        '',
+        `> 共 ${sorted.length} 篇繁體中文保存筆記，依原始發布日期由新到舊排列。`,
+        '',
+        '每個連結都指向精簡的 Markdown 版本。',
+        '引用筆記時，請改用該 Markdown frontmatter 內的 canonical HTML 網址。',
+      ];
   let currentYear = '';
 
   for (const page of sorted) {
-    const year = page.publishedAt?.slice(0, 4) || '日期不明';
+    const year =
+      page.publishedAt?.slice(0, 4) || (english ? 'Unknown date' : '日期不明');
     if (year !== currentYear) {
       lines.push('', `## ${year}`, '');
       currentYear = year;
     }
 
-    const published = page.publishedAt?.slice(0, 10) ?? '日期不明';
+    const published =
+      page.publishedAt?.slice(0, 10) ?? (english ? 'Unknown date' : '日期不明');
     const description = page.description
       ? ` — ${normalizedText(page.description)}`
       : '';
@@ -1059,7 +1412,9 @@ async function main(): Promise<void> {
   for (const htmlFile of htmlFiles) {
     const relativeHtmlPath = artifactRelative(htmlFile);
     const source = await readFile(htmlFile, 'utf8');
-    const result = pageForHtml(relativeHtmlPath, source);
+    const result = pageForHtml(relativeHtmlPath, source, {
+      includeNoindexEnglish: includeEnglishPreview,
+    });
     if (!result) {
       continue;
     }
@@ -1088,32 +1443,70 @@ async function main(): Promise<void> {
   const notePages = pages.filter(
     (page) => page.type === 'article' && page.contentKind === 'note',
   );
-  if (articlePages.length !== expectedArticleCount) {
-    throw new Error(
-      `Expected ${expectedArticleCount} article Markdown pages, generated ${articlePages.length}.`,
-    );
+  const defaultPages = pages.filter((page) => page.locale === defaultLocale);
+  const defaultArticlePages = articlePages.filter(
+    (page) => page.locale === defaultLocale,
+  );
+  const defaultNotePages = notePages.filter(
+    (page) => page.locale === defaultLocale,
+  );
+  if (defaultArticlePages.length === 0) {
+    throw new Error('No canonical article Markdown pages were generated.');
   }
 
   await writeFile(
     path.join(distRoot, 'llms.txt'),
-    llmsDocument(pages, articlePages.length, notePages.length),
+    llmsDocument(
+      defaultPages,
+      defaultArticlePages.length,
+      defaultNotePages.length,
+    ),
     'utf8',
   );
   await writeFile(
     path.join(distRoot, 'articles-llms.txt'),
-    articleIndexDocument(articlePages),
+    articleIndexDocument(defaultArticlePages),
     'utf8',
   );
   await writeFile(
     path.join(distRoot, 'notes-llms.txt'),
-    noteIndexDocument(notePages),
+    noteIndexDocument(defaultNotePages),
     'utf8',
   );
+
+  const englishPages = pages.filter((page) => page.locale === 'en');
+  const englishArticlePages = articlePages.filter(
+    (page) => page.locale === 'en',
+  );
+  const englishNotePages = notePages.filter((page) => page.locale === 'en');
+  if (englishPages.length > 0) {
+    const englishOutput = path.join(distRoot, 'en');
+    await mkdir(englishOutput, { recursive: true });
+    await writeFile(
+      path.join(englishOutput, 'llms.txt'),
+      englishLlmsDocument(
+        englishPages,
+        englishArticlePages.length,
+        englishNotePages.length,
+      ),
+      'utf8',
+    );
+    await writeFile(
+      path.join(englishOutput, 'articles-llms.txt'),
+      articleIndexDocument(englishArticlePages, 'en'),
+      'utf8',
+    );
+    await writeFile(
+      path.join(englishOutput, 'notes-llms.txt'),
+      noteIndexDocument(englishNotePages, 'en'),
+      'utf8',
+    );
+  }
   await writeApiResources(articlePages, notePages);
   await writeSkillIndex();
 
   console.log(
-    `[agent-content] PASS: generated ${pages.length} Markdown pages, ${articlePages.length} article entries, ${notePages.length} note entries, llms.txt, API resources, MCP discovery, and one verified skill index.`,
+    `[agent-content] PASS: generated ${pages.length} Markdown pages (${defaultArticlePages.length} zh-Hant and ${englishArticlePages.length} English articles; ${defaultNotePages.length} zh-Hant and ${englishNotePages.length} English notes), localized llms indexes, API resources, MCP discovery, and one verified skill index.`,
   );
 }
 

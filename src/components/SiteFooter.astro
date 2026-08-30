@@ -1,55 +1,61 @@
 ---
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
+import { localizedPath } from '@/lib/i18n';
 import { withBase } from '@/lib/urls';
 
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const t = getMessages(locale);
 const year = new Date().getUTCFullYear();
 const agentLinks = [
   {
-    href: '/developers.html',
-    label: '開發者與 Agent 入口',
-    description: '快速了解 API、MCP、WebMCP 與版本政策。',
+    href: localizedPath('/developers.html', locale),
+    label: t.footer.agentLinks.developersLabel,
+    description: t.footer.agentLinks.developersDescription,
   },
   {
-    href: '/llms.txt',
+    href: localizedPath('/llms.txt', locale),
     label: 'llms.txt',
-    description: '網站定位、內容索引與 agent 使用說明。',
+    description: t.footer.agentLinks.llmsDescription,
   },
   {
-    href: '/openapi.json',
+    href: withBase('/openapi.json'),
     label: 'OpenAPI 3.1',
-    description: '公開文章與保存筆記的唯讀 JSON API。',
+    description: t.footer.agentLinks.apiDescription,
   },
   {
-    href: '/.well-known/mcp/server-card.json',
+    href: withBase('/.well-known/mcp/server-card.json'),
     label: 'MCP Server Card',
-    description: '公開 MCP endpoint 與兩個 read-only tools。',
+    description: t.footer.agentLinks.mcpDescription,
   },
 ] as const;
 ---
 
 <footer class="site-footer">
   <div class="shell site-footer__inner">
-    <p>© {year} Darren Huang．數位引擎</p>
-    <nav aria-label="頁尾導覽">
-      <a href={withBase('/rss.xml')}>RSS</a>
+    <p>{t.footer.copyright(year)}</p>
+    <nav aria-label={t.footer.navigationAria}>
+      <a href={localizedPath('/rss.xml', locale)}>RSS</a>
       <a href={withBase('/sitemap-index.xml')}>Sitemap</a>
-      <a href={withBase('/contact.html')}>聯絡</a>
-      <a href={withBase('/privacy.html')}>隱私</a>
+      <a href={localizedPath('/contact.html', locale)}>{t.footer.contact}</a>
+      <a href={localizedPath('/privacy.html', locale)}>{t.footer.privacy}</a>
     </nav>
   </div>
   <nav
     class="shell site-footer__agent-nav"
     aria-labelledby="site-footer-agent-title"
   >
-    <h2 id="site-footer-agent-title">給開發者與 Agent 的公開入口</h2>
-    <p>
-      如果你要研究數位引擎的公開內容，可以直接使用下列文件與唯讀介面，不需要登入、API
-      key 或瀏覽器 JavaScript。
-    </p>
+    <h2 id="site-footer-agent-title">{t.footer.developerHeading}</h2>
+    <p>{t.footer.agentDescription}</p>
     <ul class="site-footer__agent-links">
       {
         agentLinks.map((link) => (
           <li>
-            <a href={withBase(link.href)}>{link.label}</a>
+            <a href={link.href}>{link.label}</a>
             <span>{link.description}</span>
           </li>
         ))

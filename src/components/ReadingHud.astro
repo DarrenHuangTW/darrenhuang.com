@@ -1,11 +1,15 @@
 ---
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
 import type { ArticleHeading } from '@/lib/article-experience';
 
 interface Props {
   headings: ArticleHeading[];
+  locale?: Locale;
 }
 
-const { headings } = Astro.props;
+const { headings, locale = DEFAULT_LOCALE } = Astro.props;
+const t = getMessages(locale);
 const visible = headings.length >= 3;
 ---
 
@@ -14,10 +18,12 @@ const visible = headings.length >= 3;
     <aside class="reading-hud">
       <details class="reading-hud__mobile">
         <summary>
-          <span>本文目錄</span>
-          <span aria-hidden="true">{headings.length} 個段落</span>
+          <span>{t.reading.tableOfContents.title}</span>
+          <span aria-hidden="true">
+            {t.reading.tableOfContents.sectionCount(headings.length)}
+          </span>
         </summary>
-        <nav aria-label="本文目錄">
+        <nav aria-label={t.reading.tableOfContents.ariaLabel}>
           <ol>
             {headings.map((heading) => (
               <li
@@ -30,8 +36,11 @@ const visible = headings.length >= 3;
         </nav>
       </details>
 
-      <nav class="reading-hud__desktop" aria-label="本文目錄">
-        <strong>本文目錄</strong>
+      <nav
+        class="reading-hud__desktop"
+        aria-label={t.reading.tableOfContents.ariaLabel}
+      >
+        <strong>{t.reading.tableOfContents.title}</strong>
         <ol>
           {headings.map((heading) => (
             <li class:list={{ 'reading-hud__subheading': heading.depth === 3 }}>

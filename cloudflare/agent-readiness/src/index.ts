@@ -30,13 +30,17 @@ interface JsonRpcRequest {
 }
 
 interface ContentItem {
+  apiUrl?: string;
   canonicalUrl?: string;
   description?: string;
   kind?: 'article' | 'note';
+  language?: string;
+  locale?: string;
   markdownUrl?: string;
   publishedAt?: string | null;
   slug: string;
   title: string;
+  translationKey?: string | null;
   updatedAt?: string | null;
 }
 
@@ -54,14 +58,19 @@ interface McpToolDefinition {
 const mcpTools: McpToolDefinition[] = [
   {
     name: 'search_content',
-    title: 'Search 數位引擎 content',
+    title: 'Search Digital Engine content',
     description:
-      'Search the public Traditional Chinese articles and Facebook notes on 數位引擎.',
+      'Search public Traditional Chinese or English articles and Facebook notes on Digital Engine.',
     inputSchema: {
       type: 'object',
       properties: {
         query: { type: 'string', minLength: 1, maxLength: 120 },
         limit: { type: 'integer', minimum: 1, maximum: 10, default: 5 },
+        locale: {
+          type: 'string',
+          enum: ['zh-hant', 'en'],
+          default: 'zh-hant',
+        },
       },
       required: ['query'],
       additionalProperties: false,
@@ -70,13 +79,18 @@ const mcpTools: McpToolDefinition[] = [
   },
   {
     name: 'read_content',
-    title: 'Read 數位引擎 content',
+    title: 'Read Digital Engine content',
     description:
-      'Read one public article or Facebook note with its canonical URL and Markdown content.',
+      'Read one public Traditional Chinese or English article or Facebook note with its canonical URL and Markdown content.',
     inputSchema: {
       type: 'object',
       properties: {
         kind: { type: 'string', enum: ['article', 'note'], default: 'article' },
+        locale: {
+          type: 'string',
+          enum: ['zh-hant', 'en'],
+          default: 'zh-hant',
+        },
         slug: { type: 'string', minLength: 1, maxLength: 160 },
       },
       required: ['slug'],
@@ -402,10 +416,12 @@ async function readContentDetail(
   request: Request,
   kind: 'articles' | 'notes',
   slug: string,
+  locale: 'zh-hant' | 'en',
 ): Promise<unknown> {
+  const localePrefix = locale === 'en' ? '/en' : '';
   const response = await fetchOriginPath(
     request,
-    `/api/${kind}/${encodeURIComponent(slug)}.json`,
+    `/api${localePrefix}/${kind}/${encodeURIComponent(slug)}.json`,
   );
   const source = await response.text();
   if (!response.ok) {
@@ -523,9 +539,11 @@ async function executeTool(
         ? Math.min(10, Math.max(1, requestedLimit))
         : 5;
       const normalizedQuery = query.toLowerCase();
+      const locale = argumentsValue.locale === 'en' ? 'en' : 'zh-hant';
       const items = await readContentItems(request);
       const results = items
         .filter((item) => {
+          if ((item.locale ?? 'zh-hant') !== locale) return false;
           const haystack = [item.title, item.description, item.slug, item.kind]
             .filter((value) => typeof value === 'string')
             .join(' ')
@@ -533,7 +551,7 @@ async function executeTool(
           return haystack.includes(normalizedQuery);
         })
         .slice(0, limit);
-      return toolResult({ query, count: results.length, results });
+      return toolResult({ query, locale, count: results.length, results });
     }
 
     if (name === 'read_content') {
@@ -547,7 +565,8 @@ async function executeTool(
         );
       }
       const kind = argumentsValue.kind === 'note' ? 'notes' : 'articles';
-      return toolResult(await readContentDetail(request, kind, slug));
+      const locale = argumentsValue.locale === 'en' ? 'en' : 'zh-hant';
+      return toolResult(await readContentDetail(request, kind, slug, locale));
     }
 
     return toolError(`Unknown tool: ${name}.`);

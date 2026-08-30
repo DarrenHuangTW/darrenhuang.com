@@ -4,24 +4,43 @@ import ArticleJourney from '@/components/ArticleJourney.astro';
 import ImageLightbox from '@/components/ImageLightbox.astro';
 import ReadingHud from '@/components/ReadingHud.astro';
 import RelatedContent from '@/components/RelatedContent.astro';
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import type {
   ArticleHeading,
   ArticleJourney as Journey,
 } from '@/lib/article-experience';
 import { transitionNameForPost } from '@/lib/article-experience';
-import { formatDate } from '@/lib/content';
+import { formatLocalizedDate, localizedPath } from '@/lib/i18n';
+import type { LocalizedPostData } from '@/lib/localized-content';
 import { slugifyTaxonomy, withBase } from '@/lib/urls';
 
 interface Props {
-  data: CollectionEntry<'posts'>['data'];
+  alternates?: Partial<Record<Locale, string>>;
+  data: CollectionEntry<'posts'>['data'] | LocalizedPostData;
   headings: ArticleHeading[];
   journey: Journey;
+  locale?: Locale;
   relatedNotes: CollectionEntry<'notes'>[];
   readingMinutes: number;
 }
 
-const { data, headings, journey, relatedNotes, readingMinutes } = Astro.props;
+const {
+  alternates = {},
+  data,
+  headings,
+  journey,
+  locale = DEFAULT_LOCALE,
+  relatedNotes,
+  readingMinutes,
+} = Astro.props;
+const t = getMessages(locale);
+const translationKey =
+  'translationKey' in data ? data.translationKey : `post:${data.slug}`;
+const isReviewDraft =
+  'translationStatus' in data &&
+  (data.translationStatus === 'draft' || data.translationStatus === 'review');
 const titleDateRange = data.title.match(
   /^(.*[~～])(\d{4}[./-]\d{1,2}[./-]\d{1,2})$/u,
 );
@@ -33,9 +52,14 @@ const hasTableOfContents = headings.length >= 3;
   description={data.excerpt}
   canonicalPath={data.canonicalPath}
   image={data.featuredMedia?.src}
+  imageAlt={data.featuredMedia?.alt}
   type="article"
   publishedAt={data.publishedAt}
   updatedAt={data.updatedAt}
+  noindex={isReviewDraft}
+  locale={locale}
+  alternates={alternates}
+  translationKey={translationKey}
 >
   <div class="reading-progress" aria-hidden="true">
     <span></span>
@@ -43,7 +67,7 @@ const hasTableOfContents = headings.length >= 3;
 
   <article class="article">
     <header class="article__header shell shell--article">
-      <div class="eyebrow">數位引擎文章</div>
+      <div class="eyebrow">{t.article.eyebrow}</div>
       <h1 style={`view-transition-name: ${transitionNameForPost(data.slug)}`}>
         {
           titleDateRange ? (
@@ -62,19 +86,37 @@ const hasTableOfContents = headings.length >= 3;
         <span>Darren Huang</span>
         <span aria-hidden="true">·</span>
         <time datetime={data.publishedAt.toISOString()}
-          >{formatDate(data.publishedAt)}</time
+          >{formatLocalizedDate(data.publishedAt, locale)}</time
         >
         <span aria-hidden="true">·</span>
-        <span>約 {readingMinutes} 分鐘</span>
+        <span>{t.article.readingTime(readingMinutes)}</span>
         {
           data.updatedAt.getTime() !== data.publishedAt.getTime() && (
             <span class="article__updated">
-              更新於 {formatDate(data.updatedAt)}
+              {t.article.updatedAt(formatLocalizedDate(data.updatedAt, locale))}
             </span>
           )
         }
       </div>
     </header>
+
+    {
+      locale === 'en' && (
+        <aside class="article__historical-notice" role="note">
+          {t.article.historicalTranslationNotice(
+            formatLocalizedDate(data.publishedAt, locale),
+          )}
+        </aside>
+      )
+    }
+
+    {
+      isReviewDraft && (
+        <aside class="article__review-banner" role="status">
+          {t.article.reviewBanner}
+        </aside>
+      )
+    }
 
     {
       data.featuredMedia && (
@@ -98,7 +140,7 @@ const hasTableOfContents = headings.length >= 3;
         { 'article__reading-shell--single': !hasTableOfContents },
       ]}
     >
-      <ReadingHud headings={headings} />
+      <ReadingHud headings={headings} locale={locale} />
 
       <div class="article__content">
         <div class="prose">
@@ -110,13 +152,14 @@ const hasTableOfContents = headings.length >= 3;
             <footer class="article__taxonomy">
               {data.categories.length > 0 && (
                 <div>
-                  <strong>分類</strong>
+                  <strong>{t.article.categories}</strong>
                   <ul>
                     {data.categories.map((category) => (
                       <li>
                         <a
-                          href={withBase(
+                          href={localizedPath(
                             `/categories/${slugifyTaxonomy(category)}.html`,
+                            locale,
                           )}
                         >
                           {category}
@@ -128,12 +171,15 @@ const hasTableOfContents = headings.length >= 3;
               )}
               {data.tags.length > 0 && (
                 <div>
-                  <strong>標籤</strong>
+                  <strong>{t.article.tags}</strong>
                   <ul>
                     {data.tags.map((tag) => (
                       <li>
                         <a
-                          href={withBase(`/tags/${slugifyTaxonomy(tag)}.html`)}
+                          href={localizedPath(
+                            `/tags/${slugifyTaxonomy(tag)}.html`,
+                            locale,
+                          )}
                         >
                           {tag}
                         </a>
@@ -146,11 +192,33 @@ const hasTableOfContents = headings.length >= 3;
           )
         }
 
-        <RelatedContent notes={relatedNotes} />
+        <RelatedContent notes={relatedNotes} locale={locale} />
 
-        <ArticleJourney journey={journey} />
+        <ArticleJourney journey={journey} locale={locale} />
       </div>
     </div>
   </article>
-  <ImageLightbox />
+  <ImageLightbox locale={locale} />
 </BaseLayout>
+
+<style>
+  .article__historical-notice,
+  .article__review-banner {
+    width: min(100% - 2rem, 50rem);
+    margin: 1.25rem auto 0;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    color: var(--color-muted);
+    background: var(--color-surface);
+    font-size: 0.94rem;
+  }
+
+  .article__review-banner {
+    border-color: color-mix(
+      in srgb,
+      var(--color-accent) 45%,
+      var(--color-line)
+    );
+  }
+</style>

@@ -1,4 +1,6 @@
 ---
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
 import { withBase } from '@/lib/urls';
 
 export interface AboutPhoto {
@@ -11,18 +13,25 @@ export interface AboutPhoto {
 
 interface Props {
   label?: string;
+  locale?: Locale;
   photos: AboutPhoto[];
 }
 
-const { label = 'Darren Huang 的活動照片', photos } = Astro.props;
+const { label, locale = DEFAULT_LOCALE, photos } = Astro.props;
+const t = getMessages(locale);
+const carouselLabel = label ?? t.media.photoCarousel.defaultLabel;
+const statusMessages = photos.map((_photo, index) =>
+  t.media.photoCarousel.status(index + 1, photos.length),
+);
 ---
 
 <section
   class="photo-carousel"
   data-photo-carousel
+  data-carousel-statuses={JSON.stringify(statusMessages)}
   role="region"
   aria-roledescription="carousel"
-  aria-label={label}
+  aria-label={carouselLabel}
 >
   <div class="photo-carousel__viewport" data-carousel-viewport tabindex="0">
     {
@@ -32,7 +41,7 @@ const { label = 'Darren Huang 的活動照片', photos } = Astro.props;
           data-carousel-slide
           role="group"
           aria-roledescription="slide"
-          aria-label={`第 ${index + 1} 張，共 ${photos.length} 張`}
+          aria-label={t.media.photoCarousel.slideAria(index + 1, photos.length)}
         >
           <div class="photo-carousel__media">
             <img
@@ -56,7 +65,7 @@ const { label = 'Darren Huang 的活動照片', photos } = Astro.props;
       class="photo-carousel__arrow"
       type="button"
       data-carousel-previous
-      aria-label="上一張照片"
+      aria-label={t.media.photoCarousel.previousAria}
     >
       <span aria-hidden="true">←</span>
     </button>
@@ -66,26 +75,26 @@ const { label = 'Darren Huang 的活動照片', photos } = Astro.props;
       aria-live="polite"
       aria-atomic="true"
     >
-      第 1 張，共 {photos.length} 張
+      {statusMessages[0]}
     </span>
     <button
       class="photo-carousel__arrow"
       type="button"
       data-carousel-next
-      aria-label="下一張照片"
+      aria-label={t.media.photoCarousel.nextAria}
     >
       <span aria-hidden="true">→</span>
     </button>
   </div>
 
-  <div class="photo-carousel__dots" aria-label="選擇照片">
+  <div class="photo-carousel__dots" aria-label={t.media.photoCarousel.dotsAria}>
     {
       photos.map((_, index) => (
         <button
           type="button"
           data-carousel-dot
           data-slide-index={index}
-          aria-label={`前往第 ${index + 1} 張照片`}
+          aria-label={t.media.photoCarousel.dotAria(index + 1)}
           aria-current={index === 0 ? 'true' : undefined}
         />
       ))
@@ -99,6 +108,9 @@ const { label = 'Darren Huang 的活動照片', photos } = Astro.props;
   );
 
   for (const carousel of carousels) {
+    const statusMessages = JSON.parse(
+      carousel.dataset.carouselStatuses ?? '[]',
+    ) as string[];
     const viewport = carousel.querySelector<HTMLElement>(
       '[data-carousel-viewport]',
     );
@@ -129,7 +141,7 @@ const { label = 'Darren Huang 的活動照片', photos } = Astro.props;
     const updateState = (index: number) => {
       const boundedIndex = Math.max(0, Math.min(index, slides.length - 1));
       activeIndex = boundedIndex;
-      status.textContent = `第 ${activeIndex + 1} 張，共 ${slides.length} 張`;
+      status.textContent = statusMessages[activeIndex] ?? '';
       previous.disabled = activeIndex === 0;
       next.disabled = activeIndex === slides.length - 1;
 

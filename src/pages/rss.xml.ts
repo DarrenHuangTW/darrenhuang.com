@@ -27,7 +27,7 @@ export const GET: APIRoute = async (context) => {
   ].toSorted((left, right) => right.pubDate.getTime() - left.pubDate.getTime());
 
   return rss({
-    title: '數位引擎',
+    title: '數位引擎 by Darren Huang',
     description: '數位行銷、SEO、內容策略與科技趨勢的長期觀察。',
     site,
     items,

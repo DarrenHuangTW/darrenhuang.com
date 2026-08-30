@@ -11,6 +11,8 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 import { PRODUCTION_SITE_URL } from './site.config.ts';
+import { TAXONOMY_TRANSLATIONS } from './src/i18n/config.ts';
+import { slugifyTaxonomy } from './src/lib/taxonomy.ts';
 
 const site = process.env.SITE_URL ?? PRODUCTION_SITE_URL;
 const requestedBase = process.env.BASE_PATH ?? '/';
@@ -20,6 +22,9 @@ const storyContentDirectory = fileURLToPath(
 );
 const notesContentDirectory = fileURLToPath(
   new URL('./src/content/notes/', import.meta.url),
+);
+const postTranslationsDirectory = fileURLToPath(
+  new URL('./src/content/post-translations/en/', import.meta.url),
 );
 const storySlugs = existsSync(storyContentDirectory)
   ? readdirSync(storyContentDirectory)
@@ -48,8 +53,48 @@ const publishedNoteSlugs = existsSync(notesContentDirectory)
       })
       .filter((slug) => slug !== null)
   : [];
+const publishedEnglishPostSlugs = existsSync(postTranslationsDirectory)
+  ? readdirSync(postTranslationsDirectory)
+      .filter(
+        (filename) => filename.endsWith('.md') || filename.endsWith('.mdx'),
+      )
+      .map((filename) => {
+        const source = readFileSync(
+          path.join(postTranslationsDirectory, filename),
+          'utf8',
+        );
+        const status = /^status:\s*published\s*$/mu.test(source);
+        const slug = /^slug:\s*([^\s]+)\s*$/mu.exec(source)?.[1];
+        return status && slug ? slug : null;
+      })
+      .filter((slug) => slug !== null)
+  : [];
 const normalizedBase =
   requestedBase === '/' ? '' : `/${requestedBase.replace(/^\/+|\/+$/g, '')}`;
+const taxonomySitemapCounterparts = new Map();
+
+for (const kind of ['categories', 'tags']) {
+  for (const [sourceLabel, englishLabel] of Object.entries(
+    TAXONOMY_TRANSLATIONS.en[kind],
+  )) {
+    const chinesePath = `/${kind}/${slugifyTaxonomy(sourceLabel)}.html`;
+    const englishPath = `/en/${kind}/${slugifyTaxonomy(englishLabel)}.html`;
+    const chineseUrl = new URL(
+      `${normalizedBase}${chinesePath}`,
+      `${site}/`,
+    ).toString();
+    const englishUrl = new URL(
+      `${normalizedBase}${englishPath}`,
+      `${site}/`,
+    ).toString();
+    const cluster = [
+      { lang: 'zh-Hant', url: chineseUrl },
+      { lang: 'en', url: englishUrl },
+    ];
+    taxonomySitemapCounterparts.set(new URL(chineseUrl).pathname, cluster);
+    taxonomySitemapCounterparts.set(new URL(englishUrl).pathname, cluster);
+  }
+}
 
 function storyDirectoryOutput() {
   return {
@@ -57,6 +102,19 @@ function storyDirectoryOutput() {
     hooks: {
       'astro:build:done': ({ dir }) => {
         const outputDirectory = fileURLToPath(dir);
+        const englishHomeSource = path.join(outputDirectory, 'en.html');
+        const englishHomeDirectory = path.join(outputDirectory, 'en');
+        if (!existsSync(englishHomeSource)) {
+          throw new Error(
+            `Missing generated English homepage route: ${englishHomeSource}`,
+          );
+        }
+        mkdirSync(englishHomeDirectory, { recursive: true });
+        renameSync(
+          englishHomeSource,
+          path.join(englishHomeDirectory, 'index.html'),
+        );
+
         for (const slug of storySlugs) {
           const source = path.join(
             outputDirectory,
@@ -87,10 +145,42 @@ function isPublishedNotePage(page) {
   return !match || publishedNoteSlugs.includes(match[1] ?? '');
 }
 
+const englishInterfaceSlugs = new Set([
+  '404',
+  'about',
+  'articles',
+  'categories',
+  'contact',
+  'developers',
+  'membership',
+  'notes',
+  'privacy',
+  'tags',
+  'web-stories',
+]);
+
+function isPublishedEnglishPostPage(page) {
+  const pathname = new URL(page).pathname;
+  const match = /\/en\/([^/]+?)(?:\.html)?$/u.exec(pathname);
+  if (!match) return true;
+  const slug = match[1] ?? '';
+  return (
+    englishInterfaceSlugs.has(slug) || publishedEnglishPostSlugs.includes(slug)
+  );
+}
+
 export default defineConfig({
   site,
   base,
   output: 'static',
+  i18n: {
+    defaultLocale: 'zh-hant',
+    locales: ['zh-hant', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+      redirectToDefaultLocale: false,
+    },
+  },
   prefetch: {
     defaultStrategy: 'hover',
     prefetchAll: false,
@@ -104,25 +194,50 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !new URL(page).pathname.endsWith('/404.html') &&
-        isPublishedNotePage(page),
+        isPublishedNotePage(page) &&
+        isPublishedEnglishPostPage(page),
+      i18n: {
+        defaultLocale: 'zh-hant',
+        locales: {
+          'zh-hant': 'zh-Hant',
+          en: 'en',
+        },
+      },
       serialize(item) {
-        const url = new URL(item.url);
-        const withoutBase =
-          normalizedBase && url.pathname.startsWith(normalizedBase)
-            ? url.pathname.slice(normalizedBase.length)
-            : url.pathname;
-        const routePath = withoutBase.replace(/\/+$/, '') || '/';
-        const storySlug = storySlugs.find(
-          (slug) => routePath === `/web-stories/${slug}`,
-        );
+        const canonicalSitemapUrl = (value) => {
+          const url = new URL(value);
+          const withoutBase =
+            normalizedBase && url.pathname.startsWith(normalizedBase)
+              ? url.pathname.slice(normalizedBase.length)
+              : url.pathname;
+          const routePath = withoutBase.replace(/\/+$/, '') || '/';
+          const storySlug = storySlugs.find(
+            (slug) => routePath === `/web-stories/${slug}`,
+          );
 
-        if (storySlug) {
-          url.pathname = `${normalizedBase}/web-stories/${storySlug}/`;
-        } else if (routePath !== '/' && !path.posix.extname(routePath)) {
-          url.pathname = `${normalizedBase}${routePath}.html`;
-        }
+          if (routePath === '/en') {
+            url.pathname = `${normalizedBase}/en/`;
+          } else if (storySlug) {
+            url.pathname = `${normalizedBase}/web-stories/${storySlug}/`;
+          } else if (routePath !== '/' && !path.posix.extname(routePath)) {
+            url.pathname = `${normalizedBase}${routePath}.html`;
+          }
 
-        return { ...item, url: url.toString() };
+          return url.toString();
+        };
+        const url = new URL(canonicalSitemapUrl(item.url));
+        const taxonomyLinks = taxonomySitemapCounterparts.get(url.pathname);
+
+        return {
+          ...item,
+          url: url.toString(),
+          links:
+            taxonomyLinks ??
+            item.links?.map((link) => ({
+              ...link,
+              url: canonicalSitemapUrl(link.url),
+            })),
+        };
       },
     }),
     storyDirectoryOutput(),

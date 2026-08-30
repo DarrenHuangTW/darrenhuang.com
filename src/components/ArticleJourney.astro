@@ -1,24 +1,30 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import type { ArticleJourney as Journey } from '@/lib/article-experience';
-import { formatDate } from '@/lib/content';
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
+import type {
+  ArticleJourney as Journey,
+  ArticlePost,
+} from '@/lib/article-experience';
 import { transitionNameForPost } from '@/lib/article-experience';
+import { formatLocalizedDate, localizedPath } from '@/lib/i18n';
 import { withBase } from '@/lib/urls';
 
 interface Props {
   journey: Journey;
+  locale?: Locale;
 }
 
-const { journey } = Astro.props;
+const { journey, locale = DEFAULT_LOCALE } = Astro.props;
+const t = getMessages(locale);
 
-function journeyCard(
-  post: CollectionEntry<'posts'>,
-  direction: 'next' | 'previous',
-) {
+function journeyCard(post: ArticlePost, direction: 'next' | 'previous') {
   return {
     direction,
     href: withBase(post.data.canonicalPath),
-    label: direction === 'previous' ? '上一期' : '下一期',
+    label:
+      direction === 'previous'
+        ? t.articleJourney.previousIssue
+        : t.articleJourney.nextIssue,
     post,
   };
 }
@@ -32,17 +38,19 @@ const seriesCards = [
 <section class="article-journey" aria-labelledby="article-journey-title">
   <header class="article-journey__header">
     <div>
-      <div class="eyebrow">Keep exploring</div>
-      <h2 id="article-journey-title">繼續閱讀</h2>
+      <div class="eyebrow">{t.articleJourney.eyebrow}</div>
+      <h2 id="article-journey-title">{t.articleJourney.title}</h2>
     </div>
-    <a class="text-link" href={withBase('/articles.html')}>全部文章 →</a>
+    <a class="text-link" href={localizedPath('/articles.html', locale)}
+      >{t.articleJourney.allArticles} →</a
+    >
   </header>
 
   {
     seriesCards.length > 0 && (
       <nav
         class="article-journey__series"
-        aria-label={`${journey.seriesLabel}系列導覽`}
+        aria-label={t.articleJourney.seriesAria(journey.seriesLabel ?? '')}
       >
         {seriesCards.map(({ direction, href, label, post }) => (
           <a
@@ -61,12 +69,12 @@ const seriesCards = [
   {
     journey.related.length > 0 && (
       <div class="article-journey__related">
-        <h3>相關文章</h3>
+        <h3>{t.articleJourney.relatedArticles}</h3>
         <div class="related-grid">
           {journey.related.map((post) => (
             <article class="related-card">
               <time datetime={post.data.publishedAt.toISOString()}>
-                {formatDate(post.data.publishedAt)}
+                {formatLocalizedDate(post.data.publishedAt, locale)}
               </time>
               <h4
                 style={`view-transition-name: ${transitionNameForPost(post.data.slug)}`}
@@ -82,9 +90,9 @@ const seriesCards = [
                 class="text-link"
                 href={withBase(post.data.canonicalPath)}
                 data-astro-prefetch="hover"
-                aria-label={`閱讀〈${post.data.title}〉`}
+                aria-label={t.articleJourney.readArticleAria(post.data.title)}
               >
-                閱讀文章 <span aria-hidden="true">→</span>
+                {t.articleJourney.readArticle} <span aria-hidden="true">→</span>
               </a>
             </article>
           ))}

@@ -1,4 +1,3 @@
-import type { CollectionEntry } from 'astro:content';
 import { load } from 'cheerio';
 
 export interface ArticleHeading {
@@ -14,10 +13,23 @@ export interface PreparedArticle {
 }
 
 export interface ArticleJourney {
-  next: CollectionEntry<'posts'> | null;
-  previous: CollectionEntry<'posts'> | null;
-  related: CollectionEntry<'posts'>[];
+  next: ArticlePost | null;
+  previous: ArticlePost | null;
+  related: ArticlePost[];
   seriesLabel: string | null;
+}
+
+export interface ArticlePost {
+  id: string;
+  data: {
+    canonicalPath: string;
+    categories: string[];
+    excerpt: string;
+    publishedAt: Date;
+    slug: string;
+    tags: string[];
+    title: string;
+  };
 }
 
 interface NewsletterRange {
@@ -104,9 +116,7 @@ export function prepareArticleHtml(html: string): PreparedArticle {
   };
 }
 
-export function newsletterRange(
-  post: CollectionEntry<'posts'>,
-): NewsletterRange | null {
+export function newsletterRange(post: ArticlePost): NewsletterRange | null {
   const match = /^seo-newsletter-issue-(\d+)(?:-(\d+))?$/u.exec(post.data.slug);
   if (!match?.[1]) return null;
 
@@ -127,10 +137,7 @@ function sharedTerms(left: string[], right: string[]): number {
   ).length;
 }
 
-function relatedScore(
-  current: CollectionEntry<'posts'>,
-  candidate: CollectionEntry<'posts'>,
-): number {
+function relatedScore(current: ArticlePost, candidate: ArticlePost): number {
   const categoryScore =
     sharedTerms(current.data.categories, candidate.data.categories) * 8;
   const tagScore = sharedTerms(current.data.tags, candidate.data.tags) * 5;
@@ -146,8 +153,8 @@ function relatedScore(
 }
 
 export function getArticleJourney(
-  current: CollectionEntry<'posts'>,
-  posts: CollectionEntry<'posts'>[],
+  current: ArticlePost,
+  posts: ArticlePost[],
 ): ArticleJourney {
   const currentRange = newsletterRange(current);
   const newsletterPosts = posts
@@ -156,14 +163,14 @@ export function getArticleJourney(
       (
         candidate,
       ): candidate is {
-        post: CollectionEntry<'posts'>;
+        post: ArticlePost;
         range: NewsletterRange;
       } => candidate.range !== null,
     )
     .toSorted((left, right) => left.range.start - right.range.start);
 
-  let previous: CollectionEntry<'posts'> | null = null;
-  let next: CollectionEntry<'posts'> | null = null;
+  let previous: ArticlePost | null = null;
+  let next: ArticlePost | null = null;
 
   if (currentRange) {
     previous =
@@ -177,7 +184,7 @@ export function getArticleJourney(
 
   const excludedIds = new Set(
     [current, previous, next]
-      .filter((post): post is CollectionEntry<'posts'> => post !== null)
+      .filter((post): post is ArticlePost => post !== null)
       .map((post) => post.id),
   );
   const scored = posts
@@ -202,7 +209,7 @@ export function getArticleJourney(
     next,
     previous,
     related: scored.slice(0, 3).map(({ post }) => post),
-    seriesLabel: currentRange ? 'SEO 電子報' : null,
+    seriesLabel: currentRange ? 'SEO Newsletter' : null,
   };
 }
 

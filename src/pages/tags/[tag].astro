@@ -6,6 +6,7 @@ import {
   getPostsNewestFirst,
   getPublishedNotesNewestFirst,
 } from '@/lib/content';
+import { taxonomyAlternates } from '@/lib/i18n';
 import { slugifyTaxonomy } from '@/lib/urls';
 
 export async function getStaticPaths() {
@@ -44,6 +45,7 @@ const { tag, notes, posts } = Astro.props;
   title={`標籤：${tag}`}
   description={`數位引擎的「${tag}」相關文章。`}
   canonicalPath={`/tags/${slugifyTaxonomy(tag)}.html`}
+  alternates={taxonomyAlternates('tags', tag)}
 >
   <section class="section shell">
     <header class="section__header">

@@ -8,6 +8,7 @@ export default tseslint.config(
     ignores: [
       '.astro/**',
       '.wrangler/**',
+      '**/.wrangler/**',
       'cloudflare/agent-readiness/worker-configuration.d.ts',
       'coverage/**',
       'dist/**',

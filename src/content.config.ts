@@ -39,6 +39,36 @@ const posts = defineCollection({
   }),
 });
 
+const postTranslations = defineCollection({
+  loader: glob({
+    base: './src/content/post-translations',
+    pattern: '**/*.{md,mdx}',
+  }),
+  schema: z.object({
+    locale: z.string().regex(/^[a-z]{2,3}(?:-[a-z0-9]+)*$/),
+    sourceId: z
+      .string()
+      .min(1)
+      .regex(/^[^/]+$/),
+    slug: z
+      .string()
+      .min(1)
+      .regex(/^[^/]+$/),
+    translationKey: z.string().regex(/^post:[^/]+$/),
+    status: z.enum(['draft', 'review', 'published']),
+    sourceHash: z
+      .string()
+      .regex(/^[a-f0-9]{64}$/)
+      .optional(),
+    reviewedAt: z.coerce.date().optional(),
+    title: z.string().min(1),
+    excerpt: z.string().default(''),
+    categories: z.array(z.string()).default([]),
+    tags: z.array(z.string()).default([]),
+    featuredMediaAlt: z.string().optional(),
+  }),
+});
+
 const notes = defineCollection({
   loader: glob({ base: './src/content/notes', pattern: '**/*.{md,mdx}' }),
   schema: z.object({
@@ -117,4 +147,10 @@ const stories = defineCollection({
   }),
 });
 
-export const collections = { pages, posts, notes, stories };
+export const collections = {
+  pages,
+  posts,
+  postTranslations,
+  notes,
+  stories,
+};

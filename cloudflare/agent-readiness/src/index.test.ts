@@ -305,6 +305,99 @@ describe('agent readiness Worker', () => {
     ]);
   });
 
+  it('filters English MCP search and reads the localized API detail', async () => {
+    const requests = mockOrigin((request) => {
+      const pathname = new URL(request.url).pathname;
+      if (pathname === '/api/content.json') {
+        return new Response(
+          JSON.stringify({
+            items: [
+              {
+                kind: 'article',
+                locale: 'zh-hant',
+                slug: 'crawl-basics',
+                title: '搜尋引擎爬取',
+              },
+              {
+                kind: 'article',
+                locale: 'en',
+                slug: 'crawl-basics',
+                title: 'How Search Engines Crawl',
+                description: 'An introduction to crawling.',
+              },
+            ],
+          }),
+          { headers: { 'Content-Type': 'application/json' } },
+        );
+      }
+      if (pathname === '/api/en/articles/crawl-basics.json') {
+        return new Response(
+          JSON.stringify({
+            locale: 'en',
+            slug: 'crawl-basics',
+            title: 'How Search Engines Crawl',
+            content: '# How Search Engines Crawl',
+          }),
+          { headers: { 'Content-Type': 'application/json' } },
+        );
+      }
+      return new Response('not found', { status: 404 });
+    });
+
+    const search = await server.fetch('https://www.darrenhuang.com/mcp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 5,
+        method: 'tools/call',
+        params: {
+          name: 'search_content',
+          arguments: { query: 'crawl', locale: 'en' },
+        },
+      }),
+    });
+    const searchBody = (await search.json()) as {
+      result?: {
+        structuredContent?: {
+          count?: number;
+          locale?: string;
+          results?: Array<{ locale?: string }>;
+        };
+      };
+    };
+    expect(searchBody.result?.structuredContent).toMatchObject({
+      count: 1,
+      locale: 'en',
+      results: [{ locale: 'en' }],
+    });
+
+    const read = await server.fetch('https://www.darrenhuang.com/mcp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 6,
+        method: 'tools/call',
+        params: {
+          name: 'read_content',
+          arguments: { slug: 'crawl-basics', locale: 'en' },
+        },
+      }),
+    });
+    const readBody = (await read.json()) as {
+      result?: { structuredContent?: { content?: string; locale?: string } };
+    };
+    expect(readBody.result?.structuredContent).toMatchObject({
+      content: '# How Search Engines Crawl',
+      locale: 'en',
+    });
+    expect(requests.map((request) => new URL(request.url).pathname)).toEqual([
+      '/api/content.json',
+      '/api/en/articles/crawl-basics.json',
+    ]);
+  });
+
   it('handles MCP CORS preflight and structured method errors', async () => {
     mockOrigin(() => new Response('{}'));
 

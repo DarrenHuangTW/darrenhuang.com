@@ -1,20 +1,24 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import type { ArticlePost } from '@/lib/article-experience';
 import { transitionNameForPost } from '@/lib/article-experience';
-import { formatDate } from '@/lib/content';
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
+import { formatLocalizedDate } from '@/lib/i18n';
 import { withBase } from '@/lib/urls';
 
 interface Props {
-  post: CollectionEntry<'posts'>;
+  locale?: Locale;
+  post: ArticlePost;
 }
 
-const { post } = Astro.props;
+const { locale = DEFAULT_LOCALE, post } = Astro.props;
+const t = getMessages(locale);
 ---
 
 <article class="post-card">
   <div class="post-card__meta">
     <time datetime={post.data.publishedAt.toISOString()}
-      >{formatDate(post.data.publishedAt)}</time
+      >{formatLocalizedDate(post.data.publishedAt, locale)}</time
     >
     {post.data.categories[0] && <span>{post.data.categories[0]}</span>}
   </div>
@@ -28,8 +32,9 @@ const { post } = Astro.props;
     class="text-link"
     href={withBase(post.data.canonicalPath)}
     data-astro-prefetch="hover"
-    aria-label={`閱讀〈${post.data.title}〉`}
+    aria-label={t.cards.post.readAria(post.data.title)}
   >
-    閱讀文章 <span aria-hidden="true">→</span>
+    {t.cards.post.read}
+    <span aria-hidden="true">→</span>
   </a>
 </article>

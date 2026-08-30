@@ -1,0 +1,51 @@
+---
+import PostCard from '@/components/PostCard.astro';
+import { getMessages } from '@/i18n/messages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { taxonomyAlternates } from '@/lib/i18n';
+import { getLocalizedPostsNewestFirst } from '@/lib/localized-content';
+import { slugifyTaxonomy } from '@/lib/urls';
+
+export async function getStaticPaths() {
+  const posts = await getLocalizedPostsNewestFirst('en');
+  const categories = new Map<string, typeof posts>();
+
+  for (const post of posts) {
+    for (const category of post.data.categories) {
+      const group = categories.get(category) ?? [];
+      group.push(post);
+      categories.set(category, group);
+    }
+  }
+
+  return [...categories.entries()].map(([category, categoryPosts]) => ({
+    params: { category: slugifyTaxonomy(category) },
+    props: { category, posts: categoryPosts },
+  }));
+}
+
+const locale = 'en';
+const t = getMessages(locale);
+const { category, posts } = Astro.props;
+---
+
+<BaseLayout
+  title={t.taxonomy.categories.detailTitle(category)}
+  description={t.taxonomy.categories.detailDescription(category)}
+  canonicalPath={`/en/categories/${slugifyTaxonomy(category)}.html`}
+  locale={locale}
+  alternates={taxonomyAlternates('categories', category)}
+>
+  <section class="section shell">
+    <header class="section__header">
+      <div>
+        <div class="eyebrow">Category</div>
+        <h1>{category}</h1>
+        <p>{t.taxonomy.categories.detailCount(posts.length)}</p>
+      </div>
+    </header>
+    <div class="post-grid">
+      {posts.map((post) => <PostCard post={post} locale={locale} />)}
+    </div>
+  </section>
+</BaseLayout>

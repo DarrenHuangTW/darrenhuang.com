@@ -1,10 +1,30 @@
-<dialog class="image-lightbox" data-image-lightbox aria-label="圖片預覽">
+---
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const t = getMessages(locale);
+---
+
+<dialog
+  class="image-lightbox"
+  data-image-lightbox
+  data-enlarge-empty={t.reading.imageLightbox.enlargeAria('')}
+  data-enlarge-prefix={t.reading.imageLightbox
+    .enlargeAria('__ALT__')
+    .replace('__ALT__', '')}
+  aria-label={t.reading.imageLightbox.previewAria}
+>
   <div class="image-lightbox__panel">
     <form method="dialog">
       <button
         class="image-lightbox__close"
         type="submit"
-        aria-label="關閉圖片預覽"
+        aria-label={t.reading.imageLightbox.closeAria}
       >
         <span aria-hidden="true">×</span>
       </button>
@@ -19,7 +39,8 @@
       target="_blank"
       rel="noopener noreferrer"
     >
-      開啟原圖 <span aria-hidden="true">↗</span>
+      {t.reading.imageLightbox.openOriginal}{' '}
+      <span aria-hidden="true">↗</span>
     </a>
   </div>
 </dialog>
@@ -42,6 +63,8 @@
       '[data-lightbox-original]',
     );
     let trigger: HTMLElement | null = null;
+    const enlargeEmpty = dialog.dataset.enlargeEmpty ?? '';
+    const enlargePrefix = dialog.dataset.enlargePrefix ?? '';
 
     if (
       !article ||
@@ -110,7 +133,7 @@
         image.setAttribute('role', 'button');
         image.setAttribute(
           'aria-label',
-          image.alt ? `放大圖片：${image.alt}` : '放大圖片',
+          image.alt ? `${enlargePrefix}${image.alt}` : enlargeEmpty,
         );
         image.addEventListener('keydown', (event) => {
           if (event.key === 'Enter' || event.key === ' ') {

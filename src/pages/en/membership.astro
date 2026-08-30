@@ -1,0 +1,45 @@
+---
+import SimplePage from '@/components/SimplePage.astro';
+import { getMessages } from '@/i18n/messages';
+import { localizedPath } from '@/lib/i18n';
+
+const locale = 'en';
+const t = getMessages(locale).membership;
+---
+
+<SimplePage
+  title={t.title}
+  visibleTitle={t.visibleTitle}
+  description={t.description}
+  canonicalPath="/en/membership.html"
+  eyebrow="Public archive"
+  locale={locale}
+>
+  <section aria-labelledby="public-content">
+    <h2 id="public-content">{t.publicContent.title}</h2>
+    <p>{t.publicContent.body}</p>
+    <p>
+      {t.publicContent.browseBeforeArticles}{' '}
+      <a href={localizedPath('/articles.html', locale)}>complete archive</a>{
+        ' '
+      }
+      {t.publicContent.browseAfterArticles}{' '}
+      <a href={localizedPath('/llms.txt', locale)}>agent content index</a>{' '}
+      {t.publicContent.browseAfterLlms}
+    </p>
+  </section>
+
+  <section aria-labelledby="newsletter-archive">
+    <h2 id="newsletter-archive">{t.newsletter.title}</h2>
+    <p>{t.newsletter.body}</p>
+  </section>
+
+  <section aria-labelledby="questions">
+    <h2 id="questions">{t.questions.title}</h2>
+    <p>
+      {t.questions.bodyBeforeContact}{' '}
+      <a href={localizedPath('/contact.html', locale)}>contact page</a>
+      {t.questions.bodyAfterContact}
+    </p>
+  </section>
+</SimplePage>
