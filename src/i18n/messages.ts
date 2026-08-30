@@ -370,7 +370,7 @@ const zhHantMessages = {
     },
     mcp: {
       browser:
-        '支援 WebMCP 的瀏覽器可以直接使用頁面上的同一組搜尋與讀取 tools。不支援 WebMCP 的 client 仍可使用 Markdown、JSON API 或 MCP HTTP endpoint。',
+        '支援 WebMCP 的瀏覽器可以直接使用頁面上的 digital_engine_search_content 與 digital_engine_read_content 兩個唯讀工具。這些站點專屬名稱可與 MCP HTTP endpoint 的 search_content、read_content 清楚區分。不支援 WebMCP 的 client 仍可使用 Markdown、JSON API 或 MCP HTTP endpoint。',
       endpoint:
         'MCP endpoint 位於 /mcp，支援 initialize、ping、tools/list 與 tools/call。它只提供 search_content 與 read_content 兩個唯讀工具，不支援登入、購買、寫入、刪除或代表使用者操作。',
       title: 'MCP 與 WebMCP',
@@ -849,7 +849,7 @@ const enMessages = {
     },
     mcp: {
       browser:
-        'Browsers with WebMCP support can use the same search and read tools directly from the page. Other clients can still use Markdown, the JSON API, or the MCP HTTP endpoint.',
+        'Browsers with WebMCP support can use the read-only digital_engine_search_content and digital_engine_read_content tools directly from the page. Their site-specific names distinguish them from the MCP HTTP endpoint tools, search_content and read_content. Other clients can still use Markdown, the JSON API, or the MCP HTTP endpoint.',
       endpoint:
         "The MCP endpoint is at /mcp and supports initialize, ping, tools/list, and tools/call. It exposes only two read-only tools, search_content and read_content. It cannot log in, buy, write, delete, or act on a user's behalf.",
       title: 'MCP and WebMCP',

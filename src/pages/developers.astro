@@ -122,8 +122,12 @@ X-API-Version: 1`}</code></pre>
           > 兩個唯讀工具，不支援登入、購買、寫入、刪除或代表使用者操作。
         </p>
         <p>
-          支援 WebMCP 的瀏覽器可以直接使用頁面上的同一組搜尋與讀取 tools。
-          不支援 WebMCP 的 client 仍可使用 Markdown、JSON API 或 MCP HTTP
+          支援 WebMCP 的瀏覽器可以直接使用頁面上的 <code
+            >digital_engine_search_content</code
+          > 與 <code>digital_engine_read_content</code> 兩個唯讀工具。這些站點專屬名稱可與
+          MCP HTTP endpoint 的 <code>search_content</code>、<code
+            >read_content</code
+          > 清楚區分。不支援 WebMCP 的 client 仍可使用 Markdown、JSON API 或 MCP HTTP
           endpoint。
         </p>
       </section>

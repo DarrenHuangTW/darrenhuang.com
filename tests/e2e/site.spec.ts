@@ -1201,7 +1201,8 @@ test.describe('Phase 5 public-site acceptance', () => {
     });
     const homepageContent = await page.content();
     expect(homepageContent).toContain('document.modelContext');
-    expect(homepageContent).toContain('search_content');
+    expect(homepageContent).toContain('digital_engine_search_content');
+    expect(homepageContent).toContain('digital_engine_read_content');
     expect(homepageContent).toContain('new AbortController');
     expect(homepageContent).toContain('astro:before-swap');
     expect(homepageContent).toContain('registrationController.signal');
