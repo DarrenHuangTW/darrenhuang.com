@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { load } from 'cheerio';
 import matter from 'gray-matter';
-import { PRODUCTION_SITE_URL, productionSiteUrl } from '../../site.config';
+import { PRODUCTION_SITE_URL } from '../../site.config';
 import { TAXONOMY_TRANSLATIONS } from '../../src/i18n/config';
 import { slugifyTaxonomy } from '../../src/lib/taxonomy';
 
@@ -34,6 +34,8 @@ const translationRoot = path.join(
 );
 const sourceRoot = path.join(root, 'src', 'content', 'posts');
 const failures: string[] = [];
+const configuredBase = normalizeBase(process.env.BASE_PATH ?? '/');
+const configuredSiteUrl = new URL(process.env.SITE_URL ?? PRODUCTION_SITE_URL);
 const interfaceCounterparts = new Map<string, string>([
   ['/en/', '/'],
   ['/en/about.html', '/about.html'],
@@ -47,6 +49,16 @@ const interfaceCounterparts = new Map<string, string>([
   ['/en/tags.html', '/tags.html'],
   ['/en/web-stories.html', '/web-stories.html'],
 ]);
+
+function normalizeBase(value: string): string {
+  const normalized = `/${value.replace(/^\/+|\/+$/gu, '')}`;
+  return normalized === '/' ? '' : normalized;
+}
+
+function withConfiguredBase(pathname: string): string {
+  const normalized = `/${pathname.replace(/^\/+/, '')}`;
+  return configuredBase ? `${configuredBase}${normalized}` : normalized;
+}
 
 function check(condition: unknown, message: string): condition is true {
   if (!condition) failures.push(message);
@@ -118,7 +130,9 @@ function markdownArtifactForPath(pathname: string): string {
 }
 
 function absolute(pathname: string): string {
-  return productionSiteUrl(pathname).toString();
+  const url = new URL(configuredSiteUrl.origin);
+  url.pathname = withConfiguredBase(pathname);
+  return url.toString();
 }
 
 function normalizedUrl(value: string): string | undefined {
@@ -127,6 +141,21 @@ function normalizedUrl(value: string): string | undefined {
   } catch {
     return undefined;
   }
+}
+
+function normalizedSitemapUrl(value: string): string | undefined {
+  const normalized = normalizedUrl(value);
+  if (!normalized) return undefined;
+
+  const url = new URL(normalized);
+  if (
+    configuredBase &&
+    url.origin === configuredSiteUrl.origin &&
+    url.pathname === configuredBase
+  ) {
+    url.pathname = `${configuredBase}/`;
+  }
+  return url.toString();
 }
 
 function htmlPathForArtifact(file: string): string {
@@ -236,7 +265,7 @@ async function verifyEnglishHtmlSurface(): Promise<void> {
     );
     check(
       $('link[rel="alternate"][type="application/rss+xml"]').attr('href') ===
-        '/en/rss.xml',
+        withConfiguredBase('/en/rss.xml'),
       `${relative} 必須連到英文 RSS。`,
     );
     check(
@@ -462,14 +491,16 @@ async function sitemapMap(): Promise<Map<string, Map<string, string>>> {
   for (const file of files) {
     const $ = load(await readFile(file, 'utf8'), { xmlMode: true });
     $('url').each((_index, element) => {
-      const loc = normalizedUrl($(element).children('loc').text().trim());
+      const loc = normalizedSitemapUrl(
+        $(element).children('loc').text().trim(),
+      );
       if (!loc) return;
       const alternates = new Map<string, string>();
       $(element)
         .children()
         .each((_childIndex, child) => {
           const hreflang = $(child).attr('hreflang');
-          const href = normalizedUrl($(child).attr('href') ?? '');
+          const href = normalizedSitemapUrl($(child).attr('href') ?? '');
           if (hreflang && href) alternates.set(hreflang, href);
         });
       result.set(loc, alternates);
@@ -509,7 +540,7 @@ async function verifySitemap(counterparts: Map<string, string>): Promise<void> {
   for (const [loc, alternates] of sitemap) {
     for (const candidate of [loc, ...alternates.values()]) {
       const url = new URL(candidate);
-      if (url.origin !== PRODUCTION_SITE_URL) continue;
+      if (url.origin !== configuredSiteUrl.origin) continue;
       if (
         url.pathname === '/' ||
         url.pathname === '/en/' ||
