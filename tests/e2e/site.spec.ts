@@ -1199,8 +1199,12 @@ test.describe('Phase 5 public-site acceptance', () => {
         addressCountry: 'TW',
       },
     });
-    expect(await page.content()).toContain('document.modelContext');
-    expect(await page.content()).toContain('search_content');
+    const homepageContent = await page.content();
+    expect(homepageContent).toContain('document.modelContext');
+    expect(homepageContent).toContain('search_content');
+    expect(homepageContent).toContain('new AbortController');
+    expect(homepageContent).toContain('astro:before-swap');
+    expect(homepageContent).toContain('registrationController.signal');
 
     const developerResponse = await page.goto(runtimePath('/developers.html'));
     expect(developerResponse?.ok()).toBe(true);

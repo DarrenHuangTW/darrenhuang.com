@@ -15,7 +15,20 @@ const script = `(() => {
   const contentIndexPath = ${JSON.stringify(contentIndexPath)};
   const apiBasePath = ${JSON.stringify(apiBasePath)};
   const pageLocale = ${JSON.stringify(locale)};
+  const registrationKey = Symbol.for('digital-engine.webmcp.registration');
   let registeredContext;
+  let registrationController;
+
+  const releaseRegistration = () => {
+    if (!registrationController) return;
+    registrationController.abort();
+    const active = window[registrationKey];
+    if (active?.controller === registrationController) {
+      delete window[registrationKey];
+    }
+    registrationController = undefined;
+    registeredContext = undefined;
+  };
 
   const readJson = async (path, signal) => {
     const response = await fetch(path, {
@@ -29,9 +42,16 @@ const script = `(() => {
   };
 
   const registerTools = () => {
+    if (document.documentElement.dataset.pageLocale !== pageLocale) {
+      return true;
+    }
+
     let modelContext;
     try {
-      modelContext = document.modelContext ?? navigator.modelContext;
+      modelContext = document.modelContext;
+      if (!modelContext && typeof navigator !== 'undefined') {
+        modelContext = navigator.modelContext;
+      }
     } catch {
       return false;
     }
@@ -39,10 +59,26 @@ const script = `(() => {
     if (!modelContext || typeof modelContext.registerTool !== 'function') {
       return false;
     }
-    if (modelContext === registeredContext) {
+    if (
+      modelContext === registeredContext &&
+      registrationController &&
+      !registrationController.signal.aborted
+    ) {
       return true;
     }
+
+    const previous = window[registrationKey];
+    if (previous?.controller && !previous.controller.signal.aborted) {
+      previous.controller.abort();
+    }
+
     registeredContext = modelContext;
+    registrationController = new AbortController();
+    window[registrationKey] = {
+      context: modelContext,
+      controller: registrationController,
+      locale: pageLocale,
+    };
 
     const tools = [
       {
@@ -114,7 +150,9 @@ const script = `(() => {
 
     for (const tool of tools) {
       try {
-        const result = modelContext.registerTool(tool);
+        const result = modelContext.registerTool(tool, {
+          signal: registrationController.signal,
+        });
         if (result && typeof result.catch === 'function') {
           result.catch(() => {});
         }
@@ -124,6 +162,10 @@ const script = `(() => {
     }
     return true;
   };
+
+  document.addEventListener('astro:before-swap', releaseRegistration, {
+    once: true,
+  });
 
   if (!registerTools()) {
     document.addEventListener('DOMContentLoaded', registerTools, { once: true });
