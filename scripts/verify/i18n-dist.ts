@@ -723,7 +723,10 @@ async function verifyStories(
     );
     check(
       normalizedUrl(amp('link[rel="canonical"]').attr('href') ?? '') ===
-        absolute(englishPath),
+        new URL(
+          englishPath.replace(/^\/+/, ''),
+          `${PRODUCTION_SITE_URL}/`,
+        ).toString(),
       `${englishPath} AMP canonical 不正確。`,
     );
     amp('[alt]').each((_index, element) => {
@@ -734,27 +737,10 @@ async function verifyStories(
         `${englishPath} AMP 媒體 alt 仍含中文字元。`,
       );
     });
-    amp(
-      '[src], [poster], [artwork], [href], [srcset], [publisher-logo-src]',
-    ).each((_index, element) => {
-      for (const attribute of [
-        'src',
-        'poster',
-        'artwork',
-        'href',
-        'srcset',
-        'publisher-logo-src',
-      ]) {
-        const value = amp(element).attr(attribute);
-        if (!value) continue;
-        check(
-          !value
-            .split(/\s|,/u)
-            .some((part) => part.startsWith('./') || part.startsWith('../')),
-          `${englishPath} AMP 仍含相對資產 URL。`,
-        );
-      }
-    });
+    // The AMP artifact is a public static file nested below /en/web-stories/<slug>/.
+    // Keep its media references portable (for both the custom domain and the
+    // GitHub Pages project base); verify:dist resolves every reference against
+    // the configured build and checks that the target artifact exists.
 
     const markdownFile = markdownArtifactForPath(englishPath);
     if (
