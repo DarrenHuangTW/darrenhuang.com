@@ -32,7 +32,26 @@ const translationDirectory = path.join(
   'content',
   'post-translations',
 );
+const noteSourceDirectory = path.join(root, 'src', 'content', 'notes');
+const noteTranslationDirectory = path.join(
+  root,
+  'src',
+  'content',
+  'note-translations',
+);
+const storySourceDirectory = path.join(root, 'src', 'content', 'stories');
+const storyTranslationDirectory = path.join(
+  root,
+  'src',
+  'content',
+  'story-translations',
+);
 const failures: string[] = [];
+
+function check(condition: unknown, message: string): condition is true {
+  if (!condition) failures.push(message);
+  return Boolean(condition);
+}
 
 async function walkMarkdownFiles(directory: string): Promise<string[]> {
   if (!existsSync(directory)) return [];
@@ -71,6 +90,31 @@ function normalizedSourceHash(raw: string): string {
     .digest('hex');
 }
 
+function normalizedNoteSourceHash(raw: string): string {
+  const parsed = matter(raw);
+  const data = parsed.data as Record<string, unknown>;
+  const translatableSource = {
+    canonicalPath: data.canonicalPath,
+    categories: data.categories,
+    excerpt: data.excerpt,
+    publishedAt: data.publishedAt,
+    tags: data.tags,
+    title: data.title,
+    updatedAt: data.updatedAt,
+    body: parsed.content.replaceAll('\r\n', '\n').trim(),
+  };
+
+  return createHash('sha256')
+    .update(JSON.stringify(translatableSource))
+    .digest('hex');
+}
+
+function normalizedStorySourceHash(raw: string): string {
+  return createHash('sha256')
+    .update(JSON.stringify(JSON.parse(raw)))
+    .digest('hex');
+}
+
 function attributeValues(
   html: string,
   selector: string,
@@ -85,6 +129,17 @@ function attributeValues(
 async function sourceFileFor(sourceId: string): Promise<string | undefined> {
   for (const extension of ['md', 'mdx']) {
     const candidate = path.join(sourceDirectory, `${sourceId}.${extension}`);
+    if (existsSync(candidate)) return candidate;
+  }
+  return undefined;
+}
+
+async function sourceFileForDirectory(
+  directory: string,
+  sourceId: string,
+): Promise<string | undefined> {
+  for (const extension of ['md', 'mdx']) {
+    const candidate = path.join(directory, `${sourceId}.${extension}`);
     if (existsSync(candidate)) return candidate;
   }
   return undefined;
@@ -239,12 +294,258 @@ for (const file of files) {
   }
 }
 
+async function verifyNoteTranslations(): Promise<{
+  published: number;
+  reviewed: number;
+}> {
+  const sourceFiles = await walkMarkdownFiles(noteSourceDirectory);
+  const publishedSources = new Set<string>();
+  for (const sourceFile of sourceFiles) {
+    const sourceData = matter(await readFile(sourceFile, 'utf8'))
+      .data as Record<string, unknown>;
+    if (sourceData.editorialStatus === 'published') {
+      const sourceId = sourceData.slug;
+      if (typeof sourceId === 'string') publishedSources.add(sourceId);
+    }
+  }
+
+  const translationFiles = await walkMarkdownFiles(noteTranslationDirectory);
+  const translationKeys = new Set<string>();
+  let published = 0;
+  let reviewed = 0;
+
+  for (const file of translationFiles) {
+    const relative = path
+      .relative(noteTranslationDirectory, file)
+      .replaceAll('\\', '/');
+    const label = `note-translations/${relative}`;
+    const raw = await readFile(file, 'utf8');
+    const parsed = matter(raw);
+    const data = parsed.data as Record<string, unknown>;
+    const sourceId = data.sourceId;
+
+    if (data.locale !== 'en') {
+      failures.push(`${label}: locale must be en.`);
+    }
+    if (typeof sourceId !== 'string' || sourceId.length === 0) {
+      failures.push(`${label}: sourceId is required.`);
+      continue;
+    }
+
+    const expectedKey = `note:${sourceId}`;
+    if (data.translationKey !== expectedKey) {
+      failures.push(`${label}: translationKey must be ${expectedKey}.`);
+    } else if (translationKeys.has(expectedKey)) {
+      failures.push(`${label}: duplicate translationKey ${expectedKey}.`);
+    } else {
+      translationKeys.add(expectedKey);
+    }
+
+    if (data.slug !== sourceId) {
+      failures.push(`${label}: slug must remain identical to sourceId.`);
+    }
+
+    const sourceFile = await sourceFileForDirectory(
+      noteSourceDirectory,
+      sourceId,
+    );
+    if (!sourceFile) {
+      failures.push(`${label}: source note ${sourceId} does not exist.`);
+      continue;
+    }
+    const sourceRaw = await readFile(sourceFile, 'utf8');
+    const sourceParsed = matter(sourceRaw);
+    const sourceData = sourceParsed.data as Record<string, unknown>;
+    if (sourceData.editorialStatus !== 'published') {
+      failures.push(
+        `${label}: translations may only reference published notes.`,
+      );
+    }
+
+    const status = data.status;
+    if (status === 'published') {
+      published += 1;
+      if (data.sourceHash !== normalizedNoteSourceHash(sourceRaw)) {
+        failures.push(`${label}: published translation is stale.`);
+      }
+      if (data.reviewedAt === undefined) {
+        failures.push(`${label}: published translation requires reviewedAt.`);
+      }
+    } else if (status === 'review' || status === 'draft') {
+      reviewed += 1;
+    } else {
+      failures.push(`${label}: status must be draft, review, or published.`);
+    }
+
+    if (
+      typeof data.originalFacebookTagline !== 'string' ||
+      data.originalFacebookTagline.trim().length === 0
+    ) {
+      failures.push(`${label}: originalFacebookTagline is required.`);
+    }
+
+    const $ = load(parsed.content, null, false);
+    $('img').each((_index, element) => {
+      const alt = $(element).attr('alt');
+      if (!alt?.trim()) {
+        failures.push(`${label}: every translated img needs English alt text.`);
+      } else if (/\p{Script=Han}/u.test(alt)) {
+        failures.push(`${label}: translated img alt text must be English.`);
+      }
+    });
+    if (
+      attributeValues(sourceParsed.content, 'img', 'src').length !==
+      attributeValues(parsed.content, 'img', 'src').length
+    ) {
+      failures.push(
+        `${label}: translated image count must match the source note.`,
+      );
+    }
+  }
+
+  check(
+    published === publishedSources.size,
+    `English notes must publish one translation for each of the ${publishedSources.size} published source notes.`,
+  );
+  return { published, reviewed };
+}
+
+async function verifyStoryTranslations(): Promise<{
+  published: number;
+  reviewed: number;
+}> {
+  const sourceFiles = (await readdir(storySourceDirectory)).filter((file) =>
+    file.endsWith('.json'),
+  );
+  const publishedSources = new Set<string>();
+  for (const file of sourceFiles) {
+    const source = JSON.parse(
+      await readFile(path.join(storySourceDirectory, file), 'utf8'),
+    ) as Record<string, unknown>;
+    if (typeof source.slug === 'string') publishedSources.add(source.slug);
+  }
+
+  const translationFiles = await walkMarkdownFiles(storyTranslationDirectory);
+  const translationKeys = new Set<string>();
+  let published = 0;
+  let reviewed = 0;
+
+  for (const file of translationFiles) {
+    const relative = path
+      .relative(storyTranslationDirectory, file)
+      .replaceAll('\\', '/');
+    const label = `story-translations/${relative}`;
+    const raw = await readFile(file, 'utf8');
+    const data = matter(raw).data as Record<string, unknown>;
+    const sourceId = data.sourceId;
+
+    if (data.locale !== 'en') failures.push(`${label}: locale must be en.`);
+    if (typeof sourceId !== 'string' || sourceId.length === 0) {
+      failures.push(`${label}: sourceId is required.`);
+      continue;
+    }
+    const expectedKey = `story:${sourceId}`;
+    if (data.translationKey !== expectedKey) {
+      failures.push(`${label}: translationKey must be ${expectedKey}.`);
+    } else if (translationKeys.has(expectedKey)) {
+      failures.push(`${label}: duplicate translationKey ${expectedKey}.`);
+    } else {
+      translationKeys.add(expectedKey);
+    }
+    if (data.slug !== sourceId) {
+      failures.push(`${label}: slug must remain identical to sourceId.`);
+    }
+
+    const sourceFile = path.join(storySourceDirectory, `${sourceId}.json`);
+    if (!existsSync(sourceFile)) {
+      failures.push(`${label}: source Web Story ${sourceId} does not exist.`);
+      continue;
+    }
+    const sourceRaw = await readFile(sourceFile, 'utf8');
+    const source = JSON.parse(sourceRaw) as Record<string, unknown>;
+    if (data.sourceHash !== normalizedStorySourceHash(sourceRaw)) {
+      failures.push(`${label}: published translation is stale.`);
+    }
+
+    const status = data.status;
+    if (status === 'published') {
+      published += 1;
+      if (data.reviewedAt === undefined) {
+        failures.push(`${label}: published translation requires reviewedAt.`);
+      }
+    } else if (status === 'review' || status === 'draft') {
+      reviewed += 1;
+    } else {
+      failures.push(`${label}: status must be draft, review, or published.`);
+    }
+
+    for (const field of ['title', 'excerpt', 'posterAlt'] as const) {
+      const value = data[field];
+      if (typeof value !== 'string' || value.trim().length === 0) {
+        failures.push(`${label}: ${field} is required.`);
+      } else if (/\p{Script=Han}/u.test(value)) {
+        failures.push(`${label}: ${field} must be English.`);
+      }
+    }
+
+    const sourceTranscript = source.transcript;
+    const translatedTranscript = data.transcript;
+    if (
+      !Array.isArray(sourceTranscript) ||
+      !Array.isArray(translatedTranscript) ||
+      sourceTranscript.length !== translatedTranscript.length
+    ) {
+      failures.push(
+        `${label}: translated transcript page count must match the source.`,
+      );
+      continue;
+    }
+    for (let index = 0; index < sourceTranscript.length; index += 1) {
+      const sourcePage = sourceTranscript[index];
+      const translatedPage = translatedTranscript[index];
+      if (
+        !sourcePage ||
+        !translatedPage ||
+        typeof sourcePage !== 'object' ||
+        typeof translatedPage !== 'object'
+      )
+        continue;
+      const sourceRecord = sourcePage as Record<string, unknown>;
+      const translatedRecord = translatedPage as Record<string, unknown>;
+      if (
+        sourceRecord.id !== translatedRecord.id ||
+        sourceRecord.order !== translatedRecord.order
+      ) {
+        failures.push(
+          `${label}: transcript page ${index + 1} must retain source id and order.`,
+        );
+      }
+      if (Array.isArray(translatedRecord.lines)) {
+        for (const line of translatedRecord.lines) {
+          if (typeof line !== 'string' || /\p{Script=Han}/u.test(line)) {
+            failures.push(`${label}: transcript text must be English.`);
+          }
+        }
+      }
+    }
+  }
+
+  check(
+    published === publishedSources.size,
+    `English Web Stories must publish one translation for each of the ${publishedSources.size} source stories.`,
+  );
+  return { published, reviewed };
+}
+
+const noteVerification = await verifyNoteTranslations();
+const storyVerification = await verifyStoryTranslations();
+
 if (failures.length > 0) {
   console.error('[verify:i18n] FAIL');
   failures.forEach((failure) => console.error(`- ${failure}`));
   process.exitCode = 1;
 } else {
   console.log(
-    `[verify:i18n] PASS: ${publishedCount} published and ${reviewCount} review translations validated.`,
+    `[verify:i18n] PASS: ${publishedCount} published and ${reviewCount} review article translations, ${noteVerification.published} published and ${noteVerification.reviewed} review note translations, and ${storyVerification.published} published Web Story translations validated.`,
   );
 }

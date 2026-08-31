@@ -2,9 +2,15 @@
 import { getMessages } from '@/i18n/messages';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { withBase } from '@/lib/urls';
+import { getEnglishNoteRoutes } from '@/lib/localized-social';
 
 const locale = 'en';
 const t = getMessages(locale).notes;
+const notes = (await getEnglishNoteRoutes()).toSorted(
+  (left, right) =>
+    right.source.data.publishedAt.getTime() -
+    left.source.data.publishedAt.getTime(),
+);
 ---
 
 <BaseLayout
@@ -22,16 +28,45 @@ const t = getMessages(locale).notes;
       </div>
     </header>
 
-    <div class="empty-state">
-      <p>{t.translationPending}</p>
-      <a
-        class="text-link"
-        href={withBase('/notes.html')}
-        hreflang="zh-Hant"
-        lang="zh-Hant"
-      >
-        {t.browseChinese} →
-      </a>
-    </div>
+    {
+      notes.length > 0 ? (
+        <div class="note-grid">
+          {notes.map(({ translation, source }) => (
+            <article class="note-card">
+              <div class="note-card__meta">
+                <time datetime={source.data.publishedAt.toISOString()}>
+                  {source.data.publishedAt.toLocaleDateString('en-US', {
+                    dateStyle: 'long',
+                    timeZone: 'Asia/Taipei',
+                  })}
+                </time>
+              </div>
+              <h2>
+                <a href={withBase(`/en/notes/${translation.data.slug}.html`)}>
+                  {translation.data.title}
+                </a>
+              </h2>
+              {translation.data.excerpt && <p>{translation.data.excerpt}</p>}
+              <a
+                class="text-link"
+                href={withBase(`/en/notes/${translation.data.slug}.html`)}
+              >
+                Read note →
+              </a>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <p>{t.translationPending}</p>
+        </div>
+      )
+    }
+    <a
+      class="text-link"
+      href={withBase('/notes.html')}
+      hreflang="zh-Hant"
+      lang="zh-Hant">{t.browseChinese} →</a
+    >
   </section>
 </BaseLayout>

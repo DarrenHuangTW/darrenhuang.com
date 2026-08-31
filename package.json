@@ -33,6 +33,7 @@
     "verify:i18n": "tsx scripts/verify/i18n.ts",
     "verify:i18n:dist": "tsx scripts/verify/i18n-dist.ts",
     "verify:migration": "tsx scripts/verify/migration.ts",
+    "translation:manifest": "tsx scripts/translation-manifest.ts",
     "verify:production": "tsx scripts/verify/production.ts"
   },
   "dependencies": {

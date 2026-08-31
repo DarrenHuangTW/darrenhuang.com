@@ -1248,7 +1248,7 @@ test.describe('Phase 5 public-site acceptance', () => {
 
     const archiveResponse = await page.goto(runtimePath('/en/articles.html'));
     expect(archiveResponse?.ok()).toBe(true);
-    await expect(page.locator('main article')).toHaveCount(10);
+    await expect(page.locator('main article')).toHaveCount(86);
 
     const topicResponse = await page.goto(runtimePath('/en/tags/seo.html'));
     expect(topicResponse?.ok()).toBe(true);
@@ -1322,8 +1322,8 @@ test.describe('Phase 5 public-site acceptance', () => {
         translationKey?: string;
       }>;
     };
-    expect(englishApi.count).toBe(10);
-    expect(englishApi.items).toHaveLength(10);
+    expect(englishApi.count).toBe(86);
+    expect(englishApi.items).toHaveLength(86);
     expect(
       englishApi.items?.every(
         (item) =>
@@ -1344,7 +1344,7 @@ test.describe('Phase 5 public-site acceptance', () => {
     const englishLlmsResponse = await request.get(runtimePath('/en/llms.txt'));
     expect(englishLlmsResponse.ok()).toBe(true);
     expect(await englishLlmsResponse.text()).toContain(
-      '10 English article translations',
+      '86 English article translations',
     );
   });
 

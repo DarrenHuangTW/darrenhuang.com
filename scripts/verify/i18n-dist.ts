@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -17,10 +18,21 @@ interface TranslationEntry {
   title: string;
 }
 
+interface SocialTranslationEntry {
+  sourceId: string;
+  slug: string;
+  translationKey: string;
+  title: string;
+}
+
 interface SourceEntry {
   canonicalPath: string;
   publishedAt: string;
   slug: string;
+}
+
+interface StorySourceEntry extends SourceEntry {
+  pageCount: number;
 }
 
 const root = process.cwd();
@@ -33,6 +45,22 @@ const translationRoot = path.join(
   'en',
 );
 const sourceRoot = path.join(root, 'src', 'content', 'posts');
+const noteTranslationRoot = path.join(
+  root,
+  'src',
+  'content',
+  'note-translations',
+  'en',
+);
+const noteSourceRoot = path.join(root, 'src', 'content', 'notes');
+const storyTranslationRoot = path.join(
+  root,
+  'src',
+  'content',
+  'story-translations',
+  'en',
+);
+const storySourceRoot = path.join(root, 'src', 'content', 'stories');
 const failures: string[] = [];
 const configuredBase = normalizeBase(process.env.BASE_PATH ?? '/');
 const configuredSiteUrl = new URL(process.env.SITE_URL ?? PRODUCTION_SITE_URL);
@@ -110,6 +138,17 @@ async function walkFiles(directory: string): Promise<string[]> {
 function artifactForPath(pathname: string): string {
   if (pathname === '/') return path.join(distRoot, 'index.html');
   if (pathname === '/en/') return path.join(distRoot, 'en', 'index.html');
+  if (pathname.endsWith('/')) {
+    const directoryArtifact = path.join(
+      distRoot,
+      ...`${pathname.replace(/^\/+/, '')}index.html`.split('/'),
+    );
+    if (existsSync(directoryArtifact)) return directoryArtifact;
+    return path.join(
+      distRoot,
+      ...`${pathname.replace(/\/+$/u, '')}.html`.split('/'),
+    );
+  }
   return path.join(distRoot, ...pathname.replace(/^\/+/, '').split('/'));
 }
 
@@ -160,7 +199,11 @@ function normalizedSitemapUrl(value: string): string | undefined {
 
 function htmlPathForArtifact(file: string): string {
   const relative = path.relative(distRoot, file).replaceAll('\\', '/');
-  return relative === 'en/index.html' ? '/en/' : `/${relative}`;
+  if (relative === 'index.html') return '/';
+  if (relative.endsWith('/index.html')) {
+    return `/${relative.slice(0, -'index.html'.length)}`;
+  }
+  return `/${relative}`;
 }
 
 async function loadTranslations(): Promise<TranslationEntry[]> {
@@ -192,7 +235,42 @@ async function loadTranslations(): Promise<TranslationEntry[]> {
     });
   }
 
-  check(translations.length === 10, '英文站必須恰好發布 10 篇代表文章。');
+  const sourceFiles = (await walkFiles(sourceRoot)).filter((file) =>
+    /\.mdx?$/u.test(file),
+  );
+  check(
+    translations.length === sourceFiles.length,
+    `英文站必須為全部 ${sourceFiles.length} 篇來源文章提供已發布翻譯。`,
+  );
+  return translations;
+}
+
+async function loadSocialTranslations(
+  directory: string,
+  expectedPrefix: 'note' | 'story',
+): Promise<SocialTranslationEntry[]> {
+  const files = (await walkFiles(directory)).filter((file) =>
+    /\.mdx?$/u.test(file),
+  );
+  const translations: SocialTranslationEntry[] = [];
+  for (const file of files) {
+    const parsed = matter(await readFile(file, 'utf8'));
+    const data = parsed.data as UnknownRecord;
+    if (data.status !== 'published') continue;
+    const sourceId = stringValue(data.sourceId);
+    const slug = stringValue(data.slug);
+    const translationKey = stringValue(data.translationKey);
+    const title = stringValue(data.title);
+    if (!sourceId || !slug || !translationKey || !title) {
+      failures.push(`${path.relative(root, file)} 的已發布 metadata 不完整。`);
+      continue;
+    }
+    check(
+      translationKey === `${expectedPrefix}:${sourceId}`,
+      `${path.relative(root, file)} 的 translationKey 不正確。`,
+    );
+    translations.push({ sourceId, slug, translationKey, title });
+  }
   return translations;
 }
 
@@ -216,6 +294,51 @@ async function loadSources(): Promise<Map<string, SourceEntry>> {
   return sources;
 }
 
+async function loadNoteSources(): Promise<Map<string, SourceEntry>> {
+  const files = (await walkFiles(noteSourceRoot)).filter((file) =>
+    /\.mdx?$/u.test(file),
+  );
+  const sources = new Map<string, SourceEntry>();
+  for (const file of files) {
+    const data = matter(await readFile(file, 'utf8')).data as UnknownRecord;
+    const slug = stringValue(data.slug);
+    const canonicalPath = stringValue(data.canonicalPath);
+    const publishedAt = dateValue(data.publishedAt);
+    if (
+      slug &&
+      canonicalPath &&
+      publishedAt &&
+      data.editorialStatus === 'published'
+    ) {
+      sources.set(slug, { canonicalPath, publishedAt, slug });
+    }
+  }
+  return sources;
+}
+
+async function loadStorySources(): Promise<Map<string, StorySourceEntry>> {
+  const files = (await walkFiles(storySourceRoot)).filter((file) =>
+    file.endsWith('.json'),
+  );
+  const sources = new Map<string, StorySourceEntry>();
+  for (const file of files) {
+    const data = JSON.parse(await readFile(file, 'utf8')) as UnknownRecord;
+    const slug = stringValue(data.slug);
+    const canonicalPath = stringValue(data.canonicalPath);
+    const publishedAt = dateValue(data.publishedAt);
+    const transcript = Array.isArray(data.transcript) ? data.transcript : [];
+    if (slug && canonicalPath && publishedAt) {
+      sources.set(slug, {
+        canonicalPath,
+        pageCount: transcript.length,
+        publishedAt,
+        slug,
+      });
+    }
+  }
+  return sources;
+}
+
 function alternateMap(
   $: ReturnType<typeof load>,
 ): Map<string, string | undefined> {
@@ -231,10 +354,10 @@ function alternateMap(
 
 async function verifyEnglishHtmlSurface(): Promise<void> {
   const englishRoot = path.join(distRoot, 'en');
-  const files = (await walkFiles(englishRoot)).filter((file) =>
-    file.endsWith('.html'),
+  const files = (await walkFiles(englishRoot)).filter(
+    (file) => file.endsWith('.html') && !file.endsWith(`${path.sep}story.html`),
   );
-  check(files.length >= 22, '英文站 HTML 產物數量異常。');
+  check(files.length >= 120, '英文站 HTML 產物數量異常。');
 
   for (const file of files) {
     const pathname = htmlPathForArtifact(file);
@@ -467,6 +590,198 @@ async function verifyArticles(
   return counterparts;
 }
 
+async function verifyNotes(
+  translations: SocialTranslationEntry[],
+  sources: Map<string, SourceEntry>,
+  counterparts: Map<string, string>,
+): Promise<void> {
+  for (const translation of translations) {
+    const source = sources.get(translation.sourceId);
+    if (!check(source, `找不到來源 Facebook 筆記：${translation.sourceId}`)) {
+      continue;
+    }
+    const englishPath = `/en/notes/${translation.slug}.html`;
+    counterparts.set(englishPath, source.canonicalPath);
+    await verifyCounterpartHtml(
+      englishPath,
+      source.canonicalPath,
+      translation.translationKey,
+    );
+
+    const htmlFile = artifactForPath(englishPath);
+    if (!(await exists(htmlFile))) continue;
+    const $ = load(await readFile(htmlFile, 'utf8'));
+    check(
+      $('meta[property="article:published_time"]').attr('content') ===
+        source.publishedAt,
+      `${englishPath} 沒有保留原始 published date ${source.publishedAt}。`,
+    );
+    check(
+      $('.article__source-tagline')
+        .text()
+        .includes('Original Chinese Facebook tagline'),
+      `${englishPath} 缺少原始中文 Facebook 標語說明。`,
+    );
+    check(
+      $('.note-review-banner').length === 0,
+      `${englishPath} 仍顯示待審核 banner。`,
+    );
+    $('.prose [src], .prose a[href]').each((_index, element) => {
+      const attribute = $(element).is('a') ? 'href' : 'src';
+      const value = $(element).attr(attribute) ?? '';
+      check(
+        !value.startsWith('./') && !value.startsWith('../'),
+        `${englishPath} 仍含未解析的相對 ${attribute}：${value}`,
+      );
+    });
+
+    const markdownFile = markdownArtifactForPath(englishPath);
+    if (
+      !check(await exists(markdownFile), `${englishPath} 缺少 Markdown 版本。`)
+    )
+      continue;
+    const markdown = matter(await readFile(markdownFile, 'utf8'));
+    const data = markdown.data as UnknownRecord;
+    check(data.locale === 'en', `${englishPath} Markdown locale 必須是 en。`);
+    check(
+      data.language === 'en',
+      `${englishPath} Markdown language 必須是 en。`,
+    );
+    check(
+      data.translationKey === translation.translationKey,
+      `${englishPath} Markdown translationKey 不正確。`,
+    );
+    check(
+      normalizedUrl(stringValue(data.canonical) ?? '') ===
+        absolute(englishPath),
+      `${englishPath} Markdown canonical 不正確。`,
+    );
+    check(
+      dateValue(data.published) === source.publishedAt,
+      `${englishPath} Markdown 沒有保留原始 published date。`,
+    );
+    check(
+      markdown.content.includes('Original Chinese Facebook tagline'),
+      `${englishPath} Markdown 缺少 Facebook 原文說明。`,
+    );
+  }
+}
+
+async function verifyStories(
+  translations: SocialTranslationEntry[],
+  sources: Map<string, StorySourceEntry>,
+  counterparts: Map<string, string>,
+): Promise<void> {
+  for (const translation of translations) {
+    const source = sources.get(translation.sourceId);
+    if (!check(source, `找不到來源 Web Story：${translation.sourceId}`))
+      continue;
+    const englishPath = `/en/web-stories/${translation.slug}/`;
+    counterparts.set(englishPath, source.canonicalPath);
+    await verifyCounterpartHtml(
+      englishPath,
+      source.canonicalPath,
+      translation.translationKey,
+    );
+
+    const htmlFile = artifactForPath(englishPath);
+    if (!(await exists(htmlFile))) continue;
+    const $ = load(await readFile(htmlFile, 'utf8'));
+    check(
+      $('meta[property="article:published_time"]').attr('content') ===
+        source.publishedAt,
+      `${englishPath} 沒有保留原始 published date ${source.publishedAt}。`,
+    );
+    check(
+      $('.story-transcript > ol > li').length === source.pageCount,
+      `${englishPath} 的逐頁文字稿數量不正確。`,
+    );
+    check(
+      !/\p{Script=Han}/u.test($('.story-transcript').text()),
+      `${englishPath} 的英文逐頁文字稿仍含中文字元。`,
+    );
+    const iframe = $('.story-player iframe').attr('src');
+    check(
+      iframe ===
+        withConfiguredBase(`/en/web-stories/${translation.slug}/story.html`),
+      `${englishPath} 的 AMP iframe 未連到英文故事 artifact。`,
+    );
+
+    const ampFile = path.join(
+      distRoot,
+      'en',
+      'web-stories',
+      translation.slug,
+      'story.html',
+    );
+    if (!check(await exists(ampFile), `${englishPath} 缺少英文 AMP artifact。`))
+      continue;
+    const amp = load(await readFile(ampFile, 'utf8'));
+    check(
+      amp('html').attr('lang') === 'en',
+      `${englishPath} AMP lang 必須是 en。`,
+    );
+    check(
+      normalizedUrl(amp('link[rel="canonical"]').attr('href') ?? '') ===
+        absolute(englishPath),
+      `${englishPath} AMP canonical 不正確。`,
+    );
+    amp('[alt]').each((_index, element) => {
+      const alt = amp(element).attr('alt') ?? '';
+      check(Boolean(alt.trim()), `${englishPath} AMP 媒體缺少 alt。`);
+      check(
+        !/\p{Script=Han}/u.test(alt),
+        `${englishPath} AMP 媒體 alt 仍含中文字元。`,
+      );
+    });
+    amp(
+      '[src], [poster], [artwork], [href], [srcset], [publisher-logo-src]',
+    ).each((_index, element) => {
+      for (const attribute of [
+        'src',
+        'poster',
+        'artwork',
+        'href',
+        'srcset',
+        'publisher-logo-src',
+      ]) {
+        const value = amp(element).attr(attribute);
+        if (!value) continue;
+        check(
+          !value
+            .split(/\s|,/u)
+            .some((part) => part.startsWith('./') || part.startsWith('../')),
+          `${englishPath} AMP 仍含相對資產 URL。`,
+        );
+      }
+    });
+
+    const markdownFile = markdownArtifactForPath(englishPath);
+    if (
+      !check(await exists(markdownFile), `${englishPath} 缺少 Markdown 版本。`)
+    )
+      continue;
+    const markdown = matter(await readFile(markdownFile, 'utf8'));
+    check(
+      markdown.data.locale === 'en',
+      `${englishPath} Markdown locale 必須是 en。`,
+    );
+    check(
+      markdown.data.language === 'en',
+      `${englishPath} Markdown language 必須是 en。`,
+    );
+    check(
+      markdown.data.translationKey === translation.translationKey,
+      `${englishPath} Markdown translationKey 不正確。`,
+    );
+    check(
+      normalizedUrl(stringValue(markdown.data.canonical) ?? '') ===
+        absolute(englishPath),
+      `${englishPath} Markdown canonical 不正確。`,
+    );
+  }
+}
+
 async function verifyTaxonomyCounterparts(
   counterparts: Map<string, string>,
 ): Promise<void> {
@@ -582,6 +897,7 @@ function itemsFromApi(
 
 async function verifyApiAndAgentContent(
   translations: TranslationEntry[],
+  noteTranslations: SocialTranslationEntry[],
 ): Promise<void> {
   const articles = await parseJsonArtifact('api/en/articles.json');
   const content = await parseJsonArtifact('api/en/content.json');
@@ -592,15 +908,35 @@ async function verifyApiAndAgentContent(
   const noteItems = itemsFromApi(notes, 'api/en/notes.json');
   const combinedItems = itemsFromApi(combined, 'api/content.json');
 
-  check(articles?.count === 10, '英文 articles API count 必須是 10。');
-  check(content?.count === 10, '英文 content API count 必須是 10。');
-  check(notes?.count === 0, '英文 notes API count 必須是 0。');
-  check(articleItems.length === 10, '英文 articles API 必須包含 10 筆。');
-  check(contentItems.length === 10, '英文 content API 必須包含 10 筆。');
-  check(noteItems.length === 0, '英文 notes API 目前必須為空。');
+  const expectedContentCount = translations.length + noteTranslations.length;
   check(
-    combinedItems.filter((item) => item.locale === 'en').length === 10,
-    '整站 content API 必須包含 10 筆英文內容。',
+    articles?.count === translations.length,
+    '英文 articles API count 與翻譯數量不符。',
+  );
+  check(
+    content?.count === expectedContentCount,
+    '英文 content API count 與翻譯數量不符。',
+  );
+  check(
+    notes?.count === noteTranslations.length,
+    '英文 notes API count 與翻譯數量不符。',
+  );
+  check(
+    articleItems.length === translations.length,
+    '英文 articles API 筆數不符。',
+  );
+  check(
+    contentItems.length === expectedContentCount,
+    '英文 content API 筆數不符。',
+  );
+  check(
+    noteItems.length === noteTranslations.length,
+    '英文 notes API 筆數不符。',
+  );
+  check(
+    combinedItems.filter((item) => item.locale === 'en').length ===
+      expectedContentCount,
+    '整站 content API 的英文內容數量不符。',
   );
 
   const expectedKeys = new Set(translations.map((item) => item.translationKey));
@@ -636,6 +972,46 @@ async function verifyApiAndAgentContent(
     );
   }
 
+  const expectedNoteKeys = new Set(
+    noteTranslations.map((item) => item.translationKey),
+  );
+  for (const item of noteItems) {
+    const slug = stringValue(item.slug) ?? '(missing slug)';
+    check(item.locale === 'en', `英文 note API ${slug} 的 locale 必須是 en。`);
+    check(
+      item.language === 'en',
+      `英文 note API ${slug} 的 language 必須是 en。`,
+    );
+    check(
+      expectedNoteKeys.has(stringValue(item.translationKey) ?? ''),
+      `英文 note API ${slug} 的 translationKey 不正確。`,
+    );
+    check(
+      normalizedUrl(stringValue(item.canonicalUrl) ?? '') ===
+        absolute(`/en/notes/${slug}.html`),
+      `英文 note API ${slug} 的 canonicalUrl 不正確。`,
+    );
+    check(
+      normalizedUrl(stringValue(item.markdownUrl) ?? '') ===
+        absolute(`/en/notes/${slug}.md`),
+      `英文 note API ${slug} 的 markdownUrl 不正確。`,
+    );
+    check(
+      normalizedUrl(stringValue(item.apiUrl) ?? '') ===
+        absolute(`/api/en/notes/${slug}.json`),
+      `英文 note API ${slug} 的 apiUrl 不正確。`,
+    );
+    const detail = await parseJsonArtifact(`api/en/notes/${slug}.json`);
+    check(
+      detail?.locale === 'en',
+      `英文 note detail API ${slug} locale 不正確。`,
+    );
+    check(
+      detail?.translationKey === item.translationKey,
+      `英文 note detail API ${slug} translationKey 不正確。`,
+    );
+  }
+
   for (const relative of [
     'en/llms.txt',
     'en/articles-llms.txt',
@@ -647,8 +1023,10 @@ async function verifyApiAndAgentContent(
   if (await exists(path.join(distRoot, 'en', 'llms.txt'))) {
     const llms = await readFile(path.join(distRoot, 'en', 'llms.txt'), 'utf8');
     check(
-      llms.includes('currently publishes 10 English article translations'),
-      '英文 llms.txt 沒有正確揭露 10 篇翻譯。',
+      llms.includes(
+        `currently publishes ${translations.length} English article translations`,
+      ),
+      '英文 llms.txt 沒有正確揭露文章翻譯數量。',
     );
     check(
       llms.includes('/api/en/content.json'),
@@ -671,7 +1049,10 @@ async function verifyRss(translations: TranslationEntry[]): Promise<void> {
     $('channel > language').text() === 'en-US',
     '英文 RSS language 必須是 en-US。',
   );
-  check($('item').length === 10, '英文 RSS 必須恰好包含 10 篇文章。');
+  check(
+    $('item').length === translations.length,
+    '英文 RSS 項目數量必須與英文文章翻譯數量一致。',
+  );
   for (const translation of translations) {
     check(
       links.has(absolute(`/en/${translation.slug}.html`)),
@@ -685,20 +1066,33 @@ async function main(): Promise<void> {
     throw new Error('找不到 dist。請先執行 npm run build。');
   }
 
-  const [translations, sources] = await Promise.all([
+  const [
+    translations,
+    sources,
+    noteTranslations,
+    noteSources,
+    storyTranslations,
+    storySources,
+  ] = await Promise.all([
     loadTranslations(),
     loadSources(),
+    loadSocialTranslations(noteTranslationRoot, 'note'),
+    loadNoteSources(),
+    loadSocialTranslations(storyTranslationRoot, 'story'),
+    loadStorySources(),
   ]);
   await verifyEnglishHtmlSurface();
   for (const [englishPath, chinesePath] of interfaceCounterparts) {
     await verifyCounterpartHtml(englishPath, chinesePath);
   }
   const counterparts = await verifyArticles(translations, sources);
+  await verifyNotes(noteTranslations, noteSources, counterparts);
+  await verifyStories(storyTranslations, storySources, counterparts);
   await verifyTaxonomyCounterparts(counterparts);
   await Promise.all([
     verifySitemap(counterparts),
     verifyRss(translations),
-    verifyApiAndAgentContent(translations),
+    verifyApiAndAgentContent(translations, noteTranslations),
   ]);
 
   if (failures.length > 0) {
@@ -712,7 +1106,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `[verify:i18n:dist] PASS：11 個英文介面頁、${translations.length} 篇英文文章、RSS、sitemap、Markdown 與 API 均符合多語系規格。`,
+    `[verify:i18n:dist] PASS：11 個英文介面頁、${translations.length} 篇英文文章、${noteTranslations.length} 篇英文筆記、${storyTranslations.length} 個英文 Web Stories、RSS、sitemap、Markdown 與 API 均符合多語系規格。`,
   );
 }
 

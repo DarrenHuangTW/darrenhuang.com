@@ -647,7 +647,7 @@ const enMessages = {
     statsLabel: 'notes saved locally',
     title: 'Digital Engine notes',
     translationPending:
-      'English translations of the saved Facebook notes will be added in a later release.',
+      'No English saved Facebook notes are currently published.',
   },
   taxonomy: {
     categories: {
@@ -905,8 +905,7 @@ const enMessages = {
         'The original page order and media, with a complete text transcript.',
       readStory: 'Read story',
       title: 'Web Stories',
-      translationPending:
-        'English page-by-page story text will be added in a later release.',
+      translationPending: 'No English Web Stories are currently published.',
     },
   },
   notFound: {

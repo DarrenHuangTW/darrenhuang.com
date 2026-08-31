@@ -135,10 +135,12 @@ export function taxonomyAlternates(
 ): Partial<Record<Locale, string>> {
   const translations = TAXONOMY_TRANSLATIONS.en[kind];
   const entries = Object.entries(translations);
-  const match = entries.find(
-    ([sourceLabel, englishLabel]) =>
-      label === sourceLabel || label === englishLabel,
-  );
+  // Prefer an exact source-label match before matching a translated label.
+  // This matters when a source tag such as `SEO` is also the English label
+  // for another source tag such as `SEO相關`.
+  const match =
+    entries.find(([sourceLabel]) => label === sourceLabel) ??
+    entries.find(([, englishLabel]) => label === englishLabel);
   if (!match) return {};
 
   const [sourceLabel, englishLabel] = match;

@@ -22,7 +22,14 @@ interface Props {
   headings: ArticleHeading[];
   journey: Journey;
   locale?: Locale;
-  relatedNotes: CollectionEntry<'notes'>[];
+  relatedNotes: Array<{
+    data: {
+      canonicalPath: string;
+      excerpt: string;
+      publishedAt: Date;
+      title: string;
+    };
+  }>;
   readingMinutes: number;
 }
 

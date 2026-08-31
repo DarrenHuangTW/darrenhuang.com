@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content';
 import NoteLayout from '@/layouts/NoteLayout.astro';
 import { prepareArticleHtml } from '@/lib/article-experience';
 import { getRelatedContentForNote } from '@/lib/content-relations';
+import { getEnglishNoteRoutes } from '@/lib/localized-social';
 
 export async function getStaticPaths() {
   const notes = await getCollection(
@@ -30,6 +31,9 @@ const relations = getRelatedContentForNote(
   await getCollection('posts'),
   await getCollection('notes'),
 );
+const englishRoute = (await getEnglishNoteRoutes()).find(
+  ({ source }) => source.data.slug === entry.data.slug,
+);
 ---
 
 <NoteLayout
@@ -38,6 +42,12 @@ const relations = getRelatedContentForNote(
   relatedNotes={relations.notes}
   relatedPosts={relations.posts}
   readingMinutes={prepared.readingMinutes}
+  alternates={englishRoute
+    ? {
+        'zh-hant': entry.data.canonicalPath,
+        en: `/en/notes/${englishRoute.translation.data.slug}.html`,
+      }
+    : undefined}
 >
   <Fragment set:html={prepared.html} />
 </NoteLayout>

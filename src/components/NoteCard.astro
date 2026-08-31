@@ -1,21 +1,33 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import { formatDate } from '@/lib/content';
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
+import { getMessages } from '@/i18n/messages';
+import { formatLocalizedDate } from '@/lib/i18n';
 import { withBase } from '@/lib/urls';
 
 interface Props {
-  note: CollectionEntry<'notes'>;
+  note: {
+    data: {
+      canonicalPath: string;
+      editorialStatus: 'review' | 'published' | 'excluded';
+      excerpt: string;
+      noteKind: 'historical' | 'reflection' | 'technical' | 'experiment';
+      publishedAt: Date;
+      title: string;
+    };
+  };
+  locale?: Locale;
 }
 
-const { note } = Astro.props;
+const { note, locale = DEFAULT_LOCALE } = Astro.props;
+const t = getMessages(locale).cards.note;
 const statusLabel =
-  note.data.editorialStatus === 'review' ? '草稿審核中' : '已整理';
+  note.data.editorialStatus === 'review' ? t.statusReview : t.statusPublished;
 ---
 
 <article class="note-card">
   <div class="note-card__meta">
     <time datetime={note.data.publishedAt.toISOString()}>
-      {formatDate(note.data.publishedAt)}
+      {formatLocalizedDate(note.data.publishedAt, locale)}
     </time>
     <span>{statusLabel}</span>
   </div>
@@ -27,15 +39,16 @@ const statusLabel =
   {note.data.excerpt && <p>{note.data.excerpt}</p>}
   <div class="note-card__footer">
     <span
-      >{note.data.noteKind === 'historical' ? '歷史保存' : '數位引擎筆記'}</span
+      >{note.data.noteKind === 'historical' ? t.historical : t.siteNote}</span
     >
     <a
       class="text-link"
       href={withBase(note.data.canonicalPath)}
       data-astro-prefetch="hover"
-      aria-label={`閱讀〈${note.data.title}〉`}
+      aria-label={t.readAria(note.data.title)}
     >
-      閱讀筆記 <span aria-hidden="true">→</span>
+      {t.read}
+      <span aria-hidden="true">→</span>
     </a>
   </div>
 </article>

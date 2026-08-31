@@ -1,0 +1,83 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+import NoteLayout from '@/layouts/NoteLayout.astro';
+import { prepareArticleHtml } from '@/lib/article-experience';
+import { getRelatedContentForNote } from '@/lib/content-relations';
+import { localizeTranslatedHtml } from '@/lib/localize-html';
+import { englishNoteView, getEnglishNoteRoutes } from '@/lib/localized-social';
+import {
+  getEnglishCounterparts,
+  getEnglishPostRoutes,
+} from '@/lib/localized-content';
+
+export async function getStaticPaths() {
+  const routes = await getEnglishNoteRoutes();
+  return routes.map(({ translation, source }) => ({
+    params: { slug: translation.data.slug },
+    props: { translation, source },
+  }));
+}
+
+const { translation, source } = Astro.props as {
+  translation: CollectionEntry<'noteTranslations'>;
+  source: CollectionEntry<'notes'>;
+};
+await render(translation);
+const localizedHtml = localizeTranslatedHtml(translation.rendered?.html ?? '', {
+  counterparts: await getEnglishCounterparts(),
+  sourceCanonicalPath: source.data.canonicalPath,
+});
+const prepared = prepareArticleHtml(localizedHtml);
+const relations = getRelatedContentForNote(
+  source,
+  await getCollection('posts'),
+  await getCollection('notes'),
+);
+const englishPosts = new Map(
+  (await getEnglishPostRoutes()).map(({ source: postSource, post }) => [
+    postSource.data.slug,
+    post,
+  ]),
+);
+const englishNotes = new Map(
+  (await getEnglishNoteRoutes()).map((route) => [
+    route.source.data.slug,
+    englishNoteView(route),
+  ]),
+);
+const localizedRelations = {
+  posts: relations.posts.flatMap((related) => {
+    const localized = englishPosts.get(related.data.slug);
+    return localized ? [localized] : [];
+  }),
+  notes: relations.notes.flatMap((related) => {
+    const localized = englishNotes.get(related.data.slug);
+    return localized ? [localized] : [];
+  }),
+};
+const data = {
+  ...source.data,
+  ...translation.data,
+  slug: translation.data.slug,
+  canonicalPath: `/en/notes/${translation.data.slug}.html`,
+  publishedAt: source.data.publishedAt,
+  updatedAt: source.data.updatedAt,
+  editorialStatus: source.data.editorialStatus,
+};
+---
+
+<NoteLayout
+  data={data}
+  headings={prepared.headings}
+  relatedNotes={localizedRelations.notes}
+  relatedPosts={localizedRelations.posts}
+  readingMinutes={prepared.readingMinutes}
+  locale="en"
+  originalFacebookTagline={translation.data.originalFacebookTagline}
+  translationKey={translation.data.translationKey}
+  sourceCanonicalPath={source.data.canonicalPath}
+  alternates={{ 'zh-hant': source.data.canonicalPath, en: data.canonicalPath }}
+>
+  <Fragment set:html={prepared.html} />
+</NoteLayout>

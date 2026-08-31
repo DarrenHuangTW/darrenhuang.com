@@ -166,6 +166,20 @@ export async function getEnglishCounterparts(): Promise<Map<string, string>> {
   for (const { post, source } of await getEnglishPostRoutes()) {
     counterparts.set(source.data.canonicalPath, post.data.canonicalPath);
   }
+  const { getEnglishNoteRoutes, getEnglishStoryRoutes } =
+    await import('./localized-social');
+  for (const { source, translation } of await getEnglishNoteRoutes()) {
+    counterparts.set(
+      source.data.canonicalPath,
+      `/en/notes/${translation.data.slug}.html`,
+    );
+  }
+  for (const { source, translation } of await getEnglishStoryRoutes()) {
+    counterparts.set(
+      source.data.canonicalPath,
+      `/en/web-stories/${translation.data.slug}/`,
+    );
+  }
   return counterparts;
 }
 

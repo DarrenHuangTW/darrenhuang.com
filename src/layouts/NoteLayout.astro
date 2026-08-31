@@ -1,23 +1,59 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import ImageLightbox from '@/components/ImageLightbox.astro';
 import ReadingHud from '@/components/ReadingHud.astro';
 import RelatedContent from '@/components/RelatedContent.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import type { ArticleHeading } from '@/lib/article-experience';
-import { formatDate } from '@/lib/content';
-import { slugifyTaxonomy, withBase } from '@/lib/urls';
+import { formatLocalizedDate, localizedPath } from '@/lib/i18n';
+import { getMessages } from '@/i18n/messages';
+import { slugifyTaxonomy } from '@/lib/urls';
+import type { Locale } from '@/i18n/config';
 
 interface Props {
-  data: CollectionEntry<'notes'>['data'];
+  data: {
+    canonicalPath: string;
+    categories: string[];
+    excerpt: string;
+    publishedAt: Date;
+    source: { url: string | null };
+    sourceLinks: string[];
+    tags: string[];
+    title: string;
+    updatedAt: Date;
+    editorialStatus: 'review' | 'published' | 'excluded';
+  };
   headings: ArticleHeading[];
-  relatedNotes: CollectionEntry<'notes'>[];
-  relatedPosts: CollectionEntry<'posts'>[];
+  relatedNotes: Array<{
+    data: {
+      canonicalPath: string;
+      excerpt: string;
+      publishedAt: Date;
+      title: string;
+    };
+  }>;
+  relatedPosts: Array<{
+    data: {
+      canonicalPath: string;
+      excerpt: string;
+      publishedAt: Date;
+      title: string;
+    };
+  }>;
   readingMinutes: number;
+  locale?: Locale;
+  alternates?: Partial<Record<Locale, string>>;
+  originalFacebookTagline?: string;
+  sourceCanonicalPath?: string;
+  translationKey?: string;
 }
 
 const { data, headings, relatedNotes, relatedPosts, readingMinutes } =
   Astro.props;
+const locale = Astro.props.locale ?? 'zh-hant';
+const originalFacebookTagline = Astro.props.originalFacebookTagline;
+const sourceCanonicalPath = Astro.props.sourceCanonicalPath;
+const alternates = Astro.props.alternates;
+const t = getMessages(locale).note;
 const hasTableOfContents = headings.length >= 3;
 const isReview = data.editorialStatus === 'review';
 const sourceLinkLabel = (href: string): string => {
@@ -33,6 +69,12 @@ const sourceLinkLabel = (href: string): string => {
   title={data.title}
   description={data.excerpt}
   canonicalPath={data.canonicalPath}
+  locale={locale}
+  translationKey={locale === 'en' ? Astro.props.translationKey : undefined}
+  alternates={alternates ??
+    (locale === 'en' && sourceCanonicalPath
+      ? { 'zh-hant': sourceCanonicalPath, en: data.canonicalPath }
+      : undefined)}
   type="article"
   publishedAt={data.publishedAt}
   updatedAt={data.updatedAt}
@@ -44,29 +86,51 @@ const sourceLinkLabel = (href: string): string => {
 
   <article class="article note-article">
     <header class="article__header shell shell--article">
-      <div class="eyebrow">數位引擎筆記 · Facebook 保存</div>
+      <div class="eyebrow">{t.eyebrow}</div>
       <h1>{data.title}</h1>
       {data.excerpt && <p class="article__dek">{data.excerpt}</p>}
       <div class="article__byline">
-        <span>原始分享於數位引擎 Facebook</span>
+        <span>{t.originalFacebookByline}</span>
+        {
+          originalFacebookTagline && (
+            <span class="article__source-tagline">
+              {locale === 'en'
+                ? `Original Chinese Facebook tagline: ${originalFacebookTagline}`
+                : originalFacebookTagline}
+            </span>
+          )
+        }
         <span aria-hidden="true">·</span>
         <time datetime={data.publishedAt.toISOString()}>
-          {formatDate(data.publishedAt)}
+          {formatLocalizedDate(data.publishedAt, locale)}
         </time>
         <span aria-hidden="true">·</span>
-        <span>約 {readingMinutes} 分鐘</span>
+        <span
+          >{
+            locale === 'en'
+              ? `${readingMinutes} min read`
+              : `約 ${readingMinutes} 分鐘`
+          }</span
+        >
         {
           data.updatedAt.getTime() !== data.publishedAt.getTime() && (
             <span class="article__updated">
-              整理於 {formatDate(data.updatedAt)}
+              {locale === 'en'
+                ? t.organizedAt(formatLocalizedDate(data.updatedAt, locale))
+                : t.organizedAt(formatLocalizedDate(data.updatedAt, locale))}
             </span>
           )
         }
       </div>
       {
         isReview && (
-          <aside class="note-review-banner" aria-label="編輯狀態">
-            這是本地審核草稿，尚未列入正式內容索引。
+          <aside
+            class="note-review-banner"
+            aria-label={locale === 'en' ? 'Editorial status' : '編輯狀態'}
+          >
+            {locale === 'en'
+              ? 'This is a local review draft and is not included in the public content index.'
+              : '這是本地審核草稿，尚未列入正式內容索引。'}
           </aside>
         )
       }
@@ -84,10 +148,9 @@ const sourceLinkLabel = (href: string): string => {
       <div class="article__content">
         <div class="note-source-card">
           <div>
-            <strong>來源註記</strong>
+            <strong>{t.sourceHeading}</strong>
             <p>
-              這篇內容保留 Facebook
-              貼文的原始脈絡，部分工具、介面與外部連結可能已經改變。
+              {t.sourceContext}
             </p>
           </div>
           {
@@ -97,7 +160,7 @@ const sourceLinkLabel = (href: string): string => {
                 href={data.source.url}
                 rel="noopener noreferrer"
               >
-                <span>查看原始貼文</span>
+                <span>{t.viewOriginal}</span>
                 <span class="note-source-card__url">{data.source.url}</span>
               </a>
             )
@@ -111,7 +174,7 @@ const sourceLinkLabel = (href: string): string => {
         {
           data.sourceLinks.length > 0 && (
             <section class="note-links" aria-labelledby="note-links-title">
-              <h2 id="note-links-title">原文提到的連結</h2>
+              <h2 id="note-links-title">{t.mentionedLinks}</h2>
               <ul>
                 {data.sourceLinks.map((href) => (
                   <li>
@@ -130,13 +193,14 @@ const sourceLinkLabel = (href: string): string => {
             <footer class="article__taxonomy">
               {data.categories.length > 0 && (
                 <div>
-                  <strong>分類</strong>
+                  <strong>{t.categories}</strong>
                   <ul>
                     {data.categories.map((category) => (
                       <li>
                         <a
-                          href={withBase(
+                          href={localizedPath(
                             `/categories/${slugifyTaxonomy(category)}.html`,
+                            locale,
                           )}
                         >
                           {category}
@@ -148,12 +212,15 @@ const sourceLinkLabel = (href: string): string => {
               )}
               {data.tags.length > 0 && (
                 <div>
-                  <strong>標籤</strong>
+                  <strong>{t.tags}</strong>
                   <ul>
                     {data.tags.map((tag) => (
                       <li>
                         <a
-                          href={withBase(`/tags/${slugifyTaxonomy(tag)}.html`)}
+                          href={localizedPath(
+                            `/tags/${slugifyTaxonomy(tag)}.html`,
+                            locale,
+                          )}
                         >
                           {tag}
                         </a>
@@ -166,9 +233,13 @@ const sourceLinkLabel = (href: string): string => {
           )
         }
 
-        <RelatedContent notes={relatedNotes} posts={relatedPosts} />
+        <RelatedContent
+          locale={locale}
+          notes={relatedNotes}
+          posts={relatedPosts}
+        />
       </div>
     </div>
   </article>
-  <ImageLightbox />
+  <ImageLightbox locale={locale} />
 </BaseLayout>

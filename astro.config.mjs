@@ -26,6 +26,9 @@ const notesContentDirectory = fileURLToPath(
 const postTranslationsDirectory = fileURLToPath(
   new URL('./src/content/post-translations/en/', import.meta.url),
 );
+const storyTranslationsDirectory = fileURLToPath(
+  new URL('./src/content/story-translations/en/', import.meta.url),
+);
 const storySlugs = existsSync(storyContentDirectory)
   ? readdirSync(storyContentDirectory)
       .filter((filename) => filename.endsWith('.json'))
@@ -36,6 +39,22 @@ const storySlugs = existsSync(storyContentDirectory)
           ).slug,
       )
       .filter((slug) => typeof slug === 'string' && slug.length > 0)
+  : [];
+const englishStorySlugs = existsSync(storyTranslationsDirectory)
+  ? readdirSync(storyTranslationsDirectory)
+      .filter(
+        (filename) => filename.endsWith('.md') || filename.endsWith('.mdx'),
+      )
+      .map((filename) => {
+        const source = readFileSync(
+          path.join(storyTranslationsDirectory, filename),
+          'utf8',
+        );
+        const status = /^status:\s*published\s*$/mu.test(source);
+        const slug = /^slug:\s*([^\s]+)\s*$/mu.exec(source)?.[1];
+        return status && slug ? slug : null;
+      })
+      .filter((slug) => slug !== null)
   : [];
 const publishedNoteSlugs = existsSync(notesContentDirectory)
   ? readdirSync(notesContentDirectory)
@@ -131,6 +150,25 @@ function storyDirectoryOutput() {
           mkdirSync(destinationDirectory, { recursive: true });
           renameSync(source, path.join(destinationDirectory, 'index.html'));
         }
+
+        for (const slug of englishStorySlugs) {
+          const source = path.join(
+            outputDirectory,
+            'en',
+            'web-stories',
+            `${slug}.html`,
+          );
+          const destinationDirectory = path.join(
+            outputDirectory,
+            'en',
+            'web-stories',
+            slug,
+          );
+          if (!existsSync(source))
+            throw new Error(`Missing generated English Story route: ${source}`);
+          mkdirSync(destinationDirectory, { recursive: true });
+          renameSync(source, path.join(destinationDirectory, 'index.html'));
+        }
       },
     },
   };
@@ -214,11 +252,16 @@ export default defineConfig({
           const storySlug = storySlugs.find(
             (slug) => routePath === `/web-stories/${slug}`,
           );
+          const englishStorySlug = englishStorySlugs.find(
+            (slug) => routePath === `/en/web-stories/${slug}`,
+          );
 
           if (routePath === '/en') {
             url.pathname = `${normalizedBase}/en/`;
           } else if (storySlug) {
             url.pathname = `${normalizedBase}/web-stories/${storySlug}/`;
+          } else if (englishStorySlug) {
+            url.pathname = `${normalizedBase}/en/web-stories/${englishStorySlug}/`;
           } else if (routePath !== '/' && !path.posix.extname(routePath)) {
             url.pathname = `${normalizedBase}${routePath}.html`;
           }

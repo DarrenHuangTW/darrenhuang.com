@@ -1,5 +1,5 @@
 ---
-import { render } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import type { EnglishPostRoute } from '@/lib/localized-content';
 import ArticleLayout from '@/layouts/ArticleLayout.astro';
 import {
@@ -12,6 +12,8 @@ import {
   getEnglishPostRoutes,
   getLocalizedPostsNewestFirst,
 } from '@/lib/localized-content';
+import { getRelatedNotesForPost } from '@/lib/content-relations';
+import { englishNoteView, getEnglishNoteRoutes } from '@/lib/localized-social';
 
 export async function getStaticPaths() {
   return (await getEnglishPostRoutes()).map((route) => ({
@@ -33,13 +35,30 @@ const localizedHtml = localizeTranslatedHtml(sourceHtml, {
 const articleExperience = prepareArticleHtml(localizedHtml);
 const posts = await getLocalizedPostsNewestFirst('en');
 const articleJourney = getArticleJourney(route.post, posts);
+const sourceRelatedNotes = getRelatedNotesForPost(
+  route.source,
+  await getCollection(
+    'notes',
+    ({ data }) => data.editorialStatus === 'published',
+  ),
+);
+const englishNotes = new Map(
+  (await getEnglishNoteRoutes()).map((noteRoute) => [
+    noteRoute.source.data.slug,
+    englishNoteView(noteRoute),
+  ]),
+);
+const relatedNotes = sourceRelatedNotes.flatMap((note) => {
+  const localized = englishNotes.get(note.data.slug);
+  return localized ? [localized] : [];
+});
 ---
 
 <ArticleLayout
   data={route.post.data}
   headings={articleExperience.headings}
   journey={articleJourney}
-  relatedNotes={[]}
+  relatedNotes={relatedNotes}
   readingMinutes={articleExperience.readingMinutes}
   locale="en"
   alternates={{

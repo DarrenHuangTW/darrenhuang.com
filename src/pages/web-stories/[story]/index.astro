@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { formatDate } from '@/lib/content';
 import { withBase } from '@/lib/urls';
+import { getEnglishStoryRoutes } from '@/lib/localized-social';
 
 interface Props {
   story: CollectionEntry<'stories'>;
@@ -20,6 +21,9 @@ export async function getStaticPaths() {
 
 const { story } = Astro.props as Props;
 const { data } = story;
+const englishRoute = (await getEnglishStoryRoutes()).find(
+  ({ source }) => source.data.slug === data.slug,
+);
 ---
 
 <BaseLayout
@@ -29,6 +33,12 @@ const { data } = story;
   image={data.poster}
   publishedAt={data.publishedAt}
   updatedAt={data.updatedAt}
+  alternates={englishRoute
+    ? {
+        'zh-hant': data.canonicalPath,
+        en: `/en/web-stories/${englishRoute.translation.data.slug}/`,
+      }
+    : undefined}
 >
   <article class="story-page shell">
     <header class="story-page__header">

@@ -1,15 +1,27 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import { DEFAULT_LOCALE, type Locale } from '@/i18n/config';
 import { getMessages } from '@/i18n/messages';
-import type { ArticlePost } from '@/lib/article-experience';
 import { formatLocalizedDate } from '@/lib/i18n';
 import { withBase } from '@/lib/urls';
 
 interface Props {
   locale?: Locale;
-  notes?: CollectionEntry<'notes'>[];
-  posts?: ArticlePost[];
+  notes?: Array<{
+    data: {
+      canonicalPath: string;
+      excerpt: string;
+      publishedAt: Date;
+      title: string;
+    };
+  }>;
+  posts?: Array<{
+    data: {
+      canonicalPath: string;
+      excerpt: string;
+      publishedAt: Date;
+      title: string;
+    };
+  }>;
 }
 
 const { locale = DEFAULT_LOCALE, notes = [], posts = [] } = Astro.props;

@@ -4,29 +4,43 @@ import { getMessages } from '@/i18n/messages';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { taxonomyAlternates } from '@/lib/i18n';
 import { getLocalizedPostsNewestFirst } from '@/lib/localized-content';
+import { englishNoteView, getEnglishNoteRoutes } from '@/lib/localized-social';
+import NoteCard from '@/components/NoteCard.astro';
 import { slugifyTaxonomy } from '@/lib/urls';
 
 export async function getStaticPaths() {
   const posts = await getLocalizedPostsNewestFirst('en');
-  const categories = new Map<string, typeof posts>();
+  const notes = (await getEnglishNoteRoutes()).map(englishNoteView);
+  const categories = new Map<
+    string,
+    { posts: typeof posts; notes: typeof notes }
+  >();
 
   for (const post of posts) {
     for (const category of post.data.categories) {
-      const group = categories.get(category) ?? [];
-      group.push(post);
+      const group = categories.get(category) ?? { posts: [], notes: [] };
+      group.posts.push(post);
       categories.set(category, group);
     }
   }
 
-  return [...categories.entries()].map(([category, categoryPosts]) => ({
+  for (const note of notes) {
+    for (const category of note.data.categories) {
+      const group = categories.get(category) ?? { posts: [], notes: [] };
+      group.notes.push(note);
+      categories.set(category, group);
+    }
+  }
+
+  return [...categories.entries()].map(([category, group]) => ({
     params: { category: slugifyTaxonomy(category) },
-    props: { category, posts: categoryPosts },
+    props: { category, ...group },
   }));
 }
 
 const locale = 'en';
 const t = getMessages(locale);
-const { category, posts } = Astro.props;
+const { category, posts, notes } = Astro.props;
 ---
 
 <BaseLayout
@@ -41,11 +55,30 @@ const { category, posts } = Astro.props;
       <div>
         <div class="eyebrow">Category</div>
         <h1>{category}</h1>
-        <p>{t.taxonomy.categories.detailCount(posts.length)}</p>
+        <p>{t.taxonomy.categories.detailCount(posts.length + notes.length)}</p>
       </div>
     </header>
     <div class="post-grid">
       {posts.map((post) => <PostCard post={post} locale={locale} />)}
     </div>
+    {
+      notes.length > 0 && (
+        <section
+          class="taxonomy-content-group"
+          aria-labelledby="category-notes-title"
+        >
+          <header class="taxonomy-content-group__header">
+            <h2 id="category-notes-title">
+              {t.taxonomy.categories.noteGroupTitle}
+            </h2>
+          </header>
+          <div class="note-grid">
+            {notes.map((note) => (
+              <NoteCard note={note} locale={locale} />
+            ))}
+          </div>
+        </section>
+      )
+    }
   </section>
 </BaseLayout>

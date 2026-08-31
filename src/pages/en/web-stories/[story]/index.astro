@@ -1,0 +1,84 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getMessages } from '@/i18n/messages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getEnglishStoryRoutes } from '@/lib/localized-social';
+import { formatLocalizedDate } from '@/lib/i18n';
+import { withBase } from '@/lib/urls';
+
+export async function getStaticPaths() {
+  const routes = await getEnglishStoryRoutes();
+  return routes.map(({ translation, source }) => ({
+    params: { story: translation.data.slug },
+    props: { translation, source },
+  }));
+}
+
+const { translation, source } = Astro.props as {
+  translation: CollectionEntry<'storyTranslations'>;
+  source: CollectionEntry<'stories'>;
+};
+const data = source.data;
+const t = getMessages('en').webStories.detail;
+const englishPath = `/en/web-stories/${translation.data.slug}/`;
+---
+
+<BaseLayout
+  title={translation.data.title}
+  description={translation.data.excerpt}
+  canonicalPath={englishPath}
+  image={data.poster}
+  imageAlt={translation.data.posterAlt}
+  locale="en"
+  publishedAt={data.publishedAt}
+  updatedAt={data.updatedAt}
+  translationKey={translation.data.translationKey}
+  alternates={{ 'zh-hant': data.canonicalPath, en: englishPath }}
+>
+  <article class="story-page shell">
+    <header class="story-page__header">
+      <div class="eyebrow">{t.transcriptEyebrow}</div>
+      <h1>{translation.data.title}</h1>
+      <p>{translation.data.excerpt}</p>
+      <time datetime={data.publishedAt.toISOString()}
+        >{formatLocalizedDate(data.publishedAt, 'en')}</time
+      >
+    </header>
+    <div
+      class="story-player"
+      aria-label={t.playerAria(translation.data.title, data.modernPageCount)}
+    >
+      <iframe
+        src={withBase(translation.data.ampSourcePath)}
+        title={`${translation.data.title} visual story`}
+        loading="eager"
+        sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+        allow="autoplay; fullscreen"></iframe>
+    </div>
+    <section class="story-transcript" aria-labelledby="story-transcript-title">
+      <div class="section__header">
+        <div>
+          <div class="eyebrow">{t.transcriptEyebrow}</div><h2
+            id="story-transcript-title"
+          >
+            {t.transcriptTitle}
+          </h2><p>{t.transcriptDescription}</p>
+        </div>
+      </div>
+      <ol>
+        {
+          translation.data.transcript.map((page) => (
+            <li id={`transcript-${page.id}`}>
+              <h3>{t.pageHeading(page.order)}</h3>
+              {page.lines.length > 0 ? (
+                page.lines.map((line) => <p>{line}</p>)
+              ) : (
+                <p>{t.visualOnly}</p>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </article>
+</BaseLayout>

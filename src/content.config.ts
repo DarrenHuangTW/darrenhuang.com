@@ -99,6 +99,35 @@ const notes = defineCollection({
   }),
 });
 
+// Localized social notes deliberately live outside `notes`: the source note
+// remains the canonical record and can be translated independently.
+const noteTranslations = defineCollection({
+  loader: glob({
+    base: './src/content/note-translations',
+    pattern: '**/*.{md,mdx}',
+  }),
+  schema: z.object({
+    locale: z.string().regex(/^[a-z]{2,3}(?:-[a-z0-9]+)*$/),
+    sourceId: z
+      .string()
+      .min(1)
+      .regex(/^[^/]+$/),
+    slug: z
+      .string()
+      .min(1)
+      .regex(/^[^/]+$/),
+    translationKey: z.string().regex(/^note:[^/]+$/),
+    status: z.enum(['draft', 'review', 'published']),
+    sourceHash: z.string().regex(/^[a-f0-9]{64}$/),
+    title: z.string().min(1),
+    excerpt: z.string().default(''),
+    categories: z.array(z.string()).default([]),
+    tags: z.array(z.string()).default([]),
+    originalFacebookTagline: z.string().min(1),
+    reviewedAt: z.coerce.date().optional(),
+  }),
+});
+
 const pages = defineCollection({
   loader: glob({ base: './src/content/pages', pattern: '**/*.{md,mdx}' }),
   schema: z.object({
@@ -147,10 +176,45 @@ const stories = defineCollection({
   }),
 });
 
+const storyTranslations = defineCollection({
+  loader: glob({
+    base: './src/content/story-translations',
+    pattern: '**/*.{md,mdx}',
+  }),
+  schema: z.object({
+    locale: z.string().regex(/^[a-z]{2,3}(?:-[a-z0-9]+)*$/),
+    sourceId: z
+      .string()
+      .min(1)
+      .regex(/^[^/]+$/),
+    slug: z
+      .string()
+      .min(1)
+      .regex(/^[^/]+$/),
+    translationKey: z.string().regex(/^story:[^/]+$/),
+    status: z.enum(['draft', 'review', 'published']),
+    sourceHash: z.string().regex(/^[a-f0-9]{64}$/),
+    title: z.string().min(1),
+    excerpt: z.string().default(''),
+    posterAlt: z.string().min(1),
+    ampSourcePath: z.string().regex(/^\/en\/web-stories\/[^/]+\/story\.html$/),
+    transcript: z.array(
+      z.object({
+        id: z.string().min(1),
+        order: z.number().int().positive(),
+        lines: z.array(z.string()).default([]),
+      }),
+    ),
+    reviewedAt: z.coerce.date().optional(),
+  }),
+});
+
 export const collections = {
   pages,
   posts,
   postTranslations,
   notes,
+  noteTranslations,
   stories,
+  storyTranslations,
 };
