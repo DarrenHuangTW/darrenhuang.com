@@ -41,7 +41,7 @@
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "@wordpress/block-serialization-default-parser": "^5.52.0",
-    "astro": "^7.1.6",
+    "astro": "^7.4.2",
     "cheerio": "^1.2.0",
     "fast-xml-parser": "^5.10.1",
     "gray-matter": "^4.0.3",
