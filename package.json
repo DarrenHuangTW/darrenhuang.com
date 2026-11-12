@@ -43,7 +43,7 @@
     "@wordpress/block-serialization-default-parser": "^5.52.0",
     "astro": "^7.1.6",
     "cheerio": "^1.2.0",
-    "fast-xml-parser": "^5.10.1",
+    "fast-xml-parser": "^5.12.0",
     "gray-matter": "^4.0.3",
     "html-entities": "^2.6.0",
     "sanitize-html": "^2.17.6",
